@@ -10,7 +10,6 @@ use App\Service\CacheInvalidatorService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,7 +19,6 @@ class AdminActionController extends AbstractController
     public function __construct(
         private readonly CacheInvalidatorService $cacheInvalidatorService,
         private readonly AdminActionService $adminActionService,
-        private readonly RequestStack $requestStack,
         private readonly LoggerInterface $logger,
     ) {}
 
@@ -84,8 +82,6 @@ class AdminActionController extends AbstractController
         string $name,
         string $action,
     ): JsonResponse {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         $state = 'ok';
         $content = '';
         $error = '';
@@ -114,7 +110,11 @@ class AdminActionController extends AbstractController
             $error
         );
 
-        return new JsonResponse($adminAction, Response::HTTP_ACCEPTED);
+        $statusCode = 'ko' === $state
+            ? Response::HTTP_INTERNAL_SERVER_ERROR
+            : Response::HTTP_ACCEPTED;
+
+        return new JsonResponse($adminAction, $statusCode);
     }
 
     private function doAction(

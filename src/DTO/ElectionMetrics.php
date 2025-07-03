@@ -22,7 +22,7 @@ final class ElectionMetrics
     public int $totalRoundCount;
 
     /**
-     * @param float[]|int[] $values
+     * @param array<string, float|int> $values
      */
     public function __construct(array $values, int $perViewCount)
     {

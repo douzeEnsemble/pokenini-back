@@ -1,0 +1,108 @@
+[
+  {
+    "request": {
+      "uri": "/userinfo",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer this-is-the-user-token"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"sub\": \"1234567890\", \"id\": \"this-is-user_s-id\", \"name\": \"John User\", \"email\": \"john.user@example.com\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/userinfo",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer this-is-the-admin-token"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"sub\": \"1234567890\", \"id\": \"this-is-admin_s-id\", \"name\": \"John Admin\", \"email\": \"john.admin@example.com\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/userinfo",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer this-is-the-collector-token"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"sub\": \"1234567890\", \"id\": \"this-is-collector_s-id\", \"name\": \"John Admin\", \"email\": \"john.admin@example.com\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/userinfo",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer this-is-the-trainer-token"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"sub\": \"1234567890\", \"id\": \"this-is-trainer_s-id\", \"name\": \"John Admin\", \"email\": \"john.admin@example.com\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/userinfo",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer create-resource-owner"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"sub\": \"0987654321\", \"id\": \"this-is-an-id\", \"name\": \"John Admin\", \"email\": \"john.snow@example.com\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/getparsedresponse/without-error",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"some-json\": \"value\"}"
+    }
+  },
+  {
+    "request": {
+      "uri": "/getparsedresponse/with-error",
+      "method": "GET"
+    },
+    "response": {
+      "status": 500,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"error\": \"oops\"}"
+    }
+  }
+]

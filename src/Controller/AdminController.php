@@ -19,20 +19,20 @@ class AdminController extends AbstractController
         private readonly GetActionLogsService $getActionLogsService,
     ) {}
 
-    #[Route('reports', methods: ['GET'])]
+    #[Route('/reports', methods: ['GET'])]
     public function reports(): JsonResponse
     {
         return new JsonResponse(
-            $this->getReportsService->get(), 
+            $this->getReportsService->get(),
             Response::HTTP_OK
         );
     }
 
-    #[Route('action-logs', methods: ['GET'])]
+    #[Route('/action-logs', methods: ['GET'])]
     public function actionLogs(): JsonResponse
     {
         return new JsonResponse(
-            $this->getActionLogsService->get(), 
+            $this->getActionLogsService->get(),
             Response::HTTP_OK
         );
     }

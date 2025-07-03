@@ -59,9 +59,6 @@ class GetLabelsServiceTest extends TestCase
         $this->getService('collections')->getCollections();
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.NPathComplexity)
-     */
     private function getService(string $type): GetLabelsService
     {
         $getCatchStatesService = $this->createMock(GetCatchStatesService::class);

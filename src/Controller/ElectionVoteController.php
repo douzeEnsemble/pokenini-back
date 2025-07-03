@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\AlbumFilters\FromRequest;
 use App\DTO\ElectionVote;
 use App\Service\ElectionVoteService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/election')]
@@ -34,7 +32,10 @@ class ElectionVoteController extends AbstractController
         $data = $request->request->all();
 
         if (empty($data)) {
-            throw new BadRequestHttpException('Data cannot be empty');
+            return new JsonResponse(
+                ['error' => 'Data cannot be empty'],
+                Response::HTTP_BAD_REQUEST
+            );
         }
 
         /** @var string[]|string[][] $data */
@@ -49,11 +50,16 @@ class ElectionVoteController extends AbstractController
         try {
             $electionVote = new ElectionVote($data);
         } catch (\InvalidArgumentException $e) {
-            throw new BadRequestHttpException($e->getMessage());
+            return new JsonResponse(
+                ['error' => $e->getMessage()],
+                Response::HTTP_BAD_REQUEST
+            );
         }
 
         $electionVoteService->vote($electionVote);
 
-        return new JsonResponse($electionVoteService, Response::HTTP_OK);
+        return new JsonResponse(
+            Response::HTTP_OK
+        );
     }
 }

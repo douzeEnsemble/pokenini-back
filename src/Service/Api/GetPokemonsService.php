@@ -36,7 +36,7 @@ class GetPokemonsService extends AbstractApiService
             ]
         );
 
-        /** @var array{type: string, items: list<array{null|int|string}>} */
+        /** @var array{type: string, items: array<array<string, null|int|string>>} */
         $data = JsonDecoder::decode($json);
 
         return new ElectionPokemonsList($data);

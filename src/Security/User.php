@@ -13,7 +13,7 @@ class User implements UserInterface
 
     public function __construct(
         private readonly string $identifier,
-        private readonly string $providerName,
+        private readonly string $provider,
     ) {}
 
     #[\Override]
@@ -62,9 +62,9 @@ class User implements UserInterface
         return $this->getUserIdentifier();
     }
 
-    public function getProviderName(): string
+    public function getProvider(): string
     {
-        return $this->providerName;
+        return $this->provider;
     }
 
     public function isATrainer(): bool

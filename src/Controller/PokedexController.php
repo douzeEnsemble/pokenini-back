@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\AlbumFilters\FromRequest;
 use App\AlbumFilters\Mapping;
+use App\Security\User;
 use App\Service\GetTrainerPokedexService;
 use App\Service\TrainerIdsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,7 @@ class PokedexController extends AbstractController
         private readonly GetTrainerPokedexService $getTrainerPokedexService,
     ) {}
 
-    #[Route('/', methods: ['GET'])]
+    #[Route('/{dexSlug}', methods: ['GET'])]
     public function get(
         Request $request,
         string $dexSlug,
@@ -31,23 +32,29 @@ class PokedexController extends AbstractController
 
         $trainerId = $this->trainerIdsService->getTrainerId();
 
-        if (!$trainerId) {
-            throw $this->createNotFoundException();
+        if (null === $trainerId) {
+            return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 
         $filters = FromRequest::get($request);
         $apiFilters = Mapping::get($filters);
-        
+
         $pokedex = $this->getTrainerPokedexService->getPokedexDataByTrainerId($dexSlug, $apiFilters, $trainerId);
-        if (null === $pokedex || !isset($pokedex['dex']) || empty($pokedex['dex'])) {
-            throw $this->createNotFoundException();
+        if (null === $pokedex || empty($pokedex['dex'])) {
+            return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 
         if (!$this->accessDexIsGranted($pokedex['dex'])) {
-            throw $this->createNotFoundException();
+            return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 
-        return new JsonResponse($pokedex, Response::HTTP_OK);
+        return new JsonResponse(
+            [
+                'pokedex' => $pokedex,
+                'filters' => $filters,
+            ],
+            Response::HTTP_OK
+        );
     }
 
     /**

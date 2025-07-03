@@ -31,9 +31,6 @@ abstract class AbstractAuthenticator extends OAuth2Authenticator
         return 'app_connect_'.$this->getProviderCode().'_check' === $request->attributes->get('_route');
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     #[\Override]
     public function authenticate(Request $request): Passport
     {

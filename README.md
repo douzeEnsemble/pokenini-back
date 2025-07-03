@@ -69,6 +69,18 @@ To save html into a file that you can open with your browser
 file_put_contents('tests/last.html', $client->getCrawler()->html());
 ```
 
+For `tests/src/Functional/Trait/JsonResponseTrait.php`
+
+```php
+/*
+// Uncomment this block to save the response content to a file for debugging purposes.
+file_put_contents(
+    __DIR__ . '/../../../resources/functional/controller/' . $filePath,
+    (string) $client->getResponse()->getContent(),
+);
+/**/
+```
+
 ### PHPStan baseline
 
 To update the `phpstan-baseline.neon` file

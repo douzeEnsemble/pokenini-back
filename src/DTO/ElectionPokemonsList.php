@@ -16,7 +16,7 @@ final class ElectionPokemonsList
     public array $items;
 
     /**
-     * @param array{type: string, items: list<array<array-key, null|int|string>>} $values
+     * @param array{type: string, items: array<array<string, null|int|string>>} $values
      */
     public function __construct(array $values)
     {

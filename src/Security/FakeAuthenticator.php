@@ -29,9 +29,6 @@ class FakeAuthenticator extends OAuth2Authenticator
         return 'app_connect_fake_check' === $request->attributes->get('_route');
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     #[\Override]
     public function authenticate(Request $request): Passport
     {

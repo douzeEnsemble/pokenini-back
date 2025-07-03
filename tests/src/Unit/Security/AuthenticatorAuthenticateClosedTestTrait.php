@@ -41,7 +41,7 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertEquals('1212121212000000000000012', $user->getId());
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProviderName());
+        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     public function testClosedAuthenticateTrainer(): void
@@ -65,7 +65,7 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertFalse($user->isACollector());
         $this->assertEquals('1212121212000000000000012', $user->getId());
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProviderName());
+        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     public function testClosedAuthenticateCollector(): void
@@ -89,7 +89,7 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertTrue($user->isACollector());
         $this->assertEquals('1212121212000000000000012', $user->getId());
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProviderName());
+        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     public function testClosedAuthenticateAdmin(): void
@@ -113,7 +113,7 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertFalse($user->isACollector());
         $this->assertEquals('1212121212000000000000012', $user->getId());
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProviderName());
+        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     public function testClosedAuthenticateAdminTrainer(): void
@@ -137,7 +137,7 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertFalse($user->isACollector());
         $this->assertEquals('1212121212000000000000012', $user->getId());
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProviderName());
+        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     public function testClosedAuthenticateAdminTrainerWithEndlines(): void
@@ -177,7 +177,7 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertTrue($user->isACollector());
         $this->assertEquals('1212121212000000000000012', $user->getId());
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProviderName());
+        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     private function getAuthenticator(string $listAdmin, string $listTrainer, string $listCollector): OAuth2Authenticator

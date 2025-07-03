@@ -18,8 +18,8 @@ class LabelsController extends AbstractController
     ) {}
 
     #[Route('/all', methods: ['GET'])]
-    public function get(): JsonResponse {
-
+    public function getAll(): JsonResponse
+    {
         return new JsonResponse(
             [
                 'catchStates' => $this->getLabelsService->getCatchStates(),

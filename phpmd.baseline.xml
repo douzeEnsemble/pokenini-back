@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<phpmd-baseline>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="src/Security/AbstractAuthenticator.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="src/Security/AuthenticatorTrait.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="src/Security/MockProvider.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="src/Security/UserProvider.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="src/Service/CacheInvalidatorService.php" method="invalidate"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="tests/src/Unit/Service/Api/GetLabelsServiceTest.php" method="getService"/>
+</phpmd-baseline>

@@ -21,11 +21,6 @@
     </projectFiles>
 
     <issueHandlers>
-        <ArgumentTypeCoercion>
-            <errorLevel type="suppress">
-                <file name="tests/src/Unit/Controller/AdminActionControllerTest.php" />
-            </errorLevel>
-        </ArgumentTypeCoercion>
         <PropertyNotSetInConstructor errorLevel="suppress" />
         <RiskyCast>
             <errorLevel type="suppress">
@@ -34,8 +29,8 @@
         </RiskyCast>
         <RiskyTruthyFalsyComparison>
             <errorLevel type="suppress">
-                <file name="src/Controller/AlbumIndexController.php" />
                 <file name="src/Controller/AlbumUpsertController.php" />
+                <file name="src/Controller/PokedexController.php" />
                 <file name="src/Controller/TrainerUpsertController.php" />
                 <file name="src/Service/TrainerIdsService.php" />
             </errorLevel>

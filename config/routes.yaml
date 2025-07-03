@@ -1,14 +1,33 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
-    prefix: /
-    trailing_slash_on_root: false
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
+  prefix: /
+  trailing_slash_on_root: false
 
 index:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+  defaults:
+    route: app_home_index
+    permanent: true
+
+# Fake route for OAuth2 clients to redirect to after authentication
+app_connect_google_check:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+app_connect_amazon_check:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+app_connect_discord_check:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+app_connect_passage_check:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+
+when@test:
+  app_connect_mock_check:
     path: /
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-    defaults:
-        route: app_home_index
-        permanent: true
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController

@@ -1,0 +1,342 @@
+{
+  "calculate_dex_availabilities": {
+    "item": "calculate_dex_availabilities",
+    "current": {
+      "createdAt": {
+        "date": "2023-03-21 09:14:36.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": null,
+      "executionTime": null,
+      "details": [],
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2023-03-20 09:14:36.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-20 10:05:08.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 3032,
+      "details": {
+        "dex_availabilities": 22472
+      },
+      "errorTrace": null
+    }
+  },
+  "calculate_pokemon_availabilities": {
+    "item": "calculate_pokemon_availabilities",
+    "current": {
+      "createdAt": {
+        "date": "2024-02-14 09:14:36.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2024-02-14 09:14:36.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 0,
+      "details": {
+        "pokemon_availabilities_game_bundle": 1,
+        "pokemon_availabilities_game_bundle_shiny": 0
+      },
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2024-02-14 09:14:36.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2024-02-14 09:14:36.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 0,
+      "details": {
+        "pokemon_availabilities_game_bundle": 1,
+        "pokemon_availabilities_game_bundle_shiny": 0
+      },
+      "errorTrace": null
+    }
+  },
+  "calculate_game_bundles_availabilities": {
+    "item": "calculate_game_bundles_availabilities",
+    "current": {
+      "createdAt": {
+        "date": "2023-03-21 07:15:04.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": null,
+      "executionTime": null,
+      "details": [],
+      "errorTrace": null
+    },
+    "last": null
+  },
+  "calculate_game_bundles_shinies_availabilities": {
+    "item": "calculate_game_bundles_shinies_availabilities",
+    "current": {
+      "createdAt": {
+        "date": "2023-04-21 15:24:18.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-04-21 15:27:18.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 180,
+      "details": {
+        "game_bundles_shinies_availabilities": 1234
+      },
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2023-04-20 15:24:18.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-04-20 15:28:18.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 200,
+      "details": {
+        "game_bundles_shinies_availabilities": 321
+      },
+      "errorTrace": null
+    }
+  },
+  "update_games_collections_and_dex": {
+    "item": "update_games_collections_and_dex",
+    "current": {
+      "createdAt": {
+        "date": "2023-09-01 08:00:20.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": null,
+      "executionTime": null,
+      "details": [],
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2023-03-21 08:51:00.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-04-20 00:52:59.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 2559719,
+      "details": [],
+      "errorTrace": "Exception has been thrown for X reason"
+    }
+  },
+  "update_games_availabilities": {
+    "item": "update_games_availabilities",
+    "current": {
+      "createdAt": {
+        "date": "2023-03-21 08:51:00.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-21 09:25:38.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 2078,
+      "details": [],
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2023-03-20 18:51:00.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-20 19:25:38.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 2012,
+      "details": [],
+      "errorTrace": null
+    }
+  },
+  "update_games_shinies_availabilities": {
+    "item": "update_games_shinies_availabilities",
+    "current": {
+      "createdAt": {
+        "date": "2023-03-21 08:51:00.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-04-22 00:52:59.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 2559719,
+      "details": [],
+      "errorTrace": "Exception has been thrown for X reason"
+    },
+    "last": {
+      "createdAt": {
+        "date": "2023-03-20 08:51:00.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-20 09:25:38.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 2078,
+      "details": {
+        "games_shinies_availabilities": 41691
+      },
+      "errorTrace": null
+    }
+  },
+  "update_labels": {
+    "item": "update_labels",
+    "current": {
+      "createdAt": {
+        "date": "2023-03-21 12:51:39.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-21 12:53:07.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 88,
+      "details": {
+        "catch_states": 6,
+        "regions": 0,
+        "category_forms": 6,
+        "regional_forms": 4,
+        "special_forms": 7,
+        "variant_forms": 7
+      },
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2023-03-20 12:51:39.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-20 12:53:07.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 8,
+      "details": {
+        "catch_states": 5,
+        "regions": 0,
+        "category_forms": 5,
+        "regional_forms": 4,
+        "special_forms": 6,
+        "variant_forms": 6
+      },
+      "errorTrace": null
+    }
+  },
+  "update_pokemons": {
+    "item": "update_pokemons",
+    "current": {
+      "createdAt": {
+        "date": "2023-03-21 08:34:47.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-21 09:38:03.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 88,
+      "details": {
+        "pokemons": 1934
+      },
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2023-03-20 08:34:47.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2023-03-20 09:38:03.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 78,
+      "details": {
+        "pokemons": 1930
+      },
+      "errorTrace": null
+    }
+  },
+  "update_collections_availabilities": {
+    "item": "update_collections_availabilities",
+    "current": {
+      "createdAt": {
+        "date": "2024-09-21 08:34:47.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2024-09-21 08:35:47.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 60,
+      "details": {
+        "collections_availabilities": 1234
+      },
+      "errorTrace": null
+    },
+    "last": {
+      "createdAt": {
+        "date": "2024-09-21 08:00:00.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "doneAt": {
+        "date": "2024-09-21 08:01:00.000000",
+        "timezone_type": 1,
+        "timezone": "+00:00"
+      },
+      "executionTime": 60,
+      "details": {
+        "collections_availabilities": 312
+      },
+      "errorTrace": null
+    }
+  }
+}

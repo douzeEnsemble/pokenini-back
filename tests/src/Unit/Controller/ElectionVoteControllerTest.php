@@ -8,11 +8,9 @@ use App\Controller\ElectionVoteController;
 use App\Service\ElectionVoteService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @internal
@@ -32,22 +30,10 @@ class ElectionVoteControllerTest extends TestCase
 
         $controller = new ElectionVoteController();
 
-        $router = $this->createMock(Router::class);
-        $router
-            ->expects($this->once())
-            ->method('generate')
-            ->willReturn('/fr/election/demo')
-        ;
-
         $container = $this->createMock(ContainerInterface::class);
-        $container
-            ->expects($this->exactly(1))
-            ->method('get')
-            ->willReturn($router)
-        ;
         $controller->setContainer($container);
 
-        /** @var RedirectResponse $response */
+        /** @var JsonResponse $response */
         $response = $controller->vote(
             $request,
             $electionVoteService,
@@ -55,8 +41,8 @@ class ElectionVoteControllerTest extends TestCase
             ''
         );
 
-        $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame('/fr/election/demo', $response->getTargetUrl());
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     public function testVoteEmpty(): void
@@ -67,14 +53,16 @@ class ElectionVoteControllerTest extends TestCase
 
         $controller = new ElectionVoteController();
 
-        $this->expectException(BadRequestHttpException::class);
-        $this->expectExceptionMessage('Data cannot be empty');
-        $controller->vote(
+        $response = $controller->vote(
             $request,
             $electionVoteService,
             'demo',
             ''
         );
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertSame(400, $response->getStatusCode());
+        $this->assertSame('{"error":"Data cannot be empty"}', (string) $response->getContent());
     }
 
     public function testVoteNonvalid(): void
@@ -85,13 +73,18 @@ class ElectionVoteControllerTest extends TestCase
 
         $controller = new ElectionVoteController();
 
-        $this->expectException(BadRequestHttpException::class);
-        $this->expectExceptionMessage('The required option "losers_slugs');
-        $controller->vote(
+        $response = $controller->vote(
             $request,
             $electionVoteService,
             'demo',
             ''
+        );
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertSame(400, $response->getStatusCode());
+        $this->assertSame(
+            '{"error":"The required option \u0022losers_slugs\u0022 is missing."}',
+            (string) $response->getContent()
         );
     }
 }

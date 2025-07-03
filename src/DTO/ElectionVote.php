@@ -22,7 +22,7 @@ final class ElectionVote
     public array $losersSlugs;
 
     /**
-     * @param string[]|string[][] $values
+     * @param array<string, array<int, string>|string> $values
      */
     public function __construct(array $values = [])
     {

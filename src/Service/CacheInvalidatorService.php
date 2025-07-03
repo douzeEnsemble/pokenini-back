@@ -11,9 +11,6 @@ use App\Service\CacheInvalidator\FormsCacheInvalidatorService;
 use App\Service\CacheInvalidator\ReportsCacheInvalidatorService;
 use App\Service\CacheInvalidator\TypesCacheInvalidatorService;
 
-/**
- * @SuppressWarnings(PHPMD.CyclomaticComplexity)
- */
 class CacheInvalidatorService
 {
     public function __construct(

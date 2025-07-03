@@ -20,7 +20,7 @@ class UserTest extends TestCase
 
         $this->assertEquals('12', $user->getUserIdentifier());
         $this->assertEquals('12', $user->getId());
-        $this->assertEquals('TestProvider', $user->getProviderName());
+        $this->assertEquals('TestProvider', $user->getProvider());
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
     }
 

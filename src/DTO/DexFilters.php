@@ -9,9 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class DexFilters
 {
-    /**
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
     private function __construct(
         public DexFilterValue $privacy,
         public DexFilterValue $homepaged,

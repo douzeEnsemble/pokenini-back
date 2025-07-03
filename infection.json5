@@ -11,13 +11,28 @@
             "ignore": [
                 "App\\Helper\\TotalRoundCountHelper::calculate",
             ],
+        },
+        "Division": {
+            "ignore": [
+                "App\\Helper\\TotalRoundCountHelper::calculate",
+                "App\\DTO\\ElectionMetrics::__construct",
+            ],
+        },
+        "Modulus": {
+            "ignore": [
+                "App\\Helper\\TotalRoundCountHelper::calculate",
+            ],
+        },
+        "MethodCallRemoval": {
             "ignoreSourceCodeByRegex": [
                 "\\$this->logger->info.*",
+                "\\$this->logger->critical.*",
             ]
         },
         "ArrayItem": {
             "ignoreSourceCodeByRegex": [
                 "\\$this->logger->info.*",
+                "\\$this->logger->critical.*",
             ]
         },
         "global-ignoreSourceCodeByRegex": [

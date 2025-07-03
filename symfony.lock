@@ -260,15 +260,6 @@
             "config/packages/monolog.yaml"
         ]
     },
-    "symfony/panther": {
-        "version": "2.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "292a3236e81f55b545b09b9954ab097248972ab3"
-        }
-    },
     "symfony/password-hasher": {
         "version": "v6.0.2"
     },
@@ -352,37 +343,11 @@
     "symfony/string": {
         "version": "v6.0.2"
     },
-    "symfony/translation": {
-        "version": "7.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.3",
-            "ref": "64fe617084223633e1dedf9112935d8c95410d3e"
-        },
-        "files": [
-            "config/packages/translation.yaml",
-            "translations/.gitignore"
-        ]
-    },
     "symfony/translation-contracts": {
         "version": "v3.0.0"
     },
     "symfony/twig-bridge": {
         "version": "v6.0.2"
-    },
-    "symfony/twig-bundle": {
-        "version": "7.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.4",
-            "ref": "cab5fd2a13a45c266d45a7d9337e28dee6272877"
-        },
-        "files": [
-            "config/packages/twig.yaml",
-            "templates/base.html.twig"
-        ]
     },
     "symfony/validator": {
         "version": "7.0",
@@ -402,27 +367,11 @@
     "symfony/var-exporter": {
         "version": "v6.0.0"
     },
-    "symfony/web-profiler-bundle": {
-        "version": "7.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.1",
-            "ref": "e42b3f0177df239add25373083a564e5ead4e13a"
-        },
-        "files": [
-            "config/packages/web_profiler.yaml",
-            "config/routes/web_profiler.yaml"
-        ]
-    },
     "symfony/yaml": {
         "version": "v6.0.2"
     },
     "theseer/tokenizer": {
         "version": "1.2.1"
-    },
-    "twig/extra-bundle": {
-        "version": "v3.8.0"
     },
     "twig/twig": {
         "version": "v3.3.7"
