@@ -54,7 +54,7 @@ class CalculateTest extends WebTestCase
                 'item' => 'dex_availabilities',
                 'state' => 'ko',
                 'content' => '',
-                'error' => 'HTTP/1.1 500 Internal Server Error returned for "http://moco.api.test/istration/calculate/dex_availabilities".',
+                'error' => 'HTTP/1.1 500 Internal Server Error returned for "http://moco.api/istration/calculate/dex_availabilities".',
             ],
             $data
         );

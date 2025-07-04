@@ -1,0 +1,951 @@
+[
+  {
+    "request": {
+      "uri": "/catch_states",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/catch_states.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/types",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/types.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/forms/category",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/category_forms.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/forms/regional",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/regional_forms.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/forms/special",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/special_forms.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/forms/variant",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/variant_forms.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/game_bundles",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/game_bundles.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/collections",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/collections.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/dex/994e463d0e059ad0e1efc15d42485a3ec89958b9/list",
+      "queries": {
+        "include_unreleased_dex": "1",
+        "include_premium_dex": "1"
+      },
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/dexes/994e463d0e059ad0e1efc15d42485a3ec89958b9_unreleased_and_premium.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/dex/d79ed57f46e74e66fa394b663810499405c818e3/list",
+      "queries": {
+        "include_premium_dex": "1"
+      },
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/dexes/d79ed57f46e74e66fa394b663810499405c818e3_premium.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/dex/963f1e5284a86d4a60fb5eb81cb75b22fbe683ec/list",
+      "queries": {
+        "include_premium_dex": "1"
+      },
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/dexes/963f1e5284a86d4a60fb5eb81cb75b22fbe683ec_premium.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "catch_states[0]": "no"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_catchstatesno.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "catch_states[0]": "!no"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_catchstates!no.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "families[0]": "bulbasaur"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_familybulbasaur.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "category_forms[0]": "starter"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_categoryforms0starter.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "special_forms[0]": "mega"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_specialforms0mega.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "any_types[0]": "fire"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_anytypes0fire.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "secondary_types[0]": "poison",
+        "secondary_types[1]": "flying"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_secondarytypes0poisonsecondarytypes1flying.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "secondary_types[0]": "poison",
+        "secondary_types[1]": "flying"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_secondarytypes0poisonsecondarytypes1flying.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "primary_types[0]": "fire"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_primarytypes0fire.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "original_game_bundles[0]": "unknown"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_originalgamebundle0unknown.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "original_game_bundles[0]": "swordshield"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_originalgamebundle0swordshield.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "queries": {
+        "collection_availabilities[0]": "pogoshadow"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_collectionavailabilities0pogoshadow.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/demo"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/demo.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/demolist3"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/demo_list3.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/demolite"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/demo-lite.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/redgreenblueyellow"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/redgreenblueyellow.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/goldsilvercrystal"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/goldsilvercrystal.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/douze"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "404"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/homepokemongo"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/homepokemongo.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/allshinies"
+      },
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/allshinies.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/squirtle"
+      },
+      "method": "patch",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "tobreed"
+      }
+    },
+    "response": {
+      "status": "401"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/wartortle"
+      },
+      "method": "patch",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "tobreed"
+      }
+    },
+    "response": {
+      "status": "403"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/blastoise"
+      },
+      "method": "patch",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "tobreed"
+      }
+    },
+    "response": {
+      "status": "500"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/[\\w-]*"
+      },
+      "method": "patch",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "no|toevolve|tobreed|totransfer|totrade|yes"
+      }
+    },
+    "response": {
+      "status": "200"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/squirtle"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "tobreed"
+      }
+    },
+    "response": {
+      "status": "401"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/wartortle"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "tobreed"
+      }
+    },
+    "response": {
+      "status": "403"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/blastoise"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "tobreed"
+      }
+    },
+    "response": {
+      "status": "500"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/[\\w-]*/[\\w-]*"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "no|toevolve|tobreed|totransfer|totrade|yes"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/update/labels"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/update/games_collections_and_dex"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/update/pokemons"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/update/games_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/update/games_shinies_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/update/regional_dex_numbers"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/update/collections_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/calculate/game_bundles_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/calculate/game_bundles_shinies_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/calculate/collections_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/calculate/dex_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "500"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/istration/calculate/pokemon_availabilities"
+      },
+      "method": "post",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/6c33064427a5b419ca8eb3f7d11a0807f66cab22/redgreenblueyellow"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+      }
+    },
+    "response": {
+      "status": "500"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/d79ed57f46e74e66fa394b663810499405c818e3/redgreenblueyellow"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+      }
+    },
+    "response": {
+      "status": "500"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/[\\w\\d]*/[\\w-]*/[\\w-]*"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/[\\w\\d]*/[\\w-]*"
+      },
+      "method": "put",
+      "headers": {
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+      }
+    },
+    "response": {
+      "status": "201"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/reports"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/reports.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/action_logs"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/action_logs.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/pokemons/to_choose"
+      },
+      "queries": {
+        "dex_slug": "demolite",
+        "election_slug": "favorite",
+        "count": "12"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/pokemons_topick_demolite_12.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/election/vote"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election_vote.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/can_hold_election"
+      },
+      "queries": {
+        "include_premium_dex": "1",
+        "include_unreleased_dex": "1"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election_dex_include_premium_dex1_include_unreleased_dex1.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/can_hold_election"
+      },
+      "queries": {
+        "include_premium_dex": "1"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election_dex_include_premium_dex1.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/can_hold_election"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election_dex.json"
+    }
+  }
+]
