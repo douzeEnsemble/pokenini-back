@@ -110,6 +110,9 @@ tests: ## Execute all tests
 tests:
 	$(PHP) vendor/bin/phpunit tests/src
 
+.PHONY: t
+t: tests
+
 .PHONY: tests-unit
 tests-unit: ## Execute unit tests
 	@$(PHP_CONT) vendor/bin/phpunit tests/src/Unit
