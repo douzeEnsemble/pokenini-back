@@ -46,6 +46,19 @@ class InvalidateTest extends WebTestCase
         );
     }
 
+    /**
+     * @return string[][]
+     */
+    public static function providerInvalidateSuccess(): array
+    {
+        return [
+            ['labels'],
+            ['dex'],
+            ['albums'],
+            ['reports'],
+        ];
+    }
+
     #[DataProvider('providerInvalidateNotExists')]
     public function testInvalidateNotExists(string $name): void
     {
@@ -59,6 +72,28 @@ class InvalidateTest extends WebTestCase
         );
 
         $this->assertResponseStatusCodeSame(404);
+    }
+
+    /**
+     * @return string[][]
+     */
+    public static function providerInvalidateNotExists(): array
+    {
+        return [
+            ['catch_states'],
+            ['types'],
+            ['games_collections_and_dex'],
+            ['pokemons'],
+            ['regional_dex_numbers'],
+            ['games_availabilities'],
+            ['games_shinies_availabilities'],
+            ['game_bundles_availabilities'],
+            ['game_bundles_shinies_availabilities'],
+            ['dex_availabilities'],
+            ['pokemon_availabilities'],
+            ['collections'],
+            ['collections_availabilities'],
+        ];
     }
 
     public function testUnknown(): void
@@ -113,40 +148,5 @@ class InvalidateTest extends WebTestCase
         );
 
         $this->assertResponseStatusCodeSame(403);
-    }
-
-    /**
-     * @return string[][]
-     */
-    public static function providerInvalidateSuccess(): array
-    {
-        return [
-            ['labels'],
-            ['dex'],
-            ['albums'],
-            ['reports'],
-        ];
-    }
-
-    /**
-     * @return string[][]
-     */
-    public static function providerInvalidateNotExists(): array
-    {
-        return [
-            ['catch_states'],
-            ['types'],
-            ['games_collections_and_dex'],
-            ['pokemons'],
-            ['regional_dex_numbers'],
-            ['games_availabilities'],
-            ['games_shinies_availabilities'],
-            ['game_bundles_availabilities'],
-            ['game_bundles_shinies_availabilities'],
-            ['dex_availabilities'],
-            ['pokemon_availabilities'],
-            ['collections'],
-            ['collections_availabilities'],
-        ];
     }
 }

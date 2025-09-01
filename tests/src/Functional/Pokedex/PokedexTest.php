@@ -179,7 +179,7 @@ class PokedexTest extends WebTestCase
 
     /**
      * @return array<string, array{
-     *     parameters: array<string, string|array<string>>,
+     *     parameters: array<string, array<string>|string>,
      *     filename: string
      * }>
      */
