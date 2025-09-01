@@ -127,13 +127,6 @@ tf: tests-functional
 .PHONY: ti
 ti: tests-functional
 
-.PHONY: tests-browser
-tests-browser: ## Execute browser tests for Web module
-	@$(PHP_CONT) vendor/bin/phpunit tests/src/Browser
-
-.PHONY: tb
-tb: tests-browser
-
 ## —— Quality 👌 ———————————————————————————————————————————————————————————————
 .PHONY: quality
 quality: ## Execute all quality analyses
