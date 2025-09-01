@@ -20,7 +20,7 @@ class GetActionLogsService extends AbstractApiService
             '/action_logs'
         );
 
-        /** @var int[][]|int[][][]|string[][] */
+        /** @var array<string, int[][]|int[][][]|string[][]> */
         $actionLogsData = JsonDecoder::decode($json);
 
         $list = [];
