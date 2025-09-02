@@ -56,6 +56,36 @@ class GetPokemonsServiceTest extends TestCase
         $this->assertEmpty($this->cache->getItems());
     }
 
+    /**
+     * @return int[][]|string[][]
+     */
+    public static function providerGet(): array
+    {
+        return [
+            '123-3' => [
+                'listType' => 'pick',
+                'trainerExternalId' => '12',
+                'dexSlug' => '123',
+                'electionSlug' => '',
+                'count' => 3,
+            ],
+            '123-5' => [
+                'listType' => 'pick',
+                'trainerExternalId' => '13',
+                'dexSlug' => '123',
+                'electionSlug' => 'a',
+                'count' => 5,
+            ],
+            'all-12' => [
+                'listType' => 'vote',
+                'trainerExternalId' => '14',
+                'dexSlug' => 'all',
+                'electionSlug' => 'b',
+                'count' => 12,
+            ],
+        ];
+    }
+
     public function testGetWithFilters(): void
     {
         $electionList = $this
@@ -87,36 +117,6 @@ class GetPokemonsServiceTest extends TestCase
         $this->assertCount(5, $pokemons);
 
         $this->assertEmpty($this->cache->getItems());
-    }
-
-    /**
-     * @return int[][]|string[][]
-     */
-    public static function providerGet(): array
-    {
-        return [
-            '123-3' => [
-                'listType' => 'pick',
-                'trainerExternalId' => '12',
-                'dexSlug' => '123',
-                'electionSlug' => '',
-                'count' => 3,
-            ],
-            '123-5' => [
-                'listType' => 'pick',
-                'trainerExternalId' => '13',
-                'dexSlug' => '123',
-                'electionSlug' => 'a',
-                'count' => 5,
-            ],
-            'all-12' => [
-                'listType' => 'vote',
-                'trainerExternalId' => '14',
-                'dexSlug' => 'all',
-                'electionSlug' => 'b',
-                'count' => 12,
-            ],
-        ];
     }
 
     /**

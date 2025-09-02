@@ -81,12 +81,23 @@ file_put_contents(
 /**/
 ```
 
-### PHPStan baseline
+### Update baselines
+
+#### Psalm
+
+To update the `psalm-baseline.xml` file
+
+```
+make bash
+tools/psalm/vendor/bin/psalm --set-baseline --update-baseline
+```
+
+#### PHPStan
 
 To update the `phpstan-baseline.neon` file
 
 ```
-make sh
+make bash
 tools/phpstan/vendor/bin/phpstan --generate-baseline --memory-limit=-1
 ```
 
