@@ -4,138 +4,161 @@ parameters:
   exclude_files:
     - .*test.*
   layers:    
-    - name: WebAlbumFilters
+    - name: AppAlbumFilters
       collectors:
         - type: classLike
-          value: 'App\\AlbumFilters\\.*'
-    - name: WebCache
+          value: '^App\\AlbumFilters\\.*'
+    - name: AppCache
       collectors:
         - type: classLike
-          value: 'App\\Cache\\.*'
-    - name: WebController
+          value: '^App\\Cache\\.*'
+    - name: AppController
       collectors:
         - type: classLike
-          value: 'App\\Controller\\.*'
-    - name: WebDTO
+          value: '^App\\Controller\\.*'
+    - name: AppDTO
       collectors:
         - type: classLike
-          value: 'App\\DTO\\.*'
-    - name: WebException
+          value: '^App\\DTO\\.*'
+    - name: AppException
       collectors:
         - type: classLike
-          value: 'App\\Exception\\.*'
-    - name: WebSecurity
+          value: '^App\\Exception\\.*'
+    - name: AppHelper
       collectors:
         - type: classLike
-          value: 'App\\Security\\.*'
-    - name: WebService
+          value: '^App\\Helper\\.*'
+    - name: AppSecurity
       collectors:
         - type: classLike
-          value: 'App\\Service\\.*'
-    - name: WebTwig
+          value: '^App\\Security\\.*'
+    - name: AppService
       collectors:
         - type: classLike
-          value: 'App\\Twig\\.*'
-    - name: WebUtils
+          value: '^App\\Service\\.*'
+    - name: AppUtils
       collectors:
         - type: classLike
-          value: 'App\\Utils\\.*'
-    - name: WebValidator
+          value: '^App\\Utils\\.*'
+    - name: AppValidator
       collectors:
         - type: classLike
-          value: 'App\\Validator\\.*'
+          value: '^App\\Validator\\.*'
+
+    # KnpU
+    - name: KnpUOAuth2ClientBundle
+      collectors:
+        - type: classLike
+          value: '^KnpU\\OAuth2ClientBundle\\.*'
+
+    # League
+    - name: LeagueOAuth2
+      collectors:
+        - type: classLike
+          value: '^League\\OAuth2\\.*'
+
+    # Logger
+    - name: Logger
+      collectors:
+        - type: classLike
+          value: '^Psr\\Log\\LoggerInterface'
+
+    # PsrHttp
+    - name: PsrHttp
+      collectors:
+        - type: classLike
+          value: '^Psr\\Http\\.*'
+
+    # Symfony
+    - name: SymfonyContractsCache
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Contracts\\Cache\\.*'
+    - name: SymfonyContractsHttpClient
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Contracts\\HttpClient\\.*'
+    - name: SymfonyFrameworkBundle
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Bundle\\FrameworkBundle\\.*'
+    - name: SymfonyHttpFoundation
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\HttpFoundation\\.*'
+    - name: SymfonyOptionsResolver
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\OptionsResolver\\.*'
+    - name: SymfonyRouting
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\Routing\\.*'
+    - name: SymfonySecurity
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\Security\\.*'
+    - name: SymfonySecurityBundle
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Bundle\\SecurityBundle\\.*'
+    - name: SymfonySerializer
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\Serializer\\.*'
+    - name: SymfonyValidator
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\Validator\\.*'
 
   ruleset:
-    ApiActionEnder:
-      - ApiDTO
-      - ApiEntity
-      - ApiMessage
-      - ApiRepository
-    ApiActionStarter:
-      - ApiEntity
-      - ApiMessage
-    ApiCalculator:
-      - ApiCalculator
-      - ApiDTO
-      - ApiEntity
-      - ApiRepository
-      - ApiService
-    ApiCommand:
-      - ApiActionEnder
-      - ApiActionStarter
-      - ApiCalculator
-      - ApiDTO
-      - ApiEntity
-      - ApiMessage
-      - ApiRepository
-      - ApiService
-      - ApiUpdater
-    ApiController:
-      - ApiActionEnder
-      - ApiActionStarter
-      - ApiDTO
-      - ApiEntity
-      - ApiRepository
-      - ApiService
-    ApiDTO:
-      - ApiDTO
-    ApiEntity:
-      - ApiEntity
-    ApiHelper:
-      - ApiHelper
-    ApiMessage:
-      - ApiMessage
-    ApiMessageHandler:
-      - ApiActionEnder
-      - ApiCalculator
-      - ApiDTO
-      - ApiEntity
-      - ApiMessage
-      - ApiMessageHandler
-      - ApiService
-      - ApiUpdater
-      - ApiRepository
-    ApiRepository:
-      - ApiDTO
-      - ApiEntity
-      - ApiMessage
-      - ApiRepository
-    ApiService:
-      - ApiCalculator
-      - ApiDTO
-      - ApiEntity
-      - ApiRepository
-      - ApiService
-      - ApiUpdater
-    ApiUpdater:
-      - ApiDTO
-      - ApiEntity
-      - ApiException
-      - ApiHelper
-      - ApiRepository
-      - ApiService
-
-    WebAlbumFilters:
-      - WebAlbumFilters
-    WebCache:
-      - WebService
-    WebController: 
-      - WebAlbumFilters
-      - WebDTO
-      - WebException
-      - WebSecurity
-      - WebService
-      - WebValidator
-    WebDTO:
-      - WebDTO
-    WebSecurity:
-      - WebException
-    WebService:
-      - WebCache
-      - WebDTO
-      - WebException
-      - WebSecurity
-      - WebUtils
-    WebValidator:
-      - WebService
-      - WebValidator
+    AppAlbumFilters:
+      - SymfonyHttpFoundation
+    AppCache:
+    AppController:
+      - AppAlbumFilters
+      - AppDTO
+      - AppException
+      - AppSecurity
+      - AppService
+      - AppValidator
+      - Logger
+      - SymfonyFrameworkBundle
+      - SymfonyHttpFoundation
+      - SymfonyRouting
+      - SymfonySecurity
+      - SymfonySerializer
+      - SymfonyValidator
+    AppDTO:
+      - AppHelper
+      - SymfonyHttpFoundation
+      - SymfonyOptionsResolver
+    AppException:
+    AppHelper:
+    AppSecurity:
+      - AppException
+      - KnpUOAuth2ClientBundle
+      - LeagueOAuth2
+      - PsrHttp
+      - SymfonyHttpFoundation
+      - SymfonyRouting
+      - SymfonySecurity
+      - SymfonySecurityBundle
+    AppService:
+      - AppCache
+      - AppDTO
+      - AppException
+      - AppSecurity
+      - AppUtils
+      - Logger
+      - SymfonyContractsCache
+      - SymfonyContractsHttpClient
+      - SymfonyHttpFoundation
+      - SymfonySecurityBundle
+      - SymfonyValidator
+    AppUtils:
+    AppValidator:
+      - AppService
+      - SymfonyContractsCache
+      - SymfonyContractsHttpClient
+      - SymfonyValidator
