@@ -13,18 +13,6 @@
   },
   {
     "request": {
-      "uri": "/types",
-      "headers": {
-        "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
-      }
-    },
-    "response": {
-      "file": "/var/moco/responses/types.json"
-    }
-  },
-  {
-    "request": {
       "uri": "/forms/category",
       "headers": {
         "accept": "application/json",
@@ -219,22 +207,6 @@
     },
     "response": {
       "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_specialforms0mega.json"
-    }
-  },
-  {
-    "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
-      "queries": {
-        "any_types[0]": "fire"
-      },
-      "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
-      }
-    },
-    "response": {
-      "file": "/var/moco/responses/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo_anytypes0fire.json"
     }
   },
   {
