@@ -289,6 +289,18 @@ dependency-check: ## Execute OWASP Dependency Check
 dependency-check: 
 	@bin/dependency-check.sh ${NVD_API_KEY}
 
+## —— Cleaning 🧽 ———————————————————————————————————————————————————————————————
+.PHONY: clean-unused-files
+clean-unused-files: ## Clean unused mocks files
+clean-unused-files:
+	tools/clean-unused-files/clean_unused_files.sh tests/resources/moco/Api/responses
+
+.PHONY: clean-moco-routes
+clean-moco-routes: ## Clean unused moco routes
+clean-moco-routes:
+	tools/clean-moco-routes/clean_moco_routes.sh tests/resources/moco/Api/moco.json
+	tools/clean-moco-routes/clean_moco_routes.sh tests/resources/moco/OAuth/moco.json
+
 ## —— Tools 🔧 ———————————————————————————————————————————————————————————————
 tools/php-cs-fixer/vendor/bin/php-cs-fixer: ## Install php-cs-fixer
 	@$(COMPOSER) install --working-dir=tools/php-cs-fixer --optimize-autoloader --no-dev
