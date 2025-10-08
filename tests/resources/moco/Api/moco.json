@@ -113,6 +113,24 @@
   },
   {
     "request": {
+      "uri": {
+        "match": "/dex/[\\w\\d]*/list"
+      },
+      "queries": {
+        "include_unreleased_dex": "1",
+        "include_premium_dex": "1"
+      },
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/dexes/list_unreleased_and_premium.json"
+    }
+  },
+  {
+    "request": {
       "uri": "/dex/d79ed57f46e74e66fa394b663810499405c818e3/list",
       "queries": {
         "include_premium_dex": "1"
@@ -139,6 +157,23 @@
     },
     "response": {
       "file": "/var/moco/responses/dexes/963f1e5284a86d4a60fb5eb81cb75b22fbe683ec_premium.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/dex/[\\w\\d]*/list"
+      },
+      "queries": {
+        "include_premium_dex": "1"
+      },
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/dexes/list_premium.json"
     }
   },
   {

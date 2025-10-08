@@ -4,26 +4,17 @@ knpu_oauth2_client:
     # https://console.cloud.google.com/apis/credentials?authuser=2&hl=fr&project=pokenini-app
     google:
       type: google
-      client_id: "%env(OAUTH_GOOGLE_CLIENT_ID)%"
-      client_secret: "%env(OAUTH_GOOGLE_CLIENT_SECRET)%"
+      client_id: ~
+      client_secret: ~
       redirect_route: app_connect_google_check
-      redirect_params: {}
-
-    # https://developer.amazon.com/docs/login-with-amazon/documentation-overview.html
-    # https://developer.amazon.com/loginwithamazon/console/site/lwa/overview.html
-    amazon:
-      type: amazon
-      client_id: "%env(OAUTH_AMAZON_CLIENT_ID)%"
-      client_secret: "%env(OAUTH_AMAZON_CLIENT_SECRET)%"
-      redirect_route: app_connect_amazon_check
       redirect_params: {}
 
     # https://discord.com/developers/docs/topics/oauth2
     # https://discord.com/developers/applications
     discord:
       type: discord
-      client_id: "%env(OAUTH_DISCORD_CLIENT_ID)%"
-      client_secret: "%env(OAUTH_DISCORD_CLIENT_SECRET)%"
+      client_id: ~
+      client_secret: ~
       redirect_route: app_connect_discord_check
       redirect_params: {}
 
@@ -31,8 +22,8 @@ knpu_oauth2_client:
     # https://console.passage.id/
     passage:
       type: passage
-      client_id: "%env(OAUTH_PASSAGE_CLIENT_ID)%"
-      client_secret: "%env(OAUTH_PASSAGE_CLIENT_SECRET)%"
+      client_id: ~
+      client_secret: ~
       redirect_route: app_connect_passage_check
       redirect_params: {}
       sub_domain: "%env(OAUTH_PASSAGE_SUB_DOMAIN)%"
@@ -43,7 +34,7 @@ when@test:
       mock:
         type: generic
         provider_class: App\Security\MockProvider
-        client_id: "mockid"
-        client_secret: "mocksecret"
+        client_id: ~
+        client_secret: ~
         redirect_route: app_connect_mock_check
         redirect_params: {}
