@@ -102,6 +102,11 @@ tests: ## Execute all tests
 tests:
 	$(PHP) vendor/bin/phpunit tests/src
 
+.PHONY: tests-defect
+tests-defect: ## Execute tests and stop when one defect
+tests-defect:
+	$(PHP) vendor/bin/phpunit tests/src --stop-on-defect
+
 .PHONY: t
 t: ## Alias of tests
 t: tests
@@ -125,6 +130,10 @@ tf: tests-functional
 .PHONY: ti
 ti: ## Alias of tests-functional
 ti: tests-functional
+
+.PHONY: tests-api-mocked
+tests-api-mocked: ## Execute tests on the group api-mocked-testing only
+	@$(PHP_CONT) vendor/bin/phpunit tests/src/Functional --group=api-mocked-testing --stop-on-defect --no-progress --no-logging
 
 ## —— Quality 👌 ———————————————————————————————————————————————————————————————
 .PHONY: quality
@@ -268,6 +277,10 @@ infection: build/coverage/coverage-xml tools/infection/vendor/bin/infection clea
 .PHONY: security
 security: ## Execute all security commands
 security: composer-audit security-checker
+
+.PHONY: s
+s: ## Alias of security
+s: security
 
 .PHONY: composer-audit
 composer-audit: ## Execute Composer Audit
