@@ -17,9 +17,6 @@ index:
 app_connect_google_check:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-app_connect_amazon_check:
-  path: /
-  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
 app_connect_discord_check:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController

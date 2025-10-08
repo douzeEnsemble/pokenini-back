@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -45,11 +46,12 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
             'access_token' => $accessToken,
         ]);
 
-        // and return a UserBadge object containing the user identifier from the found token
-        // (this is the same identifier used in Security configuration; it can be an email,
-        // a UUID, a username, a database ID, etc.)
         return new UserBadge($accessTokenObj->getToken(), function () use ($accessTokenObj, $client, $provider) {
-            $authUser = $client->fetchUserFromToken($accessTokenObj);
+            try {
+                $authUser = $client->fetchUserFromToken($accessTokenObj);
+            } catch (IdentityProviderException) {
+                throw new BadCredentialsException('Token is invalid, maybe expired');
+            }
 
             /** @var string $userId */
             $userId = $authUser->getId();

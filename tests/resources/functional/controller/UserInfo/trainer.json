@@ -1,0 +1,9 @@
+{
+  "id": "this-is-trainer_s-id",
+  "provider": "mock",
+  "roles": [
+    "ROLE_USER",
+    "ROLE_TRAINER"
+  ],
+  "profile": "trainer"
+}

@@ -4,15 +4,20 @@ security:
 
   providers:
     users:
-        id: App\Security\UserProvider
+      id: App\Security\UserProvider
 
   firewalls:
-    back:
-      pattern: ^/
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      lazy: true
+      provider: users
       access_token:
-          token_handler: App\Security\AccessTokenHandler
-          token_extractors: header
+        token_handler: App\Security\AccessTokenHandler
+        token_extractors: header
 
   access_control:
     - { path: ^/istration, roles: ROLE_ADMIN }
+    - { path: ^/user-info, roles: PUBLIC_ACCESS }
     - { path: ^/, roles: ROLE_USER }

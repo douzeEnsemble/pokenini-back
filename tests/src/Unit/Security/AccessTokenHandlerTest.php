@@ -8,6 +8,7 @@ use App\Security\AccessTokenHandler;
 use App\Security\User;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -282,7 +283,59 @@ class AccessTokenHandlerTest extends TestCase
         $this->assertFalse($user->isATrainer());
     }
 
-    public function getUserFromUserBadge(string $userId, bool $isInvitationRequired): User
+    public function testGetUserFromUserBadgeWithInvalidToken(): void
+    {
+        $client = $this->createMock(OAuth2ClientInterface::class);
+        $client
+            ->expects($this->once())
+            ->method('fetchUserFromToken')
+            ->with('some-access-token')
+            ->willThrowException(new IdentityProviderException('Invalid totoken', 0o01, '{"body": "error"}'))
+        ;
+
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry
+            ->expects($this->once())
+            ->method('getClient')
+            ->willReturn($client)
+        ;
+
+        $request = new Request(
+            [],
+            [],
+            [],
+            [],
+            [],
+            [
+                'HTTP_X-Provider' => 'some-provider',
+            ],
+        );
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack
+            ->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($request)
+        ;
+
+        $accessTokenHandler = new AccessTokenHandler(
+            $clientRegistry,
+            $requestStack,
+            'some-id,another-id,more-id,extra-id,    some-admin-id ',
+            'some-id, another-id ,    ,    some-collector-id       ',
+            'some-id,    some-trainer-id    ',
+            false,
+        );
+
+        $this->expectException(BadCredentialsException::class);
+        $this->expectExceptionMessage('Token is invalid, maybe expired');
+
+        $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
+
+        $userBadge->getUser();
+    }
+
+    private function getUserFromUserBadge(string $userId, bool $isInvitationRequired): User
     {
         $authUser = $this->createMock(ResourceOwnerInterface::class);
         $authUser
