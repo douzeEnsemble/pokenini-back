@@ -42,5 +42,7 @@ dependency-check/
 
 
 tools/*/vendor
+tools/*/node_modules
+tools/*/var
 
 /.deptrac.cache
