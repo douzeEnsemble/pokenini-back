@@ -20,4 +20,6 @@ security:
   access_control:
     - { path: ^/istration, roles: ROLE_ADMIN }
     - { path: ^/user-info, roles: PUBLIC_ACCESS }
+    - { path: ^/album, roles: PUBLIC_ACCESS }
+    - { path: ^/labels, roles: PUBLIC_ACCESS }
     - { path: ^/, roles: ROLE_USER }

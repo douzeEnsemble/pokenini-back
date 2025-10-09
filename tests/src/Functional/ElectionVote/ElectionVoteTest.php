@@ -118,4 +118,20 @@ class ElectionVoteTest extends WebTestCase
             (string) $client->getResponse()->getContent(),
         );
     }
+
+    public function testVoteNonAuthenticated(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'POST',
+            '/election/demolite',
+            [
+                'winners_slugs' => ['pichu'],
+                'losers_slugs' => ['pikachu', 'raichu'],
+            ],
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }

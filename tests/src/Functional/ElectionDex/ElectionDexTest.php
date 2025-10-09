@@ -66,4 +66,16 @@ class ElectionDexTest extends WebTestCase
 
         $this->assertResponseContent($client, 'ElectionDex/admin.json');
     }
+
+    public function testDexNonAuthenticated(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            '/election/dex',
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }

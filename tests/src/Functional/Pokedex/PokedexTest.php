@@ -272,4 +272,16 @@ class PokedexTest extends WebTestCase
             ],
         ];
     }
+
+    public function testGetNonAuthentificated(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            '/pokedex/demo',
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }
