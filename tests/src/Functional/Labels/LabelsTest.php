@@ -37,6 +37,21 @@ class LabelsTest extends WebTestCase
         $this->assertResponseContent($client, "Labels/{$filename}.json");
     }
 
+    #[DataProvider('providerGetLabels')]
+    public function testGetsNonAuthenticated(string $route, string $filename): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            "/labels/{$route}",
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertResponseContent($client, "Labels/{$filename}.json");
+    }
+
     /**
      * @return array<string, array{
      *     route: string,

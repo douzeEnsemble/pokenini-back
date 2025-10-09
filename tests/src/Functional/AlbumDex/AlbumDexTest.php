@@ -66,4 +66,16 @@ class AlbumDexTest extends WebTestCase
 
         $this->assertResponseContent($client, 'AlbumDex/admin.json');
     }
+
+    public function testDexPublic(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            '/album/dex',
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }

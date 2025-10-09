@@ -50,4 +50,16 @@ class AdminTest extends WebTestCase
 
         $this->assertResponseContent($client, 'Admin/action-logs.json');
     }
+
+    public function testGetActionLogsNonAuthenticated(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            '/istration/action-logs',
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Exception\NoLoggedUserException;
 use App\Security\UserTokenService;
 use App\Service\Api\GetDexService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,11 @@ class AlbumDexController extends AbstractController
         GetDexService $getDexService,
         UserTokenService $userTokenService,
     ): JsonResponse {
-        $connectedUserId = $userTokenService->getLoggedUserToken();
+        try {
+            $connectedUserId = $userTokenService->getLoggedUserToken();
+        } catch (NoLoggedUserException $e) {
+            return new JsonResponse([], Response::HTTP_UNAUTHORIZED);
+        }
 
         $dex = $this->isGranted('ROLE_ADMIN')
             ? $getDexService->getWithUnreleasedAndPremium($connectedUserId)

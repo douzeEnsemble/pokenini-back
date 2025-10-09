@@ -35,7 +35,7 @@ class UserInfoTest extends WebTestCase
         $this->assertResponseContent($client, 'UserInfo/trainer.json');
     }
 
-    public function testUpsertOnlyOnHome(): void
+    public function testGetNonAuthenticated(): void
     {
         $client = static::createClient();
 

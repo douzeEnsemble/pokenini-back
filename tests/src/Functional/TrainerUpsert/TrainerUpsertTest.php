@@ -148,4 +148,20 @@ class TrainerUpsertTest extends WebTestCase
         $content = (string) $client->getResponse()->getContent();
         $this->assertSame('{"error":"Fail to modify resources"}', $content);
     }
+
+    public function testUpsertNonAuthenticated(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'PUT',
+            '/trainer/dex/demo',
+            [],
+            [],
+            [],
+            '{"is_private": true, "is_on_home": true}'
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }

@@ -91,4 +91,20 @@ class AlbumUpsertTest extends WebTestCase
         $content = (string) $client->getResponse()->getContent();
         $this->assertSame('{"error":"Fail to modify resources"}', $content);
     }
+
+    public function testUpsertAsNonAuthenticated(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'PATCH',
+            '/album/demo/bulbasaur',
+            [],
+            [],
+            [],
+            'yes',
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }
