@@ -178,9 +178,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "catch_states[0]": "no"
       },
@@ -194,9 +192,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "catch_states[0]": "!no"
       },
@@ -210,9 +206,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "families[0]": "bulbasaur"
       },
@@ -226,9 +220,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "category_forms[0]": "starter"
       },
@@ -242,9 +234,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "special_forms[0]": "mega"
       },
@@ -258,9 +248,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "any_types[0]": "fire"
       },
@@ -274,9 +262,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "secondary_types[0]": "poison",
         "secondary_types[1]": "flying"
@@ -291,9 +277,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "secondary_types[0]": "poison",
         "secondary_types[1]": "flying"
@@ -308,9 +292,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "primary_types[0]": "fire"
       },
@@ -324,9 +306,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "original_game_bundles[0]": "unknown"
       },
@@ -340,9 +320,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "original_game_bundles[0]": "swordshield"
       },
@@ -356,9 +334,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "queries": {
         "collection_availabilities[0]": "pogoshadow"
       },
@@ -372,9 +348,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo"
-      },
+      "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
       }
@@ -625,9 +599,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/update/labels"
-      },
+      "uri": "/istration/update/labels",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -639,9 +611,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/update/games_collections_and_dex"
-      },
+      "uri": "/istration/update/games_collections_and_dex",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -653,9 +623,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/update/pokemons"
-      },
+      "uri": "/istration/update/pokemons",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -667,9 +635,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/update/games_availabilities"
-      },
+      "uri": "/istration/update/games_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -681,9 +647,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/update/games_shinies_availabilities"
-      },
+      "uri": "/istration/update/games_shinies_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -695,9 +659,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/update/regional_dex_numbers"
-      },
+      "uri": "/istration/update/regional_dex_numbers",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -709,9 +671,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/update/collections_availabilities"
-      },
+      "uri": "/istration/update/collections_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -723,9 +683,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/calculate/game_bundles_availabilities"
-      },
+      "uri": "/istration/calculate/game_bundles_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -737,9 +695,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/calculate/game_bundles_shinies_availabilities"
-      },
+      "uri": "/istration/calculate/game_bundles_shinies_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -751,9 +707,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/calculate/collections_availabilities"
-      },
+      "uri": "/istration/calculate/collections_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -765,9 +719,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/calculate/dex_availabilities"
-      },
+      "uri": "/istration/calculate/dex_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -779,9 +731,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/istration/calculate/pokemon_availabilities"
-      },
+      "uri": "/istration/calculate/pokemon_availabilities",
       "method": "post",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -793,9 +743,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/dex/6c33064427a5b419ca8eb3f7d11a0807f66cab22/redgreenblueyellow"
-      },
+      "uri": "/dex/6c33064427a5b419ca8eb3f7d11a0807f66cab22/redgreenblueyellow",
       "method": "put",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -810,9 +758,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/dex/d79ed57f46e74e66fa394b663810499405c818e3/redgreenblueyellow"
-      },
+      "uri": "/dex/d79ed57f46e74e66fa394b663810499405c818e3/redgreenblueyellow",
       "method": "put",
       "headers": {
         "Authorization": "Basic d2ViOmRvdXpl"
@@ -861,9 +807,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/reports"
-      },
+      "uri": "/reports",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -877,9 +821,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/action_logs"
-      },
+      "uri": "/action_logs",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -893,9 +835,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/election/vote"
-      },
+      "uri": "/election/vote",
       "method": "post",
       "headers": {
         "accept": "application/json",
@@ -909,9 +849,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/dex/can_hold_election"
-      },
+      "uri": "/dex/can_hold_election",
       "queries": {
         "include_premium_dex": "1",
         "include_unreleased_dex": "1"
@@ -929,9 +867,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/dex/can_hold_election"
-      },
+      "uri": "/dex/can_hold_election",
       "queries": {
         "include_premium_dex": "1"
       },
@@ -948,9 +884,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/dex/can_hold_election"
-      },
+      "uri": "/dex/can_hold_election",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -964,9 +898,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/pokemons/to_choose"
-      },
+      "uri": "/pokemons/to_choose",
       "queries": {
         "dex_slug": "demolitelastone",
         "count": "12"
@@ -984,9 +916,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/pokemons/to_choose"
-      },
+      "uri": "/pokemons/to_choose",
       "queries": {
         "dex_slug": "demolitenotlastone",
         "count": "12"
@@ -1004,9 +934,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/pokemons/to_choose"
-      },
+      "uri": "/pokemons/to_choose",
       "queries": {
         "dex_slug": {
           "match": "^demolite.*$"
@@ -1026,9 +954,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/election/top"
-      },
+      "uri": "/election/top",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -1048,9 +974,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/election/metrics"
-      },
+      "uri": "/election/metrics",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -1067,9 +991,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/election/metrics"
-      },
+      "uri": "/election/metrics",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -1086,9 +1008,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/election/metrics"
-      },
+      "uri": "/election/metrics",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -1105,9 +1025,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/election/metrics"
-      },
+      "uri": "/election/metrics",
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -1124,9 +1042,7 @@
   },
   {
     "request": {
-      "uri": {
-        "match": "/election/metrics"
-      },
+      "uri": "/election/metrics",
       "method": "get",
       "headers": {
         "accept": "application/json",
