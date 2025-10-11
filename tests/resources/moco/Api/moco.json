@@ -894,27 +894,6 @@
   {
     "request": {
       "uri": {
-        "match": "/pokemons/to_choose"
-      },
-      "queries": {
-        "dex_slug": "demolite",
-        "election_slug": "favorite",
-        "count": "12"
-      },
-      "method": "get",
-      "headers": {
-        "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
-      }
-    },
-    "response": {
-      "status": "200",
-      "file": "/var/moco/responses/pokemons_topick_demolite_12.json"
-    }
-  },
-  {
-    "request": {
-      "uri": {
         "match": "/election/vote"
       },
       "method": "post",
@@ -981,6 +960,187 @@
     "response": {
       "status": "200",
       "file": "/var/moco/responses/election_dex.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/pokemons/to_choose"
+      },
+      "queries": {
+        "dex_slug": "demolitelastone",
+        "count": "12"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/pokemons_topick_demolitelastone_12.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/pokemons/to_choose"
+      },
+      "queries": {
+        "dex_slug": "demolitenotlastone",
+        "count": "12"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/pokemons_topick_demolitenotlastone_12.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/pokemons/to_choose"
+      },
+      "queries": {
+        "dex_slug": {
+          "match": "^demolite.*$"
+        },
+        "count": "12"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/pokemons_topick_demolite_12.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/election/top"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "queries": {
+        "dex_slug": {
+          "match": "^demolite.*$"
+        },
+        "count": "5"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election/demolite_top_5.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/election/metrics"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "queries": {
+        "dex_slug": "demolitelastpage"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election/demolitelastpage_metrics.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/election/metrics"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "queries": {
+        "dex_slug": "demolitelastone"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election/demolitelastone_metrics.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/election/metrics"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "queries": {
+        "dex_slug": "demolitenotlastpage"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election/demolitenotlastpage_metrics.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/election/metrics"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "queries": {
+        "dex_slug": "demolitenotlastone"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election/demolitenotlastone_metrics.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/election/metrics"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "Authorization": "Basic d2ViOmRvdXpl"
+      },
+      "queries": {
+        "dex_slug": {
+          "match": "^demolite.*$"
+        }
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/election/demolite_metrics.json"
     }
   }
 ]
