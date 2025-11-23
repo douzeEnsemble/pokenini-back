@@ -38,7 +38,7 @@ class JsonDecoderTest extends TestCase
                 [
                     'color' => '#66bb6a',
                     'name' => 'Yes',
-                    'frenchName' => 'Oui',
+                    'french_name' => 'Oui',
                     'slug' => 'yes',
                 ],
             ],
@@ -58,37 +58,37 @@ class JsonDecoderTest extends TestCase
                     [
                         'color' => '#e57373',
                         'name' => 'No',
-                        'frenchName' => 'Non',
+                        'french_name' => 'Non',
                         'slug' => 'no',
                     ],
                     [
                         'color' => '#9575cd',
                         'name' => 'To evolve',
-                        'frenchName' => 'af. évoluer',
+                        'french_name' => 'af. évoluer',
                         'slug' => 'toevolve',
                     ],
                     [
                         'color' => '#4fc3f7',
                         'name' => 'To breed',
-                        'frenchName' => 'af. reproduire',
+                        'french_name' => 'af. reproduire',
                         'slug' => 'tobreed',
                     ],
                     [
                         'color' => '#ffd54f',
                         'name' => 'To transfer',
-                        'frenchName' => 'à transférer',
+                        'french_name' => 'à transférer',
                         'slug' => 'totransfer',
                     ],
                     [
                         'color' => '#ff9100',
                         'name' => 'To trade',
-                        'frenchName' => 'À échanger',
+                        'french_name' => 'À échanger',
                         'slug' => 'totrade',
                     ],
                     [
                         'color' => '#66bb6a',
                         'name' => 'Yes',
-                        'frenchName' => 'Oui',
+                        'french_name' => 'Oui',
                         'slug' => 'yes',
                     ],
                 ],
@@ -133,7 +133,7 @@ class JsonDecoderTest extends TestCase
             {
                 "color":"#66bb6a",
                 "name":"Yes",
-                "frenchName":"Oui",
+                "french_name":"Oui",
                 "slug":"yes"
             }
             JSON;
@@ -146,37 +146,37 @@ class JsonDecoderTest extends TestCase
                 {
                     "color":"#e57373",
                     "name":"No",
-                    "frenchName":"Non",
+                    "french_name":"Non",
                     "slug":"no"
                 },
                 {
                     "color":"#9575cd",
                     "name":"To evolve",
-                    "frenchName":"af. \u00e9voluer",
+                    "french_name":"af. \u00e9voluer",
                     "slug":"toevolve"
                 },
                 {
                     "color":"#4fc3f7",
                     "name":"To breed",
-                    "frenchName":"af. reproduire",
+                    "french_name":"af. reproduire",
                     "slug":"tobreed"
                 },
                 {
                     "color":"#ffd54f",
                     "name":"To transfer",
-                    "frenchName":"\u00e0 transf\u00e9rer",
+                    "french_name":"\u00e0 transf\u00e9rer",
                     "slug":"totransfer"
                 },
                 {
                     "color":"#ff9100",
                     "name":"To trade",
-                    "frenchName":"\u00c0 \u00e9changer",
+                    "french_name":"\u00c0 \u00e9changer",
                     "slug":"totrade"
                 },
                 {
                     "color":"#66bb6a",
                     "name":"Yes",
-                    "frenchName":"Oui",
+                    "french_name":"Oui",
                     "slug":"yes"
                 }
             ]

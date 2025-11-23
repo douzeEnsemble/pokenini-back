@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/election')]
 class ElectionIndexController extends AbstractController
@@ -33,6 +34,7 @@ class ElectionIndexController extends AbstractController
         ElectionMetricsService $metricsService,
         GetTrainerPokedexService $getTrainerPokedexService,
         Request $request,
+        SerializerInterface $serializer,
         string $dexSlug,
         string $electionSlug = '',
     ): JsonResponse {
@@ -56,17 +58,22 @@ class ElectionIndexController extends AbstractController
         $isTheLastOne = $isTheLastPage && 1 === $metrics->maxViewCount;
 
         return new JsonResponse(
-            [
-                'type' => $list->type,
-                'pokemons' => $list->items,
-                'pokedex' => $pokedex,
-                'electionTop' => $electionTop,
-                'metrics' => $metrics,
-                'detachedCount' => $detachedCount,
-                'isTheLastOne' => $isTheLastOne,
-                'isTheLastPage' => $isTheLastPage,
-            ],
+            $serializer->serialize(
+                [
+                    'type' => $list->type,
+                    'pokemons' => $list->items,
+                    'pokedex' => $pokedex,
+                    'election_top' => $electionTop,
+                    'metrics' => $metrics,
+                    'detached_count' => $detachedCount,
+                    'is_the_last_one' => $isTheLastOne,
+                    'is_the_last_page' => $isTheLastPage,
+                ],
+                'json',
+            ),
             Response::HTTP_OK,
+            [],
+            true,
         );
     }
 }

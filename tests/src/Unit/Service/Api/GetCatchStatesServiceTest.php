@@ -27,37 +27,37 @@ class GetCatchStatesServiceTest extends TestCase
         $expectedResult = [
             [
                 'name' => 'No',
-                'frenchName' => 'Non',
+                'french_name' => 'Non',
                 'slug' => 'no',
                 'color' => '#e57373',
             ],
             [
                 'name' => 'To evolve',
-                'frenchName' => 'af. évoluer',
+                'french_name' => 'af. évoluer',
                 'slug' => 'toevolve',
                 'color' => '#9575cd',
             ],
             [
                 'name' => 'To breed',
-                'frenchName' => 'af. reproduire',
+                'french_name' => 'af. reproduire',
                 'slug' => 'tobreed',
                 'color' => '#4fc3f7',
             ],
             [
                 'name' => 'To transfer',
-                'frenchName' => 'à transférer',
+                'french_name' => 'à transférer',
                 'slug' => 'totransfer',
                 'color' => '#ffd54f',
             ],
             [
                 'name' => 'To trade',
-                'frenchName' => 'À échanger',
+                'french_name' => 'À échanger',
                 'slug' => 'totrade',
                 'color' => '#ff9100',
             ],
             [
                 'name' => 'Yes',
-                'frenchName' => 'Oui',
+                'french_name' => 'Oui',
                 'slug' => 'yes',
                 'color' => '#66bb6a',
             ],

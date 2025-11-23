@@ -1,12 +1,12 @@
 [
     {
         "name": "Alolan",
-        "frenchName": "d\u0027Alola",
+        "french_name": "d\u0027Alola",
         "slug": "alolan"
     },
     {
         "name": "Galarian",
-        "frenchName": "de Galar",
+        "french_name": "de Galar",
         "slug": "galarian"
     }
 ]
