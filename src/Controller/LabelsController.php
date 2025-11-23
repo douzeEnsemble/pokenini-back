@@ -22,13 +22,13 @@ class LabelsController extends AbstractController
     {
         return new JsonResponse(
             [
-                'catchStates' => $this->getLabelsService->getCatchStates(),
+                'catch_states' => $this->getLabelsService->getCatchStates(),
                 'types' => $this->getLabelsService->getTypes(),
-                'categoryForms' => $this->getLabelsService->getFormsCategory(),
-                'regionalForms' => $this->getLabelsService->getFormsRegional(),
-                'specialForms' => $this->getLabelsService->getFormsSpecial(),
-                'variantForms' => $this->getLabelsService->getFormsVariant(),
-                'gameBundles' => $this->getLabelsService->getGameBundles(),
+                'category_forms' => $this->getLabelsService->getFormsCategory(),
+                'regional_forms' => $this->getLabelsService->getFormsRegional(),
+                'special_forms' => $this->getLabelsService->getFormsSpecial(),
+                'variant_forms' => $this->getLabelsService->getFormsVariant(),
+                'game_bundles' => $this->getLabelsService->getGameBundles(),
                 'collections' => $this->getLabelsService->getCollections(),
             ],
             Response::HTTP_OK

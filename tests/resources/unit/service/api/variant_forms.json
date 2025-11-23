@@ -1,17 +1,17 @@
 [
     {
         "name": "Gender",
-        "frenchName": "Genre",
+        "french_name": "Genre",
         "slug": "gender"
     },
     {
         "name": "Alternate",
-        "frenchName": "Alternatif",
+        "french_name": "Alternatif",
         "slug": "alternate"
     },
     {
         "name": "Therian",
-        "frenchName": "Tot\u00e9mique",
+        "french_name": "Tot\u00e9mique",
         "slug": "therian"
     }
 ]

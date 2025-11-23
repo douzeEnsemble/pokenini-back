@@ -1,12 +1,12 @@
 [
     {
         "name": "Mega",
-        "frenchName": "Mega",
+        "french_name": "Mega",
         "slug": "mega"
     },
     {
         "name": "Primal",
-        "frenchName": "Originelle",
+        "french_name": "Originelle",
         "slug": "primal"
     }
 ]

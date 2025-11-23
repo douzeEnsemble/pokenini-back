@@ -3560,50 +3560,50 @@
     ],
     "report": {
       "total": 37,
-      "totalCaught": 20,
-      "totalUncaught": 17,
+      "total_caught": 20,
+      "total_uncaught": 17,
       "detail": [
         {
           "slug": "no",
           "name": "No",
-          "frenchName": "Non",
+          "french_name": "Non",
           "count": 1
         },
         {
           "slug": "toevolve",
           "name": "To evolve",
-          "frenchName": "Af. \u00e9voluer",
+          "french_name": "Af. \u00e9voluer",
           "count": 1
         },
         {
           "slug": "tobreed",
           "name": "To breed",
-          "frenchName": "Af. reproduire",
+          "french_name": "Af. reproduire",
           "count": 1
         },
         {
           "slug": "totransfer",
           "name": "To transfer",
-          "frenchName": "\u00c0 transf\u00e9rer",
+          "french_name": "\u00c0 transf\u00e9rer",
           "count": 1
         },
         {
           "slug": "totrade",
           "name": "To trade",
-          "frenchName": "\u00c0 \u00e9changer",
+          "french_name": "\u00c0 \u00e9changer",
           "count": 0
         },
         {
           "slug": "yes",
           "name": "Yes",
-          "frenchName": "Oui",
+          "french_name": "Oui",
           "count": 20
         }
       ]
     },
-    "filteredReport": []
+    "filtered_report": []
   },
-  "electionTop": [
+  "election_top": [
     {
       "pokemon_slug": "bulbasaur",
       "pokemon_name": "Bulbasaur",
@@ -3776,18 +3776,18 @@
     }
   ],
   "metrics": {
-    "viewCountSum": 82,
-    "winCountSum": 41,
-    "viewCountMax": 1,
-    "winCountMax": 1,
-    "underMaxViewCount": 1,
-    "maxViewCount": 5,
-    "dexTotalCount": 48,
-    "roundCount": 7,
-    "winnerAverage": 5.86,
-    "totalRoundCount": 8
+    "view_count_sum": 82,
+    "win_count_sum": 41,
+    "view_count_max": 1,
+    "win_count_max": 1,
+    "under_max_view_count": 1,
+    "max_view_count": 5,
+    "dex_total_count": 48,
+    "round_count": 7,
+    "winner_average": 5.86,
+    "total_round_count": 8
   },
-  "detachedCount": 1,
-  "isTheLastOne": false,
-  "isTheLastPage": false
+  "detached_count": 1,
+  "is_the_last_one": false,
+  "is_the_last_page": false
 }

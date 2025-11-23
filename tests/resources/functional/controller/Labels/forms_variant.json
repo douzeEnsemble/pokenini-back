@@ -1,37 +1,37 @@
 [
   {
     "name": "Gender",
-    "frenchName": "Genre",
+    "french_name": "Genre",
     "slug": "gender"
   },
   {
     "name": "Alternate",
-    "frenchName": "Alternatif",
+    "french_name": "Alternatif",
     "slug": "alternate"
   },
   {
     "name": "Therian",
-    "frenchName": "Tot\u00e9mique",
+    "french_name": "Tot\u00e9mique",
     "slug": "therian"
   },
   {
     "name": "Battle",
-    "frenchName": "Combat",
+    "french_name": "Combat",
     "slug": "battle"
   },
   {
     "name": "Item",
-    "frenchName": "Objet",
+    "french_name": "Objet",
     "slug": "item"
   },
   {
     "name": "Fusion",
-    "frenchName": "Fusion",
+    "french_name": "Fusion",
     "slug": "fusion"
   },
   {
     "name": "Unobtainable",
-    "frenchName": "Non obtenable",
+    "french_name": "Non obtenable",
     "slug": "unobtainable"
   }
 ]

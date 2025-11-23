@@ -27,12 +27,12 @@ class GetFormsServiceTest extends TestCase
         $expectedResult = [
             [
                 'name' => 'Starter',
-                'frenchName' => 'de Départ',
+                'french_name' => 'de Départ',
                 'slug' => 'starter',
             ],
             [
                 'name' => 'Legendary',
-                'frenchName' => 'Légendaire',
+                'french_name' => 'Légendaire',
                 'slug' => 'legendary',
             ],
         ];
@@ -56,12 +56,12 @@ class GetFormsServiceTest extends TestCase
         $expectedResult = [
             [
                 'name' => 'Alolan',
-                'frenchName' => "d'Alola",
+                'french_name' => "d'Alola",
                 'slug' => 'alolan',
             ],
             [
                 'name' => 'Galarian',
-                'frenchName' => 'de Galar',
+                'french_name' => 'de Galar',
                 'slug' => 'galarian',
             ],
         ];
@@ -85,12 +85,12 @@ class GetFormsServiceTest extends TestCase
         $expectedResult = [
             [
                 'name' => 'Mega',
-                'frenchName' => 'Mega',
+                'french_name' => 'Mega',
                 'slug' => 'mega',
             ],
             [
                 'name' => 'Primal',
-                'frenchName' => 'Originelle',
+                'french_name' => 'Originelle',
                 'slug' => 'primal',
             ],
         ];
@@ -114,17 +114,17 @@ class GetFormsServiceTest extends TestCase
         $expectedResult = [
             [
                 'name' => 'Gender',
-                'frenchName' => 'Genre',
+                'french_name' => 'Genre',
                 'slug' => 'gender',
             ],
             [
                 'name' => 'Alternate',
-                'frenchName' => 'Alternatif',
+                'french_name' => 'Alternatif',
                 'slug' => 'alternate',
             ],
             [
                 'name' => 'Therian',
-                'frenchName' => 'Totémique',
+                'french_name' => 'Totémique',
                 'slug' => 'therian',
             ],
         ];

@@ -1,50 +1,50 @@
 [
   {
     "name": "Sword, Shield - Dynamax Adventures bosses",
-    "frenchName": "Sword, Shield - Boss des exp\u00e9ditions Dynamax",
+    "french_name": "Sword, Shield - Boss des exp\u00e9ditions Dynamax",
     "slug": "swshdynamaxadventuresbosses",
-    "orderNumber": 11
+    "order_number": 11
   },
   {
     "name": "Scarlet, Violet - Paldea\u0027s outbreaks",
-    "frenchName": "Scarlet, Violet - Apparitions massives de Paldea",
+    "french_name": "Scarlet, Violet - Apparitions massives de Paldea",
     "slug": "svmassoutbreakspaldea",
-    "orderNumber": 20
+    "order_number": 20
   },
   {
     "name": "Scarlet, Violet - Kitakami\u0027s outbreaks",
-    "frenchName": "Scarlet, Violet - Apparitions massives de Kitakami",
+    "french_name": "Scarlet, Violet - Apparitions massives de Kitakami",
     "slug": "svmassoutbreakskitakami",
-    "orderNumber": 21
+    "order_number": 21
   },
   {
     "name": "Scarlet, Violet - Terrarium\u0027s outbreaks",
-    "frenchName": "Scarlet, Violet - Apparitions massives du Terrarium",
+    "french_name": "Scarlet, Violet - Apparitions massives du Terrarium",
     "slug": "svmassoutbreaksterrarium",
-    "orderNumber": 22
+    "order_number": 22
   },
   {
     "name": "Scarlet, Violet - Transferable",
-    "frenchName": "Scarlet, Violet - Transf\u00e9rable",
+    "french_name": "Scarlet, Violet - Transf\u00e9rable",
     "slug": "svtransferable",
-    "orderNumber": 23
+    "order_number": 23
   },
   {
     "name": "Pokemon Go - Shadow",
-    "frenchName": "Pokemon Go - Obscurs",
+    "french_name": "Pokemon Go - Obscurs",
     "slug": "pogoshadow",
-    "orderNumber": 50
+    "order_number": 50
   },
   {
     "name": "Pokemon Go - Shiny Shadow",
-    "frenchName": "Pokemon Go - Obscurs Chromatique",
+    "french_name": "Pokemon Go - Obscurs Chromatique",
     "slug": "pogoshadowshiny",
-    "orderNumber": 51
+    "order_number": 51
   },
   {
     "name": "Pokemon Go - Dynamax",
-    "frenchName": "Pokemon Go - Dynamax",
+    "french_name": "Pokemon Go - Dynamax",
     "slug": "pogodynamax",
-    "orderNumber": 52
+    "order_number": 52
   }
 ]

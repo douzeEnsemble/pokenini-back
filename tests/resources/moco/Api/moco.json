@@ -4,7 +4,7 @@
       "uri": "/catch_states",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -16,7 +16,7 @@
       "uri": "/types",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -28,7 +28,7 @@
       "uri": "/forms/category",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -40,7 +40,7 @@
       "uri": "/forms/regional",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -52,7 +52,7 @@
       "uri": "/forms/special",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -64,7 +64,7 @@
       "uri": "/forms/variant",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -76,7 +76,7 @@
       "uri": "/game_bundles",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -88,7 +88,7 @@
       "uri": "/collections",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -104,7 +104,7 @@
       },
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -122,7 +122,7 @@
       },
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -137,7 +137,7 @@
       },
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -152,7 +152,7 @@
       },
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -169,7 +169,7 @@
       },
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -183,7 +183,7 @@
         "catch_states[0]": "no"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -197,7 +197,7 @@
         "catch_states[0]": "!no"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -211,7 +211,7 @@
         "families[0]": "bulbasaur"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -225,7 +225,7 @@
         "category_forms[0]": "starter"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -239,7 +239,7 @@
         "special_forms[0]": "mega"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -253,7 +253,7 @@
         "any_types[0]": "fire"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -268,7 +268,7 @@
         "secondary_types[1]": "flying"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -283,7 +283,7 @@
         "secondary_types[1]": "flying"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -297,7 +297,7 @@
         "primary_types[0]": "fire"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -311,7 +311,7 @@
         "original_game_bundles[0]": "unknown"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -325,7 +325,7 @@
         "original_game_bundles[0]": "swordshield"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -339,7 +339,7 @@
         "collection_availabilities[0]": "pogoshadow"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -350,7 +350,7 @@
     "request": {
       "uri": "/album/7b52009b64fd0a2a49e6d8a939753077792b0554/demo",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -363,7 +363,7 @@
         "match": "/album/[\\w\\d]*/demo"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -376,7 +376,7 @@
         "match": "/album/[\\w\\d]*/demolist3"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -389,7 +389,7 @@
         "match": "/album/[\\w\\d]*/demolite"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -402,7 +402,7 @@
         "match": "/album/[\\w\\d]*/redgreenblueyellow"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -415,7 +415,7 @@
         "match": "/album/[\\w\\d]*/goldsilvercrystal"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -428,7 +428,7 @@
         "match": "/album/[\\w\\d]*/douze"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -441,7 +441,7 @@
         "match": "/album/[\\w\\d]*/homepokemongo"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -454,7 +454,7 @@
         "match": "/album/[\\w\\d]*/allshinies"
       },
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -468,7 +468,7 @@
       },
       "method": "patch",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "tobreed"
@@ -485,7 +485,7 @@
       },
       "method": "patch",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "tobreed"
@@ -502,7 +502,7 @@
       },
       "method": "patch",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "tobreed"
@@ -519,7 +519,7 @@
       },
       "method": "patch",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "no|toevolve|tobreed|totransfer|totrade|yes"
@@ -536,7 +536,7 @@
       },
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "tobreed"
@@ -553,7 +553,7 @@
       },
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "tobreed"
@@ -570,7 +570,7 @@
       },
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "tobreed"
@@ -587,7 +587,7 @@
       },
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "no|toevolve|tobreed|totransfer|totrade|yes"
@@ -602,7 +602,7 @@
       "uri": "/istration/update/labels",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -614,7 +614,7 @@
       "uri": "/istration/update/games_collections_and_dex",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -626,7 +626,7 @@
       "uri": "/istration/update/pokemons",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -638,7 +638,7 @@
       "uri": "/istration/update/games_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -650,7 +650,7 @@
       "uri": "/istration/update/games_shinies_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -662,7 +662,7 @@
       "uri": "/istration/update/regional_dex_numbers",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -674,7 +674,7 @@
       "uri": "/istration/update/collections_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -686,7 +686,7 @@
       "uri": "/istration/calculate/game_bundles_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -698,7 +698,7 @@
       "uri": "/istration/calculate/game_bundles_shinies_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -710,7 +710,7 @@
       "uri": "/istration/calculate/collections_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -722,7 +722,7 @@
       "uri": "/istration/calculate/dex_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -734,7 +734,7 @@
       "uri": "/istration/calculate/pokemon_availabilities",
       "method": "post",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -746,7 +746,7 @@
       "uri": "/dex/6c33064427a5b419ca8eb3f7d11a0807f66cab22/redgreenblueyellow",
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
@@ -761,7 +761,7 @@
       "uri": "/dex/d79ed57f46e74e66fa394b663810499405c818e3/redgreenblueyellow",
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
@@ -778,7 +778,7 @@
       },
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
@@ -795,7 +795,7 @@
       },
       "method": "put",
       "headers": {
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
         "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
@@ -811,7 +811,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -825,7 +825,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -839,7 +839,7 @@
       "method": "post",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -857,7 +857,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -874,7 +874,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -888,7 +888,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -906,7 +906,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -924,7 +924,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -944,7 +944,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
@@ -958,7 +958,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
         "dex_slug": {
@@ -978,7 +978,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
         "dex_slug": "demolitelastpage"
@@ -995,7 +995,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
         "dex_slug": "demolitelastone"
@@ -1012,7 +1012,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
         "dex_slug": "demolitenotlastpage"
@@ -1029,7 +1029,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
         "dex_slug": "demolitenotlastone"
@@ -1046,7 +1046,7 @@
       "method": "get",
       "headers": {
         "accept": "application/json",
-        "Authorization": "Basic d2ViOmRvdXpl"
+        "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
         "dex_slug": {
