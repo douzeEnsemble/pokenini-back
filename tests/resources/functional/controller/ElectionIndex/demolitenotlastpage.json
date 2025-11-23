@@ -1,5 +1,5 @@
 {
-  "listType": "pick",
+  "type": "pick",
   "pokemons": [
     {
       "pokemon_slug": "bulbasaur",
