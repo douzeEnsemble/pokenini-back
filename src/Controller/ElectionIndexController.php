@@ -57,7 +57,7 @@ class ElectionIndexController extends AbstractController
 
         return new JsonResponse(
             [
-                'listType' => $list->type,
+                'type' => $list->type,
                 'pokemons' => $list->items,
                 'pokedex' => $pokedex,
                 'electionTop' => $electionTop,
