@@ -4,7 +4,7 @@
       "uri": "/userinfo",
       "method": "GET",
       "headers": {
-        "Authorization": "Bearer this-is-the-user-token"
+        "authorization": "Bearer this-is-the-user-token"
       }
     },
     "response": {
@@ -20,7 +20,7 @@
       "uri": "/userinfo",
       "method": "GET",
       "headers": {
-        "Authorization": "Bearer this-is-the-admin-token"
+        "authorization": "Bearer this-is-the-admin-token"
       }
     },
     "response": {
@@ -36,7 +36,7 @@
       "uri": "/userinfo",
       "method": "GET",
       "headers": {
-        "Authorization": "Bearer this-is-the-collector-token"
+        "authorization": "Bearer this-is-the-collector-token"
       }
     },
     "response": {
@@ -52,7 +52,7 @@
       "uri": "/userinfo",
       "method": "GET",
       "headers": {
-        "Authorization": "Bearer this-is-the-trainer-token"
+        "authorization": "Bearer this-is-the-trainer-token"
       }
     },
     "response": {
@@ -68,7 +68,7 @@
       "uri": "/userinfo",
       "method": "GET",
       "headers": {
-        "Authorization": "Bearer create-resource-owner"
+        "authorization": "Bearer create-resource-owner"
       }
     },
     "response": {

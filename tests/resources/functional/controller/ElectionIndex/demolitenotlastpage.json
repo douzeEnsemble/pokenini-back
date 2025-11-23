@@ -387,7 +387,7 @@
     }
   ],
   "pokedex": null,
-  "electionTop": [
+  "election_top": [
     {
       "pokemon_slug": "bulbasaur",
       "pokemon_name": "Bulbasaur",
@@ -560,18 +560,18 @@
     }
   ],
   "metrics": {
-    "viewCountSum": 82,
-    "winCountSum": 41,
-    "viewCountMax": 1,
-    "winCountMax": 1,
-    "underMaxViewCount": 0,
-    "maxViewCount": 5,
-    "dexTotalCount": 48,
-    "roundCount": 7,
-    "winnerAverage": 5.86,
-    "totalRoundCount": 8
+    "view_count_sum": 82,
+    "win_count_sum": 41,
+    "view_count_max": 1,
+    "win_count_max": 1,
+    "under_max_view_count": 0,
+    "max_view_count": 5,
+    "dex_total_count": 48,
+    "round_count": 7,
+    "winner_average": 5.86,
+    "total_round_count": 8
   },
-  "detachedCount": 1,
-  "isTheLastOne": false,
-  "isTheLastPage": false
+  "detached_count": 1,
+  "is_the_last_one": false,
+  "is_the_last_page": false
 }

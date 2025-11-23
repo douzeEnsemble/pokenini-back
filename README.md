@@ -124,7 +124,7 @@ make img-build
 Dans le container (`make sh`)
 
 ``` bash
-find tests/resources/moco -type f -name "*.json" -exec tools/jsonlint/vendor/bin/jsonlint {} \;
+find tests/resources -type f -name "*.json" -exec tools/jsonlint/vendor/bin/jsonlint {} \;
 ```
 
 ## Update moco mock from Pokénin-Api
