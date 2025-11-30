@@ -20,9 +20,6 @@ app_connect_google_check:
 app_connect_discord_check:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-app_connect_passage_check:
-  path: /
-  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
 
 when@test:
   app_connect_mock_check:
