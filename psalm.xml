@@ -33,13 +33,13 @@
                 <file name="src/Controller/TrainerUpsertController.php" />
                 <file name="src/Service/TrainerIdsService.php" />
             </errorLevel>
-        </RiskyTruthyFalsyComparison>  
+        </RiskyTruthyFalsyComparison>
         <InvalidArgument>
             <errorLevel type="suppress">
                 <file name="tests/src/Unit/DTO/ElectionVoteTest.php" />
                 <file name="tests/src/Unit/DTO/ElectionMetricsTest.php" />
                 <file name="tests/src/Unit/DTO/ElectionPokemonsListTest.php" />
             </errorLevel>
-        </InvalidArgument>       
+        </InvalidArgument>
     </issueHandlers>
 </psalm>
