@@ -42,7 +42,7 @@
         "ext-xml": "*",
         "ext-xmlwriter": "*",
         "phpunit/phpunit": "^12.4.4",
-        "symfony/browser-kit": "7.4.*",
+        "symfony/browser-kit": "8.0.*",
         "symfony/css-selector": "7.4.*",
         "symfony/debug-bundle": "7.4.*",
         "symfony/phpunit-bridge": "7.4.*",
