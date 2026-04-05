@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\AdminAction;
 
-use App\Controller\AdminActionController;
+use App\Controller\AdminActionUpdateController;
 use App\Security\User;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @internal
  */
-#[CoversClass(AdminActionController::class)]
+#[CoversClass(AdminActionUpdateController::class)]
 class UpdateTest extends WebTestCase
 {
     use ClientRequestTrait;

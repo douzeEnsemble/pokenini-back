@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\AdminAction;
 
-use App\Controller\AdminActionController;
+use App\Controller\AdminActionCalculateController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @internal
  */
-#[CoversClass(AdminActionController::class)]
+#[CoversClass(AdminActionCalculateController::class)]
 class CalculateTest extends WebTestCase
 {
     use ClientRequestTrait;

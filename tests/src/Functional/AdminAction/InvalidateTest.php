@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\AdminAction;
 
-use App\Controller\AdminActionController;
+use App\Controller\AdminActionInvalidateController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @internal
  */
-#[CoversClass(AdminActionController::class)]
+#[CoversClass(AdminActionInvalidateController::class)]
 class InvalidateTest extends WebTestCase
 {
     use ClientRequestTrait;
