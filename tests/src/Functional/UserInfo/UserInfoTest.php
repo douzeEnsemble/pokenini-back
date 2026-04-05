@@ -27,7 +27,7 @@ class UserInfoTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/user-info',
+            '/user',
         );
 
         $this->assertResponseIsSuccessful();
@@ -41,7 +41,7 @@ class UserInfoTest extends WebTestCase
 
         $client->request(
             'GET',
-            '/user-info',
+            '/user',
         );
 
         $this->assertResponseStatusCodeSame(401);
