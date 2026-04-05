@@ -11,10 +11,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/istration/action')]
-class AdminActionController extends AbstractController
+abstract class AbstractAdminActionController extends AbstractController
 {
     public function __construct(
         private readonly CacheInvalidatorService $cacheInvalidatorService,
@@ -22,63 +20,9 @@ class AdminActionController extends AbstractController
         private readonly LoggerInterface $logger,
     ) {}
 
-    #[Route(
-        '/update/{name}',
-        methods: ['POST'],
-        condition: "params['name']
-            in [
-                'labels',
-                'games_collections_and_dex',
-                'pokemons',
-                'games_availabilities',
-                'games_shinies_availabilities',
-                'regional_dex_numbers',
-                'collections_availabilities',
-            ]"
-    )]
-    public function update(
-        string $name,
-    ): JsonResponse {
-        return $this->execute($name, 'update');
-    }
+    abstract public function process(string $name): JsonResponse;
 
-    #[Route(
-        '/calculate/{name}',
-        methods: ['POST'],
-        condition: "params['name']
-            in [
-                'game_bundles_availabilities',
-                'game_bundles_shinies_availabilities',
-                'collections_availabilities',
-                'dex_availabilities',
-                'pokemon_availabilities',
-            ]"
-    )]
-    public function calculate(
-        string $name,
-    ): JsonResponse {
-        return $this->execute($name, 'calculate');
-    }
-
-    #[Route(
-        '/invalidate/{name}',
-        methods: ['DELETE'],
-        condition: "params['name']
-            in [
-                'labels',
-                'dex',
-                'albums',
-                'reports',
-                'actions',
-            ]"
-    )]
-    public function invalidate(
-        string $name,
-    ): JsonResponse {
-        return $this->execute($name, 'invalidate');
-    }
-
-    private function execute(
+    protected function execute(
         string $name,
         string $action,
     ): JsonResponse {
