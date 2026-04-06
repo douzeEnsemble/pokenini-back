@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\AlbumUpsert;
+namespace App\Tests\Functional\Album;
 
-use App\Controller\AlbumUpsertController;
+use App\Controller\Album\AlbumUpsertController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
