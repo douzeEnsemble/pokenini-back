@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\ElectionIndex;
+namespace App\Tests\Functional\Election;
 
-use App\Controller\ElectionIndexController;
+use App\Controller\Election\ElectionIndexController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use App\Tests\Functional\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;

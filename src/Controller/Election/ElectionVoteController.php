@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Election;
 
 use App\DTO\ElectionVote;
 use App\Service\ElectionVoteService;

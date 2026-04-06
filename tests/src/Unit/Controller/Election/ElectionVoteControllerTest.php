@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Controller;
+namespace App\Tests\Unit\Controller\Election;
 
-use App\Controller\ElectionVoteController;
+use App\Controller\Election\ElectionVoteController;
 use App\Service\ElectionVoteService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

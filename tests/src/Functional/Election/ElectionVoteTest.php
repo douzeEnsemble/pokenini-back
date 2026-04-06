@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\ElectionVote;
+namespace App\Tests\Functional\Election;
 
-use App\Controller\ElectionVoteController;
+use App\Controller\Election\ElectionVoteController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

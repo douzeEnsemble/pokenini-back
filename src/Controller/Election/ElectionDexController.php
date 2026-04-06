@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Election;
 
 use App\Service\Api\GetElectionDexService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
