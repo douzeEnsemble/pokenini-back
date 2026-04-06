@@ -18,24 +18,25 @@ final class ActionLog
     ) {}
 
     /**
-     * @param array<int|int[]|string> $data
+     * @param array{
+     *  created_at: string,
+     *  done_at?: null|string,
+     *  execution_time?: null|int|string,
+     *  details?: int[],
+     *  error_trace?: null|string,
+     * } $data
      */
     public static function createFromArray(array $data): self
     {
-        /** @var string */
         $createdAt = $data['created_at'];
 
-        /** @var ?string */
         $doneAtStr = $data['done_at'] ?? null;
         $doneAt = null !== $doneAtStr ? new \DateTime($doneAtStr) : null;
 
-        /** @var ?int */
         $executionTime = (isset($data['execution_time'])) ? (int) $data['execution_time'] : null;
 
-        /** @var int[] */
         $details = $data['details'] ?? [];
 
-        /** @var ?string */
         $errorTrace = $data['error_trace'] ?? null;
 
         return new self(

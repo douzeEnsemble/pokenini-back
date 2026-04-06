@@ -25,10 +25,24 @@ class GetActionLogsService extends AbstractApiService
 
         $list = [];
         foreach ($actionLogsData as $item => $data) {
-            /** @var int[]|int[][]|string[] */
+            /** @var array{
+             *  created_at: string,
+             *  done_at?: null|string,
+             *  execution_time?: null|int|string,
+             *  details?: int[],
+             *  error_trace?: null|string,
+             * } $currentData
+             */
             $currentData = $data['current'];
 
-            /** @var int[]|int[][]|string[] */
+            /** @var ?array{
+             *  created_at: string,
+             *  done_at?: null|string,
+             *  execution_time?: null|int|string,
+             *  details?: int[],
+             *  error_trace?: null|string,
+             * } $lastData
+             */
             $lastData = $data['last'] ?? null;
 
             $list[$item] = new ActionLogData(

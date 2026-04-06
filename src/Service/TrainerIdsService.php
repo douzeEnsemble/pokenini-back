@@ -30,6 +30,7 @@ class TrainerIdsService
         try {
             $this->loggedTrainerId = $this->userTokenService->getLoggedUserToken();
 
+            /** @psalm-suppress RiskyTruthyFalsyComparison */
             $this->trainerId = $this->requestedTrainerId ?: $this->loggedTrainerId;
         } catch (NoLoggedUserException $e) {
             $this->trainerId = $this->requestedTrainerId;

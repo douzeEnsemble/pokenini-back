@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service;
 
+use App\Exception\DexNotFoundException;
 use App\Security\UserTokenService;
 use App\Service\Api\GetPokedexService;
 use App\Service\GetTrainerPokedexService;
@@ -146,6 +147,38 @@ final class GetTrainerPokedexServiceTest extends TestCase
         );
     }
 
+    public function testGetPokedexDataEmptyDe(): void
+    {
+        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService
+            ->expects($this->once())
+            ->method('getLoggedUserToken')
+            ->willReturn('8800088')
+        ;
+
+        $getPokedexService = $this->createMock(GetPokedexService::class);
+        $getPokedexService
+            ->expects($this->once())
+            ->method('get')
+            ->with(
+                'douze',
+                '8800088',
+                [],
+            )
+            ->willReturn([
+                'dex' => [],
+                'pokemons' => [],
+            ])
+        ;
+
+        $service = new GetTrainerPokedexService($userTokenService, $getPokedexService);
+
+        $this->expectException(DexNotFoundException::class);
+        $this->expectExceptionMessage('Dex not found');
+
+        $service->getPokedexData('douze', []);
+    }
+
     public function testGetPokedexDataHttpException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
@@ -170,9 +203,11 @@ final class GetTrainerPokedexServiceTest extends TestCase
         ;
 
         $service = new GetTrainerPokedexService($userTokenService, $getPokedexService);
-        $dexData = $service->getPokedexData('douze', []);
 
-        $this->assertNull($dexData);
+        $this->expectException(DexNotFoundException::class);
+        $this->expectExceptionMessage('Dex not found');
+
+        $service->getPokedexData('douze', []);
     }
 
     public function testGetPokedexDataTransportException(): void
@@ -199,8 +234,10 @@ final class GetTrainerPokedexServiceTest extends TestCase
         ;
 
         $service = new GetTrainerPokedexService($userTokenService, $getPokedexService);
-        $dexData = $service->getPokedexData('douze', []);
 
-        $this->assertNull($dexData);
+        $this->expectException(DexNotFoundException::class);
+        $this->expectExceptionMessage('Dex not found');
+
+        $service->getPokedexData('douze', []);
     }
 }

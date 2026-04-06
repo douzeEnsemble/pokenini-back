@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Controller\Album;
 
 use App\Controller\Album\AlbumUpsertController;
+use App\Exception\DexNotFoundException;
 use App\Exception\EmptyContentException;
 use App\Exception\InvalidJsonException;
 use App\Service\GetTrainerPokedexService;
@@ -177,7 +178,7 @@ final class AlbumUpsertControllerTest extends TestCase
         $this->assertSame('{"error":"Json is invalid"}', $response->getContent());
     }
 
-    public function testUpsertPokedexNull(): void
+    public function testUpsertDexNotFound(): void
     {
         $requestedContentService = $this->createMock(RequestedContentService::class);
         $requestedContentService
@@ -192,56 +193,7 @@ final class AlbumUpsertControllerTest extends TestCase
             ->expects($this->once())
             ->method('getPokedexData')
             ->with('douze', [])
-            ->willReturn(null)
-        ;
-
-        $modifyTrainerAlbumService = $this->createMock(ModifyTrainerAlbumService::class);
-        $modifyTrainerAlbumService
-            ->expects($this->never())
-            ->method('modifyAlbum')
-        ;
-
-        $container = $this->createMock(ContainerInterface::class);
-        $container
-            ->expects($this->never())
-            ->method('has')
-        ;
-        $container
-            ->expects($this->never())
-            ->method('get')
-        ;
-
-        $controller = new AlbumUpsertController(
-            $requestedContentService,
-            $getTrainerPokedexService,
-            $modifyTrainerAlbumService,
-        );
-        $controller->setContainer($container);
-
-        $response = $controller->upsert('douze', 'machi');
-
-        $this->assertEquals(404, $response->getStatusCode());
-        $this->assertSame('[]', $response->getContent());
-    }
-
-    public function testUpsertDexNotDefined(): void
-    {
-        $requestedContentService = $this->createMock(RequestedContentService::class);
-        $requestedContentService
-            ->expects($this->once())
-            ->method('getContent')
-            ->with(new CatchStates())
-            ->willReturn('{"key": "value"}')
-        ;
-
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
-        $getTrainerPokedexService
-            ->expects($this->once())
-            ->method('getPokedexData')
-            ->with('douze', [])
-            ->willReturn([
-                'pokemons' => [],
-            ])
+            ->willThrowException(new DexNotFoundException())
         ;
 
         $modifyTrainerAlbumService = $this->createMock(ModifyTrainerAlbumService::class);

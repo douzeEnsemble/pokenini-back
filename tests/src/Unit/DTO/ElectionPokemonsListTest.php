@@ -55,7 +55,12 @@ final class ElectionPokemonsListTest extends TestCase
     public function testMissingType(): void
     {
         $this->expectException(MissingOptionsException::class);
-        // @phpstan-ignore argument.type
+
+        /**
+         * @psalm-suppress InvalidArgument
+         *
+         * @phpstan-ignore argument.type
+         */
         new ElectionPokemonsList([
             'items' => [
                 [
@@ -75,7 +80,12 @@ final class ElectionPokemonsListTest extends TestCase
     public function testWrongType(): void
     {
         $this->expectException(InvalidOptionsException::class);
-        // @phpstan-ignore argument.type
+
+        /**
+         * @psalm-suppress InvalidArgument
+         *
+         * @phpstan-ignore argument.type
+         */
         new ElectionPokemonsList([
             'type' => 12,
             'items' => [
@@ -96,7 +106,12 @@ final class ElectionPokemonsListTest extends TestCase
     public function testMissingItems(): void
     {
         $this->expectException(MissingOptionsException::class);
-        // @phpstan-ignore argument.type
+
+        /**
+         * @psalm-suppress InvalidArgument
+         *
+         * @phpstan-ignore argument.type
+         */
         new ElectionPokemonsList([
             'type' => 'pick',
         ]);
@@ -105,7 +120,12 @@ final class ElectionPokemonsListTest extends TestCase
     public function testWrongItems(): void
     {
         $this->expectException(InvalidOptionsException::class);
-        // @phpstan-ignore argument.type
+
+        /**
+         * @psalm-suppress InvalidArgument
+         *
+         * @phpstan-ignore argument.type
+         */
         new ElectionPokemonsList([
             'type' => 'pick',
             'items' => [
