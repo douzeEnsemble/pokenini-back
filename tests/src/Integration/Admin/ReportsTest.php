@@ -16,14 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AdminReportsController::class)]
-class ReportsTest extends WebTestCase
+final class ReportsTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
 
     public function testGetReports(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -39,7 +39,7 @@ class ReportsTest extends WebTestCase
 
     public function testGetActionLogsNonAuthenticated(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'GET',

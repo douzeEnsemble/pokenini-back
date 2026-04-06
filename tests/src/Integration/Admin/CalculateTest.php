@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AdminActionCalculateController::class)]
-class CalculateTest extends WebTestCase
+final class CalculateTest extends WebTestCase
 {
     use ClientRequestTrait;
 
@@ -36,7 +36,7 @@ class CalculateTest extends WebTestCase
 
     public function testDexAvailabilities(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         // For testing purpose, this case will fail in API side
         $this->authenticatedRequest(
@@ -64,7 +64,7 @@ class CalculateTest extends WebTestCase
 
     public function testUnknown(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -78,7 +78,7 @@ class CalculateTest extends WebTestCase
 
     public function testNonAuthenticate(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request('POST', '/istration/action/calculate/game_bundles_availabilities');
 
@@ -87,7 +87,7 @@ class CalculateTest extends WebTestCase
 
     public function testNoProvider(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'POST',
@@ -104,7 +104,7 @@ class CalculateTest extends WebTestCase
 
     public function testNonAdmin(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -118,7 +118,7 @@ class CalculateTest extends WebTestCase
 
     private function testAction(string $name): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,

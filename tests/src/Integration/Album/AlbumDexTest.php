@@ -16,14 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AlbumDexController::class)]
-class AlbumDexTest extends WebTestCase
+final class AlbumDexTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
 
     public function testDexAsTrainer(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -39,7 +39,7 @@ class AlbumDexTest extends WebTestCase
 
     public function testDexAsCollector(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -55,7 +55,7 @@ class AlbumDexTest extends WebTestCase
 
     public function testDexAdmin(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -71,7 +71,7 @@ class AlbumDexTest extends WebTestCase
 
     public function testDexPublic(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'GET',

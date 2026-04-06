@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  */
 #[CoversClass(AlbumUpsertController::class)]
 #[CoversClass(ModifyTrainerAlbumService::class)]
-class AlbumUpsertControllerTest extends TestCase
+final class AlbumUpsertControllerTest extends TestCase
 {
     public function testUpsert(): void
     {

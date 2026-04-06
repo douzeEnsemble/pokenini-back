@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversClass(KeyMaker::class)]
-class KeyMakerTest extends TestCase
+final class KeyMakerTest extends TestCase
 {
     public function testGetDexKey(): void
     {

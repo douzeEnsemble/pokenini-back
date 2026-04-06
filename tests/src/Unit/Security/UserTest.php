@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversClass(User::class)]
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
     public function testConstructor(): void
     {

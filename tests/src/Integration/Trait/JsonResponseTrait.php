@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Trait;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;

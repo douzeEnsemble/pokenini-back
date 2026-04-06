@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversClass(LastRoute::class)]
-class LastRouteTest extends TestCase
+final class LastRouteTest extends TestCase
 {
     public function testConstruct(): void
     {

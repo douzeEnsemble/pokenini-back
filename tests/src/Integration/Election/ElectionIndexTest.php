@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(ElectionIndexController::class)]
-class ElectionIndexTest extends WebTestCase
+final class ElectionIndexTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
@@ -25,7 +25,7 @@ class ElectionIndexTest extends WebTestCase
     #[DataProvider('providerDex')]
     public function testDex(string $dexName): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,

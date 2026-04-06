@@ -23,6 +23,11 @@
                 "App\\Helper\\TotalRoundCountHelper::calculate",
             ],
         },
+        "CastFloat": {
+            "ignore": [
+                "App\\Helper\\TotalRoundCountHelper::calculate",
+            ],
+        },
         "MethodCallRemoval": {
             "ignoreSourceCodeByRegex": [
                 "\\$this->logger->info.*",

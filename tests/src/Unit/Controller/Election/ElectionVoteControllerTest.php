@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @internal
  */
 #[CoversClass(ElectionVoteController::class)]
-class ElectionVoteControllerTest extends TestCase
+final class ElectionVoteControllerTest extends TestCase
 {
     public function testVote(): void
     {

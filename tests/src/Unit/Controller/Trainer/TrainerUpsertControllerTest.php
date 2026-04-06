@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\Json;
  * @internal
  */
 #[CoversClass(TrainerUpsertController::class)]
-class TrainerUpsertControllerTest extends TestCase
+final class TrainerUpsertControllerTest extends TestCase
 {
     public function testUpsert(): void
     {

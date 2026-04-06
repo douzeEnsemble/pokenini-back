@@ -4,19 +4,35 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Security;
 
+use App\Security\AbstractAuthenticator;
 use App\Security\GoogleAuthenticator;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @internal
  */
 #[CoversClass(GoogleAuthenticator::class)]
-class GoogleAuthenticatorTest extends AbstractAuthenticatorTesting
+final class GoogleAuthenticatorTest extends AbstractAuthenticatorTesting
 {
     #[\Override]
-    protected function getAuthenticatorClassName(): string
-    {
-        return GoogleAuthenticator::class;
+    protected function instanciate(
+        ClientRegistry $clientRegistry,
+        RouterInterface $router,
+        string $listAdmin,
+        string $listTrainer,
+        string $listCollector,
+        bool $isInvitationRequired,
+    ): AbstractAuthenticator {
+        return new GoogleAuthenticator(
+            $clientRegistry,
+            $router,
+            $listAdmin,
+            $listTrainer,
+            $listCollector,
+            $isInvitationRequired,
+        );
     }
 
     #[\Override]

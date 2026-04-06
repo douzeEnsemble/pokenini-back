@@ -21,7 +21,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
  * @internal
  */
 #[CoversClass(AccessTokenHandler::class)]
-class AccessTokenHandlerTest extends TestCase
+final class AccessTokenHandlerTest extends TestCase
 {
     public function testGetUserBadgeFrom(): void
     {

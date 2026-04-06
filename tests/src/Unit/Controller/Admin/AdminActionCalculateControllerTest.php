@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface;
  */
 #[CoversClass(AbstractAdminActionController::class)]
 #[CoversClass(AdminActionCalculateController::class)]
-class AdminActionCalculateControllerTest extends TestCase
+final class AdminActionCalculateControllerTest extends TestCase
 {
     public function testAction(): void
     {

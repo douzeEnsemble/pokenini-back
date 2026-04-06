@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/album')]
-class AlbumPokedexController extends AbstractController
+final class AlbumPokedexController extends AbstractController
 {
     public function __construct(
         private readonly TrainerIdsService $trainerIdsService,

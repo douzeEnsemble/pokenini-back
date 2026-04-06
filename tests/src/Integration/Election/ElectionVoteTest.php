@@ -15,13 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(ElectionVoteController::class)]
-class ElectionVoteTest extends WebTestCase
+final class ElectionVoteTest extends WebTestCase
 {
     use ClientRequestTrait;
 
     public function testVote(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -39,7 +39,7 @@ class ElectionVoteTest extends WebTestCase
 
     public function testVoteWithElectionSlug(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -57,7 +57,7 @@ class ElectionVoteTest extends WebTestCase
 
     public function testVoteWithFilters(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -75,7 +75,7 @@ class ElectionVoteTest extends WebTestCase
 
     public function testVoteEmpty(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -96,7 +96,7 @@ class ElectionVoteTest extends WebTestCase
 
     public function testVoteBad(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -123,7 +123,7 @@ class ElectionVoteTest extends WebTestCase
 
     public function testVoteNonAuthenticated(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'POST',

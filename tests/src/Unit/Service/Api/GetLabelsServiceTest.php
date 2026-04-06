@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversClass(GetLabelsService::class)]
-class GetLabelsServiceTest extends TestCase
+final class GetLabelsServiceTest extends TestCase
 {
     public function testGetCatchStates(): void
     {

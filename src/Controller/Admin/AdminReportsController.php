@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/istration')]
-class AdminReportsController extends AbstractController
+final class AdminReportsController extends AbstractController
 {
     public function __construct(
         private readonly GetReportsService $service,

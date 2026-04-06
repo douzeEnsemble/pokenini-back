@@ -15,7 +15,7 @@ use Symfony\Bundle\SecurityBundle\Security;
  * @internal
  */
 #[CoversClass(UserTokenService::class)]
-class UserTokenServiceTest extends TestCase
+final class UserTokenServiceTest extends TestCase
 {
     public function testGetLoggedUserToken(): void
     {

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversClass(MockProvider::class)]
-class MockProviderTest extends TestCase
+final class MockProviderTest extends TestCase
 {
     public function testGetBaseAuthorizationUrl(): void
     {

@@ -16,7 +16,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * @internal
  */
 #[CoversClass(ModifyAlbumService::class)]
-class ModifyAlbumServiceTest extends TestCase
+final class ModifyAlbumServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

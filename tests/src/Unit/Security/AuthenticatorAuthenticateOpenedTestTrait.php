@@ -207,8 +207,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
 
         $router = $this->createMock(RouterInterface::class);
 
-        /** @var OAuth2Authenticator */
-        return new ($this->getAuthenticatorClassName())(
+        return $this->instanciate(
             $clientRegistry,
             $router,
             $listAdmin,

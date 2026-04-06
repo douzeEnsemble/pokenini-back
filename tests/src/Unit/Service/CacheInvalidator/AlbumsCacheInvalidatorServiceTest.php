@@ -15,7 +15,7 @@ use Symfony\Contracts\Cache\ItemInterface;
  * @internal
  */
 #[CoversClass(AlbumsCacheInvalidatorService::class)]
-class AlbumsCacheInvalidatorServiceTest extends TestCase
+final class AlbumsCacheInvalidatorServiceTest extends TestCase
 {
     public function testInvalidate(): void
     {

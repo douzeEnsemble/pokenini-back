@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/istration')]
-class AdminActionLogsController extends AbstractController
+final class AdminActionLogsController extends AbstractController
 {
     public function __construct(
         private readonly GetActionLogsService $service,

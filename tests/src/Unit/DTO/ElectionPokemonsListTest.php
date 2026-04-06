@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
  * @internal
  */
 #[CoversClass(ElectionPokemonsList::class)]
-class ElectionPokemonsListTest extends TestCase
+final class ElectionPokemonsListTest extends TestCase
 {
     public function testOk(): void
     {

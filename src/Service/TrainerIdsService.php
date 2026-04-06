@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Exception\NoLoggedUserException;
@@ -37,11 +39,6 @@ class TrainerIdsService
     public function getLoggedTrainerId(): ?string
     {
         return $this->loggedTrainerId;
-    }
-
-    public function getRequestedTrainerId(): ?string
-    {
-        return $this->requestedTrainerId;
     }
 
     public function getTrainerId(): ?string

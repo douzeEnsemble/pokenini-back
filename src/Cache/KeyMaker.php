@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Cache;
 
-class KeyMaker
+final class KeyMaker
 {
     private const string CACHE_KEY_SEPARATOR = '_';
     private const string CACHE_KEY_ID_SEPARATOR = '#';

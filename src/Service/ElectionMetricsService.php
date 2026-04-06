@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\DTO\ElectionMetrics;
@@ -18,7 +20,7 @@ class ElectionMetricsService
     {
         $trainerId = $this->userTokenService->getLoggedUserToken();
 
-        /** @var float[]|int[] */
+        /** @var array<string, float|int> */
         $data = $this->apiService->getMetrics($trainerId, $dexSlug, $electionSlug);
 
         return new ElectionMetrics($data, $this->electionCandidateCount);

@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    errorLevel="5"
+    errorLevel="1"
     resolveFromConfigFile="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="false"
@@ -14,6 +14,7 @@
         <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
+          <file name="src/Kernel.php" />
             <file name="tests/bootstrap.php" />
         </ignoreFiles>
     </projectFiles>
@@ -40,5 +41,14 @@
                 <file name="tests/src/Unit/DTO/ElectionPokemonsListTest.php" />
             </errorLevel>
         </InvalidArgument>
+
+
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <!-- Symfony services -->
+                <directory name="src/Security" />
+                <directory name="src/Service" />
+            </errorLevel>
+        </ClassMustBeFinal>
     </issueHandlers>
 </psalm>

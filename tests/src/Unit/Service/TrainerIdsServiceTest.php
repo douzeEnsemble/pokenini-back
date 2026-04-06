@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * @internal
  */
 #[CoversClass(TrainerIdsService::class)]
-class TrainerIdsServiceTest extends TestCase
+final class TrainerIdsServiceTest extends TestCase
 {
     public function testInit(): void
     {
@@ -35,7 +35,6 @@ class TrainerIdsServiceTest extends TestCase
         $service->init();
 
         $this->assertSame('8800088', $service->getLoggedTrainerId());
-        $this->assertSame('2100012', $service->getRequestedTrainerId());
         $this->assertSame('2100012', $service->getTrainerId());
     }
 
@@ -56,7 +55,6 @@ class TrainerIdsServiceTest extends TestCase
         $service->init();
 
         $this->assertSame('8800088', $service->getLoggedTrainerId());
-        $this->assertSame('', $service->getRequestedTrainerId());
         $this->assertSame('8800088', $service->getTrainerId());
     }
 
@@ -77,7 +75,6 @@ class TrainerIdsServiceTest extends TestCase
         $service->init();
 
         $this->assertNull($service->getLoggedTrainerId());
-        $this->assertSame('2100012', $service->getRequestedTrainerId());
         $this->assertSame('2100012', $service->getTrainerId());
     }
 
@@ -98,7 +95,6 @@ class TrainerIdsServiceTest extends TestCase
         $service->init();
 
         $this->assertNull($service->getLoggedTrainerId());
-        $this->assertSame('', $service->getRequestedTrainerId());
         $this->assertSame('', $service->getTrainerId());
     }
 }

@@ -14,7 +14,7 @@ use Symfony\Component\Cache\Adapter\TagAwareAdapter;
  * @internal
  */
 #[CoversClass(AlbumCacheInvalidatorService::class)]
-class AlbumCacheInvalidatorServiceTest extends TestCase
+final class AlbumCacheInvalidatorServiceTest extends TestCase
 {
     public function testInvalidate(): void
     {
