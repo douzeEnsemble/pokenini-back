@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Admin;
+namespace App\Tests\Integration\Admin;
 
 use App\Controller\Admin\AdminReportsController;
-use App\Tests\Functional\Trait\ClientRequestTrait;
-use App\Tests\Functional\Trait\JsonResponseTrait;
+use App\Tests\Integration\Trait\ClientRequestTrait;
+use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

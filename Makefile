@@ -142,7 +142,7 @@ tu: tests-unit
 
 .PHONY: tests-functional
 tests-functional: ## Execute functional tests
-	@$(PHP_CONT) vendor/bin/phpunit tests/src/Functional
+	@$(PHP_CONT) vendor/bin/phpunit tests/src/Integration
 
 .PHONY: tf
 tf: ## Alias of tests-functional
@@ -154,7 +154,7 @@ ti: tests-functional
 
 .PHONY: tests-api-mocked
 tests-api-mocked: ## Execute tests on the group api-mocked-testing only
-	@$(PHP_CONT) vendor/bin/phpunit tests/src/Functional --group=api-mocked-testing --stop-on-defect --no-progress --no-logging
+	@$(PHP_CONT) vendor/bin/phpunit tests/src/Integration --group=api-mocked-testing --stop-on-defect --no-progress --no-logging
 
 ## —— Quality 👌 ———————————————————————————————————————————————————————————————
 .PHONY: quality

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Admin;
+namespace App\Tests\Integration\User;
 
-use App\Controller\Admin\AdminActionLogsController;
-use App\Tests\Functional\Trait\ClientRequestTrait;
-use App\Tests\Functional\Trait\JsonResponseTrait;
+use App\Controller\User\UserInfoController;
+use App\Tests\Integration\Trait\ClientRequestTrait;
+use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -15,35 +15,35 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @internal
  */
 #[Group('api-mocked-testing')]
-#[CoversClass(AdminActionLogsController::class)]
-class ActionLogsTest extends WebTestCase
+#[CoversClass(UserInfoController::class)]
+class UserInfoTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
 
-    public function testGetActionLogs(): void
+    public function testGet(): void
     {
         $client = static::createClient();
 
         $this->authenticatedRequest(
             $client,
-            'admin',
+            'trainer',
             'GET',
-            '/istration/action-logs',
+            '/user',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'Admin/action-logs.json');
+        $this->assertResponseContent($client, 'UserInfo/trainer.json');
     }
 
-    public function testGetActionLogsNonAuthenticated(): void
+    public function testGetNonAuthenticated(): void
     {
         $client = static::createClient();
 
         $client->request(
             'GET',
-            '/istration/action-logs',
+            '/user',
         );
 
         $this->assertResponseStatusCodeSame(401);
