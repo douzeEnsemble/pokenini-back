@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Trait;
+namespace App\Tests\Integration\Trait;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;

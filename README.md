@@ -60,7 +60,7 @@ To save html into a file that you can open with your browser
 file_put_contents('tests/last.html', $client->getCrawler()->html());
 ```
 
-For `tests/src/Functional/Trait/JsonResponseTrait.php`
+For `tests/src/Integration/Trait/JsonResponseTrait.php`
 
 ```php
 /*

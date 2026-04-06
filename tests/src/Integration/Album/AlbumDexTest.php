@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Album;
+namespace App\Tests\Integration\Album;
 
 use App\Controller\Album\AlbumDexController;
-use App\Tests\Functional\Trait\ClientRequestTrait;
-use App\Tests\Functional\Trait\JsonResponseTrait;
+use App\Tests\Integration\Trait\ClientRequestTrait;
+use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

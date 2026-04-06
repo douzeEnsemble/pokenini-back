@@ -2,68 +2,64 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Admin;
+namespace App\Tests\Integration\Admin;
 
-use App\Controller\Admin\AdminActionUpdateController;
-use App\Security\User;
-use App\Tests\Functional\Trait\ClientRequestTrait;
+use App\Controller\Admin\AdminActionCalculateController;
+use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @internal
  */
 #[Group('api-mocked-testing')]
-#[CoversClass(AdminActionUpdateController::class)]
-class UpdateTest extends WebTestCase
+#[CoversClass(AdminActionCalculateController::class)]
+class CalculateTest extends WebTestCase
 {
     use ClientRequestTrait;
 
-    public function testAdminUpdateLabels(): void
+    public function testGamesBundlesAvailabilities(): void
     {
-        $this->testAdminUpdate('labels');
+        $this->testAction('game_bundles_availabilities');
     }
 
-    public function testAdminUpdateGamesCollectionsAndDex(): void
+    public function testGamesBundlesShiniesAvailabilities(): void
     {
-        $this->testAdminUpdate('games_collections_and_dex');
+        $this->testAction('game_bundles_shinies_availabilities');
     }
 
-    public function testAdminUpdatePokemons(): void
+    public function testPokemonAvailabilities(): void
     {
-        $this->testAdminUpdate('pokemons');
+        $this->testAction('pokemon_availabilities');
     }
 
-    public function testAdminUpdateRegionalDexNumbers(): void
-    {
-        $this->testAdminUpdate('regional_dex_numbers');
-    }
-
-    public function testAdminUpdateGamesAvailabilities(): void
-    {
-        $this->testAdminUpdate('games_availabilities');
-    }
-
-    public function testAdminUpdateCollections(): void
-    {
-        $this->testAdminUpdate('collections_availabilities');
-    }
-
-    public function testAdminUpdateUnknown(): void
+    public function testDexAvailabilities(): void
     {
         $client = static::createClient();
 
-        $user = new User('8764532', 'TestProvider');
-        $user->addAdminRole();
-        $client->loginUser($user, 'web');
+        // For testing purpose, this case will fail in API side
+        $this->authenticatedRequest(
+            $client,
+            'admin',
+            'POST',
+            '/istration/action/calculate/dex_availabilities',
+        );
 
-        $client->catchExceptions(false);
+        $this->assertResponseStatusCodeSame(500);
+        $content = (string) $client->getResponse()->getContent();
+        $data = json_decode($content, true);
 
-        $this->expectException(NotFoundHttpException::class);
-
-        $client->request('GET', '/istration/action/update/truc');
+        $this->assertSame(
+            [
+                'action' => 'calculate',
+                'item' => 'dex_availabilities',
+                'state' => 'ko',
+                'content' => '',
+                'error' => 'HTTP/1.1 500 Internal Server Error returned for "http://moco.api/istration/calculate/dex_availabilities".',
+            ],
+            $data
+        );
     }
 
     public function testUnknown(): void
@@ -74,7 +70,7 @@ class UpdateTest extends WebTestCase
             $client,
             'admin',
             'POST',
-            '/istration/action/update/truc'
+            '/istration/action/calculate/truc'
         );
 
         $this->assertResponseStatusCodeSame(404);
@@ -84,7 +80,7 @@ class UpdateTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('POST', '/istration/action/update/labels');
+        $client->request('POST', '/istration/action/calculate/game_bundles_availabilities');
 
         $this->assertResponseStatusCodeSame(401);
     }
@@ -95,7 +91,7 @@ class UpdateTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/istration/action/update/labels',
+            '/istration/action/calculate/game_bundles_availabilities',
             [],
             [],
             [
@@ -114,13 +110,13 @@ class UpdateTest extends WebTestCase
             $client,
             'user',
             'POST',
-            '/istration/action/update/labels'
+            '/istration/action/calculate/game_bundles_availabilities',
         );
 
         $this->assertResponseStatusCodeSame(403);
     }
 
-    private function testAdminUpdate(string $name): void
+    private function testAction(string $name): void
     {
         $client = static::createClient();
 
@@ -128,7 +124,7 @@ class UpdateTest extends WebTestCase
             $client,
             'admin',
             'POST',
-            "/istration/action/update/{$name}",
+            "/istration/action/calculate/{$name}",
         );
 
         $this->assertResponseStatusCodeSame(202);
@@ -137,7 +133,7 @@ class UpdateTest extends WebTestCase
 
         $this->assertSame(
             [
-                'action' => 'update',
+                'action' => 'calculate',
                 'item' => $name,
                 'state' => 'ok',
                 'content' => '',

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Admin;
+namespace App\Tests\Integration\Admin;
 
 use App\Controller\Admin\AdminActionInvalidateController;
-use App\Tests\Functional\Trait\ClientRequestTrait;
+use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
