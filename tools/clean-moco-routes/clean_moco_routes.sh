@@ -3,7 +3,7 @@
 MOCK_FILE="${1:-mocks.json}"
 TMP_DIR="var/tmp_moco_check"
 LOG_FILE="var/log/moco_cleanup.log"
-TEST_CMD="make restart-mocks tests-api-mocked"
+TEST_CMD="make restart-mocks && sleep 3 && make tests-api-mocked"
 
 mkdir -p "$(dirname "$LOG_FILE")" "$TMP_DIR"
 echo "=== Moco cleanup started: $(date) ===" >"$LOG_FILE"
