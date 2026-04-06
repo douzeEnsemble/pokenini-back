@@ -11,6 +11,7 @@ COMPOSER = $(PHP_CONT) composer
 SYMFONY  = $(PHP) bin/console
 DOCKERCOMPOSE_LINTER_CMD = docker run -t --rm -v ${PWD}:/app zavoloklom/dclint:3.1.0-alpine
 DOTENV_LINTER_CMD = docker run -t --rm -v ${PWD}:/app -w /app dotenvlinter/dotenv-linter:4.0.0
+HADOLINT_CMD = docker run -t --rm -v ${PWD}:/app hadolint/hadolint:v2.14.0-alpine hadolint
 EDITORCONFIG_LINTER_CMD = docker run --rm --volume=${PWD}:/check mstruebing/editorconfig-checker:v3.6.0
 
 # Misc
@@ -180,7 +181,7 @@ docker-compose-fixer: ## Run Docker Compose fixer
 .PHONY: dockerfile-linter
 dockerfile-linter: ## Run Dockerfile linter
 	@find .docker -name 'Dockerfile' | while read -r dockerfile; do \
-		docker run -t --rm -v ${PWD}:/app hadolint/hadolint:2.12.0-alpine hadolint "/app/$$dockerfile"; \
+		$(HADOLINT_CMD) "/app/$$dockerfile"; \
 	done
 
 .PHONY: dotenv-linter
