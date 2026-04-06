@@ -20,6 +20,7 @@ security:
   access_control:
     - { path: ^/istration, roles: ROLE_ADMIN }
     - { path: ^/user, roles: PUBLIC_ACCESS }
-    - { path: ^/album, roles: PUBLIC_ACCESS }
+    - { path: ^/album/dex$, roles: PUBLIC_ACCESS }
+    - { path: ^/album, roles: ROLE_USER }
     - { path: ^/labels, roles: PUBLIC_ACCESS }
     - { path: ^/, roles: ROLE_USER }

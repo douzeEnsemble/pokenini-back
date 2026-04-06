@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Album;
 
 use App\AlbumFilters\FromRequest;
 use App\AlbumFilters\Mapping;
@@ -15,8 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/pokedex')]
-class PokedexController extends AbstractController
+#[Route('/album')]
+class AlbumPokedexController extends AbstractController
 {
     public function __construct(
         private readonly TrainerIdsService $trainerIdsService,
