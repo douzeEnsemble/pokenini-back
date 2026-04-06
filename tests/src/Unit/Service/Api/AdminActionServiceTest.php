@@ -12,6 +12,7 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
+use Tests\Utils\ConsecutiveCalls;
 
 /**
  * @internal
@@ -66,6 +67,27 @@ class AdminActionServiceTest extends TestCase
         $logger
             ->expects($this->exactly(2))
             ->method('info')
+            ->with(new ConsecutiveCalls(
+                [
+                    "Requesting POST /istration/{$suffix}",
+                    [
+                        'headers' => [
+                            'accept' => 'application/json',
+                        ],
+                        'auth_basic' => [
+                            'web',
+                            'douze',
+                        ],
+                        'cafile' => './resources/certificates/cacert.pem',
+                    ],
+                ],
+                [
+                    "Response status code: 200",
+                    [
+                        'response' => $json,
+                    ],
+                ],
+            ))
         ;
 
         $client = $this->createMock(HttpClientInterface::class);

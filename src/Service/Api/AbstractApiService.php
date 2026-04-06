@@ -36,7 +36,7 @@ abstract class AbstractApiService implements ApiServiceInterface
 
         $response = $this->client->request(
             $method,
-            "{$this->apiUrl}$endpointUrl",
+            "{$this->apiUrl}{$endpointUrl}",
             array_merge(
                 [
                     'headers' => [

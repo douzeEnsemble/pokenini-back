@@ -25,6 +25,9 @@ class CacheInvalidatorService
     public function invalidate(string $type): void
     {
         switch ($type) {
+            case 'pokemons':
+                return;
+
             case 'labels':
                 $this->catchStatesCacheInvalidatorService->invalidate();
                 $this->typesCacheInvalidatorService->invalidate();
@@ -36,9 +39,6 @@ class CacheInvalidatorService
             case 'dex':
                 $this->dexCacheInvalidatorService->invalidate();
 
-                return;
-
-            case 'pokemons':
                 return;
 
             case 'regional_dex_numbers':
