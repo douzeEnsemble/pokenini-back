@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\User;
 
 use App\Security\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,9 +14,6 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 #[Route('/user')]
 class UserInfoController extends AbstractController
 {
-    public function __construct(
-    ) {}
-
     #[Route('', methods: ['GET'])]
     public function get(): JsonResponse
     {

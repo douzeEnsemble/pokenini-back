@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Labels;
 
 use App\Service\Api\GetLabelsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
