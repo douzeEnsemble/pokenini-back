@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\UserInfo;
+namespace App\Tests\Functional\User;
 
-use App\Controller\UserInfoController;
+use App\Controller\User\UserInfoController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use App\Tests\Functional\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Trainer;
 
 use App\Exception\EmptyContentException;
 use App\Exception\InvalidJsonException;

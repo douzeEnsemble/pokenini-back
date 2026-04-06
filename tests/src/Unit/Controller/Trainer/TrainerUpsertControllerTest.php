@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Controller;
+namespace App\Tests\Unit\Controller\Trainer;
 
-use App\Controller\TrainerUpsertController;
+use App\Controller\Trainer\TrainerUpsertController;
 use App\Exception\EmptyContentException;
 use App\Exception\InvalidJsonException;
 use App\Exception\ModifyFailedException;

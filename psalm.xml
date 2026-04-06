@@ -30,7 +30,7 @@
             <errorLevel type="suppress">
                 <file name="src/Controller/Album/AlbumUpsertController.php" />
                 <file name="src/Controller/Album/AlbumPokedexController.php" />
-                <file name="src/Controller/TrainerUpsertController.php" />
+                <file name="src/Controller/Trainer/TrainerUpsertController.php" />
                 <file name="src/Service/TrainerIdsService.php" />
             </errorLevel>
         </RiskyTruthyFalsyComparison>

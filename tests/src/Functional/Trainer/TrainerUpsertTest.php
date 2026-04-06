@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\TrainerUpsert;
+namespace App\Tests\Functional\Trainer;
 
-use App\Controller\TrainerUpsertController;
+use App\Controller\Trainer\TrainerUpsertController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

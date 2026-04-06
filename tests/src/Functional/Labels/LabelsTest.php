@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Labels;
 
-use App\Controller\LabelsController;
+use App\Controller\Labels\LabelsController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use App\Tests\Functional\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
