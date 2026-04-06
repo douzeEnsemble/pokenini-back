@@ -165,7 +165,7 @@ class GetDexServiceTest extends TestCase
     private function getService(string $trainerId): GetDexService
     {
         $json = (string) file_get_contents(
-            "/var/www/html/tests/resources/unit/service/api/dex_{$trainerId}.json"
+            "/app/tests/resources/unit/service/api/dex_{$trainerId}.json"
         );
 
         return $this->getMockService(
@@ -177,7 +177,7 @@ class GetDexServiceTest extends TestCase
     private function getServiceWithUnreleased(string $trainerId): GetDexService
     {
         $json = (string) file_get_contents(
-            "/var/www/html/tests/resources/unit/service/api/dex_{$trainerId}_unreleased.json"
+            "/app/tests/resources/unit/service/api/dex_{$trainerId}_unreleased.json"
         );
 
         return $this->getMockService(
@@ -189,7 +189,7 @@ class GetDexServiceTest extends TestCase
     private function getServiceWithPremium(string $trainerId): GetDexService
     {
         $json = (string) file_get_contents(
-            "/var/www/html/tests/resources/unit/service/api/dex_{$trainerId}_premium.json"
+            "/app/tests/resources/unit/service/api/dex_{$trainerId}_premium.json"
         );
 
         return $this->getMockService(
@@ -201,7 +201,7 @@ class GetDexServiceTest extends TestCase
     private function getServiceWithUnreleasedAndPremium(string $trainerId): GetDexService
     {
         $json = (string) file_get_contents(
-            "/var/www/html/tests/resources/unit/service/api/dex_{$trainerId}_unreleased_and_premium.json"
+            "/app/tests/resources/unit/service/api/dex_{$trainerId}_unreleased_and_premium.json"
         );
 
         return $this->getMockService(

@@ -54,7 +54,7 @@ class ElectionTopApiServiceTest extends TestCase
 
         $client = $this->createMock(HttpClientInterface::class);
 
-        $json = (string) file_get_contents("/var/www/html/tests/resources/unit/service/api/election_top_{$count}_{$trainerId}_{$dexSlug}_{$electionSlug}.json");
+        $json = (string) file_get_contents("/app/tests/resources/unit/service/api/election_top_{$count}_{$trainerId}_{$dexSlug}_{$electionSlug}.json");
 
         $response = $this->createMock(ResponseInterface::class);
         $response

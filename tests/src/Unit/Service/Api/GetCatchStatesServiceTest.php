@@ -87,7 +87,7 @@ class GetCatchStatesServiceTest extends TestCase
 
         $client = $this->createMock(HttpClientInterface::class);
 
-        $json = (string) file_get_contents('/var/www/html/tests/resources/unit/service/api/catch_states.json');
+        $json = (string) file_get_contents('/app/tests/resources/unit/service/api/catch_states.json');
 
         $response = $this->createMock(ResponseInterface::class);
         $response

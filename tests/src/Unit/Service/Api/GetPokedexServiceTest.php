@@ -25,7 +25,7 @@ class GetPokedexServiceTest extends TestCase
     public function testGet(): void
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/pokedex_lite_123.json'
+            '/app/tests/resources/unit/service/api/pokedex_lite_123.json'
         );
 
         $pokedex = $this
@@ -66,7 +66,7 @@ class GetPokedexServiceTest extends TestCase
     public function testGetTwice(): void
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/pokedex_lite_123.json'
+            '/app/tests/resources/unit/service/api/pokedex_lite_123.json'
         );
 
         $pokedex = $this
@@ -107,7 +107,7 @@ class GetPokedexServiceTest extends TestCase
     public function testGetWithFilters(): void
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/pokedex_lite_123_csyes.json'
+            '/app/tests/resources/unit/service/api/pokedex_lite_123_csyes.json'
         );
 
         $pokedex = $this
@@ -157,7 +157,7 @@ class GetPokedexServiceTest extends TestCase
     public function testGetWithMultiplesFilters(): void
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/pokedex_lite_123.json'
+            '/app/tests/resources/unit/service/api/pokedex_lite_123.json'
         );
 
         $service = $this->getService(
@@ -237,7 +237,7 @@ class GetPokedexServiceTest extends TestCase
     public function testGetWithMultiplesNegativeFilters(): void
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/pokedex_lite_123.json'
+            '/app/tests/resources/unit/service/api/pokedex_lite_123.json'
         );
 
         $pokedex = $this
