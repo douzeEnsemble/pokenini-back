@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\ElectionDex;
+namespace App\Tests\Functional\Election;
 
-use App\Controller\ElectionDexController;
+use App\Controller\Election\ElectionDexController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use App\Tests\Functional\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;

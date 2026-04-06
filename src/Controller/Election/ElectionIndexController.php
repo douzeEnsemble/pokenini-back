@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Election;
 
 use App\AlbumFilters\FromRequest;
 use App\AlbumFilters\Mapping;
