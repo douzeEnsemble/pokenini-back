@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Pokedex;
+namespace App\Tests\Functional\Album;
 
-use App\Controller\PokedexController;
+use App\Controller\Album\AlbumPokedexController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use App\Tests\Functional\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -14,8 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /**
  * @internal
  */
-#[CoversClass(PokedexController::class)]
-class PokedexTest extends WebTestCase
+#[CoversClass(AlbumPokedexController::class)]
+class AlbumPokedexTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
@@ -28,7 +28,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/demo',
+            '/album/demo',
         );
 
         $this->assertResponseIsSuccessful();
@@ -44,7 +44,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/demolite',
+            '/album/demolite',
             [
                 't' => 'f86cbe805674d85f7806b175b70647a6a9334631',
             ],
@@ -63,7 +63,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/demolist3',
+            '/album/demolist3',
             [
                 't' => '159bb9b6d090a313087d2f26135970c2db49ee72',
             ],
@@ -80,7 +80,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/demolist3'
+            '/album/demolist3'
         );
 
         $this->assertResponseIsSuccessful();
@@ -96,7 +96,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/demolite',
+            '/album/demolite',
         );
 
         $this->assertResponseIsSuccessful();
@@ -112,7 +112,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/allshinies'
+            '/album/allshinies'
         );
 
         $this->assertResponseStatusCodeSame(404);
@@ -126,7 +126,7 @@ class PokedexTest extends WebTestCase
             $client,
             'admin',
             'GET',
-            '/pokedex/allshinies'
+            '/album/allshinies'
         );
 
         $this->assertResponseIsSuccessful();
@@ -142,7 +142,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/demomo',
+            '/album/demomo',
             [
                 't' => 'f86cbe805674d85f7806b175b70647a6a9334631',
             ],
@@ -163,7 +163,7 @@ class PokedexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/pokedex/demo',
+            '/album/demo',
             array_merge(
                 [
                     't' => '7b52009b64fd0a2a49e6d8a939753077792b0554',
@@ -279,7 +279,7 @@ class PokedexTest extends WebTestCase
 
         $client->request(
             'GET',
-            '/pokedex/demo',
+            '/album/demo',
         );
 
         $this->assertResponseStatusCodeSame(401);

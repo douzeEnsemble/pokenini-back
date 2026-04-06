@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Controller;
+namespace App\Tests\Unit\Controller\Album;
 
-use App\Controller\PokedexController;
+use App\Controller\Album\AlbumPokedexController;
 use App\Security\User;
 use App\Service\GetTrainerPokedexService;
 use App\Service\TrainerIdsService;
@@ -18,8 +18,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 /**
  * @internal
  */
-#[CoversClass(PokedexController::class)]
-class PokedexControllerTest extends TestCase
+#[CoversClass(AlbumPokedexController::class)]
+class AlbumPokedexControllerTest extends TestCase
 {
     public function testGet(): void
     {
@@ -73,7 +73,7 @@ class PokedexControllerTest extends TestCase
             ->willReturn($tokenStorage)
         ;
 
-        $controller = new PokedexController(
+        $controller = new AlbumPokedexController(
             $trainerIdsService,
             $getTrainerPokedexService
         );
@@ -99,7 +99,7 @@ class PokedexControllerTest extends TestCase
 
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
 
-        $controller = new PokedexController(
+        $controller = new AlbumPokedexController(
             $trainerIdsService,
             $getTrainerPokedexService
         );
@@ -129,7 +129,7 @@ class PokedexControllerTest extends TestCase
             ->willReturn(null)
         ;
 
-        $controller = new PokedexController(
+        $controller = new AlbumPokedexController(
             $trainerIdsService,
             $getTrainerPokedexService
         );
@@ -166,7 +166,7 @@ class PokedexControllerTest extends TestCase
             ])
         ;
 
-        $controller = new PokedexController(
+        $controller = new AlbumPokedexController(
             $trainerIdsService,
             $getTrainerPokedexService
         );
@@ -198,7 +198,7 @@ class PokedexControllerTest extends TestCase
             ])
         ;
 
-        $controller = new PokedexController(
+        $controller = new AlbumPokedexController(
             $trainerIdsService,
             $getTrainerPokedexService
         );
