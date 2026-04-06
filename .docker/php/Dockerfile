@@ -68,6 +68,10 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers \
 	&& docker-php-ext-enable xdebug \
 	&& apk del .build-deps
 
+COPY --link \
+    --from=ghcr.io/symfony-cli/symfony-cli:5.16.1 \
+    /usr/local/bin/symfony /usr/local/bin/symfony
+
 ## < Install chromedriver
 ENV PANTHER_NO_SANDBOX=1
 ENV PANTHER_NO_REDUCED_MOTION=1
