@@ -53,13 +53,16 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
                 throw new BadCredentialsException('Token is invalid, maybe expired');
             }
 
-            /** @var string $userId */
+            /** @var non-empty-string $userId */
             $userId = $authUser->getId();
 
             return $this->loadUserFromLists($userId, $provider);
         });
     }
 
+    /**
+     * @param non-empty-string $identifier
+     */
     private function loadUserFromLists(string $identifier, string $provider): User
     {
         $user = new User($identifier, $provider);

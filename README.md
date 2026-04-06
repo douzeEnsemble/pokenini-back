@@ -83,15 +83,6 @@ make bash
 tools/psalm/vendor/bin/psalm --set-baseline --update-baseline
 ```
 
-#### PHPStan
-
-To update the `phpstan-baseline.neon` file
-
-```
-make bash
-tools/phpstan/vendor/bin/phpstan --generate-baseline --memory-limit=-1
-```
-
 ### Docker Image build
 
 ```shell

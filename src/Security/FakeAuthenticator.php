@@ -32,6 +32,9 @@ class FakeAuthenticator extends OAuth2Authenticator
     #[\Override]
     public function authenticate(Request $request): Passport
     {
+        /**
+         * @var non-empty-string $identifier
+         */
         $identifier = $request->query->getString('t');
 
         return new SelfValidatingPassport(

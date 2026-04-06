@@ -36,6 +36,9 @@ trait AuthenticatorTrait
         return new Response($message, Response::HTTP_FORBIDDEN);
     }
 
+    /**
+     * @param non-empty-string $identifier
+     */
     private function loadUserFromLists(string $identifier, string $providerName): User
     {
         $user = new User($identifier, $providerName);

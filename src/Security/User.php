@@ -11,6 +11,9 @@ class User implements UserInterface
     /** @var string[] */
     private array $roles = ['ROLE_USER'];
 
+    /**
+     * @param non-empty-string $identifier
+     */
     public function __construct(
         private readonly string $identifier,
         private readonly string $provider,
