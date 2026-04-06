@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Controller;
+namespace App\Tests\Unit\Controller\Admin;
 
-use App\Controller\AbstractAdminActionController;
-use App\Controller\AdminActionCalculateController;
+use App\Controller\Admin\AbstractAdminActionController;
+use App\Controller\Admin\AdminActionInvalidateController;
 use App\Service\Api\AdminActionService;
 use App\Service\CacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -16,8 +16,8 @@ use Psr\Log\LoggerInterface;
  * @internal
  */
 #[CoversClass(AbstractAdminActionController::class)]
-#[CoversClass(AdminActionCalculateController::class)]
-class AdminActionCalculateControllerTest extends TestCase
+#[CoversClass(AdminActionInvalidateController::class)]
+class AdminActionInvalidateControllerTest extends TestCase
 {
     public function testAction(): void
     {
@@ -30,9 +30,12 @@ class AdminActionCalculateControllerTest extends TestCase
 
         $adminActionService = $this->createMock(AdminActionService::class);
         $adminActionService
-            ->expects($this->once())
+            ->expects($this->never())
             ->method('calculate')
-            ->with('something')
+        ;
+        $adminActionService
+            ->expects($this->never())
+            ->method('update')
         ;
 
         $logger = $this->createMock(LoggerInterface::class);
@@ -41,7 +44,7 @@ class AdminActionCalculateControllerTest extends TestCase
             ->method('critical')
         ;
 
-        $controller = new AdminActionCalculateController(
+        $controller = new AdminActionInvalidateController(
             $cacheInvalidatorService,
             $adminActionService,
             $logger
@@ -52,19 +55,19 @@ class AdminActionCalculateControllerTest extends TestCase
         $this->assertSame(202, $response->getStatusCode());
     }
 
-    public function testFailCalculateLogs(): void
+    public function testFailInvalidateLogs(): void
     {
         $cacheInvalidatorService = $this->createMock(CacheInvalidatorService::class);
         $cacheInvalidatorService
-            ->expects($this->never())
+            ->expects($this->once())
             ->method('invalidate')
+            ->willThrowException(new \Exception('Aouch'))
         ;
 
         $adminActionService = $this->createMock(AdminActionService::class);
         $adminActionService
-            ->expects($this->once())
+            ->expects($this->never())
             ->method('calculate')
-            ->willThrowException(new \Exception('Aouch'))
         ;
         $adminActionService
             ->expects($this->never())
@@ -79,12 +82,12 @@ class AdminActionCalculateControllerTest extends TestCase
                 $this->equalTo('Aouch'),
                 $this->equalTo([
                     'name' => 'something',
-                    'action' => 'calculate',
+                    'action' => 'invalidate',
                 ])
             )
         ;
 
-        $controller = new AdminActionCalculateController(
+        $controller = new AdminActionInvalidateController(
             $cacheInvalidatorService,
             $adminActionService,
             $logger

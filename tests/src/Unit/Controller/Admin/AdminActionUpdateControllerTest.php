@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Controller;
+namespace App\Tests\Unit\Controller\Admin;
 
-use App\Controller\AbstractAdminActionController;
-use App\Controller\AdminActionUpdateController;
+use App\Controller\Admin\AbstractAdminActionController;
+use App\Controller\Admin\AdminActionUpdateController;
 use App\Service\Api\AdminActionService;
 use App\Service\CacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;

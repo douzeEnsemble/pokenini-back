@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests\Functional\Admin;
+
+use App\Controller\Admin\AdminReportsController;
+use App\Tests\Functional\Trait\ClientRequestTrait;
+use App\Tests\Functional\Trait\JsonResponseTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+/**
+ * @internal
+ */
+#[CoversClass(AdminReportsController::class)]
+class ReportsTest extends WebTestCase
+{
+    use ClientRequestTrait;
+    use JsonResponseTrait;
+
+    public function testGetReports(): void
+    {
+        $client = static::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'admin',
+            'GET',
+            '/istration/reports',
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertResponseContent($client, 'Admin/reports.json');
+    }
+
+    public function testGetActionLogsNonAuthenticated(): void
+    {
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            '/istration/reports',
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
+}
