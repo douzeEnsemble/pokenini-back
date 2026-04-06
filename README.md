@@ -72,17 +72,6 @@ file_put_contents(
 /**/
 ```
 
-### Update baselines
-
-#### Psalm
-
-To update the `psalm-baseline.xml` file
-
-```
-make bash
-tools/psalm/vendor/bin/psalm --set-baseline --update-baseline
-```
-
 ### Docker Image build
 
 ```shell
