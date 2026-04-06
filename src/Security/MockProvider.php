@@ -15,57 +15,69 @@ class MockProvider extends AbstractProvider
         return 'http://moco.oauth2/authorize';
     }
 
-    #[\Override]
     /**
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     *
+     * @param array<string, mixed> $params
      */
+    #[\Override]
     public function getBaseAccessTokenUrl(array $params)
     {
         return 'http://moco.oauth2/token';
     }
 
-    #[\Override]
     /**
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      *
      * @param mixed $token
      */
+    #[\Override]
     public function getResourceOwnerDetailsUrl($token)
     {
         return 'http://moco.oauth2/userinfo';
     }
 
+    /**
+     * @return string[]
+     */
     #[\Override]
     protected function getDefaultScopes()
     {
         return ['openid'];
     }
 
-    #[\Override]
     /**
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      *
-     * @param mixed $data
+     * @param array<string, mixed>|string $data
      */
+    #[\Override]
     protected function checkResponse(ResponseInterface $response, $data)
     {
         // nothing
     }
 
-    #[\Override]
     /**
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     *
+     * @param array<string, mixed> $response
      */
+    #[\Override]
     protected function createResourceOwner(array $response, AccessToken $token)
     {
         return new GenericResourceOwner($response, 'id');
     }
 
+    /**
+     * @param null|AccessToken $token
+     *
+     * @return array<string, string>
+     */
     #[\Override]
     protected function getAuthorizationHeaders($token = null)
     {
         return [
-            'Authorization' => 'Bearer '.$token->getToken(),
+            'Authorization' => 'Bearer '.$token->getToken(), // @phpstan-ignore method.nonObject
         ];
     }
 }

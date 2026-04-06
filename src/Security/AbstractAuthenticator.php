@@ -44,7 +44,7 @@ abstract class AbstractAuthenticator extends OAuth2Authenticator
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 $authUser = $client->fetchUserFromToken($accessToken);
 
-                /** @var string $userId */
+                /** @var non-empty-string $userId */
                 $userId = $authUser->getId();
 
                 return $this->loadUserFromLists($userId, $this->getProviderName());
