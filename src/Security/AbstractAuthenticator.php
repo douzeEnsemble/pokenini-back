@@ -32,6 +32,9 @@ abstract class AbstractAuthenticator extends OAuth2Authenticator
     }
 
     #[\Override]
+    /**
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     */
     public function authenticate(Request $request): Passport
     {
         $client = $this->clientRegistry->getClient($this->getProviderCode());
