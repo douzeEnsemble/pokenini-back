@@ -128,7 +128,7 @@ class GetElectionDexServiceTest extends TestCase
     private function getService(): GetElectionDexService
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/election_dex.json'
+            '/app/tests/resources/unit/service/api/election_dex.json'
         );
 
         return $this->getMockService(
@@ -140,7 +140,7 @@ class GetElectionDexServiceTest extends TestCase
     private function getServiceWithPremium(): GetElectionDexService
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/election_dex_premium.json'
+            '/app/tests/resources/unit/service/api/election_dex_premium.json'
         );
 
         return $this->getMockService(
@@ -152,7 +152,7 @@ class GetElectionDexServiceTest extends TestCase
     private function getServiceWithUnreleasedAndPremium(): GetElectionDexService
     {
         $json = (string) file_get_contents(
-            '/var/www/html/tests/resources/unit/service/api/election_dex_unreleased_and_premium.json'
+            '/app/tests/resources/unit/service/api/election_dex_unreleased_and_premium.json'
         );
 
         return $this->getMockService(

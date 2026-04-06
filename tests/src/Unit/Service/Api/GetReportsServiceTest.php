@@ -49,7 +49,7 @@ class GetReportsServiceTest extends TestCase
 
         $client = $this->createMock(HttpClientInterface::class);
 
-        $json = (string) file_get_contents('/var/www/html/tests/resources/unit/service/api/reports.json');
+        $json = (string) file_get_contents('/app/tests/resources/unit/service/api/reports.json');
 
         $response = $this->createMock(ResponseInterface::class);
         $response

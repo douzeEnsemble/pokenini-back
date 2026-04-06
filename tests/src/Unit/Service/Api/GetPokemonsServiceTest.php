@@ -139,7 +139,7 @@ class GetPokemonsServiceTest extends TestCase
 
         $client = $this->createMock(HttpClientInterface::class);
 
-        $dir = '/var/www/html/tests/resources/unit/service/api';
+        $dir = '/app/tests/resources/unit/service/api';
         $json = (string) file_get_contents(
             "{$dir}/pokemons_to{$listType}_{$trainerExternalId}_{$dexSlug}_{$electionSlug}_{$count}{$filtersStr}.json"
         );

@@ -1,6 +1,6 @@
 FROM php:8.5.4-fpm-alpine3.23 AS php_base
 
-WORKDIR /var/www/html
+WORKDIR /app
 
 EXPOSE 9000
 
@@ -75,7 +75,7 @@ COPY --link \
 ## < Install chromedriver
 ENV PANTHER_NO_SANDBOX=1
 ENV PANTHER_NO_REDUCED_MOTION=1
-ENV PANTHER_ERROR_SCREENSHOT_DIR=/var/www/html/var/screenshots
+ENV PANTHER_ERROR_SCREENSHOT_DIR=/app/var/screenshots
 ENV PANTHER_DEVTOOLS=disabled
 ENV PANTHER_CHROME_ARGUMENTS='--disable-dev-shm-usage'
 ENV GNUPGHOME=/usr/local/share/gnupg
