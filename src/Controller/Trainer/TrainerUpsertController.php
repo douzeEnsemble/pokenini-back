@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Trainer;
 
+use App\Exception\DexNotFoundException;
 use App\Exception\EmptyContentException;
 use App\Exception\InvalidJsonException;
 use App\Exception\ModifyFailedException;
@@ -37,9 +38,10 @@ final class TrainerUpsertController extends AbstractController
             return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 
-        $pokedex = $this->getTrainerPokedexService->getPokedexData($dexSlug, []);
-        if (null === $pokedex || empty($pokedex['dex'])) {
-            return new JsonResponse([], 404);
+        try {
+            $pokedex = $this->getTrainerPokedexService->getPokedexData($dexSlug, []);
+        } catch (DexNotFoundException $e) {
+            return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 
         $dex = $pokedex['dex'];

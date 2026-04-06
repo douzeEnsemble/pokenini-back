@@ -14,34 +14,18 @@
         <directory name="tests" />
         <ignoreFiles>
             <directory name="vendor" />
-          <file name="src/Kernel.php" />
+            <file name="src/Kernel.php" />
             <file name="tests/bootstrap.php" />
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <PropertyNotSetInConstructor errorLevel="suppress" />
-        <RiskyCast>
+        <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
-                <file name="src/DTO/ActionLog.php" />
+                <directory name="src/Controller" />
+                <directory name="tests/src/Unit" />
             </errorLevel>
-        </RiskyCast>
-        <RiskyTruthyFalsyComparison>
-            <errorLevel type="suppress">
-                <file name="src/Controller/Album/AlbumUpsertController.php" />
-                <file name="src/Controller/Album/AlbumPokedexController.php" />
-                <file name="src/Controller/Trainer/TrainerUpsertController.php" />
-                <file name="src/Service/TrainerIdsService.php" />
-            </errorLevel>
-        </RiskyTruthyFalsyComparison>
-        <InvalidArgument>
-            <errorLevel type="suppress">
-                <file name="tests/src/Unit/DTO/ElectionVoteTest.php" />
-                <file name="tests/src/Unit/DTO/ElectionMetricsTest.php" />
-                <file name="tests/src/Unit/DTO/ElectionPokemonsListTest.php" />
-            </errorLevel>
-        </InvalidArgument>
-
+        </PropertyNotSetInConstructor>
 
         <ClassMustBeFinal>
             <errorLevel type="suppress">

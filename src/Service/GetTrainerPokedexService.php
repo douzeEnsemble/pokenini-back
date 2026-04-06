@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Exception\DexNotFoundException;
 use App\Security\UserTokenService;
 use App\Service\Api\GetPokedexService;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -19,9 +20,9 @@ class GetTrainerPokedexService
     /**
      * @param string[]|string[][] $filters
      *
-     * @return null|string[][]
+     * @return string[][]
      */
-    public function getPokedexData(string $dexSlug, array $filters): ?array
+    public function getPokedexData(string $dexSlug, array $filters): array
     {
         $trainerId = $this->userTokenService->getLoggedUserToken();
 
@@ -31,14 +32,21 @@ class GetTrainerPokedexService
     /**
      * @param string[]|string[][] $filters
      *
-     * @return null|string[][]
+     * @return string[][]
      */
-    public function getPokedexDataByTrainerId(string $dexSlug, array $filters, string $trainerId): ?array
+    public function getPokedexDataByTrainerId(string $dexSlug, array $filters, string $trainerId): array
     {
         try {
-            return $this->getPokedexService->get($dexSlug, $trainerId, $filters);
+            $data = $this->getPokedexService->get($dexSlug, $trainerId, $filters);
+
+            /** @psalm-suppress RiskyTruthyFalsyComparison */
+            if (empty($data['dex'])) {
+                throw new DexNotFoundException();
+            }
+
+            return $data;
         } catch (HttpExceptionInterface|TransportExceptionInterface $e) {
-            return null;
+            throw new DexNotFoundException();
         }
     }
 }

@@ -9,6 +9,9 @@ use League\OAuth2\Client\Provider\GenericResourceOwner;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 class MockProvider extends AbstractProvider
 {
     #[\Override]

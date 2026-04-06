@@ -6,6 +6,7 @@ namespace App\Controller\Election;
 
 use App\AlbumFilters\FromRequest;
 use App\AlbumFilters\Mapping;
+use App\Exception\DexNotFoundException;
 use App\Service\ElectionMetricsService;
 use App\Service\ElectionTopService;
 use App\Service\GetPokemonsListService;
@@ -45,7 +46,12 @@ final class ElectionIndexController extends AbstractController
 
         $list = $getPokemonsListService->get($dexSlug, $electionSlug, $apiFilters);
         $metrics = $metricsService->getMetrics($dexSlug, $electionSlug);
-        $pokedex = $getTrainerPokedexService->getPokedexData($dexSlug, $apiFilters);
+
+        try {
+            $pokedex = $getTrainerPokedexService->getPokedexData($dexSlug, $apiFilters);
+        } catch (DexNotFoundException $e) {
+            $pokedex = null;
+        }
 
         $detachedCount = 0;
         foreach ($electionTop as $pokemon) {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Controller\Trainer;
 
 use App\Controller\Trainer\TrainerUpsertController;
+use App\Exception\DexNotFoundException;
 use App\Exception\EmptyContentException;
 use App\Exception\InvalidJsonException;
 use App\Exception\ModifyFailedException;
@@ -191,7 +192,7 @@ final class TrainerUpsertControllerTest extends TestCase
             ->expects($this->once())
             ->method('getPokedexData')
             ->with('douze', [])
-            ->willReturn(null)
+            ->willThrowException(new DexNotFoundException())
         ;
 
         $modifyTrainerDexService = $this->createMock(ModifyTrainerDexService::class);
@@ -238,9 +239,7 @@ final class TrainerUpsertControllerTest extends TestCase
             ->expects($this->once())
             ->method('getPokedexData')
             ->with('douze', [])
-            ->willReturn([
-                'pokemons' => [],
-            ])
+            ->willThrowException(new DexNotFoundException())
         ;
 
         $modifyTrainerDexService = $this->createMock(ModifyTrainerDexService::class);

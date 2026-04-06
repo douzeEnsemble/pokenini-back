@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Controller\Album;
 
 use App\Controller\Album\AlbumPokedexController;
+use App\Exception\DexNotFoundException;
 use App\Security\User;
 use App\Service\GetTrainerPokedexService;
 use App\Service\TrainerIdsService;
@@ -109,7 +110,7 @@ final class AlbumPokedexControllerTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
-    public function testGetWithNullPokedex(): void
+    public function testGetDexNotFound(): void
     {
         $trainerIdsService = $this->createMock(TrainerIdsService::class);
         $trainerIdsService
@@ -126,76 +127,7 @@ final class AlbumPokedexControllerTest extends TestCase
         $getTrainerPokedexService
             ->expects($this->once())
             ->method('getPokedexDataByTrainerId')
-            ->willReturn(null)
-        ;
-
-        $controller = new AlbumPokedexController(
-            $trainerIdsService,
-            $getTrainerPokedexService
-        );
-
-        $response = $controller->get(new Request(), 'machi');
-
-        $this->assertEquals(404, $response->getStatusCode());
-    }
-
-    public function testGetWithNonSetDexPokedex(): void
-    {
-        $trainerIdsService = $this->createMock(TrainerIdsService::class);
-        $trainerIdsService
-            ->expects($this->once())
-            ->method('init')
-        ;
-        $trainerIdsService
-            ->expects($this->once())
-            ->method('getTrainerId')
-            ->willReturn('douze')
-        ;
-
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
-        $getTrainerPokedexService
-            ->expects($this->once())
-            ->method('getPokedexDataByTrainerId')
-            ->willReturn([
-                'dexes' => [
-                    'slug' => 'machi',
-                    'name' => 'Machi Pokedex',
-                    'is_private' => false,
-                    'is_released' => true,
-                ],
-            ])
-        ;
-
-        $controller = new AlbumPokedexController(
-            $trainerIdsService,
-            $getTrainerPokedexService
-        );
-
-        $response = $controller->get(new Request(), 'machi');
-
-        $this->assertEquals(404, $response->getStatusCode());
-    }
-
-    public function testGetWithEmptyDexPokedex(): void
-    {
-        $trainerIdsService = $this->createMock(TrainerIdsService::class);
-        $trainerIdsService
-            ->expects($this->once())
-            ->method('init')
-        ;
-        $trainerIdsService
-            ->expects($this->once())
-            ->method('getTrainerId')
-            ->willReturn('douze')
-        ;
-
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
-        $getTrainerPokedexService
-            ->expects($this->once())
-            ->method('getPokedexDataByTrainerId')
-            ->willReturn([
-                'dex' => [],
-            ])
+            ->willThrowException(new DexNotFoundException())
         ;
 
         $controller = new AlbumPokedexController(

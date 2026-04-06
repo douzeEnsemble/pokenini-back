@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Api;
 
-class GetLabelsService extends AbstractApiService
+class GetLabelsService
 {
     public function __construct(
         private readonly GetCatchStatesService $getCatchStatesService,
