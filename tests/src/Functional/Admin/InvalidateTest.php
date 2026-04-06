@@ -8,11 +8,13 @@ use App\Controller\Admin\AdminActionInvalidateController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(AdminActionInvalidateController::class)]
 class InvalidateTest extends WebTestCase
 {

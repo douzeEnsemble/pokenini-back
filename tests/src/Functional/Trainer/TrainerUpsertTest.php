@@ -7,11 +7,13 @@ namespace App\Tests\Functional\Trainer;
 use App\Controller\Trainer\TrainerUpsertController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(TrainerUpsertController::class)]
 class TrainerUpsertTest extends WebTestCase
 {

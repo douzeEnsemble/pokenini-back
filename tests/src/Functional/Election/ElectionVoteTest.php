@@ -7,11 +7,13 @@ namespace App\Tests\Functional\Election;
 use App\Controller\Election\ElectionVoteController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(ElectionVoteController::class)]
 class ElectionVoteTest extends WebTestCase
 {
