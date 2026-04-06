@@ -321,7 +321,7 @@ composer-audit: composer
 
 .PHONY: security-check
 security-check: ## Execute Symfony Security Checker
-security-check: 
+security-check:
 	@$(PHP_CONT) symfony security:check
 
 ## —— Cleaning 🧽 ———————————————————————————————————————————————————————————————
