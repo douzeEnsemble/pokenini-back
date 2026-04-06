@@ -91,7 +91,7 @@ trait AuthenticatorOnAuthentificationTestTrait
     }
 
     /**
-     * @param string[] $routes
+     * @param array<int, string> $routes
      */
     private function getOnAuthenticationAuthenticator(
         array $routes = []

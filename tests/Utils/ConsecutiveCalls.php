@@ -10,14 +10,32 @@ final class ConsecutiveCalls
 {
     private int $invocationCount = 0;
 
+    /**
+     * @var array<int, array<int|string, mixed>>
+     */
     private array $consecutiveCallArguments;
 
-    function __construct(array ...$consecutiveCallArguments)
+    /**
+     * @param array<int|string, mixed> ...$consecutiveCallArguments
+     */
+    public function __construct(array ...$consecutiveCallArguments)
     {
-        $this->consecutiveCallArguments = $consecutiveCallArguments;
+        $this->consecutiveCallArguments = array_values($consecutiveCallArguments);
     }
 
-    function __invoke(...$actualArguments)
+    public function __destruct()
+    {
+        Assert::assertSame(
+            $expectedCalls = count($this->consecutiveCallArguments),
+            $this->invocationCount,
+            sprintf('Expected %d calls, called %d times', $expectedCalls, $this->invocationCount)
+        );
+    }
+
+    /**
+     * @param array<int, array<int, mixed>> $actualArguments
+     */
+    public function __invoke(array ...$actualArguments): mixed
     {
         $callIndex = $this->invocationCount++;
         $expectedArguments = $this->consecutiveCallArguments[$callIndex];
@@ -34,14 +52,5 @@ final class ConsecutiveCalls
         );
 
         return $returnValue;
-    }
-
-    function __destruct()
-    {
-        Assert::assertSame(
-            $expectedCalls = count($this->consecutiveCallArguments),
-            $this->invocationCount,
-            sprintf('Expected %d calls, called %d times', $expectedCalls, $this->invocationCount)
-        );
     }
 }

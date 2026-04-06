@@ -82,7 +82,7 @@ class AdminActionServiceTest extends TestCase
                     ],
                 ],
                 [
-                    "Response status code: 200",
+                    'Response status code: 200',
                     [
                         'response' => $json,
                     ],

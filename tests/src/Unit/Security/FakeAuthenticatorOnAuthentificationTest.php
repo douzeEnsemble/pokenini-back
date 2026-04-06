@@ -93,7 +93,7 @@ class FakeAuthenticatorOnAuthentificationTest extends TestCase
     }
 
     /**
-     * @param string[] $routes
+     * @param array<int, string> $routes
      */
     private function getFakeAuthenticator(
         array $routes = []
