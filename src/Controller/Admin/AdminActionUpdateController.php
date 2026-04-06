@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/istration/action/update')]
-class AdminActionUpdateController extends AbstractAdminActionController
+final class AdminActionUpdateController extends AbstractAdminActionController
 {
+    #[\Override()]
     #[Route(
         '/{name}',
         methods: ['POST'],

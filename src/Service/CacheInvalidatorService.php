@@ -24,21 +24,27 @@ class CacheInvalidatorService
 
     public function invalidate(string $type): void
     {
-        $labelsInvalidator = function () {
+        $labelsInvalidator = function (): void {
             $this->catchStatesCacheInvalidatorService->invalidate();
             $this->typesCacheInvalidatorService->invalidate();
             $this->formsCacheInvalidatorService->invalidate();
         };
-        $albumsInvalidator = fn () => $this->albumsCacheInvalidatorService->invalidate();
-        $dexInvalidator = fn () => $this->dexCacheInvalidatorService->invalidate();
-        $dexAvailabilitiesInvalidator = function () {
+        $albumsInvalidator = function (): void {
+            $this->albumsCacheInvalidatorService->invalidate();
+        };
+        $dexInvalidator = function (): void {
+            $this->dexCacheInvalidatorService->invalidate();
+        };
+        $dexAvailabilitiesInvalidator = function (): void {
             $this->dexCacheInvalidatorService->invalidate();
             $this->albumsCacheInvalidatorService->invalidate();
         };
-        $reportsInvalidator = fn () => $this->reportsCacheInvalidatorService->invalidate();
+        $reportsInvalidator = function (): void {
+            $this->reportsCacheInvalidatorService->invalidate();
+        };
 
         $map = [
-            'pokemons' => fn () => null,
+            'pokemons' => fn (): null => null,
             'labels' => $labelsInvalidator,
             'games_collections_and_dex' => $dexInvalidator,
             'dex' => $dexInvalidator,

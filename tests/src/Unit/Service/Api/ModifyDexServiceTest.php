@@ -16,7 +16,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * @internal
  */
 #[CoversClass(ModifyDexService::class)]
-class ModifyDexServiceTest extends TestCase
+final class ModifyDexServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

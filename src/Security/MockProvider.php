@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
@@ -18,7 +20,7 @@ class MockProvider extends AbstractProvider
     /**
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      *
-     * @param array<string, mixed> $params
+     * @param array<array-key, mixed> $params
      */
     #[\Override]
     public function getBaseAccessTokenUrl(array $params)
@@ -49,7 +51,7 @@ class MockProvider extends AbstractProvider
     /**
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      *
-     * @param array<string, mixed>|string $data
+     * @param array<array-key, mixed>|string $data
      */
     #[\Override]
     protected function checkResponse(ResponseInterface $response, $data)
@@ -60,7 +62,7 @@ class MockProvider extends AbstractProvider
     /**
      * @SuppressWarnings("PHPMD.UnusedFormalParameter")
      *
-     * @param array<string, mixed> $response
+     * @param array<array-key, mixed> $response
      */
     #[\Override]
     protected function createResourceOwner(array $response, AccessToken $token)
@@ -69,15 +71,23 @@ class MockProvider extends AbstractProvider
     }
 
     /**
-     * @param null|AccessToken $token
+     * @param null|mixed $token
      *
      * @return array<string, string>
      */
     #[\Override]
     protected function getAuthorizationHeaders($token = null)
     {
+        /**
+         * @psalm-suppress MixedMethodCall
+         * @psalm-suppress MixedOperand
+         * @psalm-suppress PossiblyNullReference
+         */
         return [
-            'Authorization' => 'Bearer '.$token->getToken(), // @phpstan-ignore method.nonObject
+            /**
+             * @phpstan-ignore method.nonObject
+             */
+            'Authorization' => 'Bearer '.$token->getToken(),
         ];
     }
 }

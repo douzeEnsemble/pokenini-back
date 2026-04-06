@@ -15,13 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(TrainerUpsertController::class)]
-class TrainerUpsertTest extends WebTestCase
+final class TrainerUpsertTest extends WebTestCase
 {
     use ClientRequestTrait;
 
     public function testUpsert(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -39,7 +39,7 @@ class TrainerUpsertTest extends WebTestCase
 
     public function testUpsertOnlyPrivate(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -57,7 +57,7 @@ class TrainerUpsertTest extends WebTestCase
 
     public function testUpsertOnlyOnHome(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -75,7 +75,7 @@ class TrainerUpsertTest extends WebTestCase
 
     public function testUpsertOnPremiumDexAsCollector(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -93,7 +93,7 @@ class TrainerUpsertTest extends WebTestCase
 
     public function testUpsertOnPremiumDexAsTrainer(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -111,7 +111,7 @@ class TrainerUpsertTest extends WebTestCase
 
     public function testUpsertBadRequest(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -132,7 +132,7 @@ class TrainerUpsertTest extends WebTestCase
 
     public function testUpsertFail(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -153,7 +153,7 @@ class TrainerUpsertTest extends WebTestCase
 
     public function testUpsertNonAuthenticated(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'PUT',

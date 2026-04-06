@@ -4,19 +4,35 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Security;
 
+use App\Security\AbstractAuthenticator;
 use App\Security\MockAuthenticator;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @internal
  */
 #[CoversClass(MockAuthenticator::class)]
-class MockAuthenticatorTest extends AbstractAuthenticatorTesting
+final class MockAuthenticatorTest extends AbstractAuthenticatorTesting
 {
     #[\Override]
-    protected function getAuthenticatorClassName(): string
-    {
-        return MockAuthenticator::class;
+    protected function instanciate(
+        ClientRegistry $clientRegistry,
+        RouterInterface $router,
+        string $listAdmin,
+        string $listTrainer,
+        string $listCollector,
+        bool $isInvitationRequired,
+    ): AbstractAuthenticator {
+        return new MockAuthenticator(
+            $clientRegistry,
+            $router,
+            $listAdmin,
+            $listTrainer,
+            $listCollector,
+            $isInvitationRequired,
+        );
     }
 
     #[\Override]

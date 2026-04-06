@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/labels')]
-class LabelsController extends AbstractController
+final class LabelsController extends AbstractController
 {
     public function __construct(
         private readonly GetLabelsService $getLabelsService,

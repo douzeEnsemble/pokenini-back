@@ -16,14 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AdminActionInvalidateController::class)]
-class InvalidateTest extends WebTestCase
+final class InvalidateTest extends WebTestCase
 {
     use ClientRequestTrait;
 
     #[DataProvider('providerInvalidateSuccess')]
     public function testInvalidateSuccess(string $name): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -64,7 +64,7 @@ class InvalidateTest extends WebTestCase
     #[DataProvider('providerInvalidateNotExists')]
     public function testInvalidateNotExists(string $name): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -100,7 +100,7 @@ class InvalidateTest extends WebTestCase
 
     public function testUnknown(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -114,7 +114,7 @@ class InvalidateTest extends WebTestCase
 
     public function testNonAuthenticate(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request('DELETE', '/istration/action/invalidate/labels');
 
@@ -123,7 +123,7 @@ class InvalidateTest extends WebTestCase
 
     public function testNoProvider(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'DELETE',
@@ -140,7 +140,7 @@ class InvalidateTest extends WebTestCase
 
     public function testNonAdmin(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,

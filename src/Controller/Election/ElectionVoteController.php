@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/election')]
-class ElectionVoteController extends AbstractController
+final class ElectionVoteController extends AbstractController
 {
     #[Route(
         '/{dexSlug}/{electionSlug}',
@@ -38,7 +38,7 @@ class ElectionVoteController extends AbstractController
             );
         }
 
-        /** @var string[]|string[][] $data */
+        /** @var array<string, array<int, string>|string> $data */
         $data = array_merge(
             [
                 'dex_slug' => $dexSlug,

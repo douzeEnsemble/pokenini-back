@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  * @internal
  */
 #[CoversClass(GetFormsService::class)]
-class GetFormsServiceTest extends TestCase
+final class GetFormsServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

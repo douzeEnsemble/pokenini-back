@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  * @internal
  */
 #[CoversClass(GetElectionDexService::class)]
-class GetElectionDexServiceTest extends TestCase
+final class GetElectionDexServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

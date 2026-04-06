@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/election')]
-class ElectionIndexController extends AbstractController
+final class ElectionIndexController extends AbstractController
 {
     #[Route(
         '/{dexSlug}/{electionSlug}',

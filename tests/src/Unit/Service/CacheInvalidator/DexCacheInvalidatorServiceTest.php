@@ -15,7 +15,7 @@ use Symfony\Contracts\Cache\ItemInterface;
  * @internal
  */
 #[CoversClass(DexCacheInvalidatorService::class)]
-class DexCacheInvalidatorServiceTest extends TestCase
+final class DexCacheInvalidatorServiceTest extends TestCase
 {
     public function testInvalidate(): void
     {

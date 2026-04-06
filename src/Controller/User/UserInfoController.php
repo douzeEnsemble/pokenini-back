@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 #[Route('/user')]
-class UserInfoController extends AbstractController
+final class UserInfoController extends AbstractController
 {
     #[Route('', methods: ['GET'])]
     public function get(): JsonResponse

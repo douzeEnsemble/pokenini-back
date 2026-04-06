@@ -17,14 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AlbumPokedexController::class)]
-class AlbumPokedexTest extends WebTestCase
+final class AlbumPokedexTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
 
     public function testGet(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -40,7 +40,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetForAPublicDex(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -59,7 +59,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetForAPrivateDex(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -76,7 +76,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetForAnOwnPrivateDex(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -92,7 +92,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetForAnOwnPublicDex(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -108,7 +108,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetForANonReleasedDexAsTrainer(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -122,7 +122,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetForANonReleasedDexAsAdmin(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -138,7 +138,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetNonExistingDex(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -159,7 +159,7 @@ class AlbumPokedexTest extends WebTestCase
     #[DataProvider('getFilteredProvider')]
     public function testGetFiltered(array $parameters, string $filename): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -277,7 +277,7 @@ class AlbumPokedexTest extends WebTestCase
 
     public function testGetNonAuthentificated(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'GET',

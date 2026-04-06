@@ -16,7 +16,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
  * @internal
  */
 #[CoversClass(GetTrainerPokedexService::class)]
-class GetTrainerPokedexServiceTest extends TestCase
+final class GetTrainerPokedexServiceTest extends TestCase
 {
     public function testGetPokedexData(): void
     {

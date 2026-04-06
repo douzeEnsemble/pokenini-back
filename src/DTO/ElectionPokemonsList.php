@@ -11,7 +11,7 @@ final class ElectionPokemonsList
     public string $type;
 
     /**
-     * @var array{null|int|string}
+     * @var array<array<string, null|int|string>>
      */
     public array $items;
 
@@ -23,6 +23,10 @@ final class ElectionPokemonsList
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
 
+        /** @var array{
+         *  type: string,
+         *  items: array<array<string, null|int|string>>,
+         * } $options */
         $options = $resolver->resolve($values);
 
         $this->type = $options['type'];

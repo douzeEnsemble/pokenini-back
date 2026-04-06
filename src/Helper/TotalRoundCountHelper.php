@@ -19,21 +19,23 @@ final class TotalRoundCountHelper
             return 0;
         }
 
-        $totalScreens = 0;
-        $currentCount = $dexTotalCount;
+        $floatyPerViewCount = (float) $perViewCount;
+
+        $totalScreens = 0.0;
+        $currentCount = (float) $dexTotalCount;
 
         while ($currentCount > 0) {
-            $screensInCurrentRound = ceil($currentCount / $perViewCount);
+            $screensInCurrentRound = ceil($currentCount / $floatyPerViewCount);
             $totalScreens += $screensInCurrentRound;
 
             $currentCount = round(
-                (floor($currentCount / $perViewCount) * $winnerAverage)
-                + (($currentCount % $perViewCount) / ($perViewCount / $winnerAverage))
+                (floor($currentCount / $floatyPerViewCount) * $winnerAverage)
+                + ((float) ($currentCount % $floatyPerViewCount) / ($floatyPerViewCount / $winnerAverage))
             );
 
             if (round($winnerAverage) >= $currentCount) {
                 // +1 because of the screen when you have the last ONE
-                ++$totalScreens;
+                $totalScreens += 1.0;
 
                 break;
             }

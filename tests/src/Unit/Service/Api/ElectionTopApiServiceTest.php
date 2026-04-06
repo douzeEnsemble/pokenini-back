@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  * @internal
  */
 #[CoversClass(ElectionTopApiService::class)]
-class ElectionTopApiServiceTest extends TestCase
+final class ElectionTopApiServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

@@ -16,14 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(LabelsController::class)]
-class LabelsTest extends WebTestCase
+final class LabelsTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
 
     public function testGet(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -39,7 +39,7 @@ class LabelsTest extends WebTestCase
 
     public function testGetNonAuthenticated(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'GET',

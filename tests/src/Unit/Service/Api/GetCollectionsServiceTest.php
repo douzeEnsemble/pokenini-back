@@ -17,7 +17,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  * @internal
  */
 #[CoversClass(GetCollectionsService::class)]
-class GetCollectionsServiceTest extends TestCase
+final class GetCollectionsServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

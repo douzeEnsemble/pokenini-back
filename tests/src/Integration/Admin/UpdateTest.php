@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AdminActionUpdateController::class)]
-class UpdateTest extends WebTestCase
+final class UpdateTest extends WebTestCase
 {
     use ClientRequestTrait;
 
@@ -53,7 +53,7 @@ class UpdateTest extends WebTestCase
 
     public function testAdminUpdateUnknown(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $user = new User('8764532', 'TestProvider');
         $user->addAdminRole();
@@ -68,7 +68,7 @@ class UpdateTest extends WebTestCase
 
     public function testUnknown(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -82,7 +82,7 @@ class UpdateTest extends WebTestCase
 
     public function testNonAuthenticate(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request('POST', '/istration/action/update/labels');
 
@@ -91,7 +91,7 @@ class UpdateTest extends WebTestCase
 
     public function testNoProvider(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'POST',
@@ -108,7 +108,7 @@ class UpdateTest extends WebTestCase
 
     public function testNonAdmin(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -122,7 +122,7 @@ class UpdateTest extends WebTestCase
 
     private function testAdminUpdate(string $name): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,

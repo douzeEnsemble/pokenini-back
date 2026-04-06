@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/istration/action')]
-class AdminActionInvalidateController extends AbstractAdminActionController
+final class AdminActionInvalidateController extends AbstractAdminActionController
 {
+    #[\Override()]
     #[Route(
         '/invalidate/{name}',
         methods: ['DELETE'],

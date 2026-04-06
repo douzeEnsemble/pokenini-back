@@ -12,12 +12,12 @@ final class ElectionVote
     public string $electionSlug;
 
     /**
-     * @var string[]
+     * @var array<array-key, string>
      */
     public array $winnersSlugs;
 
     /**
-     * @var string[]
+     * @var array<array-key, string>
      */
     public array $losersSlugs;
 
@@ -29,6 +29,12 @@ final class ElectionVote
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
 
+        /** @var array{
+         *  dex_slug: string,
+         *  election_slug: string,
+         *  winners_slugs: array<array-key, string>,
+         *  losers_slugs: array<array-key, string>,
+         * } $options */
         $options = $resolver->resolve($values);
 
         $this->dexSlug = $options['dex_slug'];

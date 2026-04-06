@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Security;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -20,8 +19,7 @@ trait AuthenticatorSupportTestTrait
 
         $router = $this->createMock(RouterInterface::class);
 
-        /** @var OAuth2Authenticator $authenticator */
-        $authenticator = new ($this->getAuthenticatorClassName())(
+        $authenticator = $this->instanciate(
             $clientRegistry,
             $router,
             'listAdmin',

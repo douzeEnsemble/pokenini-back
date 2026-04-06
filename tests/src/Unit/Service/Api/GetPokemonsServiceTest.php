@@ -18,7 +18,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  * @internal
  */
 #[CoversClass(GetPokemonsService::class)]
-class GetPokemonsServiceTest extends TestCase
+final class GetPokemonsServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

@@ -14,7 +14,7 @@ use Symfony\Component\Cache\Adapter\TagAwareAdapter;
  * @internal
  */
 #[CoversClass(CatchStatesCacheInvalidatorService::class)]
-class CatchStatesCacheInvalidatorServiceTest extends TestCase
+final class CatchStatesCacheInvalidatorServiceTest extends TestCase
 {
     public function testInvalidate(): void
     {

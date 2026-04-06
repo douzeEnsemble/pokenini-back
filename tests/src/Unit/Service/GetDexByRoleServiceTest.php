@@ -16,7 +16,7 @@ use Symfony\Bundle\SecurityBundle\Security;
  * @internal
  */
 #[CoversClass(GetDexByRoleService::class)]
-class GetDexByRoleServiceTest extends TestCase
+final class GetDexByRoleServiceTest extends TestCase
 {
     public function testGetUserDexAsTrainer(): void
     {

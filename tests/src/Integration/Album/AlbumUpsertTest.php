@@ -15,13 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AlbumUpsertController::class)]
-class AlbumUpsertTest extends WebTestCase
+final class AlbumUpsertTest extends WebTestCase
 {
     use ClientRequestTrait;
 
     public function testUpsertAsTrainer(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -39,7 +39,7 @@ class AlbumUpsertTest extends WebTestCase
 
     public function testUpsertPremuimAsCollector(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -57,7 +57,7 @@ class AlbumUpsertTest extends WebTestCase
 
     public function testUpsertPremuimAsTrainer(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -75,7 +75,7 @@ class AlbumUpsertTest extends WebTestCase
 
     public function testUpsertFailed(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $this->authenticatedRequest(
             $client,
@@ -96,7 +96,7 @@ class AlbumUpsertTest extends WebTestCase
 
     public function testUpsertAsNonAuthenticated(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $client->request(
             'PATCH',

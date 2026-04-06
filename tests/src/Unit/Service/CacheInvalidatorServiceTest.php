@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversClass(CacheInvalidatorService::class)]
-class CacheInvalidatorServiceTest extends TestCase
+final class CacheInvalidatorServiceTest extends TestCase
 {
     public function testInvalidateLabels(): void
     {

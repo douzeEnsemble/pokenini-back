@@ -18,7 +18,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  * @internal
  */
 #[CoversClass(GetActionLogsService::class)]
-class GetActionLogsServiceTest extends TestCase
+final class GetActionLogsServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;

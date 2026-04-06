@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
  * @internal
  */
 #[CoversClass(AlbumPokedexController::class)]
-class AlbumPokedexControllerTest extends TestCase
+final class AlbumPokedexControllerTest extends TestCase
 {
     public function testGet(): void
     {

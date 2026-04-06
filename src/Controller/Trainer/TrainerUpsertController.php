@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\Json;
 
 #[Route('/trainer')]
-class TrainerUpsertController extends AbstractController
+final class TrainerUpsertController extends AbstractController
 {
     public function __construct(
         private readonly GetTrainerPokedexService $getTrainerPokedexService,
