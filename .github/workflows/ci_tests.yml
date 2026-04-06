@@ -50,3 +50,6 @@ jobs:
             --skip-initial-tests --coverage=build/coverage \
             --min-msi=100 --min-covered-msi=100 \
             --filter=src
+      - name: Security / Symfony Security Check
+        run: | 
+          docker compose exec -T php php symfony security:check
