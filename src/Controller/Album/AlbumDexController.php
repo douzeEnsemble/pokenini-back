@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Album;
 
 use App\Exception\NoLoggedUserException;
 use App\Security\UserTokenService;

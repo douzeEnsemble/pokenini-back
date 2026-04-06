@@ -28,7 +28,7 @@
         </RiskyCast>
         <RiskyTruthyFalsyComparison>
             <errorLevel type="suppress">
-                <file name="src/Controller/AlbumUpsertController.php" />
+                <file name="src/Controller/Album/AlbumUpsertController.php" />
                 <file name="src/Controller/PokedexController.php" />
                 <file name="src/Controller/TrainerUpsertController.php" />
                 <file name="src/Service/TrainerIdsService.php" />

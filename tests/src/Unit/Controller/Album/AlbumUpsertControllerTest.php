@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Controller;
+namespace App\Tests\Unit\Controller\Album;
 
-use App\Controller\AlbumUpsertController;
+use App\Controller\Album\AlbumUpsertController;
 use App\Exception\EmptyContentException;
 use App\Exception\InvalidJsonException;
 use App\Service\GetTrainerPokedexService;
