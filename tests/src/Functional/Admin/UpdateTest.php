@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\AdminAction;
+namespace App\Tests\Functional\Admin;
 
-use App\Controller\AdminActionUpdateController;
+use App\Controller\Admin\AdminActionUpdateController;
 use App\Security\User;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;

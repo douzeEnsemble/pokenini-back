@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\AdminAction;
+namespace App\Tests\Functional\Admin;
 
-use App\Controller\AdminActionCalculateController;
+use App\Controller\Admin\AdminActionCalculateController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
