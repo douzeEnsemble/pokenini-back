@@ -16,12 +16,20 @@ class MockProvider extends AbstractProvider
     }
 
     #[\Override]
+    /**
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     */
     public function getBaseAccessTokenUrl(array $params)
     {
         return 'http://moco.oauth2/token';
     }
 
     #[\Override]
+    /**
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     *
+     * @param mixed $token
+     */
     public function getResourceOwnerDetailsUrl($token)
     {
         return 'http://moco.oauth2/userinfo';
@@ -34,12 +42,20 @@ class MockProvider extends AbstractProvider
     }
 
     #[\Override]
+    /**
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     *
+     * @param mixed $data
+     */
     protected function checkResponse(ResponseInterface $response, $data)
     {
         // nothing
     }
 
     #[\Override]
+    /**
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
         return new GenericResourceOwner($response, 'id');

@@ -10,6 +10,9 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 trait AuthenticatorTrait
 {
+    /**
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?RedirectResponse
     {
         /** @var User $user */
@@ -23,6 +26,9 @@ trait AuthenticatorTrait
         return new RedirectResponse($targetUrl);
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $message = strtr($exception->getMessageKey(), $exception->getMessageData());

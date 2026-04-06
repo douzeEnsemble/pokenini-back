@@ -119,6 +119,7 @@ class CacheInvalidatorServiceTest extends TestCase
         );
 
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Invalid type 'catch_states'");
 
         $cacheInvalidator->invalidate('catch_states');
     }
