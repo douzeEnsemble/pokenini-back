@@ -7,11 +7,13 @@ namespace App\Tests\Functional\Album;
 use App\Controller\Album\AlbumUpsertController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(AlbumUpsertController::class)]
 class AlbumUpsertTest extends WebTestCase
 {

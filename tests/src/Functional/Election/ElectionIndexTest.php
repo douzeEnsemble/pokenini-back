@@ -9,11 +9,13 @@ use App\Tests\Functional\Trait\ClientRequestTrait;
 use App\Tests\Functional\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(ElectionIndexController::class)]
 class ElectionIndexTest extends WebTestCase
 {

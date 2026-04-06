@@ -8,11 +8,13 @@ use App\Controller\Admin\AdminReportsController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use App\Tests\Functional\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(AdminReportsController::class)]
 class ReportsTest extends WebTestCase
 {

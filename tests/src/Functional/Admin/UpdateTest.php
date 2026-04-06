@@ -8,12 +8,14 @@ use App\Controller\Admin\AdminActionUpdateController;
 use App\Security\User;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(AdminActionUpdateController::class)]
 class UpdateTest extends WebTestCase
 {

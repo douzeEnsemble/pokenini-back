@@ -7,11 +7,13 @@ namespace App\Tests\Functional\Admin;
 use App\Controller\Admin\AdminActionCalculateController;
 use App\Tests\Functional\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * @internal
  */
+#[Group('api-mocked-testing')]
 #[CoversClass(AdminActionCalculateController::class)]
 class CalculateTest extends WebTestCase
 {
