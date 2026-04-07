@@ -17,11 +17,45 @@
         </ignoreFiles>
     </projectFiles>
 
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
+            <containerXml>/app/var/cache/test/App_KernelTestDebugContainer.xml</containerXml>
+        </pluginClass>
+    </plugins>
+
     <issueHandlers>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="src/Controller" />
+                <directory name="tests/src/Unit" />
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+
+        <ClassMustBeFinal>
+            <errorLevel type="suppress">
+                <!-- Symfony services -->
+                <directory name="src/Security" />
+                <directory name="src/Service" />
+            </errorLevel>
+        </ClassMustBeFinal>
+
         <UnusedClass>
             <errorLevel type="suppress">
                 <directory name="src/Validator" />
             </errorLevel>
         </UnusedClass>
+
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="App\Security\User::eraseCredentials" />
+                <directory name="src/Controller" />
+            </errorLevel>
+        </PossiblyUnusedMethod>
+
+        <PossiblyUnusedProperty>
+            <errorLevel type="suppress">
+                <directory name="src/DTO" />
+            </errorLevel>
+        </PossiblyUnusedProperty>
     </issueHandlers>
 </psalm>

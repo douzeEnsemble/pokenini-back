@@ -19,7 +19,6 @@ class GetPokemonsService extends AbstractApiService
         int $count,
         array $filters,
     ): ElectionPokemonsList {
-        /** @var string $json */
         $json = $this->requestContent(
             'GET',
             '/pokemons/to_choose',
