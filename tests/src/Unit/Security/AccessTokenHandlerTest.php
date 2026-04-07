@@ -85,7 +85,7 @@ final class AccessTokenHandlerTest extends TestCase
 
     public function testGetUserBadgeFromWithoutCurrentRequest(): void
     {
-        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry = $this->createStub(ClientRegistry::class);
 
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack
@@ -111,7 +111,7 @@ final class AccessTokenHandlerTest extends TestCase
 
     public function testGetUserBadgeFromWithoutProviderHeader(): void
     {
-        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry = $this->createStub(ClientRegistry::class);
 
         $request = new Request();
 
@@ -139,7 +139,7 @@ final class AccessTokenHandlerTest extends TestCase
 
     public function testGetUserBadgeFromWithNullProviderHeader(): void
     {
-        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry = $this->createStub(ClientRegistry::class);
 
         $request = new Request(
             [],
@@ -176,7 +176,7 @@ final class AccessTokenHandlerTest extends TestCase
 
     public function testGetUserBadgeFromWithEmptyProviderHeader(): void
     {
-        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry = $this->createStub(ClientRegistry::class);
 
         $request = new Request(
             [],

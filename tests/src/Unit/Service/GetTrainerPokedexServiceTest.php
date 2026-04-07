@@ -188,7 +188,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $exception = $this->createMock(HttpExceptionInterface::class);
+        $exception = $this->createStub(HttpExceptionInterface::class);
 
         $getPokedexService = $this->createMock(GetPokedexService::class);
         $getPokedexService
@@ -219,7 +219,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $exception = $this->createMock(TransportExceptionInterface::class);
+        $exception = $this->createStub(TransportExceptionInterface::class);
 
         $getPokedexService = $this->createMock(GetPokedexService::class);
         $getPokedexService

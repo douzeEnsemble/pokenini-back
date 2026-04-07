@@ -35,7 +35,7 @@ final class UserTokenServiceTest extends TestCase
 
     public function testFailGetLoggedUserToken(): void
     {
-        $security = $this->createMock(Security::class);
+        $security = $this->createStub(Security::class);
 
         $service = new UserTokenService($security);
 

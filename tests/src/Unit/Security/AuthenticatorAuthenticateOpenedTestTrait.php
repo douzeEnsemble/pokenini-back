@@ -27,7 +27,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
             '2121212121',
         );
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
 
         $validationPassport = $authenticator->authenticate($request);
 
@@ -51,7 +51,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
             '2121212121,1313131313',
         );
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
 
         $validationPassport = $authenticator->authenticate($request);
 
@@ -75,7 +75,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
             '2121212121,1212121212000000000000012',
         );
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
 
         $validationPassport = $authenticator->authenticate($request);
 
@@ -99,7 +99,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
             '2121212121',
         );
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
 
         $validationPassport = $authenticator->authenticate($request);
 
@@ -123,7 +123,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
             '2121212121,',
         );
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
 
         $validationPassport = $authenticator->authenticate($request);
 
@@ -163,7 +163,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
 
         $authenticator = $this->getOpenedAuthenticator($listAdmin, $listTrainer, $listCollector);
 
-        $request = $this->createMock(Request::class);
+        $request = $this->createStub(Request::class);
 
         $validationPassport = $authenticator->authenticate($request);
 
@@ -205,7 +205,7 @@ trait AuthenticatorAuthenticateOpenedTestTrait
             ->willReturn($oauth2Client)
         ;
 
-        $router = $this->createMock(RouterInterface::class);
+        $router = $this->createStub(RouterInterface::class);
 
         return $this->instanciate(
             $clientRegistry,

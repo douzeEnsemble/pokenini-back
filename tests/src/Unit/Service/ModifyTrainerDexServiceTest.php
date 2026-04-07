@@ -78,7 +78,7 @@ final class ModifyTrainerDexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $exception = $this->createMock(HttpExceptionInterface::class);
+        $exception = $this->createStub(HttpExceptionInterface::class);
 
         $modifyDexService = $this->createMock(ModifyDexService::class);
         $modifyDexService
@@ -125,7 +125,7 @@ final class ModifyTrainerDexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $exception = $this->createMock(TransportExceptionInterface::class);
+        $exception = $this->createStub(TransportExceptionInterface::class);
 
         $modifyDexService = $this->createMock(ModifyDexService::class);
         $modifyDexService

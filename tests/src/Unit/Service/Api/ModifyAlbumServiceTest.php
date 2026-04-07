@@ -65,9 +65,9 @@ final class ModifyAlbumServiceTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
 
-        $client = $this->createMock(HttpClientInterface::class);
+        $client = $this->createStub(HttpClientInterface::class);
 
         $service = new ModifyAlbumService(
             $logger,
@@ -93,10 +93,9 @@ final class ModifyAlbumServiceTest extends TestCase
         string $suffix,
         string $body
     ): ModifyAlbumService {
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
 
         $client = $this->createMock(HttpClientInterface::class);
-
         $client
             ->expects($this->once())
             ->method('request')
