@@ -36,7 +36,7 @@ final class AlbumUpsertController extends AbstractController
         try {
             $content = $this->requestedContentService->getContent(new CatchStates());
         } catch (EmptyContentException|InvalidJsonException $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 400);
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         try {
