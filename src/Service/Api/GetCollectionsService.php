@@ -16,7 +16,6 @@ class GetCollectionsService extends AbstractApiService
     {
         $key = KeyMaker::getCollectionsKey();
 
-        /** @var string $json */
         $json = $this->cache->get($key, function () {
             return $this->requestContent(
                 'GET',

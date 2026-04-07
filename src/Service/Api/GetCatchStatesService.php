@@ -16,7 +16,6 @@ class GetCatchStatesService extends AbstractApiService
     {
         $key = KeyMaker::getCatchStatesKey();
 
-        /** @var string $json */
         $json = $this->cache->get($key, function () {
             return $this->requestContent(
                 'GET',

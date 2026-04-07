@@ -22,69 +22,6 @@ final class GetDexServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testGet(): void
-    {
-        $expectedSlugs = [
-            'homepokemongo',
-            'alpha',
-            'mega',
-        ];
-
-        $this->assertEquals(
-            $expectedSlugs,
-            self::extractSlugs($this->getService('123')->get('123')),
-        );
-
-        /** @var string $value */
-        $value = $this->cache->getItem('dex_123')->get();
-
-        /** @var string[][] */
-        $jsonData = json_decode($value, true);
-
-        $this->assertEquals(
-            $expectedSlugs,
-            self::extractSlugs($jsonData),
-        );
-    }
-
-    public function testGetWithUnreleased(): void
-    {
-        $expectedSlugs = [
-            'redgreenblueyellow',
-            'homepokemongo',
-            'alpha',
-            'mega',
-        ];
-
-        $this->assertEquals(
-            $expectedSlugs,
-            self::extractSlugs($this->getServiceWithUnreleased('123')->getWithUnreleased('123')),
-        );
-
-        $dexCacheItem = $this->cache->getItem('dex_123_include_unreleased_dex=1');
-
-        $this->assertSame(
-            [
-                'tags' => [
-                    'dex' => 'dex',
-                    'trainer#123' => 'trainer#123',
-                ],
-            ],
-            $dexCacheItem->getMetadata(),
-        );
-
-        /** @var string $value */
-        $value = $dexCacheItem->get();
-
-        /** @var string[][] */
-        $jsonData = json_decode($value, true);
-
-        $this->assertEquals(
-            $expectedSlugs,
-            self::extractSlugs($jsonData),
-        );
-    }
-
     public function testGetWithPremium(): void
     {
         $expectedSlugs = [
@@ -159,30 +96,6 @@ final class GetDexServiceTest extends TestCase
         $this->assertEquals(
             $expectedSlugs,
             self::extractSlugs($jsonData),
-        );
-    }
-
-    private function getService(string $trainerId): GetDexService
-    {
-        $json = (string) file_get_contents(
-            "/app/tests/resources/unit/service/api/dex_{$trainerId}.json"
-        );
-
-        return $this->getMockService(
-            $json,
-            "dex/{$trainerId}/list",
-        );
-    }
-
-    private function getServiceWithUnreleased(string $trainerId): GetDexService
-    {
-        $json = (string) file_get_contents(
-            "/app/tests/resources/unit/service/api/dex_{$trainerId}_unreleased.json"
-        );
-
-        return $this->getMockService(
-            $json,
-            "dex/{$trainerId}/list?include_unreleased_dex=1",
         );
     }
 

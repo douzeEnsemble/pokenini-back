@@ -25,32 +25,14 @@ final class AdminActionServiceTest extends TestCase
 
     public function testUpdate(): void
     {
-        $json = <<<'JSON'
-            {
-                "suffix": "update/start"
-            }
-            JSON;
-
-        $this->assertEquals(
-            $json,
-            $this->getService('update/start')->update('start')
-        );
+        $this->getService('update/start')->update('start');
 
         $this->assertEmpty($this->cachePool->getValues());
     }
 
     public function testCalculate(): void
     {
-        $json = <<<'JSON'
-            {
-                "suffix": "calculate/start"
-            }
-            JSON;
-
-        $this->assertEquals(
-            $json,
-            $this->getService('calculate/start')->calculate('start')
-        );
+        $this->getService('calculate/start')->calculate('start');
 
         $this->assertEmpty($this->cachePool->getValues());
     }

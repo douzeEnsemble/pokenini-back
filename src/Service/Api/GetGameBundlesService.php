@@ -16,7 +16,6 @@ class GetGameBundlesService extends AbstractApiService
     {
         $key = KeyMaker::getGameBundlesKey();
 
-        /** @var string $json */
         $json = $this->cache->get($key, function () {
             return $this->requestContent(
                 'GET',

@@ -17,7 +17,6 @@ class ElectionTopApiService extends AbstractApiService
         string $electionSlug,
         int $count,
     ): array {
-        /** @var string $json */
         $json = $this->requestContent(
             'GET',
             "/election/top?trainer_external_id={$trainerId}&dex_slug={$dexSlug}&election_slug={$electionSlug}&count={$count}"

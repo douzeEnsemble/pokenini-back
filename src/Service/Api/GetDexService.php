@@ -13,24 +13,6 @@ class GetDexService extends AbstractApiService
     /**
      * @return string[][]
      */
-    public function get(string $trainerId): array
-    {
-        return $this->getDexWithParam($trainerId, []);
-    }
-
-    /**
-     * @return string[][]
-     */
-    public function getWithUnreleased(string $trainerId): array
-    {
-        return $this->getDexWithParam($trainerId, [
-            'include_unreleased_dex' => '1',
-        ]);
-    }
-
-    /**
-     * @return string[][]
-     */
     public function getWithPremium(string $trainerId): array
     {
         return $this->getDexWithParam($trainerId, [
@@ -60,7 +42,6 @@ class GetDexService extends AbstractApiService
 
         $urlQueryParams = http_build_query($queryParams);
 
-        /** @var string $json */
         $json = $this->cache->get($key, function (ItemInterface $item) use ($trainerId, $urlQueryParams) {
             $item->tag([
                 KeyMaker::getDexKey(),

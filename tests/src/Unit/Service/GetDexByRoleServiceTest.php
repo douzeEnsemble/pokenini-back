@@ -35,14 +35,6 @@ final class GetDexByRoleServiceTest extends TestCase
         ;
         $getDexService
             ->expects($this->never())
-            ->method('get')
-        ;
-        $getDexService
-            ->expects($this->never())
-            ->method('getWithUnreleased')
-        ;
-        $getDexService
-            ->expects($this->never())
             ->method('getWithUnreleasedAndPremium')
         ;
 
@@ -95,14 +87,6 @@ final class GetDexByRoleServiceTest extends TestCase
                 ['dos'],
                 ['tres'],
             ])
-        ;
-        $getDexService
-            ->expects($this->never())
-            ->method('get')
-        ;
-        $getDexService
-            ->expects($this->never())
-            ->method('getWithUnreleased')
         ;
         $getDexService
             ->expects($this->never())
@@ -162,15 +146,7 @@ final class GetDexByRoleServiceTest extends TestCase
         ;
         $getDexService
             ->expects($this->never())
-            ->method('get')
-        ;
-        $getDexService
-            ->expects($this->never())
             ->method('getWithPremium')
-        ;
-        $getDexService
-            ->expects($this->never())
-            ->method('getWithUnreleased')
         ;
 
         $userTokenService = $this->createMock(UserTokenService::class);
@@ -218,15 +194,7 @@ final class GetDexByRoleServiceTest extends TestCase
         ;
         $getDexService
             ->expects($this->never())
-            ->method('get')
-        ;
-        $getDexService
-            ->expects($this->never())
             ->method('getWithPremium')
-        ;
-        $getDexService
-            ->expects($this->never())
-            ->method('getWithUnreleased')
         ;
 
         $userTokenService = $this->createMock(UserTokenService::class);

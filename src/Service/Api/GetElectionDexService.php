@@ -50,7 +50,6 @@ class GetElectionDexService extends AbstractApiService
 
         $urlQueryParams = http_build_query($queryParams);
 
-        /** @var string $json */
         $json = $this->cache->get($key, function (ItemInterface $item) use ($urlQueryParams) {
             $item->tag([
                 KeyMaker::getDexKey(),

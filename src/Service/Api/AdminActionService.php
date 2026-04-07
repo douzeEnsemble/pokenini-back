@@ -6,17 +6,17 @@ namespace App\Service\Api;
 
 class AdminActionService extends AbstractApiService
 {
-    public function update(string $type): string
+    public function update(string $type): void
     {
-        return $this->requestContent(
+        $this->requestContent(
             'POST',
             "/istration/update/{$type}"
         );
     }
 
-    public function calculate(string $type): string
+    public function calculate(string $type): void
     {
-        return $this->requestContent(
+        $this->requestContent(
             'POST',
             "/istration/calculate/{$type}"
         );

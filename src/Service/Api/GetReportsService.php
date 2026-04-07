@@ -16,7 +16,6 @@ class GetReportsService extends AbstractApiService
     {
         $key = KeyMaker::getReportsKey();
 
-        /** @var string $json */
         $json = $this->cache->get($key, function () {
             return $this->requestContent(
                 'GET',

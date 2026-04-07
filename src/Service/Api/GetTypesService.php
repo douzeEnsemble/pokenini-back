@@ -16,7 +16,6 @@ class GetTypesService extends AbstractApiService
     {
         $key = KeyMaker::getTypesKey();
 
-        /** @var string $json */
         $json = $this->cache->get($key, function () {
             return $this->requestContent(
                 'GET',

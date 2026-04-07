@@ -58,7 +58,6 @@ class GetFormsService extends AbstractApiService
      */
     private function getFormsByType(string $type, string $key): array
     {
-        /** @var string $json */
         $json = $this->cache->get($key, function () use ($type) {
             return $this->requestContent(
                 'GET',

@@ -16,7 +16,6 @@ class ElectionMetricsApiService extends AbstractApiService
         string $dexSlug,
         string $electionSlug,
     ): array {
-        /** @var string $json */
         $json = $this->requestContent(
             'GET',
             '/election/metrics',

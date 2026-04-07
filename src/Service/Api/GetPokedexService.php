@@ -22,7 +22,6 @@ class GetPokedexService extends AbstractApiService
     ): array {
         $key = KeyMaker::getPokedexKey($dexSlug, $trainerId, $filters);
 
-        /** @var string $json */
         $json = $this->cache->get($key, function (ItemInterface $item) use ($dexSlug, $trainerId, $filters) {
             $item->tag([
                 KeyMaker::getAlbumKey(),
