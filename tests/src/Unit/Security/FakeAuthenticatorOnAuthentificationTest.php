@@ -37,7 +37,7 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
         ]);
 
         $response = $fakeAuthenticator->onAuthenticationSuccess(
-            $this->createMock(Request::class),
+            $this->createStub(Request::class),
             $token,
             'web'
         );
@@ -66,7 +66,7 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
         ]);
 
         $response = $fakeAuthenticator->onAuthenticationSuccess(
-            $this->createMock(Request::class),
+            $this->createStub(Request::class),
             $token,
             'web'
         );
@@ -82,7 +82,7 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
         $fakeAuthenticator = $this->getFakeAuthenticator([]);
 
         $response = $fakeAuthenticator->onAuthenticationFailure(
-            $this->createMock(Request::class),
+            $this->createStub(Request::class),
             new AuthenticationException()
         );
 

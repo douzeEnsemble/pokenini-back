@@ -174,7 +174,7 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
 
     private function getFakeAuthenticator(string $listAdmin, string $listTrainer, string $listCollector): FakeAuthenticator
     {
-        $router = $this->createMock(RouterInterface::class);
+        $router = $this->createStub(RouterInterface::class);
 
         return new FakeAuthenticator(
             $router,

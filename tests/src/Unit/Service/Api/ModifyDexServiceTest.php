@@ -42,10 +42,9 @@ final class ModifyDexServiceTest extends TestCase
         string $suffix,
         string $body
     ): ModifyDexService {
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
 
         $client = $this->createMock(HttpClientInterface::class);
-
         $client
             ->expects($this->once())
             ->method('request')

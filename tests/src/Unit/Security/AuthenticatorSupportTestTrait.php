@@ -15,9 +15,9 @@ trait AuthenticatorSupportTestTrait
 {
     public function testSupports(): void
     {
-        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry = $this->createStub(ClientRegistry::class);
 
-        $router = $this->createMock(RouterInterface::class);
+        $router = $this->createStub(RouterInterface::class);
 
         $authenticator = $this->instanciate(
             $clientRegistry,

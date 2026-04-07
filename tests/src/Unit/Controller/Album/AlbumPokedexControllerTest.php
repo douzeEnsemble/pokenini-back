@@ -98,7 +98,7 @@ final class AlbumPokedexControllerTest extends TestCase
             ->willReturn(null)
         ;
 
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
 
         $controller = new AlbumPokedexController(
             $trainerIdsService,

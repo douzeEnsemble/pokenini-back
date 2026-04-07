@@ -30,7 +30,7 @@ final class ElectionVoteControllerTest extends TestCase
 
         $controller = new ElectionVoteController();
 
-        $container = $this->createMock(ContainerInterface::class);
+        $container = $this->createStub(ContainerInterface::class);
         $controller->setContainer($container);
 
         /** @var JsonResponse $response */
@@ -49,7 +49,7 @@ final class ElectionVoteControllerTest extends TestCase
     {
         $request = new Request();
 
-        $electionVoteService = $this->createMock(ElectionVoteService::class);
+        $electionVoteService = $this->createStub(ElectionVoteService::class);
 
         $controller = new ElectionVoteController();
 
@@ -69,7 +69,7 @@ final class ElectionVoteControllerTest extends TestCase
     {
         $request = new Request([], ['winners_slugs' => ['pichu']]);
 
-        $electionVoteService = $this->createMock(ElectionVoteService::class);
+        $electionVoteService = $this->createStub(ElectionVoteService::class);
 
         $controller = new ElectionVoteController();
 
