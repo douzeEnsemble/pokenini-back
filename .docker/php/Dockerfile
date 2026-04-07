@@ -69,7 +69,7 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers \
 	&& apk del .build-deps
 
 COPY --link \
-	--from=ghcr.io/symfony-cli/symfony-cli:5.16.1 \
+	--from=ghcr.io/symfony-cli/symfony-cli:5.17.1 \
 	/usr/local/bin/symfony /usr/local/bin/symfony
 
 ## < Install chromedriver
