@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Service;
 
 use App\DTO\ElectionPokemonsList;
 use App\Security\UserTokenService;
-use App\Service\Api\GetPokemonsService;
+use App\Service\Api\GetPokemonsApiService;
 use App\Service\GetPokemonsListService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -26,7 +26,7 @@ final class GetPokemonsListServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $getPokemonsService = $this->createMock(GetPokemonsService::class);
+        $getPokemonsService = $this->createMock(GetPokemonsApiService::class);
         $getPokemonsService
             ->expects($this->once())
             ->method('get')
@@ -87,7 +87,7 @@ final class GetPokemonsListServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $getPokemonsService = $this->createMock(GetPokemonsService::class);
+        $getPokemonsService = $this->createMock(GetPokemonsApiService::class);
         $getPokemonsService
             ->expects($this->once())
             ->method('get')

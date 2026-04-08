@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Labels;
 
-use App\Service\Api\GetLabelsService;
+use App\Service\Api\GetLabelsApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class LabelsController extends AbstractController
 {
     public function __construct(
-        private readonly GetLabelsService $getLabelsService,
+        private readonly GetLabelsApiService $getLabelsService,
     ) {}
 
     #[Route('', methods: ['GET'])]

@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Service;
 
 use App\Security\User;
 use App\Security\UserTokenService;
-use App\Service\Api\GetDexListService;
+use App\Service\Api\GetDexListApiService;
 use App\Service\GetDexByRoleService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +20,7 @@ final class GetDexByRoleServiceTest extends TestCase
 {
     public function testGetUserDexAsTrainer(): void
     {
-        $getDexListService = $this->createMock(GetDexListService::class);
+        $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService
             ->expects($this->once())
             ->method('getWithPremium')
@@ -75,7 +75,7 @@ final class GetDexByRoleServiceTest extends TestCase
 
     public function testGetUserDexAsCollector(): void
     {
-        $getDexListService = $this->createMock(GetDexListService::class);
+        $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService
             ->expects($this->once())
             ->method('getWithPremium')
@@ -131,7 +131,7 @@ final class GetDexByRoleServiceTest extends TestCase
 
     public function testGetUserDexAsAdmin(): void
     {
-        $getDexListService = $this->createMock(GetDexListService::class);
+        $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService
             ->expects($this->once())
             ->method('getWithUnreleasedAndPremium')
@@ -187,7 +187,7 @@ final class GetDexByRoleServiceTest extends TestCase
 
     public function testGetUserDexAsNull(): void
     {
-        $getDexListService = $this->createMock(GetDexListService::class);
+        $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService
             ->expects($this->never())
             ->method('getWithUnreleasedAndPremium')

@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Service;
 
 use App\Exception\ModifyFailedException;
 use App\Security\UserTokenService;
-use App\Service\Api\ModifyDexService;
+use App\Service\Api\ModifyDexApiService;
 use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
 use App\Service\CacheInvalidator\DexCacheInvalidatorService;
 use App\Service\ModifyTrainerDexService;
@@ -30,7 +30,7 @@ final class ModifyTrainerDexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $modifyDexService = $this->createMock(ModifyDexService::class);
+        $modifyDexService = $this->createMock(ModifyDexApiService::class);
         $modifyDexService
             ->expects($this->once())
             ->method('modify')
@@ -80,7 +80,7 @@ final class ModifyTrainerDexServiceTest extends TestCase
 
         $exception = $this->createStub(HttpExceptionInterface::class);
 
-        $modifyDexService = $this->createMock(ModifyDexService::class);
+        $modifyDexService = $this->createMock(ModifyDexApiService::class);
         $modifyDexService
             ->expects($this->once())
             ->method('modify')
@@ -127,7 +127,7 @@ final class ModifyTrainerDexServiceTest extends TestCase
 
         $exception = $this->createStub(TransportExceptionInterface::class);
 
-        $modifyDexService = $this->createMock(ModifyDexService::class);
+        $modifyDexService = $this->createMock(ModifyDexApiService::class);
         $modifyDexService
             ->expects($this->once())
             ->method('modify')

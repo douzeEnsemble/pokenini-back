@@ -6,13 +6,13 @@ namespace App\Service;
 
 use App\Security\User;
 use App\Security\UserTokenService;
-use App\Service\Api\GetDexListService;
+use App\Service\Api\GetDexListApiService;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class GetDexByRoleService
 {
     public function __construct(
-        private readonly GetDexListService $getDexListService,
+        private readonly GetDexListApiService $getDexListService,
         private readonly UserTokenService $userTokenService,
         private Security $security,
     ) {}

@@ -6,7 +6,7 @@ namespace App\Controller\Album;
 
 use App\Exception\NoLoggedUserException;
 use App\Security\UserTokenService;
-use App\Service\Api\GetDexListService;
+use App\Service\Api\GetDexListApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ final class AlbumDexListController extends AbstractController
         priority: 2,
     )]
     public function index(
-        GetDexListService $getDexListService,
+        GetDexListApiService $getDexListService,
         UserTokenService $userTokenService,
     ): JsonResponse {
         try {

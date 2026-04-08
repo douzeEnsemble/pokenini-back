@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Controller\Admin;
 
 use App\Controller\Admin\AbstractAdminActionController;
 use App\Controller\Admin\AdminActionInvalidateController;
-use App\Service\Api\AdminActionService;
+use App\Service\Api\AdminActionApiService;
 use App\Service\CacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +28,7 @@ final class AdminActionInvalidateControllerTest extends TestCase
             ->with('something')
         ;
 
-        $adminActionService = $this->createMock(AdminActionService::class);
+        $adminActionService = $this->createMock(AdminActionApiService::class);
         $adminActionService
             ->expects($this->never())
             ->method('calculate')
@@ -64,7 +64,7 @@ final class AdminActionInvalidateControllerTest extends TestCase
             ->willThrowException(new \Exception('Aouch'))
         ;
 
-        $adminActionService = $this->createMock(AdminActionService::class);
+        $adminActionService = $this->createMock(AdminActionApiService::class);
         $adminActionService
             ->expects($this->never())
             ->method('calculate')
