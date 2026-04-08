@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Election;
 
-use App\Service\Api\GetElectionDexListService;
+use App\Service\Api\ElectionDexListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ final class ElectionDexListController extends AbstractController
         priority: 2,
     )]
     public function index(
-        GetElectionDexListService $getDexService,
+        ElectionDexListService $getDexService,
     ): JsonResponse {
         switch (true) {
             case $this->isGranted('ROLE_ADMIN'):
