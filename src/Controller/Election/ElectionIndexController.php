@@ -7,8 +7,8 @@ namespace App\Controller\Election;
 use App\AlbumFilters\FromRequest;
 use App\AlbumFilters\Mapping;
 use App\Exception\DexNotFoundException;
-use App\Service\ElectionMetricsService;
-use App\Service\ElectionTopService;
+use App\Service\GetElectionMetricsService;
+use App\Service\GetElectionTopService;
 use App\Service\GetPokemonsListService;
 use App\Service\GetTrainerPokedexService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,8 +31,8 @@ final class ElectionIndexController extends AbstractController
     )]
     public function index(
         GetPokemonsListService $getPokemonsListService,
-        ElectionTopService $electionTopService,
-        ElectionMetricsService $metricsService,
+        GetElectionTopService $electionTopService,
+        GetElectionMetricsService $metricsService,
         GetTrainerPokedexService $getTrainerPokedexService,
         Request $request,
         SerializerInterface $serializer,

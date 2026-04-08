@@ -6,15 +6,15 @@ namespace App\Tests\Unit\Service;
 
 use App\Security\UserTokenService;
 use App\Service\Api\GetElectionTopApiService;
-use App\Service\ElectionTopService;
+use App\Service\GetElectionTopService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  */
-#[CoversClass(ElectionTopService::class)]
-final class ElectionTopServiceTest extends TestCase
+#[CoversClass(GetElectionTopService::class)]
+final class GetElectionTopServiceTest extends TestCase
 {
     public function testGetTop(): void
     {
@@ -38,7 +38,7 @@ final class ElectionTopServiceTest extends TestCase
             ->willReturn(['some', 'data'])
         ;
 
-        $service = new ElectionTopService($userTokenService, $apiService, 12);
+        $service = new GetElectionTopService($userTokenService, $apiService, 12);
 
         $this->assertSame(
             ['some', 'data'],

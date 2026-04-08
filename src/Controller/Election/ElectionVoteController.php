@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Election;
 
 use App\DTO\ElectionVote;
-use App\Service\ElectionVoteService;
+use App\Service\ModifyElectionVoteService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ final class ElectionVoteController extends AbstractController
     )]
     public function vote(
         Request $request,
-        ElectionVoteService $electionVoteService,
+        ModifyElectionVoteService $electionVoteService,
         string $dexSlug,
         string $electionSlug = '',
     ): Response {
