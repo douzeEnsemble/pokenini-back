@@ -7,7 +7,7 @@ namespace App\Service;
 use App\Security\UserTokenService;
 use App\Service\Api\GetElectionTopApiService;
 
-class ElectionTopService
+class GetElectionTopService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,

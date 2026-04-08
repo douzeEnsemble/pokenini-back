@@ -8,7 +8,7 @@ use App\DTO\ElectionVote;
 use App\Security\UserTokenService;
 use App\Service\Api\ModifyElectionVoteApiService;
 
-class ElectionVoteService
+class ModifyElectionVoteService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,

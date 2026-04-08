@@ -6,15 +6,15 @@ namespace App\Tests\Unit\Service;
 
 use App\Security\UserTokenService;
 use App\Service\Api\GetElectionMetricsApiService;
-use App\Service\ElectionMetricsService;
+use App\Service\GetElectionMetricsService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  */
-#[CoversClass(ElectionMetricsService::class)]
-final class ElectionMetricsServiceTest extends TestCase
+#[CoversClass(GetElectionMetricsService::class)]
+final class GetElectionMetricsServiceTest extends TestCase
 {
     public function testGetMetrics(): void
     {
@@ -45,7 +45,7 @@ final class ElectionMetricsServiceTest extends TestCase
             ])
         ;
 
-        $service = new ElectionMetricsService($userTokenService, $apiService, 12);
+        $service = new GetElectionMetricsService($userTokenService, $apiService, 12);
 
         $metrics = $service->getMetrics('demo', 'whatever');
 

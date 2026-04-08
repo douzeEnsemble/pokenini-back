@@ -8,7 +8,7 @@ use App\DTO\ElectionMetrics;
 use App\Security\UserTokenService;
 use App\Service\Api\GetElectionMetricsApiService;
 
-class ElectionMetricsService
+class GetElectionMetricsService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,

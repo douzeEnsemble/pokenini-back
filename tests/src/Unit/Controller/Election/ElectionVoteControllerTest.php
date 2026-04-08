@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Controller\Election;
 
 use App\Controller\Election\ElectionVoteController;
-use App\Service\ElectionVoteService;
+use App\Service\ModifyElectionVoteService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,7 +22,7 @@ final class ElectionVoteControllerTest extends TestCase
     {
         $request = new Request([], ['winners_slugs' => ['pichu'], 'losers_slugs' => ['pikachu']]);
 
-        $electionVoteService = $this->createMock(ElectionVoteService::class);
+        $electionVoteService = $this->createMock(ModifyElectionVoteService::class);
         $electionVoteService
             ->expects($this->once())
             ->method('vote')
@@ -49,7 +49,7 @@ final class ElectionVoteControllerTest extends TestCase
     {
         $request = new Request();
 
-        $electionVoteService = $this->createStub(ElectionVoteService::class);
+        $electionVoteService = $this->createStub(ModifyElectionVoteService::class);
 
         $controller = new ElectionVoteController();
 
@@ -69,7 +69,7 @@ final class ElectionVoteControllerTest extends TestCase
     {
         $request = new Request([], ['winners_slugs' => ['pichu']]);
 
-        $electionVoteService = $this->createStub(ElectionVoteService::class);
+        $electionVoteService = $this->createStub(ModifyElectionVoteService::class);
 
         $controller = new ElectionVoteController();
 

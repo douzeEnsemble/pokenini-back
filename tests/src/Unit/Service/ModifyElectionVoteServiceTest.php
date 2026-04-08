@@ -7,15 +7,15 @@ namespace App\Tests\Unit\Service;
 use App\DTO\ElectionVote;
 use App\Security\UserTokenService;
 use App\Service\Api\ModifyElectionVoteApiService;
-use App\Service\ElectionVoteService;
+use App\Service\ModifyElectionVoteService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  */
-#[CoversClass(ElectionVoteService::class)]
-final class ElectionVoteServiceTest extends TestCase
+#[CoversClass(ModifyElectionVoteService::class)]
+final class ModifyElectionVoteServiceTest extends TestCase
 {
     public function testVote(): void
     {
@@ -43,7 +43,7 @@ final class ElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ElectionVoteService($userTokenService, $apiService);
+        $service = new ModifyElectionVoteService($userTokenService, $apiService);
         $service->vote($electionVote);
     }
 
@@ -73,7 +73,7 @@ final class ElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ElectionVoteService($userTokenService, $apiService);
+        $service = new ModifyElectionVoteService($userTokenService, $apiService);
         $service->vote($electionVote);
     }
 
@@ -103,7 +103,7 @@ final class ElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ElectionVoteService($userTokenService, $apiService);
+        $service = new ModifyElectionVoteService($userTokenService, $apiService);
         $service->vote($electionVote);
     }
 
@@ -133,7 +133,7 @@ final class ElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ElectionVoteService($userTokenService, $apiService);
+        $service = new ModifyElectionVoteService($userTokenService, $apiService);
         $service->vote($electionVote);
     }
 }
