@@ -13,13 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/album')]
-final class AlbumDexController extends AbstractController
+final class AlbumDexListController extends AbstractController
 {
-    public function __construct() {}
-
     #[Route(
         '/dex',
-        methods: ['GET']
+        methods: ['GET'],
+        priority: 2,
     )]
     public function index(
         GetDexService $getDexService,

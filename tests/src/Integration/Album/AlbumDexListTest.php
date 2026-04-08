@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Trainer;
+namespace App\Tests\Integration\Album;
 
-use App\Controller\Trainer\TrainerDexController;
+use App\Controller\Album\AlbumDexListController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -15,8 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @internal
  */
 #[Group('api-mocked-testing')]
-#[CoversClass(TrainerDexController::class)]
-final class TrainerDexTest extends WebTestCase
+#[CoversClass(AlbumDexListController::class)]
+final class AlbumDexListTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
@@ -29,12 +29,12 @@ final class TrainerDexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/trainer/dex',
+            '/album/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'TrainerDex/trainer.json');
+        $this->assertResponseContent($client, 'AlbumDexList/trainer.json');
     }
 
     public function testDexAsCollector(): void
@@ -45,12 +45,12 @@ final class TrainerDexTest extends WebTestCase
             $client,
             'collector',
             'GET',
-            '/trainer/dex',
+            '/album/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'TrainerDex/collector.json');
+        $this->assertResponseContent($client, 'AlbumDexList/collector.json');
     }
 
     public function testDexAdmin(): void
@@ -61,12 +61,12 @@ final class TrainerDexTest extends WebTestCase
             $client,
             'admin',
             'GET',
-            '/trainer/dex',
+            '/album/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'TrainerDex/admin.json');
+        $this->assertResponseContent($client, 'AlbumDexList/admin.json');
     }
 
     public function testDexPublic(): void
@@ -75,7 +75,7 @@ final class TrainerDexTest extends WebTestCase
 
         $client->request(
             'GET',
-            '/trainer/dex',
+            '/album/dex',
         );
 
         $this->assertResponseStatusCodeSame(401);

@@ -10,7 +10,7 @@ final class KeyMaker
     private const string CACHE_KEY_ID_SEPARATOR = '#';
 
     private const string CACHE_KEY_DEX = 'dex';
-    private const string CACHE_KEY_ELECTION_DEX = 'election_dex';
+    private const string CACHE_KEY_ELECTION_DEX_LIST = 'election_dex_list';
     private const string CACHE_KEY_CATCH_STATES = 'catch_states';
     private const string CACHE_KEY_TYPES = 'types';
     private const string CACHE_KEY_GAME_BUNDLES = 'game_bundles';
@@ -92,11 +92,11 @@ final class KeyMaker
     /**
      * @param string[] $queryParams
      */
-    public static function getElectionDexKey(array $queryParams = []): string
+    public static function getElectionDexListKey(array $queryParams = []): string
     {
         $cacheKeySuffixe = http_build_query($queryParams, '', self::CACHE_KEY_SEPARATOR);
 
-        return self::CACHE_KEY_ELECTION_DEX.($cacheKeySuffixe ? self::CACHE_KEY_SEPARATOR.$cacheKeySuffixe : '');
+        return self::CACHE_KEY_ELECTION_DEX_LIST.($cacheKeySuffixe ? self::CACHE_KEY_SEPARATOR.$cacheKeySuffixe : '');
     }
 
     /**

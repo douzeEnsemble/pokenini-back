@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/trainer')]
-final class TrainerDexController extends AbstractController
+final class TrainerListDexController extends AbstractController
 {
     public function __construct(
         private readonly GetDexService $service,

@@ -8,7 +8,7 @@ use App\Cache\KeyMaker;
 use App\Utils\JsonDecoder;
 use Symfony\Contracts\Cache\ItemInterface;
 
-class GetElectionDexService extends AbstractApiService
+class GetElectionDexListService extends AbstractApiService
 {
     /**
      * @return string[][]
@@ -46,14 +46,14 @@ class GetElectionDexService extends AbstractApiService
      */
     private function getDexWithParam(array $queryParams = []): array
     {
-        $key = KeyMaker::getElectionDexKey($queryParams);
+        $key = KeyMaker::getElectionDexListKey($queryParams);
 
         $urlQueryParams = http_build_query($queryParams);
 
         $json = $this->cache->get($key, function (ItemInterface $item) use ($urlQueryParams) {
             $item->tag([
                 KeyMaker::getDexKey(),
-                KeyMaker::getElectionDexKey(),
+                KeyMaker::getElectionDexListKey(),
             ]);
 
             return $this->requestContent(
