@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
-use App\Service\Api\ElectionMetricsApiService;
+use App\Service\Api\GetElectionMetricsApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -16,8 +16,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @internal
  */
-#[CoversClass(ElectionMetricsApiService::class)]
-final class ElectionMetricsApiServiceTest extends TestCase
+#[CoversClass(GetElectionMetricsApiService::class)]
+final class GetElectionMetricsApiServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
@@ -150,7 +150,7 @@ final class ElectionMetricsApiServiceTest extends TestCase
         string $trainerId,
         string $dexSlug,
         string $electionSlug,
-    ): ElectionMetricsApiService {
+    ): GetElectionMetricsApiService {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
             ->expects($this->exactly(2))
@@ -199,7 +199,7 @@ final class ElectionMetricsApiServiceTest extends TestCase
         $this->cachePool = new ArrayAdapter();
         $this->cache = new TagAwareAdapter($this->cachePool, new ArrayAdapter());
 
-        return new ElectionMetricsApiService(
+        return new GetElectionMetricsApiService(
             $logger,
             $client,
             'https://api.domain',

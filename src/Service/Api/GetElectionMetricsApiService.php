@@ -6,7 +6,7 @@ namespace App\Service\Api;
 
 use App\Utils\JsonDecoder;
 
-class ElectionMetricsApiService extends AbstractApiService
+class GetElectionMetricsApiService extends AbstractApiService
 {
     /**
      * @return float[]|int[]

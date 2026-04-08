@@ -6,13 +6,13 @@ namespace App\Service;
 
 use App\DTO\ElectionMetrics;
 use App\Security\UserTokenService;
-use App\Service\Api\ElectionMetricsApiService;
+use App\Service\Api\GetElectionMetricsApiService;
 
 class ElectionMetricsService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,
-        private readonly ElectionMetricsApiService $apiService,
+        private readonly GetElectionMetricsApiService $apiService,
         private readonly int $electionCandidateCount,
     ) {}
 

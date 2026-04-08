@@ -8,7 +8,7 @@ use App\Cache\KeyMaker;
 use App\Utils\JsonDecoder;
 use Symfony\Contracts\Cache\ItemInterface;
 
-class ElectionDexListApiService extends AbstractApiService
+class GetElectionDexListApiService extends AbstractApiService
 {
     /**
      * @return string[][]

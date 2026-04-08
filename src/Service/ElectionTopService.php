@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Security\UserTokenService;
-use App\Service\Api\ElectionTopApiService;
+use App\Service\Api\GetElectionTopApiService;
 
 class ElectionTopService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,
-        private readonly ElectionTopApiService $apiService,
+        private readonly GetElectionTopApiService $apiService,
         private readonly int $topCount,
     ) {}
 
