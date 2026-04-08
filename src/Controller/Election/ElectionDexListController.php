@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace App\Controller\Election;
 
-use App\Service\Api\GetElectionDexService;
+use App\Service\Api\GetElectionDexListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/election')]
-final class ElectionDexController extends AbstractController
+final class ElectionDexListController extends AbstractController
 {
-    #[Route('/dex', methods: ['GET'])]
+    #[Route(
+        '/dex',
+        methods: ['GET'],
+        priority: 2,
+    )]
     public function index(
-        GetElectionDexService $getDexService,
+        GetElectionDexListService $getDexService,
     ): JsonResponse {
         switch (true) {
             case $this->isGranted('ROLE_ADMIN'):

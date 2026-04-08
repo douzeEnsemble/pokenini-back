@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
-use App\Service\Api\GetElectionDexService;
+use App\Service\Api\GetElectionDexListService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -16,8 +16,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @internal
  */
-#[CoversClass(GetElectionDexService::class)]
-final class GetElectionDexServiceTest extends TestCase
+#[CoversClass(GetElectionDexListService::class)]
+final class GetElectionDexListServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
@@ -33,7 +33,7 @@ final class GetElectionDexServiceTest extends TestCase
             self::extractSlugs($this->getService()->get()),
         );
 
-        $cacheItem = $this->cache->getItem('election_dex');
+        $cacheItem = $this->cache->getItem('election_dex_list');
 
         /** @var string $value */
         $value = $cacheItem->get();
@@ -49,7 +49,7 @@ final class GetElectionDexServiceTest extends TestCase
         $this->assertSame(
             [
                 'dex' => 'dex',
-                'election_dex' => 'election_dex',
+                'election_dex_list' => 'election_dex_list',
             ],
             $cacheItem->getMetadata()['tags'],
         );
@@ -67,7 +67,7 @@ final class GetElectionDexServiceTest extends TestCase
             self::extractSlugs($this->getServiceWithPremium()->getWithPremium()),
         );
 
-        $cacheItem = $this->cache->getItem('election_dex_include_premium_dex=1');
+        $cacheItem = $this->cache->getItem('election_dex_list_include_premium_dex=1');
 
         /** @var string $value */
         $value = $cacheItem->get();
@@ -83,7 +83,7 @@ final class GetElectionDexServiceTest extends TestCase
         $this->assertSame(
             [
                 'dex' => 'dex',
-                'election_dex' => 'election_dex',
+                'election_dex_list' => 'election_dex_list',
             ],
             $cacheItem->getMetadata()['tags'],
         );
@@ -103,7 +103,7 @@ final class GetElectionDexServiceTest extends TestCase
             self::extractSlugs($this->getServiceWithUnreleasedAndPremium()->getWithUnreleasedAndPremium()),
         );
 
-        $cacheItem = $this->cache->getItem('election_dex_include_unreleased_dex=1_include_premium_dex=1');
+        $cacheItem = $this->cache->getItem('election_dex_list_include_unreleased_dex=1_include_premium_dex=1');
 
         /** @var string $value */
         $value = $cacheItem->get();
@@ -119,16 +119,16 @@ final class GetElectionDexServiceTest extends TestCase
         $this->assertSame(
             [
                 'dex' => 'dex',
-                'election_dex' => 'election_dex',
+                'election_dex_list' => 'election_dex_list',
             ],
             $cacheItem->getMetadata()['tags'],
         );
     }
 
-    private function getService(): GetElectionDexService
+    private function getService(): GetElectionDexListService
     {
         $json = (string) file_get_contents(
-            '/app/tests/resources/unit/service/api/election_dex.json'
+            '/app/tests/resources/unit/service/api/election_dex_list.json'
         );
 
         return $this->getMockService(
@@ -137,10 +137,10 @@ final class GetElectionDexServiceTest extends TestCase
         );
     }
 
-    private function getServiceWithPremium(): GetElectionDexService
+    private function getServiceWithPremium(): GetElectionDexListService
     {
         $json = (string) file_get_contents(
-            '/app/tests/resources/unit/service/api/election_dex_premium.json'
+            '/app/tests/resources/unit/service/api/election_dex_list_premium.json'
         );
 
         return $this->getMockService(
@@ -149,10 +149,10 @@ final class GetElectionDexServiceTest extends TestCase
         );
     }
 
-    private function getServiceWithUnreleasedAndPremium(): GetElectionDexService
+    private function getServiceWithUnreleasedAndPremium(): GetElectionDexListService
     {
         $json = (string) file_get_contents(
-            '/app/tests/resources/unit/service/api/election_dex_unreleased_and_premium.json'
+            '/app/tests/resources/unit/service/api/election_dex_list_unreleased_and_premium.json'
         );
 
         return $this->getMockService(
@@ -164,7 +164,7 @@ final class GetElectionDexServiceTest extends TestCase
     private function getMockService(
         string $json,
         string $endpoint,
-    ): GetElectionDexService {
+    ): GetElectionDexListService {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
             ->expects($this->exactly(2))
@@ -203,7 +203,7 @@ final class GetElectionDexServiceTest extends TestCase
         $this->cachePool = new ArrayAdapter();
         $this->cache = new TagAwareAdapter($this->cachePool, new ArrayAdapter());
 
-        return new GetElectionDexService(
+        return new GetElectionDexListService(
             $logger,
             $client,
             'https://api.domain',

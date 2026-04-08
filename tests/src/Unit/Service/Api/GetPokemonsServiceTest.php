@@ -31,7 +31,7 @@ final class GetPokemonsServiceTest extends TestCase
         string $electionSlug,
         int $count,
     ): void {
-        $electionList = $this
+        $electionDexList = $this
             ->getService(
                 $listType,
                 $trainerExternalId,
@@ -48,9 +48,9 @@ final class GetPokemonsServiceTest extends TestCase
             )
         ;
 
-        $this->assertSame($listType, $electionList->type);
+        $this->assertSame($listType, $electionDexList->type);
 
-        $pokemons = $electionList->items;
+        $pokemons = $electionDexList->items;
         $this->assertCount($count, $pokemons);
 
         $this->assertEmpty($this->cache->getItems());
@@ -88,7 +88,7 @@ final class GetPokemonsServiceTest extends TestCase
 
     public function testGetWithFilters(): void
     {
-        $electionList = $this
+        $electionDexList = $this
             ->getService(
                 'pick',
                 '12',
@@ -111,9 +111,9 @@ final class GetPokemonsServiceTest extends TestCase
             )
         ;
 
-        $this->assertSame('pick', $electionList->type);
+        $this->assertSame('pick', $electionDexList->type);
 
-        $pokemons = $electionList->items;
+        $pokemons = $electionDexList->items;
         $this->assertCount(5, $pokemons);
 
         $this->assertEmpty($this->cache->getItems());

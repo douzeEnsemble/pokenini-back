@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Album;
+namespace App\Tests\Integration\Election;
 
-use App\Controller\Album\AlbumDexController;
+use App\Controller\Election\ElectionDexListController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -15,8 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @internal
  */
 #[Group('api-mocked-testing')]
-#[CoversClass(AlbumDexController::class)]
-final class AlbumDexTest extends WebTestCase
+#[CoversClass(ElectionDexListController::class)]
+final class ElectionDexListTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
@@ -29,12 +29,12 @@ final class AlbumDexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/album/dex',
+            '/election/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'AlbumDex/trainer.json');
+        $this->assertResponseContent($client, 'ElectionDexList/trainer.json');
     }
 
     public function testDexAsCollector(): void
@@ -45,12 +45,12 @@ final class AlbumDexTest extends WebTestCase
             $client,
             'collector',
             'GET',
-            '/album/dex',
+            '/election/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'AlbumDex/collector.json');
+        $this->assertResponseContent($client, 'ElectionDexList/collector.json');
     }
 
     public function testDexAdmin(): void
@@ -61,21 +61,21 @@ final class AlbumDexTest extends WebTestCase
             $client,
             'admin',
             'GET',
-            '/album/dex',
+            '/election/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'AlbumDex/admin.json');
+        $this->assertResponseContent($client, 'ElectionDexList/admin.json');
     }
 
-    public function testDexPublic(): void
+    public function testDexNonAuthenticated(): void
     {
         $client = self::createClient();
 
         $client->request(
             'GET',
-            '/album/dex',
+            '/election/dex',
         );
 
         $this->assertResponseStatusCodeSame(401);

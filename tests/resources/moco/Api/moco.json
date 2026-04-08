@@ -862,7 +862,7 @@
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election_dex_include_premium_dex1_include_unreleased_dex1.json"
+      "file": "/var/moco/responses/election_dex_list_include_premium_dex1_include_unreleased_dex1.json"
     }
   },
   {
@@ -879,7 +879,7 @@
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election_dex_include_premium_dex1.json"
+      "file": "/var/moco/responses/election_dex_list_include_premium_dex1.json"
     }
   },
   {
@@ -893,7 +893,7 @@
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election_dex.json"
+      "file": "/var/moco/responses/election_dex_list.json"
     }
   },
   {

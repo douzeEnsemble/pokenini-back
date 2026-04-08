@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Integration\Election;
+namespace App\Tests\Integration\Trainer;
 
-use App\Controller\Election\ElectionDexController;
+use App\Controller\Trainer\TrainerListDexController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -15,8 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @internal
  */
 #[Group('api-mocked-testing')]
-#[CoversClass(ElectionDexController::class)]
-final class ElectionDexTest extends WebTestCase
+#[CoversClass(TrainerListDexController::class)]
+final class TrainerListDexTest extends WebTestCase
 {
     use ClientRequestTrait;
     use JsonResponseTrait;
@@ -29,12 +29,12 @@ final class ElectionDexTest extends WebTestCase
             $client,
             'trainer',
             'GET',
-            '/election/dex',
+            '/trainer/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'ElectionDex/trainer.json');
+        $this->assertResponseContent($client, 'TrainerListDex/trainer.json');
     }
 
     public function testDexAsCollector(): void
@@ -45,12 +45,12 @@ final class ElectionDexTest extends WebTestCase
             $client,
             'collector',
             'GET',
-            '/election/dex',
+            '/trainer/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'ElectionDex/collector.json');
+        $this->assertResponseContent($client, 'TrainerListDex/collector.json');
     }
 
     public function testDexAdmin(): void
@@ -61,21 +61,21 @@ final class ElectionDexTest extends WebTestCase
             $client,
             'admin',
             'GET',
-            '/election/dex',
+            '/trainer/dex',
         );
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'ElectionDex/admin.json');
+        $this->assertResponseContent($client, 'TrainerListDex/admin.json');
     }
 
-    public function testDexNonAuthenticated(): void
+    public function testDexPublic(): void
     {
         $client = self::createClient();
 
         $client->request(
             'GET',
-            '/election/dex',
+            '/trainer/dex',
         );
 
         $this->assertResponseStatusCodeSame(401);
