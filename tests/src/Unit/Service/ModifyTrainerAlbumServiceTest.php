@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Service;
 
 use App\Exception\ModifyFailedException;
 use App\Security\UserTokenService;
-use App\Service\Api\ModifyAlbumService;
+use App\Service\Api\ModifyAlbumApiService;
 use App\Service\CacheInvalidator\AlbumsCacheInvalidatorService;
 use App\Service\ModifyTrainerAlbumService;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -31,7 +31,7 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $modifyAlbumService = $this->createMock(ModifyAlbumService::class);
+        $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
         $modifyAlbumService
             ->expects($this->once())
             ->method('modify')
@@ -77,7 +77,7 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
 
         $exception = $this->createStub(HttpExceptionInterface::class);
 
-        $modifyAlbumService = $this->createMock(ModifyAlbumService::class);
+        $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
         $modifyAlbumService
             ->expects($this->once())
             ->method('modify')
@@ -125,7 +125,7 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $modifyAlbumService = $this->createMock(ModifyAlbumService::class);
+        $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
         $modifyAlbumService
             ->expects($this->never())
             ->method('modify')
@@ -162,7 +162,7 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
 
         $exception = $this->createStub(TransportExceptionInterface::class);
 
-        $modifyAlbumService = $this->createMock(ModifyAlbumService::class);
+        $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
         $modifyAlbumService
             ->expects($this->once())
             ->method('modify')

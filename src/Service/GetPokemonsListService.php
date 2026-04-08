@@ -6,13 +6,13 @@ namespace App\Service;
 
 use App\DTO\ElectionPokemonsList;
 use App\Security\UserTokenService;
-use App\Service\Api\GetPokemonsService;
+use App\Service\Api\GetPokemonsApiService;
 
 class GetPokemonsListService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,
-        private readonly GetPokemonsService $getPokemonsService,
+        private readonly GetPokemonsApiService $getPokemonsService,
         private readonly int $electionCandidateCount,
     ) {}
 

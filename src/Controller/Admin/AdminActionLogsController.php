@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Service\Api\GetActionLogsService;
+use App\Service\Api\GetActionLogsApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 final class AdminActionLogsController extends AbstractController
 {
     public function __construct(
-        private readonly GetActionLogsService $service,
+        private readonly GetActionLogsApiService $service,
         private readonly SerializerInterface $serializer
     ) {}
 

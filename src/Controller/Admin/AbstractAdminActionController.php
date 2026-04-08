@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\DTO\AdminAction;
-use App\Service\Api\AdminActionService;
+use App\Service\Api\AdminActionApiService;
 use App\Service\CacheInvalidatorService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,7 @@ abstract class AbstractAdminActionController extends AbstractController
 {
     public function __construct(
         private readonly CacheInvalidatorService $cacheInvalidatorService,
-        private readonly AdminActionService $adminActionService,
+        private readonly AdminActionApiService $adminActionService,
         private readonly LoggerInterface $logger,
     ) {}
 

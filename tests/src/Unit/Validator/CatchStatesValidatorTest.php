@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Validator;
 
-use App\Service\Api\GetCatchStatesService;
+use App\Service\Api\GetCatchStatesApiService;
 use App\Validator\CatchStates;
 use App\Validator\CatchStatesValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -47,7 +47,7 @@ final class CatchStatesValidatorTest extends ConstraintValidatorTestCase
     #[\Override]
     protected function createValidator(): CatchStatesValidator
     {
-        $getService = $this->createMock(GetCatchStatesService::class);
+        $getService = $this->createMock(GetCatchStatesApiService::class);
         $getService
             ->expects($this->never())
             ->method('get')

@@ -6,7 +6,7 @@ namespace App\Service;
 
 use App\Exception\DexNotFoundException;
 use App\Security\UserTokenService;
-use App\Service\Api\GetPokedexService;
+use App\Service\Api\GetPokedexApiService;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
@@ -14,7 +14,7 @@ class GetTrainerPokedexService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,
-        private readonly GetPokedexService $getPokedexService,
+        private readonly GetPokedexApiService $getPokedexService,
     ) {}
 
     /**

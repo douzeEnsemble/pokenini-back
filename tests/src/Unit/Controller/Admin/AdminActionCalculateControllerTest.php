@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Controller\Admin;
 
 use App\Controller\Admin\AbstractAdminActionController;
 use App\Controller\Admin\AdminActionCalculateController;
-use App\Service\Api\AdminActionService;
+use App\Service\Api\AdminActionApiService;
 use App\Service\CacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +28,7 @@ final class AdminActionCalculateControllerTest extends TestCase
             ->with('something')
         ;
 
-        $adminActionService = $this->createMock(AdminActionService::class);
+        $adminActionService = $this->createMock(AdminActionApiService::class);
         $adminActionService
             ->expects($this->once())
             ->method('calculate')
@@ -60,7 +60,7 @@ final class AdminActionCalculateControllerTest extends TestCase
             ->method('invalidate')
         ;
 
-        $adminActionService = $this->createMock(AdminActionService::class);
+        $adminActionService = $this->createMock(AdminActionApiService::class);
         $adminActionService
             ->expects($this->once())
             ->method('calculate')

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
-use App\Service\Api\GetCatchStatesService;
+use App\Service\Api\GetCatchStatesApiService;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 final class CatchStatesValidator extends ConstraintValidator
 {
     public function __construct(
-        private readonly GetCatchStatesService $getCatchStatesService,
+        private readonly GetCatchStatesApiService $getCatchStatesService,
     ) {}
 
     /**

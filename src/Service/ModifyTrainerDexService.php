@@ -6,7 +6,7 @@ namespace App\Service;
 
 use App\Exception\ModifyFailedException;
 use App\Security\UserTokenService;
-use App\Service\Api\ModifyDexService;
+use App\Service\Api\ModifyDexApiService;
 use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
 use App\Service\CacheInvalidator\DexCacheInvalidatorService;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -16,7 +16,7 @@ class ModifyTrainerDexService
 {
     public function __construct(
         private readonly UserTokenService $userTokenService,
-        private readonly ModifyDexService $modifyDexService,
+        private readonly ModifyDexApiService $modifyDexService,
         private readonly AlbumCacheInvalidatorService $albumCacheInvalidatorService,
         private readonly DexCacheInvalidatorService $dexCacheInvalidatorService,
     ) {}

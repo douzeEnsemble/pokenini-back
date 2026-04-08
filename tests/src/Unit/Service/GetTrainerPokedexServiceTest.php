@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Service;
 
 use App\Exception\DexNotFoundException;
 use App\Security\UserTokenService;
-use App\Service\Api\GetPokedexService;
+use App\Service\Api\GetPokedexApiService;
 use App\Service\GetTrainerPokedexService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +28,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $getPokedexService = $this->createMock(GetPokedexService::class);
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
         $getPokedexService
             ->expects($this->once())
             ->method('get')
@@ -68,7 +68,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $getPokedexService = $this->createMock(GetPokedexService::class);
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
         $getPokedexService
             ->expects($this->once())
             ->method('get')
@@ -116,7 +116,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
             ->method('getLoggedUserToken')
         ;
 
-        $getPokedexService = $this->createMock(GetPokedexService::class);
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
         $getPokedexService
             ->expects($this->once())
             ->method('get')
@@ -156,7 +156,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $getPokedexService = $this->createMock(GetPokedexService::class);
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
         $getPokedexService
             ->expects($this->once())
             ->method('get')
@@ -190,7 +190,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
 
         $exception = $this->createStub(HttpExceptionInterface::class);
 
-        $getPokedexService = $this->createMock(GetPokedexService::class);
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
         $getPokedexService
             ->expects($this->once())
             ->method('get')
@@ -221,7 +221,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
 
         $exception = $this->createStub(TransportExceptionInterface::class);
 
-        $getPokedexService = $this->createMock(GetPokedexService::class);
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
         $getPokedexService
             ->expects($this->once())
             ->method('get')
