@@ -6,7 +6,7 @@ namespace App\Service\Api;
 
 use App\DTO\ElectionVote;
 
-class ElectionVoteApiService extends AbstractApiService
+class ModifyElectionVoteApiService extends AbstractApiService
 {
     public function vote(
         string $trainerId,

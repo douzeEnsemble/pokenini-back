@@ -6,7 +6,7 @@ namespace App\Service\Api;
 
 use App\Utils\JsonDecoder;
 
-class ElectionTopApiService extends AbstractApiService
+class GetElectionTopApiService extends AbstractApiService
 {
     /**
      * @return string[][]
