@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
-use App\Service\Api\GetElectionDexListService;
+use App\Service\Api\ElectionDexListService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -16,8 +16,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @internal
  */
-#[CoversClass(GetElectionDexListService::class)]
-final class GetElectionDexListServiceTest extends TestCase
+#[CoversClass(ElectionDexListService::class)]
+final class ElectionDexListServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
@@ -125,7 +125,7 @@ final class GetElectionDexListServiceTest extends TestCase
         );
     }
 
-    private function getService(): GetElectionDexListService
+    private function getService(): ElectionDexListService
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/election_dex_list.json'
@@ -137,7 +137,7 @@ final class GetElectionDexListServiceTest extends TestCase
         );
     }
 
-    private function getServiceWithPremium(): GetElectionDexListService
+    private function getServiceWithPremium(): ElectionDexListService
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/election_dex_list_premium.json'
@@ -149,7 +149,7 @@ final class GetElectionDexListServiceTest extends TestCase
         );
     }
 
-    private function getServiceWithUnreleasedAndPremium(): GetElectionDexListService
+    private function getServiceWithUnreleasedAndPremium(): ElectionDexListService
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/election_dex_list_unreleased_and_premium.json'
@@ -164,7 +164,7 @@ final class GetElectionDexListServiceTest extends TestCase
     private function getMockService(
         string $json,
         string $endpoint,
-    ): GetElectionDexListService {
+    ): ElectionDexListService {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
             ->expects($this->exactly(2))
@@ -203,7 +203,7 @@ final class GetElectionDexListServiceTest extends TestCase
         $this->cachePool = new ArrayAdapter();
         $this->cache = new TagAwareAdapter($this->cachePool, new ArrayAdapter());
 
-        return new GetElectionDexListService(
+        return new ElectionDexListService(
             $logger,
             $client,
             'https://api.domain',
