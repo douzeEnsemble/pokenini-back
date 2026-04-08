@@ -8,7 +8,7 @@ use App\Cache\KeyMaker;
 use App\Utils\JsonDecoder;
 use Symfony\Contracts\Cache\ItemInterface;
 
-class GetDexService extends AbstractApiService
+class GetDexListService extends AbstractApiService
 {
     /**
      * @return string[][]

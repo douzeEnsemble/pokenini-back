@@ -19,21 +19,21 @@ final class ElectionDexListController extends AbstractController
         priority: 2,
     )]
     public function index(
-        ElectionDexListService $getDexService,
+        ElectionDexListService $getDexListService,
     ): JsonResponse {
         switch (true) {
             case $this->isGranted('ROLE_ADMIN'):
-                $dex = $getDexService->getWithUnreleasedAndPremium();
+                $dex = $getDexListService->getWithUnreleasedAndPremium();
 
                 break;
 
             case $this->isGranted('ROLE_COLLECTOR'):
-                $dex = $getDexService->getWithPremium();
+                $dex = $getDexListService->getWithPremium();
 
                 break;
 
             default:
-                $dex = $getDexService->get();
+                $dex = $getDexListService->get();
 
                 break;
         }

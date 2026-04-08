@@ -6,7 +6,7 @@ namespace App\Controller\Album;
 
 use App\Exception\NoLoggedUserException;
 use App\Security\UserTokenService;
-use App\Service\Api\GetDexService;
+use App\Service\Api\GetDexListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ final class AlbumDexListController extends AbstractController
         priority: 2,
     )]
     public function index(
-        GetDexService $getDexService,
+        GetDexListService $getDexListService,
         UserTokenService $userTokenService,
     ): JsonResponse {
         try {
@@ -31,8 +31,8 @@ final class AlbumDexListController extends AbstractController
         }
 
         $dex = $this->isGranted('ROLE_ADMIN')
-            ? $getDexService->getWithUnreleasedAndPremium($connectedUserId)
-            : $getDexService->getWithPremium($connectedUserId);
+            ? $getDexListService->getWithUnreleasedAndPremium($connectedUserId)
+            : $getDexListService->getWithPremium($connectedUserId);
 
         return new JsonResponse($dex, Response::HTTP_OK);
     }

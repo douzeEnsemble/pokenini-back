@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Trainer;
 
 use App\Security\UserTokenService;
-use App\Service\Api\GetDexService;
+use App\Service\Api\GetDexListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class TrainerListDexController extends AbstractController
 {
     public function __construct(
-        private readonly GetDexService $service,
+        private readonly GetDexListService $service,
         private readonly UserTokenService $userTokenService,
     ) {}
 

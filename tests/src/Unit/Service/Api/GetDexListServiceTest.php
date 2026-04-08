@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
-use App\Service\Api\GetDexService;
+use App\Service\Api\GetDexListService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -16,8 +16,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @internal
  */
-#[CoversClass(GetDexService::class)]
-final class GetDexServiceTest extends TestCase
+#[CoversClass(GetDexListService::class)]
+final class GetDexListServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
@@ -99,7 +99,7 @@ final class GetDexServiceTest extends TestCase
         );
     }
 
-    private function getServiceWithPremium(string $trainerId): GetDexService
+    private function getServiceWithPremium(string $trainerId): GetDexListService
     {
         $json = (string) file_get_contents(
             "/app/tests/resources/unit/service/api/dex_{$trainerId}_premium.json"
@@ -111,7 +111,7 @@ final class GetDexServiceTest extends TestCase
         );
     }
 
-    private function getServiceWithUnreleasedAndPremium(string $trainerId): GetDexService
+    private function getServiceWithUnreleasedAndPremium(string $trainerId): GetDexListService
     {
         $json = (string) file_get_contents(
             "/app/tests/resources/unit/service/api/dex_{$trainerId}_unreleased_and_premium.json"
@@ -126,7 +126,7 @@ final class GetDexServiceTest extends TestCase
     private function getMockService(
         string $json,
         string $endpoint,
-    ): GetDexService {
+    ): GetDexListService {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
             ->expects($this->exactly(2))
@@ -165,7 +165,7 @@ final class GetDexServiceTest extends TestCase
         $this->cachePool = new ArrayAdapter();
         $this->cache = new TagAwareAdapter($this->cachePool, new ArrayAdapter());
 
-        return new GetDexService(
+        return new GetDexListService(
             $logger,
             $client,
             'https://api.domain',
