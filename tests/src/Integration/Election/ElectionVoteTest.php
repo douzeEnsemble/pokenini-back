@@ -82,8 +82,7 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite',
-            [
-            ],
+            [],
         );
 
         $this->assertResponseStatusCodeSame(400);

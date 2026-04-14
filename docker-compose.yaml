@@ -31,14 +31,14 @@ services:
     tty: true
 
   redis:
-    image: redis:8.0-alpine
+    image: redis:8.6.2-alpine3.23
     volumes:
       - redis_data:/data
     command: redis-server --requirepass douze
     restart: always
 
   web:
-    image: nginx:1.28-alpine
+    image: nginx:1.29.8-alpine3.23
     volumes:
       - .:/app
       - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf

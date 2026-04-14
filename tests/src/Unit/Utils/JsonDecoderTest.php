@@ -44,13 +44,11 @@ final class JsonDecoderTest extends TestCase
             ],
             [
                 '{}',
-                [
-                ],
+                [],
             ],
             [
                 '[]',
-                [
-                ],
+                [],
             ],
             [
                 self::getManyColorsJson(),
