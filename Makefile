@@ -188,7 +188,7 @@ dockerfile-linter: ## Run Dockerfile linter
 dotenv-linter: ## Run DotEnv linter
 	$(DOTENV_LINTER_CMD) check . -r
 
-.PHONY: dotenv-linter
+.PHONY: dotenv-fixer
 dotenv-fixer: ## Run DotEnv fixer
 	$(DOTENV_LINTER_CMD) fix . -r --no-backup
 
@@ -242,11 +242,6 @@ psalm: tools/psalm/vendor/bin/psalm
 	@$(PHP_CONT) rm -Rf var/cache/psalm
 	@$(PHP) tools/psalm/vendor/bin/psalm -c psalm.xml --no-diff --show-info=false --no-cache --find-unused-psalm-suppress --no-suggestions
 	@$(PHP) tools/psalm/vendor/bin/psalm -c psalm-src-only.xml --no-diff --show-info=false --no-cache --find-unused-psalm-suppress --no-suggestions
-
-.PHONY: psalm-fix
-psalm-fix: ## Execute psalm auto fixing
-psalm-fix: tools/psalm/vendor/bin/psalm
-	@$(PHP) tools/psalm/vendor/bin/psalm --alter --issues=UnnecessaryVarAnnotation,UnusedVariable,PossiblyUnusedMethod,MissingParamType
 
 .PHONY: phpstan
 phpstan: ## Execute phpstan analyse
