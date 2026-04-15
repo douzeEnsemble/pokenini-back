@@ -25,11 +25,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
-	libpq-dev \
-	&& docker-php-ext-install pdo_pgsql pgsql
-
-# hadolint ignore=DL3018
-RUN apk add --no-cache \
 	libzip-dev \
 	zlib-dev \
 	&& docker-php-ext-install zip
