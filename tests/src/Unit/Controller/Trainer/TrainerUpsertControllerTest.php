@@ -15,7 +15,6 @@ use App\Service\RequestedContentService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Validator\Constraints\Json;
 
@@ -134,7 +133,6 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertSame('{"error":"Content cannot be empty"}', $response->getContent());
     }

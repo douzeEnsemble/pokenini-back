@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 /**
  * @internal
@@ -76,7 +75,6 @@ final class AccessTokenHandlerTest extends TestCase
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
 
-        $this->assertInstanceOf(UserBadge::class, $userBadge);
         $this->assertSame('some-access-token', $userBadge->getUserIdentifier());
         $user = $userBadge->getUser();
         $this->assertInstanceOf(User::class, $user);

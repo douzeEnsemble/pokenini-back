@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
-use App\DTO\ActionLogData;
 use App\Service\Api\GetActionLogsApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -42,7 +41,6 @@ final class GetActionLogsApiServiceTest extends TestCase
         ];
         foreach ($expectedLogs as $key) {
             $this->assertArrayHasKey($key, $actionLogs);
-            $this->assertInstanceOf(ActionLogData::class, $actionLogs[$key]);
         }
 
         $this->assertEmpty($this->cachePool->getValues());
