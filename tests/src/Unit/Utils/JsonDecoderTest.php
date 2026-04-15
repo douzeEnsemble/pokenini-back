@@ -16,8 +16,8 @@ use PHPUnit\Framework\TestCase;
 final class JsonDecoderTest extends TestCase
 {
     /**
-     * @param mixed[] $expectedData
-     */
+     * @param array<array-key, mixed> $expectedData
+    */
     #[DataProvider('providerDecode')]
     public function testDecode(string $json, array $expectedData): void
     {
@@ -28,14 +28,17 @@ final class JsonDecoderTest extends TestCase
     }
 
     /**
-     * @return string[][]|string[][][]|string[][][][]|string[][][][][][]
+     * @return array<int, array{
+     *      json: string,
+     *      expectedData: array<array-key, mixed>
+     * }>
      */
     public static function providerDecode(): array
     {
         return [
             [
-                self::getOneColorJson(),
-                [
+                'json' => self::getOneColorJson(),
+                'expectedData' => [
                     'color' => '#66bb6a',
                     'name' => 'Yes',
                     'french_name' => 'Oui',
@@ -43,16 +46,16 @@ final class JsonDecoderTest extends TestCase
                 ],
             ],
             [
-                '{}',
-                [],
+                'json' => '{}',
+                'expectedData' => [],
             ],
             [
-                '[]',
-                [],
+                'json' => '[]',
+                'expectedData' => [],
             ],
             [
-                self::getManyColorsJson(),
-                [
+                'json' => self::getManyColorsJson(),
+                'expectedData' => [
                     [
                         'color' => '#e57373',
                         'name' => 'No',
@@ -92,8 +95,8 @@ final class JsonDecoderTest extends TestCase
                 ],
             ],
             [
-                self::getMaxDepthJson(),
-                [
+                'json' => self::getMaxDepthJson(),
+                'expectedData' => [
                     'lvl1' => [
                         'lvl2' => [
                             'lvl3' => [

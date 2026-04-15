@@ -33,7 +33,12 @@ final class TotalRoundCountHelperTest extends TestCase
     }
 
     /**
-     * @return float[][]|int[][]
+     * @return array<string, array{
+     *      dexTotalCount: int,
+     *      perViewCount: int,
+     *      winnerAverage: float,
+     *      expectedCount: int,
+     * }>
      */
     public static function providerCalculate(): array
     {
