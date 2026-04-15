@@ -17,7 +17,7 @@ final class JsonDecoderTest extends TestCase
 {
     /**
      * @param array<array-key, mixed> $expectedData
-    */
+     */
     #[DataProvider('providerDecode')]
     public function testDecode(string $json, array $expectedData): void
     {
