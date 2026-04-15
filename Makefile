@@ -9,6 +9,7 @@ PHP_CONT = $(DOCKER_COMP) exec php
 PHP      = $(PHP_CONT) php
 COMPOSER = $(PHP_CONT) composer
 SYMFONY  = $(PHP) bin/console
+PHPUNIT  = $(PHP) vendor/bin/phpunit
 DOCKERCOMPOSE_LINTER_CMD = docker run -t --rm -v ${PWD}:/app zavoloklom/dclint:3.1.0-alpine
 DOTENV_LINTER_CMD = docker run -t --rm -v ${PWD}:/app -w /app dotenvlinter/dotenv-linter:4.0.0
 HADOLINT_CMD = docker run -t --rm -v ${PWD}:/app hadolint/hadolint:v2.14.0-alpine hadolint
@@ -122,40 +123,31 @@ cc:
 .PHONY: tests
 tests: ## Execute all tests
 tests:
-	$(PHP) vendor/bin/phpunit tests/src
-
-.PHONY: tests-defect
-tests-defect: ## Execute tests and stop when one defect
-tests-defect:
-	$(PHP) vendor/bin/phpunit tests/src --stop-on-defect
+	$(PHPUNIT) tests/src --display-all
 
 .PHONY: t
 t: ## Alias of tests
 t: tests
 
 .PHONY: tests-unit
-tests-unit: ## Execute unit's tests
-	@$(PHP_CONT) vendor/bin/phpunit tests/src/Unit
+tests-unit: ## Execute unit tests
+	$(PHPUNIT) tests/src/Unit
+
+.PHONY: tests-integration
+tests-integration: ## Execute integration tests
+	$(PHPUNIT) tests/src/Integration
 
 .PHONY: tu
 tu: ## Alias of tests-unit
 tu: tests-unit
 
-.PHONY: tests-functional
-tests-functional: ## Execute functional tests
-	@$(PHP_CONT) vendor/bin/phpunit tests/src/Integration
-
-.PHONY: tf
-tf: ## Alias of tests-functional
-tf: tests-functional
-
 .PHONY: ti
-ti: ## Alias of tests-functional
-ti: tests-functional
+ti: ## Alias of tests-integration
+ti: tests-integration
 
 .PHONY: tests-api-mocked
 tests-api-mocked: ## Execute tests on the group api-mocked-testing only
-	@$(PHP_CONT) vendor/bin/phpunit tests/src/Integration --group=api-mocked-testing --stop-on-defect --no-progress --no-logging
+	$(PHPUNIT) tests/src/Integration --group=api-mocked-testing
 
 ## —— Quality 👌 ———————————————————————————————————————————————————————————————
 .PHONY: quality
