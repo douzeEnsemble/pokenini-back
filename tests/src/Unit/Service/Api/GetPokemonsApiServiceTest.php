@@ -57,7 +57,13 @@ final class GetPokemonsApiServiceTest extends TestCase
     }
 
     /**
-     * @return int[][]|string[][]
+     * @return array<string, array{
+     *      listType: string,
+     *      trainerExternalId: string,
+     *      dexSlug: string,
+     *      electionSlug: string,
+     *      count: int,
+     * }>
      */
     public static function providerGet(): array
     {
