@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Trait;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Component\DomCrawler\Crawler;
 
 trait ClientRequestTrait
 {
@@ -23,8 +22,8 @@ trait ClientRequestTrait
         array $files = [],
         array $server = [],
         ?string $content = null,
-    ): Crawler {
-        return $client->request(
+    ): void {
+        $client->request(
             $method,
             $uri,
             $parameters,
