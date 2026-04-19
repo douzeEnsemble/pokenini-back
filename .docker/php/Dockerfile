@@ -82,7 +82,7 @@ RUN set -eux; \
 
 COPY . ./
 
-RUN mv .env.prod .env && chown www-data:www-data .env
+RUN mv .env.prod .env
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
