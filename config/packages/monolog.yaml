@@ -7,7 +7,7 @@ monolog:
       channels: ["!event"]
     stdout:
       type: stream
-      path: "php://stdout"
+      path: "php://stderr"
       level: debug
       channels: ["!event"]
     console:
