@@ -47,25 +47,25 @@ final class CatchStatesValidatorServiceCalledTest extends ConstraintValidatorTes
             ->willReturn([
                 [
                     'name' => 'No',
-                    'frenchName' => 'Non',
+                    'french_name' => 'Non',
                     'slug' => 'no',
                     'color' => '#e57373',
                 ],
                 [
                     'name' => 'Maybe',
-                    'frenchName' => 'Peut être',
+                    'french_name' => 'Peut être',
                     'slug' => 'maybe',
                     'color' => '#9575cd',
                 ],
                 [
                     'name' => 'Maybe not',
-                    'frenchName' => 'Peut être pas',
+                    'french_name' => 'Peut être pas',
                     'slug' => 'maybenot',
                     'color' => '#9575cd',
                 ],
                 [
                     'name' => 'Yes',
-                    'frenchName' => 'Oui',
+                    'french_name' => 'Oui',
                     'slug' => 'yes',
                     'color' => '#66bb6a',
                 ],
