@@ -1120,7 +1120,7 @@
     }
   },
   "filters": {
-    "ca": [
+    "collection_availabilities": [
       "pogoshadow"
     ]
   }

@@ -801,7 +801,7 @@
     }
   },
   "filters": {
-    "t2": [
+    "secondary_types": [
       "poison",
       "flying"
     ]

@@ -647,7 +647,7 @@
     }
   },
   "filters": {
-    "at": [
+    "any_types": [
       "fire"
     ]
   }

@@ -190,85 +190,85 @@ final class AlbumPokedexTest extends WebTestCase
         return [
             'cs-no' => [
                 'parameters' => [
-                    'cs' => 'no',
+                    'catch_states' => 'no',
                 ],
                 'filename' => 'cs-no',
             ],
             'cs-!no' => [
                 'parameters' => [
-                    'cs' => '!no',
+                    'catch_states' => '!no',
                 ],
                 'filename' => 'cs-!no',
             ],
             'ca-pogoshadow' => [
                 'parameters' => [
-                    'ca' => ['pogoshadow'],
+                    'collection_availabilities' => ['pogoshadow'],
                 ],
                 'filename' => 'ca-pogoshadow',
             ],
             'f-bulbasaur' => [
                 'parameters' => [
-                    'f' => 'bulbasaur',
+                    'families' => 'bulbasaur',
                 ],
                 'filename' => 'f-bulbasaur',
             ],
             'fc-starter' => [
                 'parameters' => [
-                    'fc' => ['starter'],
+                    'category_forms' => ['starter'],
                 ],
                 'filename' => 'fc-starter',
             ],
             'fs-mega' => [
                 'parameters' => [
-                    'fs' => ['mega'],
+                    'special_forms' => ['mega'],
                 ],
                 'filename' => 'fs-mega',
             ],
             'fs-mega-gigamax' => [
                 'parameters' => [
-                    'fs' => ['mega', ' gigamax'],
+                    'special_forms' => ['mega', ' gigamax'],
                 ],
                 'filename' => 'fs-mega-gigamax',
             ],
             'fr-paldean' => [
                 'parameters' => [
-                    'fr' => ['paldean'],
+                    'regional_forms' => ['paldean'],
                 ],
                 'filename' => 'fr-paldean',
             ],
             'fv-alternate' => [
                 'parameters' => [
-                    'fv' => ['alternate'],
+                    'variant_forms' => ['alternate'],
                 ],
                 'filename' => 'fv-alternate',
             ],
             'ogb-swordshield' => [
                 'parameters' => [
-                    'ogb' => ['swordshield'],
+                    'original_game_bundles' => ['swordshield'],
                 ],
                 'filename' => 'ogb-swordshield',
             ],
             'ogb-unknown' => [
                 'parameters' => [
-                    'ogb' => ['unknown'],
+                    'original_game_bundles' => ['unknown'],
                 ],
                 'filename' => 'ogb-unknown',
             ],
             't1-fire' => [
                 'parameters' => [
-                    't1' => ['fire'],
+                    'primary_types' => ['fire'],
                 ],
                 'filename' => 't1-fire',
             ],
             't2-poison-flying' => [
                 'parameters' => [
-                    't2' => ['poison', 'flying'],
+                    'secondary_types' => ['poison', 'flying'],
                 ],
                 'filename' => 't2-poison-flying',
             ],
             'at-fire' => [
                 'parameters' => [
-                    'at' => ['fire'],
+                    'any_types' => ['fire'],
                 ],
                 'filename' => 'at-fire',
             ],

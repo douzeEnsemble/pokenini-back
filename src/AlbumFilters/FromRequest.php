@@ -8,23 +8,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class FromRequest
 {
-    private const array STRING_FILTERS = [
-        'cs',
-        'f',
-    ];
-
-    private const array MULTIPLE_FILTERS = [
-        'fc',
-        'fr',
-        'fs',
-        'fv',
-        'at',
-        't1',
-        't2',
-        'ogb',
-        'gba',
-        'gbsa',
-        'ca',
+    private const array FILTERS = [
+        'catch_states',
+        'families',
+        'category_forms',
+        'regional_forms',
+        'special_forms',
+        'variant_forms',
+        'any_types',
+        'primary_types',
+        'secondary_types',
+        'original_game_bundles',
+        'game_bundle_availabilities',
+        'game_bundle_shiny_availabilities',
+        'collection_availabilities',
     ];
 
     /**
@@ -34,18 +31,15 @@ final class FromRequest
     {
         $filters = [];
 
-        foreach (self::STRING_FILTERS as $filterName) {
+        foreach (self::FILTERS as $filterName) {
             if ($request->query->has($filterName)) {
-                $filters[$filterName] = $request->query->getString($filterName);
-            }
-        }
-
-        foreach (self::MULTIPLE_FILTERS as $filterName) {
-            if ($request->query->has($filterName)) {
-                /** @var null|string[] $values */
+                /** @var null|string|string[] $values */
                 $values = $request->query->all()[$filterName];
                 $values ??= [];
-                $filters[$filterName] = array_filter($values);
+
+                $values = is_array($values) ? array_filter($values) : [$values];
+
+                $filters[$filterName] = $values;
             }
         }
 

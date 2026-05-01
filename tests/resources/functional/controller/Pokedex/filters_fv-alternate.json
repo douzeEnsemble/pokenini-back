@@ -1479,7 +1479,7 @@
     "filtered_report": []
   },
   "filters": {
-    "fv": [
+    "variant_forms": [
       "alternate"
     ]
   }

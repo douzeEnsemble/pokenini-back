@@ -416,7 +416,7 @@
     }
   },
   "filters": {
-    "fs": [
+    "special_forms": [
       "mega"
     ]
   }
