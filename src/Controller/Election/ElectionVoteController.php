@@ -29,7 +29,11 @@ final class ElectionVoteController extends AbstractController
         string $dexSlug,
         string $electionSlug = '',
     ): Response {
-        $data = $request->request->all();
+        $data = json_decode(
+            $request->getContent(), 
+            associative: true, 
+            depth: 3,
+        );
 
         if (empty($data)) {
             return new JsonResponse(
@@ -40,11 +44,11 @@ final class ElectionVoteController extends AbstractController
 
         /** @var array<string, array<int, string>|string> $data */
         $data = array_merge(
+            $data,
             [
                 'dex_slug' => $dexSlug,
                 'election_slug' => $electionSlug,
             ],
-            $data
         );
 
         try {
@@ -59,6 +63,7 @@ final class ElectionVoteController extends AbstractController
         $electionVoteService->vote($electionVote);
 
         return new JsonResponse(
+            [],
             Response::HTTP_OK
         );
     }
