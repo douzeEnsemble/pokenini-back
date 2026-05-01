@@ -81,6 +81,19 @@
   },
   {
     "request": {
+      "uri": "/userinfo",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "text": "{\"sub\": \"1234567890\", \"id\": \"this-is-trainer_s-id\", \"name\": \"John Admin\", \"email\": \"john.admin@example.com\"}"
+    }
+  },
+  {
+    "request": {
       "uri": "/getparsedresponse/without-error",
       "method": "GET"
     },

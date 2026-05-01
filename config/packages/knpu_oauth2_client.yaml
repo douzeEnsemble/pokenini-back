@@ -18,7 +18,7 @@ knpu_oauth2_client:
       redirect_route: app_connect_discord_check
       redirect_params: {}
 
-when@test:
+when@test: &client_test
   knpu_oauth2_client:
     clients:
       mock:
@@ -28,3 +28,5 @@ when@test:
         client_secret: ~
         redirect_route: app_connect_mock_check
         redirect_params: {}
+
+when@dev: *client_test
