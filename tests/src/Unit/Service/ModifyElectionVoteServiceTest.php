@@ -26,12 +26,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $electionVote = new ElectionVote([
-            'dex_slug' => 'demo',
-            'election_slug' => 'whatever',
-            'winners_slugs' => ['pichu'],
-            'losers_slugs' => ['pikachu', 'raichu'],
-        ]);
+        $electionVote = new ElectionVote(
+            'demo',
+            'whatever',
+            [
+                'winners_slugs' => ['pichu'],
+                'losers_slugs' => ['pikachu', 'raichu'],
+            ],
+        );
 
         $apiService = $this->createMock(ModifyElectionVoteApiService::class);
         $apiService
@@ -56,12 +58,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $electionVote = new ElectionVote([
-            'dex_slug' => 'demo',
-            'election_slug' => 'whatever',
-            'winners_slugs' => ['pichu'],
-            'losers_slugs' => ['pikachu', 'pichu', 'raichu'],
-        ]);
+        $electionVote = new ElectionVote(
+            'demo',
+            'whatever',
+            [
+                'winners_slugs' => ['pichu'],
+                'losers_slugs' => ['pikachu', 'pichu', 'raichu'],
+            ],
+        );
 
         $apiService = $this->createMock(ModifyElectionVoteApiService::class);
         $apiService
@@ -86,12 +90,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $electionVote = new ElectionVote([
-            'dex_slug' => 'demo',
-            'election_slug' => 'whatever',
-            'winners_slugs' => [],
-            'losers_slugs' => ['pikachu', 'pichu', 'raichu'],
-        ]);
+        $electionVote = new ElectionVote(
+            'demo',
+            'whatever',
+            [
+                'winners_slugs' => [],
+                'losers_slugs' => ['pikachu', 'pichu', 'raichu'],
+            ],
+        );
 
         $apiService = $this->createMock(ModifyElectionVoteApiService::class);
         $apiService
@@ -116,12 +122,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
-        $electionVote = new ElectionVote([
-            'dex_slug' => 'demo',
-            'election_slug' => 'whatever',
-            'winners_slugs' => ['pikachu', 'pichu', 'raichu'],
-            'losers_slugs' => [],
-        ]);
+        $electionVote = new ElectionVote(
+            'demo',
+            'whatever',
+            [
+                'winners_slugs' => ['pikachu', 'pichu', 'raichu'],
+                'losers_slugs' => [],
+            ],
+        );
 
         $apiService = $this->createMock(ModifyElectionVoteApiService::class);
         $apiService

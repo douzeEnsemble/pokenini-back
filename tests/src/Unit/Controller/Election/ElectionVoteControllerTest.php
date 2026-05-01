@@ -20,7 +20,7 @@ final class ElectionVoteControllerTest extends TestCase
 {
     public function testVote(): void
     {
-        $request = new Request([], ['winners_slugs' => ['pichu'], 'losers_slugs' => ['pikachu']]);
+        $request = new Request(content: (string) json_encode(['winners_slugs' => ['pichu'], 'losers_slugs' => ['pikachu']]));
 
         $electionVoteService = $this->createMock(ModifyElectionVoteService::class);
         $electionVoteService
@@ -67,7 +67,7 @@ final class ElectionVoteControllerTest extends TestCase
 
     public function testVoteNonvalid(): void
     {
-        $request = new Request([], ['winners_slugs' => ['pichu']]);
+        $request = new Request(content: (string) json_encode(['winners_slugs' => ['pichu']]));
 
         $electionVoteService = $this->createStub(ModifyElectionVoteService::class);
 

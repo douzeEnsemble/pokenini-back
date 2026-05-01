@@ -29,9 +29,10 @@ final class ElectionVoteController extends AbstractController
         string $dexSlug,
         string $electionSlug = '',
     ): Response {
+        /** @var array<string, array<int, string>> $data */
         $data = json_decode(
-            $request->getContent(), 
-            associative: true, 
+            $request->getContent(),
+            associative: true,
             depth: 3,
         );
 
@@ -42,17 +43,8 @@ final class ElectionVoteController extends AbstractController
             );
         }
 
-        /** @var array<string, array<int, string>|string> $data */
-        $data = array_merge(
-            $data,
-            [
-                'dex_slug' => $dexSlug,
-                'election_slug' => $electionSlug,
-            ],
-        );
-
         try {
-            $electionVote = new ElectionVote($data);
+            $electionVote = new ElectionVote($dexSlug, $electionSlug, $data);
         } catch (\InvalidArgumentException $e) {
             return new JsonResponse(
                 ['error' => $e->getMessage()],
