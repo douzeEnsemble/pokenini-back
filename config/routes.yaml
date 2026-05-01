@@ -21,7 +21,9 @@ app_connect_discord_check:
   path: /
   controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
 
-when@test:
+when@test: &routes_test
   app_connect_mock_check:
     path: /
     controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+
+when@dev: *routes_test
