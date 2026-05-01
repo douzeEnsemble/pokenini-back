@@ -25,12 +25,14 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
 
     public function testVote(): void
     {
-        $electionVote = new ElectionVote([
-            'dex_slug' => 'demo',
-            'election_slug' => 'whatever',
-            'winners_slugs' => ['pichu'],
-            'losers_slugs' => ['pikachu', 'raichu'],
-        ]);
+        $electionVote = new ElectionVote(
+            'demo',
+            'whatever',
+            [
+                'winners_slugs' => ['pichu'],
+                'losers_slugs' => ['pikachu', 'raichu'],
+            ],
+        );
 
         $this
             ->getService('5465465', 'demo', 'whatever', ['pichu'], ['pikachu', 'raichu'])
@@ -43,12 +45,14 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
 
     public function testVoteAllLosers(): void
     {
-        $electionVote = new ElectionVote([
-            'dex_slug' => 'demo',
-            'election_slug' => 'whatever',
-            'winners_slugs' => [],
-            'losers_slugs' => ['pikachu', 'pichu', 'raichu'],
-        ]);
+        $electionVote = new ElectionVote(
+            'demo',
+            'whatever',
+            [
+                'winners_slugs' => [],
+                'losers_slugs' => ['pikachu', 'pichu', 'raichu'],
+            ],
+        );
 
         $this
             ->getService('5465465', 'demo', 'whatever', [], ['pikachu', 'pichu', 'raichu'])
@@ -61,12 +65,14 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
 
     public function testVoteAllWinners(): void
     {
-        $electionVote = new ElectionVote([
-            'dex_slug' => 'demo',
-            'election_slug' => 'whatever',
-            'winners_slugs' => ['pikachu', 'pichu', 'raichu'],
-            'losers_slugs' => [],
-        ]);
+        $electionVote = new ElectionVote(
+            'demo',
+            'whatever',
+            [
+                'winners_slugs' => ['pikachu', 'pichu', 'raichu'],
+                'losers_slugs' => [],
+            ],
+        );
 
         $this
             ->getService('5465465', 'demo', 'whatever', ['pikachu', 'pichu', 'raichu'], [])

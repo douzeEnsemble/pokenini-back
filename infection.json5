@@ -28,6 +28,11 @@
                 "App\\Helper\\TotalRoundCountHelper::calculate",
             ],
         },
+        "IncrementInteger": {
+            "ignoreSourceCodeByRegex": [
+                "depth: \\d+,"
+            ]
+        },
         "MethodCallRemoval": {
             "ignoreSourceCodeByRegex": [
                 "\\$this->logger->info.*",

@@ -28,10 +28,10 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite',
-            [
+            content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
-            ],
+            ]),
         );
 
         $this->assertResponseIsSuccessful();
@@ -46,10 +46,10 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite/favorite',
-            [
+            content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
-            ],
+            ]),
         );
 
         $this->assertResponseIsSuccessful();
@@ -64,10 +64,10 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite/favorite?at[]=poison&at[]=fire&t1[]=&t2[]=&fc[]=&fr[]=&fs[]=&fv[]=&ogb[]=&gba[]=&gbsa[]',
-            [
+            content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
-            ],
+            ]),
         );
 
         $this->assertResponseIsSuccessful();
@@ -82,7 +82,7 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite',
-            [],
+            content: (string) json_encode([]),
         );
 
         $this->assertResponseStatusCodeSame(400);
@@ -102,14 +102,11 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite',
-            [],
-            [],
-            [],
-            http_build_query([
+            [
                 'electionSlug' => '',
                 'winnersSlugs' => ['pichu'],
                 'losersSlugs' => ['pikachu', 'raichu'],
-            ]),
+            ],
         );
 
         $this->assertResponseStatusCodeSame(400);
@@ -127,10 +124,10 @@ final class ElectionVoteTest extends WebTestCase
         $client->request(
             'POST',
             '/election/demolite',
-            [
+            content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
-            ],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(401);
