@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Album;
 
 use App\AlbumFilters\FromRequest;
-use App\AlbumFilters\Mapping;
 use App\Exception\DexNotFoundException;
 use App\Security\User;
 use App\Service\GetTrainerPokedexService;
@@ -38,10 +37,9 @@ final class AlbumPokedexController extends AbstractController
         }
 
         $filters = FromRequest::get($request);
-        $apiFilters = Mapping::get($filters);
 
         try {
-            $pokedex = $this->getTrainerPokedexService->getPokedexDataByTrainerId($dexSlug, $apiFilters, $trainerId);
+            $pokedex = $this->getTrainerPokedexService->getPokedexDataByTrainerId($dexSlug, $filters, $trainerId);
         } catch (DexNotFoundException $e) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }

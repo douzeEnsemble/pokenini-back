@@ -339,7 +339,7 @@
     }
   },
   "filters": {
-    "fc": [
+    "category_forms": [
       "starter"
     ]
   }

@@ -570,7 +570,7 @@
     }
   },
   "filters": {
-    "t1": [
+    "primary_types": [
       "fire"
     ]
   }

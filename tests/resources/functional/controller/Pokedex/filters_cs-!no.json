@@ -647,6 +647,8 @@
     }
   },
   "filters": {
-    "cs": "!no"
+    "catch_states": [
+      "!no"
+    ]
   }
 }

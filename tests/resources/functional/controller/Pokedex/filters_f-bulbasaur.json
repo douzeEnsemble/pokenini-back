@@ -570,6 +570,8 @@
     }
   },
   "filters": {
-    "f": "bulbasaur"
+    "families": [
+      "bulbasaur"
+    ]
   }
 }
