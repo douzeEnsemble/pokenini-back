@@ -95,6 +95,6 @@ final class TrainerIdsServiceTest extends TestCase
         $service->init();
 
         $this->assertNull($service->getLoggedTrainerId());
-        $this->assertSame('', $service->getTrainerId());
+        $this->assertNull($service->getTrainerId());
     }
 }
