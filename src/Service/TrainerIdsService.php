@@ -24,16 +24,19 @@ class TrainerIdsService
         $request = $this->requestStack->getCurrentRequest();
 
         if ($request) {
-            $this->requestedTrainerId = $request->query->getAlnum('t');
+            $this->requestedTrainerId = $request->query->get('t', null);
         }
 
         try {
             $this->loggedTrainerId = $this->userTokenService->getLoggedUserToken();
 
-            /** @psalm-suppress RiskyTruthyFalsyComparison */
-            $this->trainerId = $this->requestedTrainerId ?: $this->loggedTrainerId;
+            $this->trainerId = null !== $this->requestedTrainerId
+                ? $this->requestedTrainerId
+                : $this->loggedTrainerId;
         } catch (NoLoggedUserException $e) {
-            $this->trainerId = $this->requestedTrainerId;
+            $this->trainerId = null !== $this->requestedTrainerId
+                ? $this->requestedTrainerId
+                : null;
         }
     }
 

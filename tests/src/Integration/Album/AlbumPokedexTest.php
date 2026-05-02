@@ -281,9 +281,26 @@ final class AlbumPokedexTest extends WebTestCase
 
         $client->request(
             'GET',
-            '/album/demo',
+            '/album/demolite',
         );
 
-        $this->assertResponseStatusCodeSame(401);
+        $this->assertResponseStatusCodeSame(404);
+    }
+
+    public function testGetTrainerPublicDexNonAuthentificated(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/album/demolite',
+            [
+                't' => 'f86cbe805674d85f7806b175b70647a6a9334631',
+            ],
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertResponseContent($client, 'Pokedex/demolite_f86cbe805674d85f7806b175b70647a6a9334631.json');
     }
 }
