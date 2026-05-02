@@ -28,7 +28,7 @@ final class TrainerIdsServiceTest extends TestCase
         ;
 
         $requestStack = new RequestStack();
-        $request = new Request(['t' => '2100012']);
+        $request = new Request(['trainer_id' => '2100012']);
         $requestStack->push($request);
 
         $service = new TrainerIdsService($userTokenService, $requestStack);
@@ -68,7 +68,7 @@ final class TrainerIdsServiceTest extends TestCase
         ;
 
         $requestStack = new RequestStack();
-        $request = new Request(['t' => '2100012']);
+        $request = new Request(['trainer_id' => '2100012']);
         $requestStack->push($request);
 
         $service = new TrainerIdsService($userTokenService, $requestStack);

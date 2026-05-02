@@ -24,7 +24,7 @@ class TrainerIdsService
         $request = $this->requestStack->getCurrentRequest();
 
         if ($request) {
-            $this->requestedTrainerId = $request->query->get('t', null);
+            $this->requestedTrainerId = $request->query->get('trainer_id', null);
         }
 
         try {

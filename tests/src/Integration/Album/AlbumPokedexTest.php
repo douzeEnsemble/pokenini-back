@@ -48,7 +48,7 @@ final class AlbumPokedexTest extends WebTestCase
             'GET',
             '/album/demolite',
             [
-                't' => 'f86cbe805674d85f7806b175b70647a6a9334631',
+                'trainer_id' => 'f86cbe805674d85f7806b175b70647a6a9334631',
             ],
         );
 
@@ -67,7 +67,7 @@ final class AlbumPokedexTest extends WebTestCase
             'GET',
             '/album/demolist3',
             [
-                't' => '159bb9b6d090a313087d2f26135970c2db49ee72',
+                'trainer_id' => '159bb9b6d090a313087d2f26135970c2db49ee72',
             ],
         );
 
@@ -146,7 +146,7 @@ final class AlbumPokedexTest extends WebTestCase
             'GET',
             '/album/demomo',
             [
-                't' => 'f86cbe805674d85f7806b175b70647a6a9334631',
+                'trainer_id' => 'f86cbe805674d85f7806b175b70647a6a9334631',
             ],
         );
 
@@ -168,7 +168,7 @@ final class AlbumPokedexTest extends WebTestCase
             '/album/demo',
             array_merge(
                 [
-                    't' => '7b52009b64fd0a2a49e6d8a939753077792b0554',
+                    'trainer_id' => '7b52009b64fd0a2a49e6d8a939753077792b0554',
                 ],
                 $parameters,
             ),
@@ -295,7 +295,7 @@ final class AlbumPokedexTest extends WebTestCase
             'GET',
             '/album/demolite',
             [
-                't' => 'f86cbe805674d85f7806b175b70647a6a9334631',
+                'trainer_id' => 'f86cbe805674d85f7806b175b70647a6a9334631',
             ],
         );
 
