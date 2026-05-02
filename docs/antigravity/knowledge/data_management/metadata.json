@@ -1,0 +1,10 @@
+{
+  "title": "Data Management",
+  "summary": "Information on how the project manages its data, including API calls and Caching.",
+  "created_at": "2026-05-02T12:10:00+02:00",
+  "last_updated_at": "2026-05-02T12:10:00+02:00",
+  "references": [
+    "src/Service",
+    "src/Cache"
+  ]
+}
