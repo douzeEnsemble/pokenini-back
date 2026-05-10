@@ -19,9 +19,9 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
   Fichier : `.php-cs-fixer.dist.php:19`
   Résolu : mis à jour vers `@PHP85Migration` (disponible dans php-cs-fixer v3.95.1).
 
-- [ ] [moyenne] Version `actions/checkout` incohérente entre les workflows CI
-  Fichier : `.github/workflows/security.yml:15` (`@v5`) vs `.github/workflows/ci_codequality.yml:29`, `ci_tests.yml:30` (`@v6`)
-  Suggestion : Standardiser sur `actions/checkout@v6` (ou la dernière version stable) dans tous les workflows.
+- [x] [moyenne] Version `actions/checkout` incohérente entre les workflows CI
+  Fichier : `.github/workflows/security.yml:15`
+  Résolu : mis à jour de `@v5` vers `@v6`.
 
 - [ ] [moyenne] `AbstractAdminActionController` non-`final` sans nécessité d'extension externe
   Fichier : `src/Controller/Admin/AbstractAdminActionController.php:15`
