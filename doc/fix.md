@@ -15,9 +15,9 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
   Fichier : `src/Controller/Admin/AbstractAdminActionController.php:36`
   Résolu : remplacé par `catch (ExceptionInterface|\InvalidArgumentException $e)` — couvre les erreurs HTTP client (transport + HTTP) et les types d'invalidation inconnus.
 
-- [ ] [moyenne] Ruleset PHP CS Fixer `@PHP83Migration` avec PHP 8.5.6
+- [x] [moyenne] Ruleset PHP CS Fixer `@PHP83Migration` avec PHP 8.5.6
   Fichier : `.php-cs-fixer.dist.php:19`
-  Suggestion : Le projet cible PHP 8.5.6 mais le ruleset de migration est `@PHP83Migration`. Mettre à jour vers `@PHP84Migration` ou `@PHP85Migration` pour bénéficier des règles de style propres à PHP 8.4/8.5.
+  Résolu : mis à jour vers `@PHP85Migration` (disponible dans php-cs-fixer v3.95.1).
 
 - [ ] [moyenne] Version `actions/checkout` incohérente entre les workflows CI
   Fichier : `.github/workflows/security.yml:15` (`@v5`) vs `.github/workflows/ci_codequality.yml:29`, `ci_tests.yml:30` (`@v6`)
