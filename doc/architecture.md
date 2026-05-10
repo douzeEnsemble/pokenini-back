@@ -1,10 +1,15 @@
-# Architecture — pokenini-back
+# Architecture — Pokenini Back
 
 ## Vue d'ensemble
 
-Pokenini-back est un **BFF (Backend for Frontend)** Symfony 8.0 pour un tracker de Pokédex (living dex, alternate forms, gender dex). Il n'a **pas de base de données** : toute la persistance est dans l'API externe `pokenini-api`. Son rôle est de gérer l'authentification OAuth2 (Google, Discord), de mettre en cache les réponses de l'API distante (tag-aware), d'appliquer des règles de contrôle d'accès, et d'exposer un JSON REST API consommé par le frontend.
+`pokenini-back` est un **BFF (Backend for Frontend)** en Symfony 8.0 servant de façade à une API externe (`pokenini-api`). Il gère l'authentification OAuth2 (Google, Discord), met en cache les réponses de l'API (APCu / Redis avec invalidation par tags), applique les contrôles d'accès par rôle, et expose une API JSON consommée par le frontend Pokenini.
 
-Fonctionnalités principales : consultation du Pokédex par trainer, gestion d'album (catch states), liste de dex avec filtres, élection de Pokémon, rapports admin, invalidation de cache.
+Périmètre fonctionnel :
+- Consultation et mise à jour des pokédex personnels des dresseurs (albums)
+- Système d'élection de Pokémon (vote, métriques, classement)
+- Administration : invalidation cache, mise à jour des données, calculs, rapports, logs
+- Gestion des labels, types, collections et formes de Pokémon
+- Authentification OAuth2 multi-provider avec rôles basés sur des listes d'IDs en env
 
 ---
 
@@ -13,33 +18,37 @@ Fonctionnalités principales : consultation du Pokédex par trainer, gestion d'a
 ```
 pokenini-back/
 ├── src/
-│   ├── AlbumFilters/          Extraction et validation des filtres URL de l'album
-│   ├── Cache/                 KeyMaker — clés de cache déterministes
-│   ├── Controller/            Contrôleurs slim (1 endpoint = 1 fichier)
-│   │   ├── Admin/             Endpoints admin : actions, rapports, invalidation
-│   │   ├── Album/             Pokedex personnel, upsert catch states
-│   │   ├── Election/          Index, liste dex, vote
-│   │   ├── Labels/            Référentiels publics (types, formes, jeux)
-│   │   ├── Trainer/           Liste des dex, upsert dex trainer
-│   │   └── User/              Info utilisateur connecté
-│   ├── DTO/                   Value objects typés construits depuis tableaux
-│   ├── Exception/             Exceptions métier applicatives
-│   ├── Helper/                Calculs purs (TotalRoundCountHelper)
-│   ├── Security/              Authenticators OAuth2 + AccessToken + Fake/Mock
+│   ├── AlbumFilters/       # Parsing des filtres URL → tableau pour l'API
+│   ├── Cache/              # KeyMaker : génération déterministe des clés de cache
+│   ├── Controller/         # Points d'entrée HTTP (un contrôleur = un endpoint)
+│   │   ├── Admin/          # Endpoints admin (/istration/*)
+│   │   ├── Album/          # Endpoints album/pokédex
+│   │   ├── Election/       # Endpoints élection
+│   │   ├── Labels/         # Endpoint labels
+│   │   ├── Trainer/        # Endpoints dresseur
+│   │   └── User/           # Endpoint info utilisateur
+│   ├── DTO/                # Value objects typés (lecture seule, factory statique)
+│   ├── Exception/          # Exceptions métier (final, RuntimeException)
+│   ├── Helper/             # Helpers statiques purs (calculs)
+│   ├── Security/           # Authenticators, AccessTokenHandler, UserProvider
 │   ├── Service/
-│   │   ├── Api/               Appels HTTP vers pokenini-api (avec cache)
-│   │   └── CacheInvalidator/  Invalidation de cache par tags
-│   ├── Utils/                 JsonDecoder (json_decode centralisé)
-│   └── Validator/             Contrainte Symfony pour les catch states
+│   │   ├── Api/            # Appels HTTP vers pokenini-api (AbstractApiService)
+│   │   └── CacheInvalidator/ # Invalidation cache par tags
+│   ├── Utils/              # JsonDecoder (wrapper json_decode)
+│   └── Validator/          # Contrainte Symfony CatchStates
 ├── tests/
 │   ├── src/
-│   │   ├── Integration/       Tests full-stack avec Moco (WebTestCase)
-│   │   └── Unit/              Tests unitaires purs (PHPUnit)
-│   └── resources/
-│       ├── functional/        Snapshots JSON attendus par endpoint
-│       └── moco/              Config Moco + réponses HTTP mockées
-├── config/                    Configuration Symfony (packages, routes, services)
-├── tools/                     Outils qualité isolés (chacun avec son composer.json)
+│   │   ├── Integration/    # Tests d'intégration (WebTestCase + Moco)
+│   │   └── Unit/           # Tests unitaires (PHPUnit pur)
+│   ├── resources/
+│   │   ├── moco/Api/       # Réponses mock de l'API externe
+│   │   ├── moco/OAuth/     # Réponses mock OAuth2
+│   │   └── functional/     # Snapshots JSON des réponses controller
+│   └── Utils/              # Helpers de test (WithConsecutive)
+├── config/
+│   ├── packages/           # Configuration Symfony (cache, security, monolog…)
+│   └── routes/             # Routes additionnelles (security OAuth)
+├── tools/                  # Outils qualité isolés (composer indépendant par outil)
 │   ├── deptrac/
 │   ├── infection/
 │   ├── jsonlint/
@@ -47,139 +56,159 @@ pokenini-back/
 │   ├── phpmd/
 │   ├── phpstan/
 │   └── psalm/
-├── .docker/                   Dockerfiles PHP, Nginx, Moco
-├── .github/workflows/         CI GitHub Actions (tests, qualité, sécurité)
+├── .docker/
+│   ├── php/                # Dockerfile multi-stage (base/dev/prod)
+│   ├── nginx/              # Config Nginx (reverse proxy)
+│   └── moco/               # Dockerfile Moco (mock HTTP)
 └── resources/
-    ├── certificates/          CA certificate pour HTTPS vers pokenini-api
-    └── metadata/              Version de l'application
+    ├── certificates/       # CA cert pour les appels HTTPS vers l'API externe
+    └── metadata/           # Version de l'application
 ```
 
 ---
 
 ## Rôle de chaque couche
 
-| Couche | Rôle | Responsabilités | Fichier de référence |
-|--------|------|----------------|---------------------|
-| `Controller` | Point d'entrée HTTP | Reçoit la Request, délègue à un Service, retourne JsonResponse | `src/Controller/Album/AlbumPokedexController.php` |
-| `Service` (métier) | Orchestration | Combine ApiServices, applique la logique métier, gère les IDs trainer | `src/Service/GetTrainerPokedexService.php` |
-| `Service/Api` | Accès données | Appels HTTP à pokenini-api, mise en cache avec tags, décodage JSON | `src/Service/Api/GetPokedexApiService.php` |
-| `Service/CacheInvalidator` | Invalidation | Invalide les tags de cache selon le type de ressource modifiée | `src/Service/CacheInvalidator/AlbumCacheInvalidatorService.php` |
-| `DTO` | Transfert de données | Value objects immuables, nommés constructors `createFromArray()` | `src/DTO/ActionLog.php` |
-| `Security` | Authentification | OAuth2 (Google/Discord), AccessToken, Fake (dev), Mock (test) | `src/Security/AbstractAuthenticator.php` |
-| `AlbumFilters` | Parsing URL | Extrait les paramètres de filtre du `Request` vers un tableau typé | `src/AlbumFilters/FromRequest.php` |
-| `Cache/KeyMaker` | Clés de cache | Génère des clés déterministes à partir des paramètres de requête | `src/Cache/KeyMaker.php` |
-| `Utils` | Utilitaires | `JsonDecoder::decode()` — json_decode centralisé avec JSON_THROW_ON_ERROR | `src/Utils/JsonDecoder.php` |
-| `Validator` | Validation | Contrainte Symfony pour valider les valeurs de catch states | `src/Validator/CatchStatesValidator.php` |
+### Controller (`src/Controller/`)
+Point d'entrée HTTP. Reçoit la requête, délègue à un ou deux services, retourne `JsonResponse`. **Aucune logique métier.** Toujours `final`, hérite de `AbstractController`.
+Référence : `src/Controller/Album/AlbumPokedexController.php`
 
-### Règles de dépendances (enforced by Deptrac — `deptrac.yaml`)
+### AlbumFilters (`src/AlbumFilters/`)
+Parse les paramètres de requête HTTP en tableau de filtres typés, transmis tel quel à l'API externe. Dépendance unique : `SymfonyHttpFoundation`.
+Référence : `src/AlbumFilters/FromRequest.php`
 
-| Couche | Peut dépendre de |
-|--------|----------------|
-| `Controller` | AlbumFilters, DTO, Exception, Security, Service, Validator |
-| `Service` | Cache, DTO, Exception, Security, Utils, SymfonyContracts |
-| `DTO` | Helper, SymfonyOptionsResolver |
-| `Security` | Exception, KnpU OAuth2, League OAuth2 |
-| `Validator` | Service, SymfonyValidator |
-| `AlbumFilters` | SymfonyHttpFoundation uniquement |
-| `Cache`, `Utils`, `Helper`, `Exception` | Aucune dépendance interne |
+### Service (`src/Service/`)
+Orchestration de la logique métier. Deux sous-couches :
+- **`Service\Api\`** : appels HTTP vers pokenini-api via `AbstractApiService` (cache, logging, auth Basic). Nommage : `Get*ApiService` / `Modify*ApiService`.
+- **`Service\CacheInvalidator\`** : invalidation cache par tags Symfony.
+Référence : `src/Service/GetTrainerPokedexService.php`, `src/Service/Api/GetPokedexApiService.php`
 
-**Règle fondamentale** : les Controllers ne peuvent pas appeler les `ApiService` directement — ils passent obligatoirement par un `Service` métier intermédiaire.
+### DTO (`src/DTO/`)
+Value objects typés immuables, construits via factory statique `createFromArray` + `OptionsResolver`. Propriétés publiques directes. `final`.
+Référence : `src/DTO/DexFilters.php`
+
+### Security (`src/Security/`)
+- `AbstractAuthenticator` + `GoogleAuthenticator`/`DiscordAuthenticator` — flux OAuth2 classique (redirect)
+- `AccessTokenHandler` — valide les Bearer tokens d'API (header `Authorization` + `X-Provider`)
+- `UserProvider` / `User` — représentation de l'utilisateur avec rôles (admin/collector/trainer)
+- `UserTokenService` — extrait le SHA1 de l'identifiant utilisateur comme clé de cache trainer
+- `FakeAuthenticator` — dev uniquement, pas de secret
+- `MockAuthenticator` / `MockProvider` — tests uniquement
+Référence : `src/Security/AccessTokenHandler.php`
+
+### Cache (`src/Cache/`)
+`KeyMaker` : génère des clés de cache déterministes par type de ressource et paramètres. Toutes statiques.
+Référence : `src/Cache/KeyMaker.php`
+
+### Validator (`src/Validator/`)
+Contrainte Symfony `CatchStates` + `CatchStatesValidator` — valide les états de capture transmis lors d'une mise à jour d'album.
+
+### Utils (`src/Utils/`)
+`JsonDecoder::decode()` : wrapper `json_decode` avec `JSON_THROW_ON_ERROR`, profondeur 5.
+
+### Exception (`src/Exception/`)
+Exceptions métier `final` : `DexNotFoundException`, `EmptyContentException`, `InvalidJsonException`, `ModifyFailedException`, `NoLoggedUserException`, `ToJsonResponseException`.
 
 ---
 
-## Flux typique : consultation du Pokedex
+## Flux typiques
+
+### 1. Consultation d'un pokédex (cas nominal avec cache)
 
 ```
-GET /album/{dexSlug}?trainer_id=xxx&catch_states=no
-        |
-        ▼
-Symfony Security (AccessTokenHandler → MockProvider en test, UserProvider en prod)
-        |
-        ▼
-AlbumPokedexController::get()
-  · TrainerIdsService::init()        ← résout trainer_id (request ou session)
-  · FromRequest::get($request)       ← extrait les filtres URL
-  · GetTrainerPokedexService::getPokedexDataByTrainerId()
-          |
-          ▼
-      GetPokedexApiService::get($dexSlug, $trainerId, $filters)
-        · KeyMaker::getPokedexKey()  ← clé de cache déterministe
-        · TagAwareCacheInterface::get($key, fn → requestContent('GET', '/album/...'))
-        · JsonDecoder::decode()
-          |
-          ▼ (cache miss uniquement)
-      HTTP GET → pokenini-api /album/{trainerId}/{dexSlug}?...
-          |
-          ▼
-      Réponse JSON stockée en cache avec tags [album, trainer#xxx]
-  · accessDexIsGranted()             ← vérifie is_private / is_released
-        |
-        ▼
-JsonResponse(['pokedex' => ..., 'filters' => ...], 200)
+Client HTTP
+  → GET /album/{dexSlug}?catch_states[]=caught
+  → Security (AccessTokenHandler::getUserBadgeFrom)
+      → ClientRegistry::getClient($provider)
+      → provider->fetchUserFromToken → User{roles}
+  → AlbumPokedexController::get()
+      → TrainerIdsService::init()        # résout trainerId depuis query ou session
+      → FromRequest::get($request)       # parse les filtres URL
+      → GetTrainerPokedexService::getPokedexDataByTrainerId()
+          → GetPokedexApiService::get()
+              → KeyMaker::getPokedexKey()
+              → TagAwareCacheInterface::get()  # cache HIT → retour immédiat
+              → [cache MISS] → AbstractApiService::requestContent('GET', /album/{id}/{slug})
+              → JsonDecoder::decode()
+  → JsonResponse{pokedex, filters} HTTP 200
 ```
 
-## Flux typique : modification catch state (upsert album)
+### 2. Mise à jour d'un album (upsert)
 
 ```
-PATCH /album/{dexSlug}/{pokemonSlug}
-        |
-        ▼
-Symfony Security → ROLE_USER requis (voir security.yaml)
-        |
-        ▼
-AlbumUpsertController::upsert()
-  · Validation Symfony (CatchStates constraint)
-  · ModifyTrainerAlbumService::modify()
-          |
-          ▼
-      ModifyAlbumApiService::modify()     ← PATCH/PUT vers pokenini-api
-      AlbumCacheInvalidatorService::invalidate()  ← invalide tags album
+Client HTTP
+  → PATCH /album/{dexSlug}
+  → Security (ROLE_USER requis)
+  → AlbumUpsertController::upsert()
+      → CatchStatesValidator (contrainte Symfony)
+      → ModifyTrainerAlbumService::modify()
+          → ModifyAlbumApiService::modify()  # POST vers pokenini-api
+          → AlbumCacheInvalidatorService::invalidate()  # invalide tags cache
+  → JsonResponse HTTP 202
+```
+
+### 3. Action admin (invalidation cache)
+
+```
+Client HTTP (ROLE_ADMIN)
+  → POST /istration/action/update/{name}
+  → Security (access_control: ^/istration → ROLE_ADMIN)
+  → AdminActionUpdateController::process()
+      → AbstractAdminActionController::execute()
+          → AdminActionApiService::update()   # appel API externe
+          → CacheInvalidatorService::invalidate($name)  # map type → invalidators
+  → JsonResponse{action, name, state} HTTP 202 | 500
 ```
 
 ---
 
 ## Points d'entrée
 
-| Type | Fichier/URL | Détail |
-|------|-------------|--------|
-| HTTP GET | `/album/{dexSlug}` | Pokedex d'un trainer (public si trainer_id fourni) |
-| HTTP PATCH/PUT | `/album/{dexSlug}/{pokemonSlug}` | Upsert catch state (auth requise) |
-| HTTP GET | `/album/list` | Liste des dex d'un trainer |
-| HTTP GET | `/labels` | Référentiels (types, formes, jeux, collections) |
-| HTTP GET | `/trainer/list` | Liste des dex (vue trainer) |
-| HTTP GET | `/election/*` | Consultation + vote élection |
-| HTTP GET | `/istration/*` | Actions admin (ROLE_ADMIN requis) |
-| HTTP GET | `/user` | Info utilisateur connecté (PUBLIC_ACCESS) |
-| HTTP GET | `/fr/connect/f/c?t=trainer\|admin\|collector` | Authentification fake (dev/test uniquement) |
-| CLI | `bin/console` | Console Symfony standard |
+| Type | Fichier | Détail |
+|------|---------|--------|
+| HTTP | `public/index.php` | Entrypoint Symfony standard (FPM) |
+| CLI  | `bin/console` | Console Symfony (cache:clear, etc.) |
 
 ---
 
-## Environnements et infrastructure
+## Dépendances entre modules (enforced par Deptrac)
 
-| Env | Auth | API cible | Cache | Notes |
-|-----|------|-----------|-------|-------|
-| `dev` | FakeAuthenticator (`/fr/connect/f/c?t=...`) | Moco (http://moco.api) | filesystem | Xdebug disponible, profiler actif |
-| `test` | MockAuthenticator + Bearer token | Moco (http://moco.api) | filesystem | Moco intercepte tous les appels HTTP |
-| `ci` | MockAuthenticator | Moco | filesystem | Identique test, via GitHub Actions + Docker Compose |
-| `prod` | Google OAuth2 + Discord OAuth2 + AccessToken | pokenini-api (réel) | filesystem* | *Redis disponible mais non configuré dans cache.yaml |
+| Couche | Peut dépendre de |
+|--------|-----------------|
+| `AppController` | AlbumFilters, DTO, Exception, Security, Service, Validator, Logger, SymfonyFramework, HttpFoundation, Routing, Security, Serializer, Validator |
+| `AppService` | Cache, DTO, Exception, Security, Utils, Logger, SymfonyContractsCache, HttpClient, HttpFoundation, SecurityBundle, Validator |
+| `AppDTO` | Helper, SymfonyHttpFoundation, OptionsResolver |
+| `AppSecurity` | Exception, KnpUOAuth2, LeagueOAuth2, PsrHttp, HttpFoundation, Routing, SymfonySecurity, SecurityBundle |
+| `AppAlbumFilters` | SymfonyHttpFoundation uniquement |
+| `AppValidator` | Service, SymfonyContractsCache, HttpClient, Validator |
+| `AppCache` | — (aucune dépendance app) |
+| `AppHelper` | — (aucune dépendance app) |
+| `AppUtils` | — (aucune dépendance app) |
+| `AppException` | — (aucune dépendance app) |
 
-### Services Docker
+Référence : `deptrac.yaml`
 
-| Service | Image | Version | Rôle |
-|---------|-------|---------|------|
-| `php` | `php:8.5.5-fpm-alpine3.23` | 8.5.5 | Application PHP-FPM |
-| `web` | `nginx:1.29.8-alpine3.23` | 1.29.8 | Reverse proxy HTTP |
-| `redis` | `redis:8.6.2-alpine3.23` | 8.6.2 | Cache (disponible, non utilisé par défaut) |
-| `moco.api` | Image custom | 1.5.0 | Mock HTTP pour pokenini-api (test/dev) |
-| `moco.oauth2` | Image custom | 1.5.0 | Mock HTTP pour OAuth2 (test/dev) |
+---
 
-### Authentification en production
+## Infrastructure
 
-Trois niveaux de rôles, pilotés par variables d'env :
-- `LIST_ADMIN` → `ROLE_ADMIN` (accès `/istration/*`)
-- `LIST_COLLECTOR` → `ROLE_COLLECTOR`
-- `LIST_TRAINER` → `ROLE_TRAINER` (accès général authentifié)
-- `REQUIRE_INVITATION` → si `true`, seuls les IDs dans `LIST_TRAINER` peuvent se connecter
+### Docker
 
-Tous les identifiants OAuth sont hashés en `sha1()` pour générer les clés de cache.
+| Service | Image | Rôle |
+|---------|-------|------|
+| `php` | Custom (`php:8.5.6-fpm-alpine3.23`) | PHP-FPM, multi-stage (base/dev/prod) |
+| `web` | `nginx:1.29.8-alpine3.23` | Reverse proxy, port `127.0.0.1:8081:8080` |
+| `redis` | `redis:8.6.2-alpine3.23` | Cache tag-aware (Symfony Cache) |
+| `moco.api` | Custom (Moco 1.5.0) | Mock du serveur pokenini-api (tests) |
+| `moco.oauth2` | Custom (Moco 1.5.0) | Mock des providers OAuth2 (tests) |
+
+### Environnements
+
+| Env | Description | Auth |
+|-----|-------------|------|
+| `dev` | Dev local, FakeAuthenticator via `/fr/connect/f/c?t=admin\|collector\|trainer` | Fake (pas de secret) |
+| `test` | PHPUnit + Moco, MockAuthenticator + MockProvider | Mock (token `Bearer this-is-{role}-token`) |
+| `prod` | Déployé via image Docker `ghcr.io/douzeensemble/pokenini-back:latest` | OAuth2 Google + Discord |
+
+### Environnement de test spécifique
+Les tests d'intégration (`#[Group('api-mocked-testing')]`) tournent avec le kernel Symfony complet + Moco comme mock HTTP. Les réponses JSON sont comparées à des snapshots dans `tests/resources/functional/`.

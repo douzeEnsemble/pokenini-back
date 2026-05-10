@@ -1,109 +1,105 @@
-# Améliorations — pokenini-back
+# Améliorations — Pokenini Back
 
 ## Performance
 
-### 1 — Cache Redis non configuré en production
+### 1. Logging verbeux des réponses API en production
+**Problème** : `AbstractApiService::request()` logue le corps complet de chaque réponse HTTP en niveau `info`. Pour des endpoints renvoyant de gros JSON (pokédex complets, listes de Pokémon), cela génère des logs volumineux à chaque requête.
 
-**Problème** : `config/packages/cache.yaml` utilise `cache.adapter.filesystem` pour tous les environnements. Redis est présent dans le stack Docker (`redis:8.6.2-alpine`) mais n'est pas connecté comme adaptateur de cache. Avec des workers PHP-FPM multiples en production, le filesystem est partagé par NFS ou volume et peut créer des contentions ou des invalidations partielles.
-**Fichier(s)** : `config/packages/cache.yaml:3`, `docker-compose.yaml:31-36`
-**Correction** : ajouter une section `when@prod` dans `cache.yaml` :
-```yaml
-when@prod:
-  framework:
-    cache:
-      app: cache.adapter.redis
-      default_redis_provider: 'redis://:douze@redis'
-```
-et binder la variable `REDIS_URL` via `.env.prod`.
+**Fichiers** : `src/Service/Api/AbstractApiService.php:55-60`
 
-### 2 — Clé de cache SHA1 pour l'identifiant trainer
-
-**Problème** : `UserTokenService::getLoggedUserToken()` applique `sha1()` sur l'identifiant OAuth. SHA1 produit une empreinte de 40 caractères hexadécimaux pour des IDs OAuth qui sont déjà courts (< 30 chars). Le hashing ajoute une collision théorique (négligeable) et un calcul inutile.
-**Fichier(s)** : `src/Security/UserTokenService.php:26`
-**Correction** : utiliser directement l'identifiant (ou un hash plus court/rapide comme `crc32b` hex). Si l'opacité est souhaitée pour des raisons de confidentialité dans les clés de cache, documenter ce choix.
+**Correction** : Déplacer le log du body en niveau `debug`, ne logger que le code HTTP en `info`. Utiliser la configuration Monolog par environnement pour activer le niveau `debug` uniquement en dev.
 
 ---
 
 ## Qualité du code
 
-### 3 — `AbstractAdminActionController::doAction` utilise un switch sans mécanisme d'extensibilité
+### 2. Pattern `init()` obligatoire avant usage dans `TrainerIdsService`
+**Problème** : `TrainerIdsService` expose `getTrainerId()` et `getLoggedTrainerId()` qui retournent `null` si `init()` n'a pas été appelé. L'appelant (`AlbumPokedexController`) doit se souvenir d'appeler `init()` manuellement. Aucune protection si oublié.
 
-**Problème** : ajouter une nouvelle action admin nécessite de modifier `doAction()` (switch) ET `CacheInvalidatorService::invalidate()` (map). Les deux méthodes codent en dur des chaînes de type, ce qui crée un couplage fort et un risque d'incohérence.
-**Fichier(s)** : `src/Controller/Admin/AbstractAdminActionController.php:68-78`, `src/Service/CacheInvalidatorService.php:46-67`
-**Correction** : extraire un objet `AdminActionDefinition` contenant le nom de l'action, la méthode API à appeler, et les tags à invalider. `CacheInvalidatorService` devient une lookup table d'objets immuables plutôt qu'une map de closures.
+**Fichiers** : `src/Service/TrainerIdsService.php:23`, `src/Controller/Album/AlbumPokedexController.php:31`
 
-### 4 — `TrainerIdsService` mutable par `init()` — pattern fragile
+**Correction** : Déplacer la logique d'initialisation dans le constructeur via le `RequestStack` (comme c'est déjà injecté), ou utiliser une lazy-initialization : appeler `init()` automatiquement dans `getTrainerId()` si l'état n'est pas initialisé.
 
-**Problème** : le service accumule un état interne mutable (`$trainerId`, `$loggedTrainerId`) initialisé par `init()`. Si un Controller oublie d'appeler `init()`, toutes les méthodes retournent `null` silencieusement. PHPStan et Psalm ne détectent pas ce comportement.
-**Fichier(s)** : `src/Service/TrainerIdsService.php`
-**Correction** : rendre `init()` privé et appeler implicitement depuis le constructeur avec le `RequestStack`, ou transformer en factory retournant un DTO `TrainerIds(loggedId: ..., requestedId: ...)` immuable depuis le Controller.
+### 3. Comparaison lâche pour des identifiants de type `?string`
+**Problème** : `AlbumPokedexController::accessDexIsGranted()` utilise `!=` pour comparer deux `?string`. PHP coercera des valeurs inattendues. Convention du projet : typage strict partout.
 
-### 5 — `KeyMaker` : boilerplate de getters pour des constantes privées
+**Fichiers** : `src/Controller/Album/AlbumPokedexController.php:67`
 
-**Problème** : 12 méthodes statiques retournant chacune une constante privée (`getDexKey()` → `self::CACHE_KEY_DEX`). Toute la classe fait 132 lignes pour ce qui pourrait tenir en 15 lignes de constantes publiques.
-**Fichier(s)** : `src/Cache/KeyMaker.php:9-79`
-**Correction** : passer les constantes en `public const string` et les utiliser directement (`KeyMaker::CACHE_KEY_DEX`). Les méthodes complexes (`getDexKeyForTrainer`, `getPokedexKey`) restent des méthodes statiques.
+**Correction** : Remplacer `!=` par `!==`.
+
+### 4. Catch générique dans le contrôleur admin
+**Problème** : `AbstractAdminActionController::execute()` attrape `\Exception` — masque potentiellement des erreurs de programmation (`TypeError`, `Error`, `LogicException`) et les traite comme des erreurs fonctionnelles retournées au client.
+
+**Fichiers** : `src/Controller/Admin/AbstractAdminActionController.php:35`
+
+**Correction** : Restreindre le catch aux exceptions métier attendues (`HttpExceptionInterface`, `TransportExceptionInterface`) ; laisser les autres exceptions remonter au gestionnaire d'erreurs Symfony.
+
+### 5. `CacheInvalidatorService` : couplage fort avec tous les types connus
+**Problème** : La méthode `invalidate()` contient une map statique de tous les types connus. Ajouter un nouveau type oblige à modifier cette classe centrale. Si le domaine grossit, le couplage devient problématique.
+
+**Fichiers** : `src/Service/CacheInvalidatorService.php:27-68`
+
+**Correction** : Envisager un tag Symfony avec `#[AsTaggedItem]` et une collection d'invalidateurs injectée — chaque invalidateur déclare les types qu'il gère. Décision à peser selon la stabilité du domaine.
 
 ---
 
 ## Tests
 
-### 6 — Pas de test pour le service `CacheInvalidatorService`
+### 6. Couverture à 100% — maintenir la discipline Infection
+**Problème** : Rien d'identifié sur la couverture. La contrainte 100% MSI Infection est en place et vérifiée en CI. Risque : les assertions peuvent être trop larges (pas de valeurs précises vérifiées) sans que la couverture s'en aperçoive.
 
-**Problème** : `CacheInvalidatorService` contient 14 mappings de types → invalidateurs, mais aucun test unitaire ne vérifie que chaque type déclenche les bons invalidateurs de cache. Un changement dans la map pourrait passer silencieusement (le coverage 100% est atteint par les tests d'intégration qui ne vérifient pas l'invalidation de cache).
-**Fichier(s)** : `src/Service/CacheInvalidatorService.php` (pas de fichier de test correspondant dans `tests/src/Unit/Service/`)
-**Correction** : ajouter `tests/src/Unit/Service/CacheInvalidatorServiceTest.php` qui vérifie que chaque type invalide exactement les bons tags via des mocks de `TagAwareCacheInterface`.
+**Fichiers** : `tests/src/Integration/Album/AlbumPokedexTest.php`
 
-### 7 — `JsonResponseTrait::assertResponseContent` sans message d'erreur contextuel
-
-**Problème** : lors d'un échec d'assertion de snapshot JSON, PHPUnit affiche un diff JSON brut sans indiquer quel endpoint ou quel cas de test est en cause. Le debug est laborieux sur les tests avec DataProvider.
-**Fichier(s)** : `tests/src/Integration/Trait/JsonResponseTrait.php:14`
-**Correction** : passer un `$message` optionnel à `assertJsonStringEqualsJsonFile()`, ou construire un message d'erreur incluant `$filePath`.
+**Correction** : S'assurer que chaque snapshot JSON de test couvre des cas limites (dex privé, dex non released, filtres multiples) et pas seulement le cas nominal. Bonne pratique déjà partiellement en place (`testGetForAPublicDex`, etc.).
 
 ---
 
 ## Sécurité
 
-### 8 — `APP_SECRET` en valeur par défaut dans `.env.prod`
+### 7. Absence de rate limiting sur les endpoints sensibles
+**Problème** : Aucun rate limiting configuré (ni Symfony RateLimiter, ni Nginx). Les endpoints d'authentification OAuth (`/fr/connect/*`) et les endpoints d'écriture (`/album PATCH`, `/election/vote`) sont exposés à des abus.
 
-**Problème** : `.env.prod:13` contient `APP_SECRET=!ChangeMe!`. Cette valeur par défaut trop simple invalide la protection CSRF et la signature des sessions si elle n'est pas overridée à chaque déploiement.
-**Fichier(s)** : `.env.prod:13`
-**Correction** : retirer `APP_SECRET` de `.env.prod` et forcer son injection via une variable d'environnement injectée au déploiement (secret manager). Documenter son caractère obligatoire.
+**Correction** : Configurer `symfony/rate-limiter` avec une politique par IP sur les endpoints OAuth et d'écriture. Ou déléguer au reverse proxy Nginx (`limit_req_zone`).
 
-### 9 — Credentials OAuth réels commitèrent dans `.env.dev` et `.env.prod`
+### 8. SHA1 utilisé pour dériver les identifiants de cache dresseur
+**Problème** : `UserTokenService::getLoggedUserToken()` utilise `sha1($user->getUserIdentifier())` comme clé de cache trainer. SHA1 est considéré cassé pour la cryptographie.
 
-**Problème** : les `OAUTH_GOOGLE_CLIENT_SECRET` et `OAUTH_DISCORD_CLIENT_SECRET` sont versionnés. Si ces valeurs sont réelles (même pour un environnement de staging), leur présence dans git expose les secrets à tout accès au dépôt.
-**Fichier(s)** : `.env.dev:44-46`, `.env.prod:43-46`
-**Correction** : utiliser des variables d'env réelles et retirer les valeurs concrètes du `.env.prod`/`.env.dev`. Les `.env.*.local` (gitignorés) sont le bon endroit pour les valeurs locales.
+**Fichiers** : `src/Security/UserTokenService.php:26`
+
+**Correction** : Utiliser `hash('sha256', ...)` ou directement l'identifiant OAuth (après validation qu'il est safe pour une clé de cache).
 
 ---
 
 ## Maintenabilité
 
-### 10 — Pas de documentation des types d'invalidation dans `CacheInvalidatorService`
+### 9. Ruleset PHP CS Fixer `@PHP83Migration` avec PHP 8.5.6
+**Problème** : Le projet cible PHP ≥ 8.5.6 mais le ruleset est `@PHP83Migration`, manquant les règles de style propres à PHP 8.4 et 8.5.
 
-**Problème** : les 14 types d'invalidation (`'pokemons'`, `'labels'`, `'dex'`, etc.) sont définis en strings hardcodées sans enum ni constante. Ajouter un nouveau type ou corriger un typo nécessite de chercher dans le code consommateur.
-**Fichier(s)** : `src/Service/CacheInvalidatorService.php:46-67`
-**Correction** : créer une enum `AdminActionType` avec les cas nommés, utilisée comme clé dans la map et comme paramètre de `invalidate()`. Deptrac sera mis à jour pour inclure le nouveau namespace.
+**Fichiers** : `.php-cs-fixer.dist.php:19`
 
-### 11 — `resources/metadata/version` — usage non documenté
+**Correction** : Mettre à jour vers `@PHP84Migration` (disponible dans PHP CS Fixer 3.x) puis `@PHP85Migration` dès que disponible.
 
-**Problème** : le fichier `resources/metadata/version` existe mais aucun code dans `src/` ne le lit. Son rôle (versionning du déploiement ? endpoint de santé ?) n'est pas clair.
-**Fichier(s)** : `resources/metadata/version`
-**Correction** : soit l'exposer via un endpoint `/version` ou en header de réponse, soit le supprimer s'il n'est plus nécessaire.
+### 10. Psalm épinglé sur une version exacte (`6.16.1`)
+**Problème** : Les autres outils utilisent des contraintes `^` (majeure fixe), mais Psalm est épinglé sur `6.16.1` exactement. Les corrections de bugs ne sont pas récupérées automatiquement avec `make updates`.
+
+**Fichiers** : `tools/psalm/composer.json:15`
+
+**Correction** : Utiliser `^6.16.1` pour suivre les patches. Tester la mise à jour avec `make psalm` avant de valider.
 
 ---
 
 ## DevX
 
-### 12 — Pas de cible `make` pour lancer un test unitaire ou d'intégration seul en dev
+### 11. `make security` ne vérifie pas les outils qualité (`tools/`)
+**Problème** : `composer audit` (via `make security`) ne s'exécute que sur `composer.json` racine. Les outils dans `tools/*/composer.json` peuvent contenir des dépendances avec des vulnérabilités connues, non auditées.
 
-**Problème** : le `Makefile` expose `make tests`, `make tests-unit`, `make tests-integration`, mais pour filtrer un test précis il faut taper la commande `docker compose exec php php vendor/bin/phpunit` complète documentée dans `CLAUDE.md`. La friction est réelle pour le cycle test/fix rapide.
-**Fichier(s)** : `Makefile`
-**Correction** : ajouter une cible `make test f="MyTest"` ou `make t f="testMyMethod"` qui encapsule `docker compose exec php php vendor/bin/phpunit --filter "$(f)"`.
+**Correction** : Étendre la target `security` du Makefile pour auditer chaque outil :
+```makefile
+security-tools:
+    for tool in tools/*/; do $(COMPOSER) audit --working-dir=$$tool; done
+```
 
-### 13 — Pas de commande `make` pour dump des réponses réelles vs snapshots
+### 12. Nettoyage des mocks inutilisés non intégré au workflow CI
+**Problème** : `make clean-unused-files` et `make clean-moco-routes` sont des outils utiles mais pas exécutés en CI. Des fichiers moco orphelins peuvent s'accumuler.
 
-**Problème** : le debug des tests d'intégration nécessite de décommenter manuellement un bloc `file_put_contents` dans `JsonResponseTrait.php` selon la documentation dans `CLAUDE.md`. Ce workflow est fragile (risque de commit du code décommenté).
-**Fichier(s)** : `tests/src/Integration/Trait/JsonResponseTrait.php`, `CLAUDE.md:95`
-**Correction** : remplacer le bloc commenté par une variable d'env `DUMP_RESPONSES=1` lue dans `JsonResponseTrait`, injectable via `make` (`DUMP_RESPONSES=1 make tests-integration`).
+**Correction** : Exécuter ces outils en CI (ou en pre-commit hook) et échouer si des fichiers non référencés sont détectés.
