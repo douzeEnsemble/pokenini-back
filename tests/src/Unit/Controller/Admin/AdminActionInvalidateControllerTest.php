@@ -61,7 +61,7 @@ final class AdminActionInvalidateControllerTest extends TestCase
         $cacheInvalidatorService
             ->expects($this->once())
             ->method('invalidate')
-            ->willThrowException(new \Exception('Aouch'))
+            ->willThrowException(new \InvalidArgumentException('Aouch'))
         ;
 
         $adminActionService = $this->createMock(AdminActionApiService::class);

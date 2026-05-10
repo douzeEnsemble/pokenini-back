@@ -64,7 +64,7 @@ final class AdminActionCalculateControllerTest extends TestCase
         $adminActionService
             ->expects($this->once())
             ->method('calculate')
-            ->willThrowException(new \Exception('Aouch'))
+            ->willThrowException(new \RuntimeException('Aouch'))
         ;
         $adminActionService
             ->expects($this->never())
