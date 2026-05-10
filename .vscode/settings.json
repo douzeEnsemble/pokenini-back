@@ -7,6 +7,9 @@
     "titleBar.inactiveForeground": "#607786",
     "activityBar.background": "#a1d8e6",
     "activityBar.foreground": "#445f71",
-    "activityBar.inactiveForeground": "#364c5a"
+    "activityBar.inactiveForeground": "#364c5a",
+    "statusBar.background": "#a1d8e6",
+    "statusBar.border": "#a1d8e6",
+    "statusBar.foreground": "#445f71"
   }
 }
