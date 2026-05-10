@@ -68,7 +68,7 @@ final class AdminActionUpdateControllerTest extends TestCase
         $adminActionService
             ->expects($this->once())
             ->method('update')
-            ->willThrowException(new \Exception('Aouch'))
+            ->willThrowException(new \RuntimeException('Aouch'))
         ;
 
         $logger = $this->createMock(LoggerInterface::class);

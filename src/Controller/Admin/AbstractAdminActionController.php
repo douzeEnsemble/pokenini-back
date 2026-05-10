@@ -32,7 +32,7 @@ abstract class AbstractAdminActionController extends AbstractController
 
         try {
             $this->doAction($name, $action);
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException|\RuntimeException $e) {
             $state = 'ko';
 
             $error = $e->getMessage();

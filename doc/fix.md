@@ -11,9 +11,9 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
 
 ## Priorité moyenne
 
-- [ ] [moyenne] Catch générique `\Exception` dans `AbstractAdminActionController`
-  Fichier : `src/Controller/Admin/AbstractAdminActionController.php:35`
-  Suggestion : `catch (\Exception $e)` capture trop large — masque les erreurs de programmation (TypeError, LogicException). Restreindre aux exceptions métier attendues (`HttpExceptionInterface`, `TransportExceptionInterface`, exceptions App). Loguer en `critical` est déjà en place, mais l'erreur est silencieuse pour le reste du code.
+- [x] [moyenne] Catch générique `\Exception` dans `AbstractAdminActionController`
+  Fichier : `src/Controller/Admin/AbstractAdminActionController.php:36`
+  Résolu : remplacé par `catch (ExceptionInterface|\InvalidArgumentException $e)` — couvre les erreurs HTTP client (transport + HTTP) et les types d'invalidation inconnus.
 
 - [ ] [moyenne] Ruleset PHP CS Fixer `@PHP83Migration` avec PHP 8.5.6
   Fichier : `.php-cs-fixer.dist.php:19`

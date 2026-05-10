@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
+use App\Exception\ModifyFailedException;
 use App\Service\Api\AdminActionApiService;
 use App\Tests\Utils\WithConsecutive;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -11,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Component\HttpClient\Exception\TransportException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -35,6 +37,46 @@ final class AdminActionApiServiceTest extends TestCase
         $this->getService('calculate/start')->calculate('start');
 
         $this->assertEmpty($this->cachePool->getValues());
+    }
+
+    public function testUpdateFails(): void
+    {
+        $this->expectException(ModifyFailedException::class);
+
+        $this->getFailingService()->update('start');
+    }
+
+    public function testCalculateFails(): void
+    {
+        $this->expectException(ModifyFailedException::class);
+
+        $this->getFailingService()->calculate('start');
+    }
+
+    private function getFailingService(): AdminActionApiService
+    {
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('info');
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client
+            ->expects($this->once())
+            ->method('request')
+            ->willThrowException(new TransportException('Network error'))
+        ;
+
+        $this->cachePool = new ArrayAdapter();
+        $this->cache = new TagAwareAdapter($this->cachePool, new ArrayAdapter());
+
+        return new AdminActionApiService(
+            $logger,
+            $client,
+            'https://api.domain',
+            './resources/certificates/cacert.pem',
+            $this->cache,
+            'web',
+            'douze',
+        );
     }
 
     private function getService(string $suffix): AdminActionApiService
