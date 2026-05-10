@@ -5,14 +5,11 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
 ## Exceptions et choix délibérés
 
 - **Credentials OAuth dans les `.env`** : les valeurs de `OAUTH_DISCORD_CLIENT_SECRET` et `OAUTH_GOOGLE_CLIENT_SECRET` ressemblent intentionnellement à des credentials réels (format `GOCSPX-`…) mais n'en sont pas — choix délibéré pour tester des formats valides en dev/test.
+- **Mot de passe Redis dans `docker-compose.yaml`** : `requirepass douze` hardcodé est intentionnel pour l'environnement de développement local.
 
 ---
 
 ## Priorité moyenne
-
-- [ ] [moyenne] Mot de passe Redis hardcodé dans `docker-compose.yaml`
-  Fichier : `docker-compose.yaml:35`
-  Suggestion : `command: redis-server --requirepass douze` expose le mot de passe Redis dans le fichier de configuration commité. Le passer via une variable d'environnement (`${REDIS_PASSWORD}`) et le définir dans `.env.dev.local` (non commité).
 
 - [ ] [moyenne] Catch générique `\Exception` dans `AbstractAdminActionController`
   Fichier : `src/Controller/Admin/AbstractAdminActionController.php:35`
