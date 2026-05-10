@@ -8,18 +8,6 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
 
 ---
 
-## Haute priorité
-
-- [ ] [haute] `APP_SECRET` non changé en production
-  Fichier : `.env.prod:12`
-  Valeur actuelle : `!ChangeMe!` — si cette valeur est déployée telle quelle, la sécurité des sessions et des tokens Symfony est compromise. S'assurer que la valeur réelle est injectée via un secret d'environnement au déploiement.
-
-- [ ] [haute] Mot de passe API faible en production
-  Fichier : `.env.prod:23`
-  Valeur : `API_PASSWORD=douze` — même mot de passe en dev, test et prod. Utiliser un secret fort distinct par environnement.
-
----
-
 ## Priorité moyenne
 
 - [ ] [moyenne] Mot de passe Redis hardcodé dans `docker-compose.yaml`
