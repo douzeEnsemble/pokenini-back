@@ -4,7 +4,7 @@
 
 | Dépendance | Version contrainte | Action recommandée |
 |-----------|------------------|-------------------|
-| `php` | `>=8.5.4` | OK (8.5.5 en prod Docker) |
+| `php` | `>=8.5.6` | OK (8.5.6 en prod Docker) |
 | `guzzlehttp/guzzle` | `^7.10.0` | Surveiller — Guzzle 8 non encore stable |
 | `knpuniversity/oauth2-client-bundle` | `^2.20.2` | OK |
 | `league/oauth2-google` | `^5.0.0` | OK |
