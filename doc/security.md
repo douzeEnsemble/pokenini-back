@@ -150,6 +150,6 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 ### Basse priorité
 
 - [ ] [basse] Documenter le choix `REQUIRE_INVITATION=false` comme intentionnel — `.env.prod:26`
-- [ ] [basse] Remplacer `sha1` par `hash('sha256', ...)` pour les clés de cache dresseur — `src/Security/UserTokenService.php:26`
+- [~] [basse] `sha1` conservé intentionnellement — clé OAuth déjà publique, hash sert uniquement à éviter la valeur en clair. Pas de gain sécurité réel à migrer.
 - [ ] [basse] Logger les authentifications réussies et échouées en niveau `info`
 - [ ] [basse] Logger les actions admin réussies pour la traçabilité — `src/Controller/Admin/AbstractAdminActionController.php`
