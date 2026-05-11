@@ -27,7 +27,7 @@ Référence : `config/packages/security.yaml`, `src/Security/AccessTokenHandler.
 ### Points de vigilance
 
 - [ ] Aucun mécanisme de révocation de token — si un token OAuth est compromis, il reste valide jusqu'à expiration. Le provider externe gère la durée de vie.
-- [ ] `REQUIRE_INVITATION=false` en prod (`.env.prod:26`) — tout utilisateur authentifié Google/Discord reçoit le rôle `ROLE_USER` sans invitation. À documenter comme choix intentionnel.
+- [x] `REQUIRE_INVITATION=false` — tout utilisateur authentifié Google/Discord reçoit le rôle `ROLE_USER` sans invitation. Choix intentionnel : l'application est ouverte à tous les utilisateurs OAuth.
 - [ ] Le header `X-Provider` est un paramètre libre transmis par le client — `AccessTokenHandler` fait confiance à ce header pour choisir le provider OAuth2. Un attaquant contrôlant les deux headers (`Authorization` + `X-Provider`) pourrait tenter une authentification croisée si les providers partagent des IDs utilisateur. Vérifier que les tokens des différents providers ne sont pas interchangeables.
 
 ---
@@ -149,7 +149,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 ### Basse priorité
 
-- [ ] [basse] Documenter le choix `REQUIRE_INVITATION=false` comme intentionnel — `.env.prod:26`
+- [x] [basse] `REQUIRE_INVITATION=false` documenté comme choix intentionnel
 - [~] [basse] `sha1` conservé intentionnellement — clé OAuth déjà publique, hash sert uniquement à éviter la valeur en clair. Pas de gain sécurité réel à migrer.
 - [x] [basse] Authentifications réussies et échouées loggées en `info` — `src/Security/AccessTokenHandler.php`
 - [x] [basse] Actions admin réussies loggées en `info` — `src/Controller/Admin/AbstractAdminActionController.php:35`
