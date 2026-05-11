@@ -7,6 +7,7 @@ namespace App\Security;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
@@ -21,6 +22,7 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         private readonly string $listCollector,
         private readonly string $listTrainer,
         private readonly bool $isInvitationRequired,
+        private readonly LoggerInterface $logger,
     ) {}
 
     #[\Override]
@@ -29,16 +31,22 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         $currentRequest = $this->requestStack->getCurrentRequest();
 
         if (null === $currentRequest) {
+            $this->logger->info('Authentication failed: no current request');
+
             throw new BadCredentialsException('No current request available.');
         }
 
         if (!$currentRequest->headers->has('X-Provider')) {
+            $this->logger->info('Authentication failed: missing X-Provider header');
+
             throw new BadCredentialsException('The "X-Provider" header is missing.');
         }
 
         $provider = $currentRequest->headers->get('X-Provider');
 
         if (null === $provider || '' === $provider) {
+            $this->logger->info('Authentication failed: empty X-Provider header');
+
             throw new BadCredentialsException('The "X-Provider" header is empty.');
         }
 
@@ -52,13 +60,18 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
             try {
                 $authUser = $client->fetchUserFromToken($accessTokenObj);
             } catch (IdentityProviderException) {
+                $this->logger->info("Authentication failed: invalid token for provider {$provider}");
+
                 throw new BadCredentialsException('Token is invalid, maybe expired');
             }
 
             /** @var non-empty-string $userId */
             $userId = $authUser->getId();
 
-            return $this->loadUserFromLists($userId, $provider);
+            $user = $this->loadUserFromLists($userId, $provider);
+            $this->logger->info("Authentication succeeded for provider {$provider}");
+
+            return $user;
         });
     }
 

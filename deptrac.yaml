@@ -139,6 +139,7 @@ parameters:
       - AppException
       - KnpUOAuth2ClientBundle
       - LeagueOAuth2
+      - Logger
       - PsrHttp
       - SymfonyHttpFoundation
       - SymfonyRouting
