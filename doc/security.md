@@ -152,7 +152,7 @@ Audit automatique via `make security` (`composer audit`) et workflow CI dédié 
 
 ### Points de vigilance
 
-- [ ] Les credentials `auth_basic` (API_LOGIN, API_PASSWORD) sont inclus dans les options loggées en `info` à la ligne 52-54 de `AbstractApiService.php`. En pratique les options sont un tableau vide pour la plupart des appels, mais à surveiller si des requêtes avec options sensibles sont ajoutées.
+- [x] `auth_basic` non exposé dans les logs — le logger logue `$options` du caller (`AbstractApiService.php:52`), pas les options fusionnées internes qui contiennent les credentials. Faux positif confirmé.
 - [x] Rejets RBAC (`AccessDeniedException`) loggés en `warning` avec la route — `src/EventSubscriber/AccessDeniedSubscriber.php`.
 
 ---
