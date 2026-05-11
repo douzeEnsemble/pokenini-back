@@ -20,6 +20,10 @@ parameters:
       collectors:
         - type: classLike
           value: '^App\\DTO\\.*'
+    - name: AppEventSubscriber
+      collectors:
+        - type: classLike
+          value: '^App\\EventSubscriber\\.*'
     - name: AppException
       collectors:
         - type: classLike
@@ -70,6 +74,10 @@ parameters:
           value: '^Psr\\Http\\.*'
 
     # Symfony
+    - name: SymfonyAttribute
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\DependencyInjection\\Attribute\\.*'
     - name: SymfonyContractsCache
       collectors:
         - type: classLike
@@ -78,6 +86,10 @@ parameters:
       collectors:
         - type: classLike
           value: '^Symfony\\Contracts\\HttpClient\\.*'
+    - name: SymfonyEventDispatcher
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\EventDispatcher\\.*'
     - name: SymfonyFrameworkBundle
       collectors:
         - type: classLike
@@ -106,6 +118,14 @@ parameters:
       collectors:
         - type: classLike
           value: '^Symfony\\Component\\Serializer\\.*'
+    - name: SymfonyHttpKernel
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\HttpKernel\\.*'
+    - name: SymfonyRateLimiter
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\RateLimiter\\.*'
     - name: SymfonyValidator
       collectors:
         - type: classLike
@@ -115,6 +135,12 @@ parameters:
     AppAlbumFilters:
       - SymfonyHttpFoundation
     AppCache:
+    AppEventSubscriber:
+      - SymfonyAttribute
+      - SymfonyEventDispatcher
+      - SymfonyHttpFoundation
+      - SymfonyHttpKernel
+      - SymfonyRateLimiter
     AppController:
       - AppAlbumFilters
       - AppDTO

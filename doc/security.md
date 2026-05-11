@@ -82,7 +82,7 @@ Configuré via `CORS_ALLOW_ORIGIN` en variable d'env. En dev/test : `localhost|a
 
 ### Rate limiting
 
-- [ ] **Aucun rate limiting configuré** — ni au niveau Symfony, ni visible dans la config Nginx. Les endpoints d'authentification OAuth et les endpoints d'écriture (`PATCH /album`, `POST /election/vote`) sont exposés à des abus.
+- [x] Rate limiting configuré sur les endpoints d'écriture via `RateLimiterSubscriber` (60 req/min par token, APCu). Les endpoints OAuth sont mieux protégés au niveau Nginx/infra.
 
 ### Points de vigilance
 
@@ -141,7 +141,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 ### Priorité moyenne
 
-- [ ] [moyenne] Configurer un rate limiter Symfony sur les endpoints OAuth et d'écriture
+- [x] [moyenne] Rate limiter configuré sur les endpoints d'écriture — `src/EventSubscriber/RateLimiterSubscriber.php`, `config/packages/rate_limiter.yaml`
 - [x] [moyenne] Passer le mot de passe Redis en variable d'env — `docker-compose.yaml:35`
 - [ ] [moyenne] Ajouter `nelmio/security-bundle` pour les en-têtes HTTP de sécurité
 - [x] [moyenne] Log du body des réponses API déjà en niveau `debug` — `src/Service/Api/AbstractApiService.php:39`

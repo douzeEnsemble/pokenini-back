@@ -44,6 +44,7 @@
 
         <UnusedClass>
             <errorLevel type="suppress">
+                <directory name="src/EventSubscriber" />
                 <directory name="src/Validator" />
             </errorLevel>
         </UnusedClass>
