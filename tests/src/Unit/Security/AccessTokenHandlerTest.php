@@ -12,6 +12,7 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
@@ -64,6 +65,13 @@ final class AccessTokenHandlerTest extends TestCase
             ->willReturn($request)
         ;
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication succeeded for provider some-provider')
+        ;
+
         $accessTokenHandler = new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
@@ -71,6 +79,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id,another-id',
             'some-id',
             false,
+            $logger,
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
@@ -92,6 +101,13 @@ final class AccessTokenHandlerTest extends TestCase
             ->willReturn(null)
         ;
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication failed: no current request')
+        ;
+
         $accessTokenHandler = new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
@@ -99,6 +115,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id,another-id',
             'some-id',
             false,
+            $logger,
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -120,6 +137,13 @@ final class AccessTokenHandlerTest extends TestCase
             ->willReturn($request)
         ;
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication failed: missing X-Provider header')
+        ;
+
         $accessTokenHandler = new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
@@ -127,6 +151,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id,another-id',
             'some-id',
             false,
+            $logger,
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -157,6 +182,13 @@ final class AccessTokenHandlerTest extends TestCase
             ->willReturn($request)
         ;
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication failed: empty X-Provider header')
+        ;
+
         $accessTokenHandler = new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
@@ -164,6 +196,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id,another-id',
             'some-id',
             false,
+            $logger,
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -194,6 +227,13 @@ final class AccessTokenHandlerTest extends TestCase
             ->willReturn($request)
         ;
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication failed: empty X-Provider header')
+        ;
+
         $accessTokenHandler = new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
@@ -201,6 +241,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id,another-id',
             'some-id',
             false,
+            $logger,
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -316,6 +357,13 @@ final class AccessTokenHandlerTest extends TestCase
             ->willReturn($request)
         ;
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication failed: invalid token for provider some-provider')
+        ;
+
         $accessTokenHandler = new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
@@ -323,6 +371,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id, another-id ,    ,    some-collector-id       ',
             'some-id,    some-trainer-id    ',
             false,
+            $logger,
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -375,6 +424,13 @@ final class AccessTokenHandlerTest extends TestCase
             ->willReturn($request)
         ;
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication succeeded for provider some-provider')
+        ;
+
         $accessTokenHandler = new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
@@ -382,6 +438,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id, another-id ,    ,    some-collector-id       ',
             'some-id,    some-trainer-id    ',
             $isInvitationRequired,
+            $logger,
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
