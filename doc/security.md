@@ -153,7 +153,7 @@ Audit automatique via `make security` (`composer audit`) et workflow CI dédié 
 ### Points de vigilance
 
 - [ ] Les credentials `auth_basic` (API_LOGIN, API_PASSWORD) sont inclus dans les options loggées en `info` à la ligne 52-54 de `AbstractApiService.php`. En pratique les options sont un tableau vide pour la plupart des appels, mais à surveiller si des requêtes avec options sensibles sont ajoutées.
-- [ ] Aucun log des actions Symfony Security au niveau framework (login OAuth, rejet RBAC). Les rejets RBAC (`AccessDeniedException`) dépendent du niveau configuré pour le logger `security` de Symfony.
+- [x] Rejets RBAC (`AccessDeniedException`) loggés en `warning` avec la route — `src/EventSubscriber/AccessDeniedSubscriber.php`.
 
 ---
 
@@ -172,5 +172,5 @@ Audit automatique via `make security` (`composer audit`) et workflow CI dédié 
 ### Basse priorité
 
 - [ ] [basse] Renforcer `API_PASSWORD` et `REDIS_PASSWORD` en production via secrets CI/CD (valeur `douze` trop faible).
-- [ ] [basse] Logger les rejets RBAC (`AccessDeniedException`) en niveau `warning` pour la traçabilité.
+- [x] [basse] Rejets RBAC loggés en `warning` — `src/EventSubscriber/AccessDeniedSubscriber.php`.
 - [ ] [basse] `sha1` dans `UserTokenService.php:25` — conservé intentionnellement (clé OAuth déjà publique, usage cache uniquement, pas cryptographique).

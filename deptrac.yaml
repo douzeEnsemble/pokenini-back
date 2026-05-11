@@ -136,11 +136,13 @@ parameters:
       - SymfonyHttpFoundation
     AppCache:
     AppEventSubscriber:
+      - Logger
       - SymfonyAttribute
       - SymfonyEventDispatcher
       - SymfonyHttpFoundation
       - SymfonyHttpKernel
       - SymfonyRateLimiter
+      - SymfonySecurity
     AppController:
       - AppAlbumFilters
       - AppDTO
