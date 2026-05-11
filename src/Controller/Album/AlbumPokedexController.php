@@ -63,7 +63,7 @@ final class AlbumPokedexController extends AbstractController
     private function accessDexIsGranted(array $dex): bool
     {
         if ($dex['is_private']
-            && $this->trainerIdsService->getTrainerId() != $this->trainerIdsService->getLoggedTrainerId()
+            && $this->trainerIdsService->getTrainerId() !== $this->trainerIdsService->getLoggedTrainerId()
         ) {
             return false;
         }
