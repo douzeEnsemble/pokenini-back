@@ -2,7 +2,7 @@
 
 ## Posture générale
 
-L'application est une API JSON exposée à un frontend web. Le niveau de sécurité est globalement solide (OAuth2 multi-provider, contrôle d'accès par rôle, cache isolé par dresseur), avec un point critique : des secrets de production réels sont committés dans le dépôt.
+L'application est une API JSON exposée à un frontend SPA. La posture sécurité est **solide** : OAuth2 multi-provider, contrôle d'accès par rôle, rate limiting sur les endpoints d'écriture, en-têtes HTTP de sécurité (nelmio), audit CI des dépendances. Le seul secret committé est le mot de passe Redis de développement (`douze`), intentionnellement laissé comme valeur par défaut surchargeable via `.env.local`.
 
 ---
 
@@ -10,25 +10,27 @@ L'application est une API JSON exposée à un frontend web. Le niveau de sécuri
 
 ### Mécanisme en place
 
-Deux modes coexistent selon le contexte :
+Trois modes coexistent selon le contexte :
 
-**1. OAuth2 redirect (login web)** — `GoogleAuthenticator`, `DiscordAuthenticator` via `knpuniversity/oauth2-client-bundle`. L'utilisateur est redirigé vers le provider OAuth2, revient avec un code, et reçoit une session.
+**1. Bearer token (API)** — `AccessTokenHandler` valide un token Bearer + header `X-Provider`. Chaque requête API est validée via `ClientRegistry::getClient($provider)->fetchUserFromToken()`. Mécanisme principal en production. Référence : `src/Security/AccessTokenHandler.php`
 
-**2. Bearer token (API)** — `AccessTokenHandler` valide un token Bearer + header `X-Provider`. Utilisé par le frontend pour les appels API après login. La validation du token se fait via `ClientRegistry::getClient($provider)->fetchUserFromToken()`.
+**2. OAuth2 redirect (login web)** — `GoogleAuthenticator`, `DiscordAuthenticator` via `knpuniversity/oauth2-client-bundle`. Le frontend récupère un token OAuth et l'envoie en Bearer sur chaque appel API. Référence : `src/Security/AbstractAuthenticator.php`
 
-**3. FakeAuthenticator (dev uniquement)** — `/fr/connect/f/c?t=admin|collector|trainer` crée une session sans secret. Non accessible en prod.
+**3. FakeAuthenticator (dev uniquement)** — `/fr/connect/f/c?t=admin|collector|trainer` crée une session sans secret. Inaccessible en prod via `security.yaml`.
 
 **4. MockAuthenticator (tests uniquement)** — token `Bearer this-is-{role}-token` + `X-Provider: mock`.
 
-Les rôles sont définis par des listes d'IDs dans les variables d'env (`LIST_ADMIN`, `LIST_COLLECTOR`, `LIST_TRAINER`). L'attribution se fait dans `AccessTokenHandler::loadUserFromLists()`.
+Les rôles (`admin`, `collector`, `trainer`) sont définis par des listes CSV d'IDs dans les variables d'env (`LIST_ADMIN`, `LIST_COLLECTOR`, `LIST_TRAINER`). Attribution dans `AccessTokenHandler::loadUserFromLists()` — `src/Security/AccessTokenHandler.php:68`.
 
-Référence : `config/packages/security.yaml`, `src/Security/AccessTokenHandler.php`
+Les succès et échecs d'authentification sont loggés en `info` — `src/Security/AccessTokenHandler.php:34-72`.
+
+Référence config : `config/packages/security.yaml`
 
 ### Points de vigilance
 
-- [ ] Aucun mécanisme de révocation de token — si un token OAuth est compromis, il reste valide jusqu'à expiration. Le provider externe gère la durée de vie.
-- [x] `REQUIRE_INVITATION=false` — tout utilisateur authentifié Google/Discord reçoit le rôle `ROLE_USER` sans invitation. Choix intentionnel : l'application est ouverte à tous les utilisateurs OAuth.
-- [ ] Le header `X-Provider` est un paramètre libre transmis par le client — `AccessTokenHandler` fait confiance à ce header pour choisir le provider OAuth2. Un attaquant contrôlant les deux headers (`Authorization` + `X-Provider`) pourrait tenter une authentification croisée si les providers partagent des IDs utilisateur. Vérifier que les tokens des différents providers ne sont pas interchangeables.
+- [ ] Aucun mécanisme de révocation de token — si un token OAuth est compromis, il reste valide jusqu'à expiration. Le provider externe (Google, Discord) gère la durée de vie.
+- [ ] Le header `X-Provider` est transmis par le client — `AccessTokenHandler` fait confiance à ce header pour choisir le provider OAuth2 (`src/Security/AccessTokenHandler.php:39`). Un attaquant contrôlant les deux headers pourrait tenter une authentification croisée si les providers partagent des IDs utilisateur. Les tokens OAuth2 sont normalement isolés par provider.
+- [x] `REQUIRE_INVITATION=false` — tout utilisateur authentifié Google/Discord reçoit `ROLE_USER` sans invitation. **Choix intentionnel** : l'application est ouverte à tous les utilisateurs OAuth.
 
 ---
 
@@ -38,13 +40,14 @@ Référence : `config/packages/security.yaml`, `src/Security/AccessTokenHandler.
 
 - **DTOs** : `OptionsResolver` avec types stricts et normaliseurs — validation exhaustive à la construction (`src/DTO/DexFilters.php:26`)
 - **CatchStates** : contrainte Symfony `CatchStates` + `CatchStatesValidator` validant les états de capture autorisés
-- **AlbumFilters** : whitelist explicite des paramètres de requête autorisés (`src/AlbumFilters/FromRequest.php:11-24`)
+- **AlbumFilters** : whitelist explicite des 13 paramètres de requête autorisés (`src/AlbumFilters/FromRequest.php:11-24`)
+- **JsonDecoder** : profondeur max 5, `JSON_THROW_ON_ERROR` — `src/Utils/JsonDecoder.php:11`
 - **Pas de base de données** : aucun risque d'injection SQL
 
 ### Points de vigilance
 
 - [ ] Les filtres de `AlbumFilters\FromRequest` sont transmis sans transformation à l'API externe comme paramètres de requête (`src/Service/Api/GetPokedexApiService.php:37`). Si l'API externe est vulnérable à des injections de paramètres, ce BFF amplifie le vecteur. Vérifier que pokenini-api valide ses entrées.
-- [ ] `JsonDecoder::decode()` utilise une profondeur de 5 — `src/Utils/JsonDecoder.php:11`. Suffisant pour les structures actuelles, mais à surveiller si des structures imbriquées sont ajoutées.
+- [ ] `JsonDecoder::decode()` utilise une profondeur de 5 — `src/Utils/JsonDecoder.php:11`. Suffisant pour les structures actuelles ; à revoir si des structures JSON imbriquées sont ajoutées.
 
 ---
 
@@ -54,17 +57,17 @@ Référence : `config/packages/security.yaml`, `src/Security/AccessTokenHandler.
 
 | Variable | Exposition | Recommandation |
 |----------|-----------|----------------|
-| `APP_SECRET` | `.env.prod` commité (`!ChangeMe!`) | **Injecter via secret CI/CD — valeur actuelle invalide en prod** |
-| `OAUTH_GOOGLE_CLIENT_SECRET` | `.env.prod` commité (valeur réelle) | **Rotation immédiate + injection via secret CI/CD** |
-| `OAUTH_DISCORD_CLIENT_SECRET` | `.env.prod` commité (valeur réelle) | **Rotation immédiate + injection via secret CI/CD** |
-| `API_PASSWORD` | `.env.prod` commité (`douze`) | Mot de passe faible — renforcer et injecter via secret |
-| `REDIS_PASSWORD` | `docker-compose.yaml:35` hardcodé (`douze`) | Passer via `${REDIS_PASSWORD}` en variable d'env |
-| `LIST_ADMIN` | `.env.prod` commité (IDs numériques) | Acceptable si les IDs OAuth ne sont pas considérés secrets |
+| `APP_SECRET` | `.env.dev` : `$ecretf0rt3st` | Valeur dev distincte de prod — OK. Injecter la valeur prod via secret CI/CD. |
+| `OAUTH_GOOGLE_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (valeurs réelles) | **Apps de développement distinctes de la prod** — choix intentionnel documenté. |
+| `OAUTH_DISCORD_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (valeurs réelles) | Idem Google. |
+| `API_PASSWORD` | `.env.dev` : `douze` | Mot de passe faible — acceptable en dev/test, renforcer en prod via secret CI/CD. |
+| `REDIS_PASSWORD` | `.env` : `douze` (défaut dev) | Valeur par défaut surchargeable via `.env.local`. Renforcer en prod. |
 
 ### Points de vigilance
 
-- [x] **CRITIQUE** `.env.prod` supprimé — secrets OAuth et `APP_SECRET` prod plus committés (commit `06e0c95`).
-- [x] `.env.dev` contient des credentials OAuth d'apps de développement distinctes de la prod — choix intentionnel documenté.
+- [x] `.env.prod` supprimé du dépôt (commit `06e0c95`) — secrets OAuth prod ne sont plus committés.
+- [x] Credentials OAuth dans `.env.dev/.env.ci/.env.int` : **apps de développement distinctes de la production** — choix intentionnel.
+- [x] Mot de passe Redis en variable d'env `${REDIS_PASSWORD}` — `docker-compose.yaml:37`. Valeur par défaut dans `.env`, surchargeable via `.env.local`.
 - [ ] `.env.dev.local` est dans `.gitignore` (non commité) — bon. Vérifier que les secrets prod ne transitent jamais par ce fichier en dev.
 
 ---
@@ -72,34 +75,53 @@ Référence : `config/packages/security.yaml`, `src/Security/AccessTokenHandler.
 ## Sécurité HTTP
 
 ### En-têtes de sécurité
-Non configurés au niveau applicatif Symfony. Les en-têtes de sécurité (CSP, HSTS, X-Frame-Options, X-Content-Type-Options) dépendent de la configuration Nginx (`config/packages/` ne contient pas `nelmio/security-bundle`).
+
+Configurés via `nelmio/security-bundle` — `config/packages/nelmio_security.yaml` :
+
+| En-tête | Valeur | Contexte |
+|---------|--------|---------|
+| `X-Frame-Options` | `DENY` | Tous environnements |
+| `X-Content-Type-Options` | `nosniff` | Tous environnements |
+| `Referrer-Policy` | `no-referrer, strict-origin-when-cross-origin` | Tous environnements |
+| `Strict-Transport-Security` | `max-age=31536000` | Production uniquement |
 
 ### CSRF
-Non applicable — API JSON stateless. Le frontend consomme l'API avec un Bearer token, pas de formulaire HTML.
+
+Non applicable — API JSON stateless. Le frontend consomme l'API avec un Bearer token, pas de formulaire HTML. Les cookies de session utilisent `SameSite: lax` (`config/packages/framework.yaml:17`).
 
 ### CORS
-Configuré via `CORS_ALLOW_ORIGIN` en variable d'env. En dev/test : `localhost|apache|127.0.0.1`. En prod : à vérifier que `CORS_ALLOW_ORIGIN` est correctement restreint au domaine du frontend.
+
+Configuré via `CORS_ALLOW_ORIGIN` en variable d'env. En dev : `localhost|apache|127.0.0.1`. En prod : à vérifier que `CORS_ALLOW_ORIGIN` est correctement restreint au domaine du frontend.
 
 ### Rate limiting
 
-- [x] Rate limiting configuré sur les endpoints d'écriture via `RateLimiterSubscriber` (60 req/min par token, APCu). Les endpoints OAuth sont mieux protégés au niveau Nginx/infra.
+Configuré sur les **endpoints d'écriture** via `App\EventSubscriber\RateLimiterSubscriber` — `src/EventSubscriber/RateLimiterSubscriber.php` :
+
+| Route | Méthode | Limite |
+|-------|---------|--------|
+| `app_album_albumupsert_upsert` | PATCH/PUT | 60 req/min |
+| `app_election_electionvote_vote` | POST | 60 req/min |
+| `app_trainer_trainerupsert_upsert` | PUT | 60 req/min |
+| `app_admin_adminactioncalculate_process` | POST | 60 req/min |
+| `app_admin_adminactionupdate_process` | POST | 60 req/min |
+| `app_admin_adminactioninvalidate_process` | DELETE | 60 req/min |
+
+Clé de limite : SHA-256(Authorization header) ou SHA-256(IP) si pas de header. Policy : `sliding_window`. Config : `config/packages/rate_limiter.yaml`.
 
 ### Points de vigilance
 
-- [x] `nelmio/security-bundle` ajouté — X-Frame-Options DENY, X-Content-Type-Options nosniff, Referrer-Policy, HSTS en prod — `config/packages/nelmio_security.yaml`.
-- [ ] `TRUSTED_PROXIES=127.0.0.1` — à s'assurer que le reverse proxy Nginx en prod transmet correctement `X-Forwarded-For` et que cette valeur est adaptée à la topologie de déploiement.
+- [ ] Rate limiting des endpoints OAuth (callbacks) non géré au niveau Symfony — les routes OAuth sont à `/` et ne sont pas identifiables par nom de route depuis un subscriber. À traiter au niveau **Nginx/infrastructure**.
+- [ ] `TRUSTED_PROXIES=127.0.0.1` — à s'assurer que le reverse proxy Nginx en prod transmet correctement `X-Forwarded-For` et que cette valeur est adaptée à la topologie de déploiement — `config/packages/framework.yaml:8`.
 
 ---
 
 ## Dépendances vulnérables
 
-Audit automatique via `make security` (`composer audit` + `symfony security:check`) et workflow CI dédié (`.github/workflows/security.yml`). Les outils qualité (`tools/*/`) ne sont pas audités par ce workflow.
+Audit automatique via `make security` (`composer audit`) et workflow CI dédié (`.github/workflows/security.yml`). Le workflow couvre maintenant **à la fois les dépendances racine et les outils qualité** (`tools/*/`) via le job `tools-composer-audit`.
 
 | Dépendance | Version | Vulnérabilité | Action |
 |-----------|---------|--------------|--------|
 | — | — | Aucune vulnérabilité connue au moment de l'analyse | Maintenir `make security` en CI |
-
-**Note** : les dépendances des outils qualité (`tools/deptrac/`, `tools/phpstan/`, etc.) ne sont pas couvertes par `composer audit` racine.
 
 ---
 
@@ -107,11 +129,11 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 ### Points de vigilance
 
-- [x] Mot de passe Redis passé en variable d'env `${REDIS_PASSWORD}` — valeur par défaut dev dans `.env`, surchargeable via `.env.local`.
+- [x] Mot de passe Redis en variable d'env `${REDIS_PASSWORD}` — `docker-compose.yaml:37`.
+- [x] Port Redis non exposé à l'hôte (pas de `ports:` dans `docker-compose.yaml`) — communication interne uniquement.
+- [x] Port Nginx publié uniquement sur `127.0.0.1:8081` en dev — `docker-compose.yaml:47`.
 - [ ] Image PHP non épinglée sur un digest SHA — `php:8.5.6-fpm-alpine3.23` dans `.docker/php/Dockerfile:1`. La version de tag est fixée (bon), mais pas le digest. Acceptable pour ce type de projet.
-- [ ] Symfony CLI épinglée à `5.17.1` dans le Dockerfile dev (`--from=ghcr.io/symfony-cli/symfony-cli:5.17.1`) — bien épinglée, surveiller les nouvelles versions.
-- [ ] Port Redis non exposé à l'hôte (pas de `ports:` dans `docker-compose.yaml`) — correct.
-- [ ] Port PHP-FPM 9000 exposé via `EXPOSE 9000` dans le Dockerfile mais non publié dans `docker-compose.yaml` — correct (communication interne uniquement).
+- [ ] Symfony CLI épinglée à `5.17.1` dans le Dockerfile dev — bien épinglée, surveiller les nouvelles versions.
 
 ---
 
@@ -119,15 +141,19 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 ### Ce qui est loggé
 
-- **Toutes les requêtes HTTP sortantes** (méthode, URL, options) en niveau `info` — `src/Service/Api/AbstractApiService.php:33`
-- **Toutes les réponses HTTP** (code + body complet) en niveau `info` — `src/Service/Api/AbstractApiService.php:55`
-- **Erreurs admin** en niveau `critical` avec contexte (name, action) — `src/Controller/Admin/AbstractAdminActionController.php:40`
+- **Authentifications** (réussies et échouées) en niveau `info` — `src/Security/AccessTokenHandler.php:34-72`
+  - Échec : no request, header manquant/vide, token invalide
+  - Succès : provider utilisé
+- **Toutes les requêtes HTTP sortantes** (méthode, URL) en niveau `info` — `src/Service/Api/AbstractApiService.php:52`
+- **Body des réponses HTTP** en niveau `debug` (désactivé en prod) — `src/Service/Api/AbstractApiService.php:39`
+- **Code HTTP des réponses** en niveau `info` — `src/Service/Api/AbstractApiService.php:75`
+- **Actions admin réussies** en niveau `info` — `src/Controller/Admin/AbstractAdminActionController.php:35`
+- **Erreurs admin** en niveau `critical` avec contexte (name, action) — `src/Controller/Admin/AbstractAdminActionController.php:41`
 
 ### Points de vigilance
 
-- [x] Le body des réponses API est loggé en `debug` — `src/Service/Api/AbstractApiService.php:39` (commit `99a85ce`).
-- [ ] Aucun log des événements d'authentification (login, échec, token invalide) au niveau applicatif. Les logs de rejet (BadCredentialsException) dépendent du niveau configuré pour le logger `security` de Symfony.
-- [ ] Les actions admin (update, calculate, invalidate) sont loggées uniquement en cas d'erreur. Un log `info` des actions réussies améliorerait la traçabilité.
+- [ ] Les credentials `auth_basic` (API_LOGIN, API_PASSWORD) sont inclus dans les options loggées en `info` à la ligne 52-54 de `AbstractApiService.php`. En pratique les options sont un tableau vide pour la plupart des appels, mais à surveiller si des requêtes avec options sensibles sont ajoutées.
+- [ ] Aucun log des actions Symfony Security au niveau framework (login OAuth, rejet RBAC). Les rejets RBAC (`AccessDeniedException`) dépendent du niveau configuré pour le logger `security` de Symfony.
 
 ---
 
@@ -135,21 +161,16 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 ### Haute priorité
 
-- [ ] [haute] Rotation et suppression des secrets OAuth committés dans `.env.prod` — `.env.prod:43-46`
-- [ ] [haute] Remplacer `APP_SECRET=!ChangeMe!` par un secret fort injecté via CI/CD — `.env.prod:12`
-- [ ] [haute] Renforcer `API_PASSWORD` en production et l'injecter via secret — `.env.prod:23`
+— Aucune. Les items critiques ont été traités (suppression `.env.prod`, rate limiting, en-têtes HTTP).
 
 ### Priorité moyenne
 
-- [x] [moyenne] Rate limiter configuré sur les endpoints d'écriture — `src/EventSubscriber/RateLimiterSubscriber.php`, `config/packages/rate_limiter.yaml`
-- [x] [moyenne] Passer le mot de passe Redis en variable d'env — `docker-compose.yaml:35`
-- [x] [moyenne] `nelmio/security-bundle` ajouté — X-Frame-Options, nosniff, Referrer-Policy, HSTS prod
-- [x] [moyenne] Log du body des réponses API déjà en niveau `debug` — `src/Service/Api/AbstractApiService.php:39`
-- [x] [moyenne] `composer audit` étendu aux outils qualité — job `tools-composer-audit` dans `.github/workflows/security.yml`
+- [ ] [moyenne] Vérifier que `CORS_ALLOW_ORIGIN` est correctement restreint en production au domaine frontend.
+- [ ] [moyenne] Adapter `TRUSTED_PROXIES` à la topologie de déploiement prod — `config/packages/framework.yaml:8`.
+- [ ] [moyenne] Rate limiting des endpoints OAuth à configurer au niveau Nginx/infrastructure.
 
 ### Basse priorité
 
-- [x] [basse] `REQUIRE_INVITATION=false` documenté comme choix intentionnel
-- [~] [basse] `sha1` conservé intentionnellement — clé OAuth déjà publique, hash sert uniquement à éviter la valeur en clair. Pas de gain sécurité réel à migrer.
-- [x] [basse] Authentifications réussies et échouées loggées en `info` — `src/Security/AccessTokenHandler.php`
-- [x] [basse] Actions admin réussies loggées en `info` — `src/Controller/Admin/AbstractAdminActionController.php:35`
+- [ ] [basse] Renforcer `API_PASSWORD` et `REDIS_PASSWORD` en production via secrets CI/CD (valeur `douze` trop faible).
+- [ ] [basse] Logger les rejets RBAC (`AccessDeniedException`) en niveau `warning` pour la traçabilité.
+- [ ] [basse] `sha1` dans `UserTokenService.php:25` — conservé intentionnellement (clé OAuth déjà publique, usage cache uniquement, pas cryptographique).
