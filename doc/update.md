@@ -12,6 +12,7 @@ Versions extraites du `composer.lock` (versions réellement installées).
 | league/oauth2-client | `2.9.0` | (transitive) | — |
 | league/oauth2-google | `5.0.0` | `^5.0.0` | À jour |
 | monolog/monolog | `3.10.0` | (via monolog-bundle) | — |
+| nelmio/security-bundle | `v3.9.0` | `^3.9` | À jour |
 | phpdocumentor/reflection-docblock | `6.0.3` | `^6.0.3` | À jour |
 | phpstan/phpdoc-parser | `2.3.2` | `^2.3.2` | À jour |
 | symfony/asset | `v8.0.8` | `8.0.*` | À jour (patch 8.0) |
@@ -28,6 +29,7 @@ Versions extraites du `composer.lock` (versions réellement installées).
 | symfony/options-resolver | `v8.0.8` | `8.0.*` | À jour |
 | symfony/property-access | `v8.0.8` | `8.0.*` | À jour |
 | symfony/property-info | `v8.0.8` | `8.0.*` | À jour |
+| symfony/rate-limiter | `v8.0.10` | `8.0.*` | À jour |
 | symfony/routing | `v8.0.9` | (transitive) | — |
 | symfony/runtime | `v8.0.8` | `8.0.*` | À jour |
 | symfony/security-bundle | `v8.0.8` | `8.0.*` | À jour |
@@ -159,7 +161,7 @@ Versions extraites des `composer.lock` de chaque outil.
 4. **Homogénéiser `actions/checkout`** — mettre `security.yml` à jour de `v5` vers `v6` (tous les autres workflows utilisent déjà `v6`).
 5. **Mettre à jour le ruleset PHP CS Fixer** — passer de `@PHP83Migration` à `@PHP84Migration` dans `.php-cs-fixer.dist.php` (le projet cible PHP 8.5.6).
 6. **Exécuter `make updates` régulièrement** — met à jour tous les `composer.json` (projet + 7 outils) en une seule commande.
-7. **Étendre l'audit sécurité aux outils qualité** — `make security` n'audite que le `composer.json` racine. Ajouter une target pour auditer `tools/*/`.
+7. **Étendre l'audit sécurité aux outils qualité** — ~~`make security` n'audite que le `composer.json` racine~~ — job `tools-composer-audit` ajouté dans `.github/workflows/security.yml` : boucle sur `tools/*/`. ✓ Fait.
 
 ---
 

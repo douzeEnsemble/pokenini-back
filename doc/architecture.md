@@ -30,6 +30,7 @@ pokenini-back/
 │   ├── DTO/                # Value objects typés (lecture seule, factory statique)
 │   ├── Exception/          # Exceptions métier (final, RuntimeException)
 │   ├── Helper/             # Helpers statiques purs (calculs)
+│   ├── EventSubscriber/    # Rate limiting (write routes) + RBAC rejection logging
 │   ├── Security/           # Authenticators, AccessTokenHandler, UserProvider
 │   ├── Service/
 │   │   ├── Api/            # Appels HTTP vers pokenini-api (AbstractApiService)
@@ -95,6 +96,12 @@ Référence : `src/DTO/DexFilters.php`
 - `FakeAuthenticator` — dev uniquement, pas de secret
 - `MockAuthenticator` / `MockProvider` — tests uniquement
 Référence : `src/Security/AccessTokenHandler.php`
+
+### EventSubscriber (`src/EventSubscriber/`)
+Abonnés noyau Symfony transverses, sans logique métier :
+- `RateLimiterSubscriber` — intercède sur `KernelEvents::REQUEST`, bloque les routes d'écriture au-delà de 60 req/min par token (SHA-256) ou IP. Retourne HTTP 429 si dépassé.
+- `AccessDeniedSubscriber` — intercepte `KernelEvents::EXCEPTION` pour logger en `warning` les rejets `AccessDeniedException` avec la route concernée.
+Référence : `src/EventSubscriber/RateLimiterSubscriber.php`
 
 ### Cache (`src/Cache/`)
 `KeyMaker` : génère des clés de cache déterministes par type de ressource et paramètres. Toutes statiques.
@@ -175,6 +182,7 @@ Client HTTP (ROLE_ADMIN)
 
 | Couche | Peut dépendre de |
 |--------|-----------------|
+| `AppEventSubscriber` | Logger, SymfonyAttribute, SymfonyEventDispatcher, SymfonyHttpFoundation, SymfonyHttpKernel, SymfonyRateLimiter, SymfonySecurity |
 | `AppController` | AlbumFilters, DTO, Exception, Security, Service, Validator, Logger, SymfonyFramework, HttpFoundation, Routing, Security, Serializer, Validator |
 | `AppService` | Cache, DTO, Exception, Security, Utils, Logger, SymfonyContractsCache, HttpClient, HttpFoundation, SecurityBundle, Validator |
 | `AppDTO` | Helper, SymfonyHttpFoundation, OptionsResolver |
