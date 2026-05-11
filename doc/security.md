@@ -63,8 +63,8 @@ Référence : `config/packages/security.yaml`, `src/Security/AccessTokenHandler.
 
 ### Points de vigilance
 
-- [ ] **CRITIQUE** `.env.prod` contient des secrets réels committés — `.env.prod:43-46`. Rotation immédiate des secrets Google et Discord nécessaire, puis remplacement par des placeholders.
-- [ ] `.env.dev` contient aussi des credentials OAuth réels dev/test (`OAUTH_DISCORD_CLIENT_SECRET`, `OAUTH_GOOGLE_CLIENT_SECRET`) — `.env.dev:43-46`. Acceptable si ce sont des apps de développement, mais à documenter.
+- [x] **CRITIQUE** `.env.prod` supprimé — secrets OAuth et `APP_SECRET` prod plus committés (commit `06e0c95`).
+- [x] `.env.dev` contient des credentials OAuth d'apps de développement distinctes de la prod — choix intentionnel documenté.
 - [ ] `.env.dev.local` est dans `.gitignore` (non commité) — bon. Vérifier que les secrets prod ne transitent jamais par ce fichier en dev.
 
 ---
