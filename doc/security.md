@@ -107,7 +107,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 ### Points de vigilance
 
-- [ ] Mot de passe Redis en clair dans `docker-compose.yaml:35` — `command: redis-server --requirepass douze`. Passer via variable d'env.
+- [x] Mot de passe Redis passé en variable d'env `${REDIS_PASSWORD}` — valeur par défaut dev dans `.env`, surchargeable via `.env.local`.
 - [ ] Image PHP non épinglée sur un digest SHA — `php:8.5.6-fpm-alpine3.23` dans `.docker/php/Dockerfile:1`. La version de tag est fixée (bon), mais pas le digest. Acceptable pour ce type de projet.
 - [ ] Symfony CLI épinglée à `5.17.1` dans le Dockerfile dev (`--from=ghcr.io/symfony-cli/symfony-cli:5.17.1`) — bien épinglée, surveiller les nouvelles versions.
 - [ ] Port Redis non exposé à l'hôte (pas de `ports:` dans `docker-compose.yaml`) — correct.
@@ -142,7 +142,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 ### Priorité moyenne
 
 - [ ] [moyenne] Configurer un rate limiter Symfony sur les endpoints OAuth et d'écriture
-- [ ] [moyenne] Passer le mot de passe Redis en variable d'env — `docker-compose.yaml:35`
+- [x] [moyenne] Passer le mot de passe Redis en variable d'env — `docker-compose.yaml:35`
 - [ ] [moyenne] Ajouter `nelmio/security-bundle` pour les en-têtes HTTP de sécurité
 - [ ] [moyenne] Passer le log du body des réponses API en niveau `debug` — `src/Service/Api/AbstractApiService.php:55`
 - [ ] [moyenne] Étendre `composer audit` aux dépendances des outils qualité (`tools/*/`)
