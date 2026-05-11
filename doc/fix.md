@@ -6,6 +6,7 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
 
 - **Credentials OAuth dans les `.env`** : les valeurs de `OAUTH_DISCORD_CLIENT_SECRET` et `OAUTH_GOOGLE_CLIENT_SECRET` ressemblent intentionnellement à des credentials réels (format `GOCSPX-`…) mais n'en sont pas — choix délibéré pour tester des formats valides en dev/test.
 - **Mot de passe Redis dans `docker-compose.yaml`** : `requirepass douze` hardcodé est intentionnel pour l'environnement de développement local.
+- **`AbstractAdminActionController` non-`final`** : classe abstraite par nécessité de design (partage de `execute()` entre sous-classes concrètes qui sont, elles, toutes `final`).
 
 ---
 
@@ -23,9 +24,6 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
   Fichier : `.github/workflows/security.yml:15`
   Résolu : mis à jour de `@v5` vers `@v6`.
 
-- [ ] [moyenne] `AbstractAdminActionController` non-`final` sans nécessité d'extension externe
-  Fichier : `src/Controller/Admin/AbstractAdminActionController.php:15`
-  Suggestion : La classe est abstraite pour mutualiser `execute()`, mais les quatre sous-classes (`Calculate`, `Update`, `Invalidate`, `Logs`) sont toutes dans le même namespace. Il s'agit davantage d'un pattern template method interne. Documenter explicitement pourquoi elle n'est pas `final` ou envisager une composition plutôt qu'héritage.
 
 ---
 
