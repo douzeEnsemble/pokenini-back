@@ -32,6 +32,7 @@ abstract class AbstractAdminActionController extends AbstractController
 
         try {
             $this->doAction($name, $action);
+            $this->logger->info("Admin action succeeded: {$action} {$name}");
         } catch (\InvalidArgumentException|\RuntimeException $e) {
             $state = 'ko';
 

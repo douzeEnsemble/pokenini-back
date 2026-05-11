@@ -43,6 +43,11 @@ final class AdminActionInvalidateControllerTest extends TestCase
             ->expects($this->never())
             ->method('critical')
         ;
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Admin action succeeded: invalidate something')
+        ;
 
         $controller = new AdminActionInvalidateController(
             $cacheInvalidatorService,

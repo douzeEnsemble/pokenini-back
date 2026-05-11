@@ -40,6 +40,11 @@ final class AdminActionCalculateControllerTest extends TestCase
             ->expects($this->never())
             ->method('critical')
         ;
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Admin action succeeded: calculate something')
+        ;
 
         $controller = new AdminActionCalculateController(
             $cacheInvalidatorService,

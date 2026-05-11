@@ -40,6 +40,11 @@ final class AdminActionUpdateControllerTest extends TestCase
             ->expects($this->never())
             ->method('critical')
         ;
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Admin action succeeded: update something')
+        ;
 
         $controller = new AdminActionUpdateController(
             $cacheInvalidatorService,
