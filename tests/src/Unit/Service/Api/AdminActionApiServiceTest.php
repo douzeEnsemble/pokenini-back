@@ -98,18 +98,21 @@ final class AdminActionApiServiceTest extends TestCase
                 ],
                 [
                     'Response status code: 200',
-                    [
-                        'response' => $json,
-                    ],
+                    [],
                 ],
             ]))
+        ;
+        $logger
+            ->expects($this->once())
+            ->method('debug')
+            ->with('Response body', ['response' => $json])
         ;
 
         $client = $this->createMock(HttpClientInterface::class);
 
         $response = $this->createMock(ResponseInterface::class);
         $response
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('getContent')
             ->willReturn($json)
         ;

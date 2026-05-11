@@ -60,7 +60,7 @@ final class GetActionLogsApiServiceTest extends TestCase
 
         $response = $this->createMock(ResponseInterface::class);
         $response
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('getContent')
             ->willReturn($json)
         ;

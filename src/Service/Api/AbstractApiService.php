@@ -24,7 +24,27 @@ abstract class AbstractApiService implements ApiServiceInterface
     /**
      * @param mixed[] $options
      */
-    protected function request(
+    protected function requestContent(
+        string $method,
+        string $endpointUrl,
+        array $options = []
+    ): string {
+        $response = $this->request(
+            $method,
+            $endpointUrl,
+            $options,
+        );
+
+        $content = $response->getContent();
+        $this->logger->debug('Response body', ['response' => $content]);
+
+        return $content;
+    }
+
+    /**
+     * @param mixed[] $options
+     */
+    private function request(
         string $method,
         string $endpointUrl,
         array $options = []
@@ -52,31 +72,8 @@ abstract class AbstractApiService implements ApiServiceInterface
             ),
         );
 
-        $this->logger->info(
-            "Response status code: {$response->getStatusCode()}",
-            [
-                'response' => $response->getContent(),
-            ]
-        );
+        $this->logger->info("Response status code: {$response->getStatusCode()}", []);
 
         return $response;
-    }
-
-    /**
-     * @param mixed[] $options
-     */
-    protected function requestContent(
-        string $method,
-        string $endpointUrl,
-        array $options = []
-    ): string {
-        $response = $this->request(
-            $method,
-            $endpointUrl,
-            $options,
-        );
-
-        /** @var string */
-        return $response->getContent();
     }
 }
