@@ -97,4 +97,28 @@ final class TrainerIdsServiceTest extends TestCase
         $this->assertNull($service->getLoggedTrainerId());
         $this->assertNull($service->getTrainerId());
     }
+
+    public function testGetTrainerIdWithoutInitThrows(): void
+    {
+        $this->expectException(\LogicException::class);
+
+        $service = new TrainerIdsService(
+            $this->createStub(UserTokenService::class),
+            new RequestStack(),
+        );
+
+        $service->getTrainerId();
+    }
+
+    public function testGetLoggedTrainerIdWithoutInitThrows(): void
+    {
+        $this->expectException(\LogicException::class);
+
+        $service = new TrainerIdsService(
+            $this->createStub(UserTokenService::class),
+            new RequestStack(),
+        );
+
+        $service->getLoggedTrainerId();
+    }
 }
