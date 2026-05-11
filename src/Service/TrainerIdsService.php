@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class TrainerIdsService
 {
+    private bool $initialized = false;
     private ?string $loggedTrainerId = null;
     private ?string $trainerId = null;
     private ?string $requestedTrainerId = null;
@@ -21,6 +22,7 @@ class TrainerIdsService
 
     public function init(): void
     {
+        $this->initialized = true;
         $request = $this->requestStack->getCurrentRequest();
 
         if ($request) {
@@ -33,7 +35,7 @@ class TrainerIdsService
             $this->trainerId = null !== $this->requestedTrainerId
                 ? $this->requestedTrainerId
                 : $this->loggedTrainerId;
-        } catch (NoLoggedUserException $e) {
+        } catch (NoLoggedUserException) {
             $this->trainerId = null !== $this->requestedTrainerId
                 ? $this->requestedTrainerId
                 : null;
@@ -42,11 +44,19 @@ class TrainerIdsService
 
     public function getLoggedTrainerId(): ?string
     {
+        if (!$this->initialized) {
+            throw new \LogicException('init() must be called before getLoggedTrainerId()');
+        }
+
         return $this->loggedTrainerId;
     }
 
     public function getTrainerId(): ?string
     {
+        if (!$this->initialized) {
+            throw new \LogicException('init() must be called before getTrainerId()');
+        }
+
         return $this->trainerId;
     }
 }

@@ -37,6 +37,6 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
   Fichier : `src/Service/Api/AbstractApiService.php:55-60`
   Résolu : code HTTP loggé en `info`, body de la réponse passé en `debug` (invisible en prod via `fingers_crossed action_level: error`, visible en dev).
 
-- [ ] [basse] `TrainerIdsService` requiert un appel explicite à `init()` avant usage
+- [x] [basse] `TrainerIdsService` requiert un appel explicite à `init()` avant usage
   Fichier : `src/Service/TrainerIdsService.php:23`
-  Suggestion : Le pattern `init()` obligatoire avant `getTrainerId()` est fragile — aucune garde ne protège contre un appel sans `init()` préalable (les propriétés sont `null` par défaut). Documenter explicitement ou lever une exception si `getTrainerId()` est appelé sans `init()`.
+  Résolu : ajout d'un flag `$initialized` et d'une `\LogicException` dans `getTrainerId()` et `getLoggedTrainerId()` si `init()` n'a pas été appelé.
