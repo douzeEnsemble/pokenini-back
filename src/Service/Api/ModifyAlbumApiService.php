@@ -19,7 +19,7 @@ class ModifyAlbumApiService extends AbstractApiService
             throw new \InvalidArgumentException();
         }
 
-        $this->request(
+        $this->requestContent(
             $method,
             "/album/{$trainerId}/{$dexSlug}/{$pokemonSlug}",
             [

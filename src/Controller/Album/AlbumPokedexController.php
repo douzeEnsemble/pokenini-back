@@ -40,7 +40,7 @@ final class AlbumPokedexController extends AbstractController
 
         try {
             $pokedex = $this->getTrainerPokedexService->getPokedexDataByTrainerId($dexSlug, $filters, $trainerId);
-        } catch (DexNotFoundException $e) {
+        } catch (DexNotFoundException) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 

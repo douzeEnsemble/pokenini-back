@@ -33,9 +33,9 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
   Fichier : `src/Controller/Album/AlbumPokedexController.php:67`
   Résolu : remplacé `!=` par `!==`.
 
-- [ ] [basse] Logging de la réponse complète en `info` pour chaque appel API
+- [x] [basse] Logging de la réponse complète en `info` pour chaque appel API
   Fichier : `src/Service/Api/AbstractApiService.php:55-60`
-  Suggestion : `$response->getContent()` est loggé en entier à chaque requête HTTP sortante. En production avec un volume important, cela génère des logs très verbeux pouvant contenir des données utilisateur. Envisager de logger uniquement le code HTTP en prod (niveau `debug` pour le body) ou de tronquer le contenu.
+  Résolu : code HTTP loggé en `info`, body de la réponse passé en `debug` (invisible en prod via `fingers_crossed action_level: error`, visible en dev).
 
 - [ ] [basse] `TrainerIdsService` requiert un appel explicite à `init()` avant usage
   Fichier : `src/Service/TrainerIdsService.php:23`
