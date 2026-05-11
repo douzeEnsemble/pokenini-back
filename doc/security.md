@@ -86,7 +86,7 @@ Configuré via `CORS_ALLOW_ORIGIN` en variable d'env. En dev/test : `localhost|a
 
 ### Points de vigilance
 
-- [ ] Pas de `nelmio/security-bundle` — aucun en-têtes HTTP de sécurité ajoutés automatiquement — `composer.json`. Envisager l'ajout pour CSP, HSTS, X-Frame-Options.
+- [x] `nelmio/security-bundle` ajouté — X-Frame-Options DENY, X-Content-Type-Options nosniff, Referrer-Policy, HSTS en prod — `config/packages/nelmio_security.yaml`.
 - [ ] `TRUSTED_PROXIES=127.0.0.1` — à s'assurer que le reverse proxy Nginx en prod transmet correctement `X-Forwarded-For` et que cette valeur est adaptée à la topologie de déploiement.
 
 ---
@@ -143,7 +143,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 - [x] [moyenne] Rate limiter configuré sur les endpoints d'écriture — `src/EventSubscriber/RateLimiterSubscriber.php`, `config/packages/rate_limiter.yaml`
 - [x] [moyenne] Passer le mot de passe Redis en variable d'env — `docker-compose.yaml:35`
-- [ ] [moyenne] Ajouter `nelmio/security-bundle` pour les en-têtes HTTP de sécurité
+- [x] [moyenne] `nelmio/security-bundle` ajouté — X-Frame-Options, nosniff, Referrer-Policy, HSTS prod
 - [x] [moyenne] Log du body des réponses API déjà en niveau `debug` — `src/Service/Api/AbstractApiService.php:39`
 - [x] [moyenne] `composer audit` étendu aux outils qualité — job `tools-composer-audit` dans `.github/workflows/security.yml`
 
