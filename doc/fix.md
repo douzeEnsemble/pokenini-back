@@ -29,9 +29,9 @@ Recherche de dette technique : aucun `TODO`, `FIXME`, `HACK`, `XXX` ni `@depreca
 
 ## Basse priorité
 
-- [ ] [basse] Comparaison lâche (`!=`) pour les identifiants dresseur
+- [x] [basse] Comparaison lâche (`!=`) pour les identifiants dresseur
   Fichier : `src/Controller/Album/AlbumPokedexController.php:67`
-  Suggestion : `$this->trainerIdsService->getTrainerId() != $this->trainerIdsService->getLoggedTrainerId()` utilise `!=` au lieu de `!==`. Les deux méthodes retournent `?string` — le comportement est correct en pratique (null != "string" est true), mais `!==` est plus explicite et évite toute surprise de coercition de type.
+  Résolu : remplacé `!=` par `!==`.
 
 - [ ] [basse] Logging de la réponse complète en `info` pour chaque appel API
   Fichier : `src/Service/Api/AbstractApiService.php:55-60`
