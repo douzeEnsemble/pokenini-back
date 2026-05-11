@@ -125,7 +125,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 
 ### Points de vigilance
 
-- [ ] Le body complet des réponses API est loggé en `info` — peut contenir des données personnelles (IDs, données d'album d'un dresseur). À passer en `debug` avec désactivation en prod (`config/packages/monolog.yaml`).
+- [x] Le body des réponses API est loggé en `debug` — `src/Service/Api/AbstractApiService.php:39` (commit `99a85ce`).
 - [ ] Aucun log des événements d'authentification (login, échec, token invalide) au niveau applicatif. Les logs de rejet (BadCredentialsException) dépendent du niveau configuré pour le logger `security` de Symfony.
 - [ ] Les actions admin (update, calculate, invalidate) sont loggées uniquement en cas d'erreur. Un log `info` des actions réussies améliorerait la traçabilité.
 
@@ -144,7 +144,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 - [ ] [moyenne] Configurer un rate limiter Symfony sur les endpoints OAuth et d'écriture
 - [x] [moyenne] Passer le mot de passe Redis en variable d'env — `docker-compose.yaml:35`
 - [ ] [moyenne] Ajouter `nelmio/security-bundle` pour les en-têtes HTTP de sécurité
-- [ ] [moyenne] Passer le log du body des réponses API en niveau `debug` — `src/Service/Api/AbstractApiService.php:55`
+- [x] [moyenne] Log du body des réponses API déjà en niveau `debug` — `src/Service/Api/AbstractApiService.php:39`
 - [ ] [moyenne] Étendre `composer audit` aux dépendances des outils qualité (`tools/*/`)
 
 ### Basse priorité
