@@ -145,7 +145,7 @@ Audit automatique via `make security` (`composer audit` + `symfony security:chec
 - [x] [moyenne] Passer le mot de passe Redis en variable d'env — `docker-compose.yaml:35`
 - [ ] [moyenne] Ajouter `nelmio/security-bundle` pour les en-têtes HTTP de sécurité
 - [x] [moyenne] Log du body des réponses API déjà en niveau `debug` — `src/Service/Api/AbstractApiService.php:39`
-- [ ] [moyenne] Étendre `composer audit` aux dépendances des outils qualité (`tools/*/`)
+- [x] [moyenne] `composer audit` étendu aux outils qualité — job `tools-composer-audit` dans `.github/workflows/security.yml`
 
 ### Basse priorité
 
