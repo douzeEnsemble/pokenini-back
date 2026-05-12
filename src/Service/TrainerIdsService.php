@@ -20,7 +20,25 @@ class TrainerIdsService
         private readonly RequestStack $requestStack,
     ) {}
 
-    public function init(): void
+    public function getLoggedTrainerId(): ?string
+    {
+        if (!$this->initialized) {
+            $this->init();
+        }
+
+        return $this->loggedTrainerId;
+    }
+
+    public function getTrainerId(): ?string
+    {
+        if (!$this->initialized) {
+            $this->init();
+        }
+
+        return $this->trainerId;
+    }
+
+    private function init(): void
     {
         $this->initialized = true;
         $request = $this->requestStack->getCurrentRequest();
@@ -40,23 +58,5 @@ class TrainerIdsService
                 ? $this->requestedTrainerId
                 : null;
         }
-    }
-
-    public function getLoggedTrainerId(): ?string
-    {
-        if (!$this->initialized) {
-            throw new \LogicException('init() must be called before getLoggedTrainerId()');
-        }
-
-        return $this->loggedTrainerId;
-    }
-
-    public function getTrainerId(): ?string
-    {
-        if (!$this->initialized) {
-            throw new \LogicException('init() must be called before getTrainerId()');
-        }
-
-        return $this->trainerId;
     }
 }

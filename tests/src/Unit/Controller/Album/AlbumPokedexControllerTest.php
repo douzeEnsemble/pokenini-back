@@ -27,10 +27,6 @@ final class AlbumPokedexControllerTest extends TestCase
         $trainerIdsService = $this->createMock(TrainerIdsService::class);
         $trainerIdsService
             ->expects($this->once())
-            ->method('init')
-        ;
-        $trainerIdsService
-            ->expects($this->once())
             ->method('getTrainerId')
             ->willReturn('douze')
         ;
@@ -90,10 +86,6 @@ final class AlbumPokedexControllerTest extends TestCase
         $trainerIdsService = $this->createMock(TrainerIdsService::class);
         $trainerIdsService
             ->expects($this->once())
-            ->method('init')
-        ;
-        $trainerIdsService
-            ->expects($this->once())
             ->method('getTrainerId')
             ->willReturn(null)
         ;
@@ -113,10 +105,6 @@ final class AlbumPokedexControllerTest extends TestCase
     public function testGetDexNotFound(): void
     {
         $trainerIdsService = $this->createMock(TrainerIdsService::class);
-        $trainerIdsService
-            ->expects($this->once())
-            ->method('init')
-        ;
         $trainerIdsService
             ->expects($this->once())
             ->method('getTrainerId')
