@@ -4,66 +4,32 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Service\CacheInvalidator\AlbumsCacheInvalidatorService;
-use App\Service\CacheInvalidator\CatchStatesCacheInvalidatorService;
-use App\Service\CacheInvalidator\DexCacheInvalidatorService;
-use App\Service\CacheInvalidator\FormsCacheInvalidatorService;
-use App\Service\CacheInvalidator\ReportsCacheInvalidatorService;
-use App\Service\CacheInvalidator\TypesCacheInvalidatorService;
+use App\Service\CacheInvalidator\CacheInvalidatorInterface;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class CacheInvalidatorService
 {
+    /**
+     * @param iterable<CacheInvalidatorInterface> $invalidators
+     */
     public function __construct(
-        private readonly CatchStatesCacheInvalidatorService $catchStatesCacheInvalidatorService,
-        private readonly TypesCacheInvalidatorService $typesCacheInvalidatorService,
-        private readonly FormsCacheInvalidatorService $formsCacheInvalidatorService,
-        private readonly DexCacheInvalidatorService $dexCacheInvalidatorService,
-        private readonly AlbumsCacheInvalidatorService $albumsCacheInvalidatorService,
-        private readonly ReportsCacheInvalidatorService $reportsCacheInvalidatorService,
+        #[AutowireIterator('app.cache_invalidator')]
+        private readonly iterable $invalidators,
     ) {}
 
     public function invalidate(string $type): void
     {
-        $labelsInvalidator = function (): void {
-            $this->catchStatesCacheInvalidatorService->invalidate();
-            $this->typesCacheInvalidatorService->invalidate();
-            $this->formsCacheInvalidatorService->invalidate();
-        };
-        $albumsInvalidator = function (): void {
-            $this->albumsCacheInvalidatorService->invalidate();
-        };
-        $dexInvalidator = function (): void {
-            $this->dexCacheInvalidatorService->invalidate();
-        };
-        $dexAvailabilitiesInvalidator = function (): void {
-            $this->dexCacheInvalidatorService->invalidate();
-            $this->albumsCacheInvalidatorService->invalidate();
-        };
-        $reportsInvalidator = function (): void {
-            $this->reportsCacheInvalidatorService->invalidate();
-        };
+        $matched = false;
 
-        $map = [
-            'pokemons' => fn (): null => null,
-            'labels' => $labelsInvalidator,
-            'games_collections_and_dex' => $dexInvalidator,
-            'dex' => $dexInvalidator,
-            'regional_dex_numbers' => $albumsInvalidator,
-            'games_availabilities' => $albumsInvalidator,
-            'games_shinies_availabilities' => $albumsInvalidator,
-            'game_bundles_availabilities' => $albumsInvalidator,
-            'game_bundles_shinies_availabilities' => $albumsInvalidator,
-            'collections_availabilities' => $albumsInvalidator,
-            'pokemon_availabilities' => $albumsInvalidator,
-            'albums' => $albumsInvalidator,
-            'dex_availabilities' => $dexAvailabilitiesInvalidator,
-            'reports' => $reportsInvalidator,
-        ];
-
-        if (!isset($map[$type])) {
-            throw new \InvalidArgumentException("Invalid type '{$type}'");
+        foreach ($this->invalidators as $invalidator) {
+            if (in_array($type, $invalidator->getSupportedTypes(), true)) {
+                $invalidator->invalidate();
+                $matched = true;
+            }
         }
 
-        $map[$type]();
+        if (!$matched) {
+            throw new \InvalidArgumentException("Invalid type '{$type}'");
+        }
     }
 }

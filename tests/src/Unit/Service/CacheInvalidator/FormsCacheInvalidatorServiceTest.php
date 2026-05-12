@@ -16,6 +16,13 @@ use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 #[CoversClass(FormsCacheInvalidatorService::class)]
 final class FormsCacheInvalidatorServiceTest extends TestCase
 {
+    public function testGetSupportedTypes(): void
+    {
+        $service = new FormsCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
+
+        $this->assertSame(['labels'], $service->getSupportedTypes());
+    }
+
     public function testInvalidate(): void
     {
         $cachePool = new ArrayAdapter();

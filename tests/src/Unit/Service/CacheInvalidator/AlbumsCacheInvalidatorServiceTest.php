@@ -42,6 +42,15 @@ final class AlbumsCacheInvalidatorServiceTest extends TestCase
         $this->assertFalse($cache->hasItem('album_home_456'));
     }
 
+    public function testGetSupportedTypes(): void
+    {
+        $service = new AlbumsCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
+
+        $this->assertContains('albums', $service->getSupportedTypes());
+        $this->assertContains('dex_availabilities', $service->getSupportedTypes());
+        $this->assertContains('regional_dex_numbers', $service->getSupportedTypes());
+    }
+
     public function testInvalidateMock(): void
     {
         $cache = $this->createMock(TagAwareAdapter::class);

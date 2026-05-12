@@ -17,6 +17,15 @@ use Symfony\Contracts\Cache\ItemInterface;
 #[CoversClass(DexCacheInvalidatorService::class)]
 final class DexCacheInvalidatorServiceTest extends TestCase
 {
+    public function testGetSupportedTypes(): void
+    {
+        $service = new DexCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
+
+        $this->assertContains('dex', $service->getSupportedTypes());
+        $this->assertContains('dex_availabilities', $service->getSupportedTypes());
+        $this->assertContains('games_collections_and_dex', $service->getSupportedTypes());
+    }
+
     public function testInvalidate(): void
     {
         $cachePool = new ArrayAdapter();

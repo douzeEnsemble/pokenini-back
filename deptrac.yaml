@@ -180,6 +180,7 @@ parameters:
       - AppSecurity
       - AppUtils
       - Logger
+      - SymfonyAttribute
       - SymfonyContractsCache
       - SymfonyContractsHttpClient
       - SymfonyHttpFoundation

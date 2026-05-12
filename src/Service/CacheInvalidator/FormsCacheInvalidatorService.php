@@ -6,8 +6,15 @@ namespace App\Service\CacheInvalidator;
 
 use App\Cache\KeyMaker;
 
-class FormsCacheInvalidatorService extends AbstractCacheInvalidatorService
+class FormsCacheInvalidatorService extends AbstractCacheInvalidatorService implements CacheInvalidatorInterface
 {
+    #[\Override]
+    public function getSupportedTypes(): array
+    {
+        return ['labels'];
+    }
+
+    #[\Override]
     public function invalidate(): void
     {
         $this->cache->delete(KeyMaker::getFormsCategoryKey());
