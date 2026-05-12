@@ -28,8 +28,6 @@ final class AlbumPokedexController extends AbstractController
         Request $request,
         string $dexSlug,
     ): JsonResponse {
-        $this->trainerIdsService->init();
-
         $trainerId = $this->trainerIdsService->getTrainerId();
 
         if (null === $trainerId) {

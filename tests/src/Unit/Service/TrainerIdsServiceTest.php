@@ -18,27 +18,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 #[CoversClass(TrainerIdsService::class)]
 final class TrainerIdsServiceTest extends TestCase
 {
-    public function testInit(): void
-    {
-        $userTokenService = $this->createMock(UserTokenService::class);
-        $userTokenService
-            ->expects($this->once())
-            ->method('getLoggedUserToken')
-            ->willReturn('8800088')
-        ;
-
-        $requestStack = new RequestStack();
-        $request = new Request(['trainer_id' => '2100012']);
-        $requestStack->push($request);
-
-        $service = new TrainerIdsService($userTokenService, $requestStack);
-        $service->init();
-
-        $this->assertSame('8800088', $service->getLoggedTrainerId());
-        $this->assertSame('2100012', $service->getTrainerId());
-    }
-
-    public function testInitWithoutRequested(): void
+    public function testWithoutRequested(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -52,13 +32,12 @@ final class TrainerIdsServiceTest extends TestCase
         $requestStack->push($request);
 
         $service = new TrainerIdsService($userTokenService, $requestStack);
-        $service->init();
 
         $this->assertSame('8800088', $service->getLoggedTrainerId());
         $this->assertSame('8800088', $service->getTrainerId());
     }
 
-    public function testInitWithoutLogged(): void
+    public function testWithoutLogged(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -72,13 +51,12 @@ final class TrainerIdsServiceTest extends TestCase
         $requestStack->push($request);
 
         $service = new TrainerIdsService($userTokenService, $requestStack);
-        $service->init();
 
         $this->assertNull($service->getLoggedTrainerId());
         $this->assertSame('2100012', $service->getTrainerId());
     }
 
-    public function testInitWithoutLoggedAndRequested(): void
+    public function testWithoutLoggedAndRequested(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -92,33 +70,42 @@ final class TrainerIdsServiceTest extends TestCase
         $requestStack->push($request);
 
         $service = new TrainerIdsService($userTokenService, $requestStack);
-        $service->init();
 
         $this->assertNull($service->getLoggedTrainerId());
         $this->assertNull($service->getTrainerId());
     }
 
-    public function testGetTrainerIdWithoutInitThrows(): void
+    public function testGetTrainerIdUsesLazyInit(): void
     {
-        $this->expectException(\LogicException::class);
+        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService
+            ->expects($this->once())
+            ->method('getLoggedUserToken')
+            ->willReturn('8800088')
+        ;
 
-        $service = new TrainerIdsService(
-            $this->createStub(UserTokenService::class),
-            new RequestStack(),
-        );
+        $requestStack = new RequestStack();
+        $requestStack->push(new Request(['trainer_id' => '2100012']));
 
-        $service->getTrainerId();
+        $service = new TrainerIdsService($userTokenService, $requestStack);
+
+        $this->assertSame('2100012', $service->getTrainerId());
     }
 
-    public function testGetLoggedTrainerIdWithoutInitThrows(): void
+    public function testGetLoggedTrainerIdUsesLazyInit(): void
     {
-        $this->expectException(\LogicException::class);
+        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService
+            ->expects($this->once())
+            ->method('getLoggedUserToken')
+            ->willReturn('8800088')
+        ;
 
-        $service = new TrainerIdsService(
-            $this->createStub(UserTokenService::class),
-            new RequestStack(),
-        );
+        $requestStack = new RequestStack();
+        $requestStack->push(new Request());
 
-        $service->getLoggedTrainerId();
+        $service = new TrainerIdsService($userTokenService, $requestStack);
+
+        $this->assertSame('8800088', $service->getLoggedTrainerId());
     }
 }
