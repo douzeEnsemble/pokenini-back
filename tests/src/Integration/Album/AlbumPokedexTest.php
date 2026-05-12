@@ -272,6 +272,13 @@ final class AlbumPokedexTest extends WebTestCase
                 ],
                 'filename' => 'at-fire',
             ],
+            'cs-no+t1-fire' => [
+                'parameters' => [
+                    'catch_states' => 'no',
+                    'primary_types' => ['fire'],
+                ],
+                'filename' => 'cs-no+t1-fire',
+            ],
         ];
     }
 
