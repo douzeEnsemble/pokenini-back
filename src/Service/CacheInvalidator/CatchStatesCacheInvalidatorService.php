@@ -6,8 +6,15 @@ namespace App\Service\CacheInvalidator;
 
 use App\Cache\KeyMaker;
 
-class CatchStatesCacheInvalidatorService extends AbstractCacheInvalidatorService
+class CatchStatesCacheInvalidatorService extends AbstractCacheInvalidatorService implements CacheInvalidatorInterface
 {
+    #[\Override]
+    public function getSupportedTypes(): array
+    {
+        return ['labels'];
+    }
+
+    #[\Override]
     public function invalidate(): void
     {
         $this->cache->delete(KeyMaker::getCatchStatesKey());

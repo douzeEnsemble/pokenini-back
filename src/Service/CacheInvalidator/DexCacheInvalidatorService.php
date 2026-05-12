@@ -6,8 +6,15 @@ namespace App\Service\CacheInvalidator;
 
 use App\Cache\KeyMaker;
 
-class DexCacheInvalidatorService extends AbstractCacheInvalidatorService
+class DexCacheInvalidatorService extends AbstractCacheInvalidatorService implements CacheInvalidatorInterface
 {
+    #[\Override]
+    public function getSupportedTypes(): array
+    {
+        return ['games_collections_and_dex', 'dex', 'dex_availabilities'];
+    }
+
+    #[\Override]
     public function invalidate(): void
     {
         $this->cache->invalidateTags([
