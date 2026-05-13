@@ -61,14 +61,6 @@
 
 **Correction** : Configurer `symfony/rate-limiter` avec une politique par IP sur les endpoints OAuth et d'écriture. Ou déléguer au reverse proxy Nginx (`limit_req_zone`).
 
-### 8. SHA1 utilisé pour dériver les identifiants de cache dresseur
-**Problème** : `UserTokenService::getLoggedUserToken()` utilise `sha1($user->getUserIdentifier())` comme clé de cache trainer. SHA1 est considéré cassé pour la cryptographie.
-
-**Fichiers** : `src/Security/UserTokenService.php:26`
-
-**Correction** : Utiliser `hash('sha256', ...)` ou directement l'identifiant OAuth (après validation qu'il est safe pour une clé de cache).
-
----
 
 ## Maintenabilité
 
