@@ -282,6 +282,21 @@ final class AlbumPokedexTest extends WebTestCase
         ];
     }
 
+    public function testGetPrivateDexNonAuthentificated(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/album/demolist3',
+            [
+                'trainer_id' => '159bb9b6d090a313087d2f26135970c2db49ee72',
+            ],
+        );
+
+        $this->assertResponseStatusCodeSame(404);
+    }
+
     public function testGetNonAuthentificated(): void
     {
         $client = self::createClient();

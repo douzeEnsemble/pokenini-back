@@ -1,16 +1,5 @@
 # Améliorations — Pokenini Back
 
-## Tests
-
-### 1. Couverture à 100% — maintenir la discipline Infection
-**Problème** : Rien d'identifié sur la couverture. La contrainte 100% MSI Infection est en place et vérifiée en CI. Risque : les assertions peuvent être trop larges (pas de valeurs précises vérifiées) sans que la couverture s'en aperçoive.
-
-**Fichiers** : `tests/src/Integration/Album/AlbumPokedexTest.php`
-
-**Correction** : S'assurer que chaque snapshot JSON de test couvre des cas limites (dex privé, dex non released, filtres multiples) et pas seulement le cas nominal. Bonne pratique déjà partiellement en place (`testGetForAPublicDex`, etc.).
-
----
-
 ## Maintenabilité
 
 ### 2. Psalm épinglé sur une version exacte (`6.16.1`)
