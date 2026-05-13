@@ -66,7 +66,7 @@ Versions extraites des `composer.lock` de chaque outil.
 | `tools/phpstan` | phpstan/phpstan-symfony | `2.0.17` | `^2.0.15` | À jour |
 | `tools/phpstan` | phpstan/phpstan-phpunit | `2.0.16` | `^2.0.16` | À jour |
 | `tools/phpmd` | phpmd/phpmd | `2.15.0` | `^2.15` | À jour |
-| `tools/psalm` | vimeo/psalm | `6.16.1` | `6.16.1` **(épinglé exactement)** | **Passer à `^6.16.1`** |
+| `tools/psalm` | vimeo/psalm | `6.16.1` | `^6.16.1` | À jour |
 | `tools/psalm` | psalm/plugin-symfony | `v5.3.0` | `^5.3.0` | À jour |
 | `tools/psalm` | psalm/plugin-phpunit | `0.19.7` | `^0.19.7` | À jour |
 | `tools/infection` | infection/infection | `0.32.7` | `^0.32.7` | À jour |
@@ -97,7 +97,7 @@ Versions extraites des `composer.lock` de chaque outil.
 | `ci_infraquality.yml` | `dotenv-linter/action-dotenv-linter` | `v3` | À jour |
 | `ci_infraquality.yml` | `hadolint/hadolint-action` | `v3.1.0` | À jour |
 | `ci_tests.yml` | `actions/checkout` | `v6` | À jour |
-| `security.yml` | `actions/checkout` | `v5` | **Mettre à jour vers `v6`** (incohérence) |
+| `security.yml` | `actions/checkout` | `v6` | À jour |
 | `push.yml` | `actions/checkout` | `v6` | À jour |
 | `push.yml` | `docker/login-action` | `v4` | À jour |
 | `push.yml` | `docker/metadata-action` | `v5` | À jour |
@@ -137,9 +137,9 @@ Versions extraites des `composer.lock` de chaque outil.
 | `LIST_TRAINER` | IDs OAuth numériques | Gérer via secret CI/CD |
 | `REQUIRE_INVITATION` | `false` | Si `true`, seuls `LIST_TRAINER` peuvent s'authentifier |
 | `OAUTH_DISCORD_CLIENT_ID` | `1684654646846543616` | Public, OK dans le repo |
-| `OAUTH_DISCORD_CLIENT_SECRET` | valeur réelle dans `.env.prod` | **CRITIQUE — secret exposé, rotation immédiate** |
+| `OAUTH_DISCORD_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (apps dev distinctes) | Apps de développement distinctes de la prod — intentionnel. `.env.prod` supprimé. |
 | `OAUTH_GOOGLE_CLIENT_ID` | ID d'app Google | Public, OK dans le repo |
-| `OAUTH_GOOGLE_CLIENT_SECRET` | valeur réelle dans `.env.prod` | **CRITIQUE — secret exposé, rotation immédiate** |
+| `OAUTH_GOOGLE_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (apps dev distinctes) | Apps de développement distinctes de la prod — intentionnel. `.env.prod` supprimé. |
 | `DEX_BANNER_URL` | URL avec `%1$s` | Template `sprintf` pour les bannières |
 | `POKEMON_ICON_URL` | URL avec `%1$s/%2$s` | Template `sprintf` |
 | `POKEMON_IMAGE_URL` | URL avec `%1$s/%2$s` | Template `sprintf` |
@@ -155,13 +155,8 @@ Versions extraites des `composer.lock` de chaque outil.
 
 ## Recommandations globales
 
-1. **Rotation et suppression des secrets committés** — `OAUTH_DISCORD_CLIENT_SECRET` et `OAUTH_GOOGLE_CLIENT_SECRET` sont présents en clair dans `.env.prod` (commité). Rotation immédiate des secrets côté Google et Discord, puis remplacement par des placeholders et injection via secrets GitHub Actions.
-2. **Remplacer `APP_SECRET=!ChangeMe!`** — injecter un secret fort via CI/CD pour chaque environnement (`APP_SECRET` est critique pour la sécurité des sessions Symfony).
-3. **Désépingler Psalm** — passer `vimeo/psalm` de `6.16.1` (version exacte) à `^6.16.1` dans `tools/psalm/composer.json` pour récupérer les patches automatiquement avec `make updates`.
-4. **Homogénéiser `actions/checkout`** — mettre `security.yml` à jour de `v5` vers `v6` (tous les autres workflows utilisent déjà `v6`).
-5. **Mettre à jour le ruleset PHP CS Fixer** — passer de `@PHP83Migration` à `@PHP84Migration` dans `.php-cs-fixer.dist.php` (le projet cible PHP 8.5.6).
-6. **Exécuter `make updates` régulièrement** — met à jour tous les `composer.json` (projet + 7 outils) en une seule commande.
-7. **Étendre l'audit sécurité aux outils qualité** — ~~`make security` n'audite que le `composer.json` racine~~ — job `tools-composer-audit` ajouté dans `.github/workflows/security.yml` : boucle sur `tools/*/`. ✓ Fait.
+1. **Remplacer `APP_SECRET=!ChangeMe!`** — injecter un secret fort via CI/CD pour chaque environnement (`APP_SECRET` est critique pour la sécurité des sessions Symfony).
+2. **Exécuter `make updates` régulièrement** — met à jour tous les `composer.json` (projet + 7 outils) en une seule commande.
 
 ---
 
