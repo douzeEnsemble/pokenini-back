@@ -156,7 +156,7 @@ quality: infra-quality code-quality
 
 .PHONY: infra-quality
 infra-quality: ## Execute all infra quality analyses
-infra-quality: docker-compose-linter dockerfile-linter dotenv-linter
+infra-quality: docker-compose-linter dockerfile-linter dotenv-linter check-moco-refs
 
 .PHONY: iq
 iq: ## Alias of infra-quality
@@ -320,6 +320,12 @@ composer-audit-tools:
 security-check: ## Execute Symfony Security Checker
 security-check:
 	@$(PHP_CONT) symfony security:check
+
+.PHONY: check-moco-refs
+check-moco-refs: ## Check moco file references integrity (no Docker needed)
+check-moco-refs:
+	@tools/check-moco-refs/check_moco_refs.sh tests/resources/moco/Api/moco.json tests/resources/moco/Api
+	@tools/check-moco-refs/check_moco_refs.sh tests/resources/moco/OAuth/moco.json tests/resources/moco/OAuth
 
 ## —— Cleaning 🧽 ———————————————————————————————————————————————————————————————
 .PHONY: clean-unused-files
