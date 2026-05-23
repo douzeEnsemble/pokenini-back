@@ -74,6 +74,7 @@ Controllers must not call API services directly — they go through business `Se
   - `App\Service\Api\` — HTTP calls to pokenini-api, all extend `AbstractApiService`. Names follow `Get*ApiService` / `Modify*ApiService`.
   - `App\Service\CacheInvalidator\` — Tag-based cache invalidation services.
 - `App\Security\` — OAuth2 authenticators (Google, Discord), FakeAuthenticator (dev only), MockAuthenticator (tests), `UserTokenService` (extracts trainer ID from session), `UserProvider`.
+- `App\EventSubscriber\` — Kernel/security event listeners (own deptrac layer, may depend on Logger, HttpFoundation, HttpKernel, RateLimiter, Security).
 - `App\DTO\` — Typed value objects built from request/response data.
 - `App\AlbumFilters\` — Parses URL query parameters into filter arrays for the API call.
 - `App\Cache\KeyMaker` — Generates deterministic cache keys.
