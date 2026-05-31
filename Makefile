@@ -19,6 +19,37 @@ EDITORCONFIG_LINTER_CMD = docker run --rm --volume=${PWD}:/check mstruebing/edit
 SHELL := /bin/bash
 .DEFAULT_GOAL = help
 
+define sequential_runner
+@TOOLS="$(1)"; \
+LABEL="$(2)"; \
+N=0; for t in $$TOOLS; do N=$$((N+1)); done; \
+TMPDIR=$$(mktemp -d); \
+SPINNER=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏'); \
+printf "Running $$N $$LABEL sequentially…\n\n"; \
+for tool in $$TOOLS; do \
+	printf "  \033[33m⏳\033[0m  %s\n" "$$tool"; \
+	( $(MAKE) --no-print-directory $$tool > "$$TMPDIR/$$tool.log" 2>&1; echo $$? > "$$TMPDIR/$$tool.exit" ) & \
+	spin_idx=0; \
+	while [ ! -f "$$TMPDIR/$$tool.exit" ]; do \
+		spin_char=$${SPINNER[$$((spin_idx % 10))]}; \
+		printf "\033[1A\r\033[2K  \033[33m%s\033[0m  %s\n" "$$spin_char" "$$tool"; \
+		spin_idx=$$((spin_idx + 1)); \
+		sleep 0.1; \
+	done; \
+	exit_code=$$(cat "$$TMPDIR/$$tool.exit"); \
+	if [ "$$exit_code" -eq 0 ]; then \
+		printf "\033[1A\r\033[2K  \033[32m✔\033[0m  %s\n" "$$tool"; \
+	else \
+		printf "\033[1A\r\033[2K  \033[31m✘\033[0m  %s\n" "$$tool"; \
+		cat "$$TMPDIR/$$tool.log"; \
+		rm -rf "$$TMPDIR"; \
+		exit 1; \
+	fi; \
+done; \
+printf "\n"; \
+rm -rf "$$TMPDIR"
+endef
+
 define parallel_runner
 @TOOLS="$(1)"; \
 LABEL="$(2)"; \
@@ -179,6 +210,16 @@ cc:
 	@$(SYMFONY) cache:clear --env=dev
 	@$(SYMFONY) cache:clear --env=test
 
+## —— CI 🚀 ———————————————————————————————————————————————————————————————————
+.PHONY: all
+all: ## Run all checks (infra-quality, code-quality, tests, measures, security)
+all:
+	$(call parallel_runner,infra-quality code-quality tests measures security,test suites)
+
+.PHONY: a
+a: ## Alias of all
+a: all
+
 ## —— Tests 🧪 ———————————————————————————————————————————————————————————————
 .PHONY: tests
 tests: ## Execute all tests
@@ -195,7 +236,7 @@ tests-unit: ## Execute unit tests
 
 .PHONY: tu
 tu: ## Alias of tests-unit
-tu: tests-units
+tu: tests-unit
 
 .PHONY: tests-integration
 tests-integration: ## Execute integration tests
@@ -205,7 +246,7 @@ tests-integration: ## Execute integration tests
 ti: ## Alias of tests-integration
 ti: tests-integration
 
-## —— Quality 👌 ———————————————————————————————————————————————————————————————
+## —— Infra Quality 🏗️ ———————————————————————————————————————————————————————————————
 .PHONY: infra-quality
 infra-quality: ## Execute all infra quality analyses
 infra-quality:
@@ -237,6 +278,7 @@ dotenv-linter: ## Run DotEnv linter
 dotenv-fixer: ## Run DotEnv fixer
 	$(DOTENV_LINTER_CMD) fix . -r --no-backup
 
+## —— Code Quality 🔍 ———————————————————————————————————————————————————————————————
 .PHONY: code-quality
 code-quality: ## Execute all code quality analyses
 code-quality:
@@ -303,7 +345,9 @@ deptrac: tools/deptrac/vendor/bin/deptrac
 ## —— Measures 📏 ———————————————————————————————————————————————————————————————
 .PHONY: measures
 measures: ## Execute all measures tools
-measures: coverage infection
+measures: clear-build
+	$(call sequential_runner,coverage-generate,coverage generation)
+	$(call parallel_runner,coverage-check infection,measures)
 
 .PHONY: m
 m: ## Alias of measures
@@ -311,7 +355,11 @@ m: measures
 
 .PHONY: clear-build
 clear-build: ## Clear build directory
-	rm -Rf build/coverage*
+	@rm -Rf build/coverage*
+
+.PHONY: coverage-generate
+coverage-generate: ## Generate PHPUnit coverage data (Xdebug)
+coverage-generate: build/coverage/coverage-xml
 
 build/coverage/coverage-xml: ## Generate coverage report
 	$(DOCKER_COMP) exec \
@@ -322,11 +370,15 @@ build/coverage/coverage-xml: ## Generate coverage report
 			--coverage-xml=build/coverage/coverage-xml \
 			--log-junit=build/coverage/junit.xml
 
-.PHONY: coverage
-coverage: ## Execute PHPUnit Coverage to check the score
-coverage: clear-build build/coverage/coverage-xml
+.PHONY: coverage-check
+coverage-check: ## Check PHPUnit coverage score (requires build/coverage/coverage-xml)
+coverage-check: build/coverage/coverage-xml
 	@$(PHP_CONT) php tools/coverage/coverage.php build/coverage/coverage.xml 100 true \
 	|| (echo "❌ Coverage check failed, generating HTML report..." && $(MAKE) coverage-html && exit 1)
+
+.PHONY: coverage
+coverage: ## Execute PHPUnit Coverage to check the score
+coverage: clear-build build/coverage/coverage-xml coverage-check
 
 .PHONY: coverage-html
 coverage-html: ## Execute PHPUnit Coverage in HTML
