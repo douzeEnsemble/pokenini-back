@@ -9,7 +9,7 @@ PHP_CONT = $(DOCKER_COMP) exec php
 PHP      = $(PHP_CONT) php
 COMPOSER = $(PHP_CONT) composer
 SYMFONY  = $(PHP) bin/console
-PHPUNIT  = $(PHP) vendor/bin/phpunit
+PHPUNIT  = $(PHP) vendor/bin/phpunit --display-all
 DOCKERCOMPOSE_LINTER_CMD = docker run -t --rm -v ${PWD}:/app zavoloklom/dclint:3.1.0-alpine
 DOTENV_LINTER_CMD = docker run -t --rm -v ${PWD}:/app -w /app dotenvlinter/dotenv-linter:4.0.0
 HADOLINT_CMD = docker run -t --rm -v ${PWD}:/app hadolint/hadolint:v2.14.0-alpine hadolint
@@ -193,27 +193,19 @@ t: tests
 tests-unit: ## Execute unit tests
 	$(PHPUNIT) tests/src/Unit
 
+.PHONY: tu
+tu: ## Alias of tests-unit
+tu: tests-units
+
 .PHONY: tests-integration
 tests-integration: ## Execute integration tests
 	$(PHPUNIT) tests/src/Integration
-
-.PHONY: tu
-tu: ## Alias of tests-unit
-tu: tests-unit
 
 .PHONY: ti
 ti: ## Alias of tests-integration
 ti: tests-integration
 
-.PHONY: tests-api-mocked
-tests-api-mocked: ## Execute tests on the group api-mocked-testing only
-	$(PHPUNIT) tests/src/Integration --group=api-mocked-testing
-
 ## —— Quality 👌 ———————————————————————————————————————————————————————————————
-.PHONY: quality
-quality: ## Execute all quality analyses
-quality: infra-quality code-quality
-
 .PHONY: infra-quality
 infra-quality: ## Execute all infra quality analyses
 infra-quality:
