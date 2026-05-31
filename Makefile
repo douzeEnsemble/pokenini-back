@@ -16,7 +16,67 @@ HADOLINT_CMD = docker run -t --rm -v ${PWD}:/app hadolint/hadolint:v2.14.0-alpin
 EDITORCONFIG_LINTER_CMD = docker run --rm --volume=${PWD}:/check mstruebing/editorconfig-checker:v3.6.0
 
 # Misc
+SHELL := /bin/bash
 .DEFAULT_GOAL = help
+
+define parallel_runner
+@TOOLS="$(1)"; \
+LABEL="$(2)"; \
+N=0; for t in $$TOOLS; do N=$$((N+1)); done; \
+TMPDIR=$$(mktemp -d); \
+SPINNER=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏'); \
+printf "Launching $$N $$LABEL in parallel…\n\n"; \
+for tool in $$TOOLS; do \
+	printf "  \033[33m⏳\033[0m  %s\n" "$$tool"; \
+done; \
+for tool in $$TOOLS; do \
+	( $(MAKE) --no-print-directory $$tool > "$$TMPDIR/$$tool.log" 2>&1; echo $$? > "$$TMPDIR/$$tool.exit" ) & \
+done; \
+PENDING="$$TOOLS"; \
+FAILED=0; \
+spin_idx=0; \
+while [ -n "$$PENDING" ]; do \
+	spin_char=$${SPINNER[$$((spin_idx % 10))]}; \
+	NEW_PENDING=""; \
+	for tool in $$PENDING; do \
+		idx=0; \
+		for t in $$TOOLS; do \
+			[ "$$t" = "$$tool" ] && break; \
+			idx=$$((idx + 1)); \
+		done; \
+		lines_up=$$((N - idx)); \
+		if [ -f "$$TMPDIR/$$tool.exit" ]; then \
+			exit_code=$$(cat "$$TMPDIR/$$tool.exit"); \
+			if [ "$$exit_code" -eq 0 ]; then \
+				printf "\033[%dA\r\033[2K  \033[32m✔\033[0m  %s\033[%dB\r" "$$lines_up" "$$tool" "$$lines_up"; \
+			else \
+				printf "\033[%dA\r\033[2K  \033[31m✘\033[0m  %s\033[%dB\r" "$$lines_up" "$$tool" "$$lines_up"; \
+				FAILED=1; \
+			fi; \
+		else \
+			printf "\033[%dA\r\033[2K  \033[33m%s\033[0m  %s\033[%dB\r" "$$lines_up" "$$spin_char" "$$tool" "$$lines_up"; \
+			NEW_PENDING="$$NEW_PENDING $$tool"; \
+		fi; \
+	done; \
+	PENDING="$$NEW_PENDING"; \
+	spin_idx=$$((spin_idx + 1)); \
+	[ -n "$$PENDING" ] && sleep 0.1; \
+done; \
+printf "\n"; \
+if [ $$FAILED -eq 0 ]; then \
+	printf "\033[32mAll $$LABEL passed.\033[0m\n"; \
+else \
+	for tool in $$TOOLS; do \
+		exit_code=$$(cat "$$TMPDIR/$$tool.exit"); \
+		if [ "$$exit_code" -ne 0 ]; then \
+			printf "\n\033[31m── %s ──────────────────────────────────────────────────\033[0m\n" "$$tool"; \
+			cat "$$TMPDIR/$$tool.log"; \
+		fi; \
+	done; \
+fi; \
+rm -rf "$$TMPDIR"; \
+[ $$FAILED -eq 0 ]
+endef
 
 ## —— 🎵 🐳 The Symfony-docker Makefile 🐳 🎵 ——————————————————————————————————
 .PHONY: help
@@ -123,7 +183,7 @@ cc:
 .PHONY: tests
 tests: ## Execute all tests
 tests:
-	$(PHPUNIT) tests/src --display-all
+	$(call parallel_runner,tests-unit tests-integration,test suites)
 
 .PHONY: t
 t: ## Alias of tests
@@ -156,7 +216,8 @@ quality: infra-quality code-quality
 
 .PHONY: infra-quality
 infra-quality: ## Execute all infra quality analyses
-infra-quality: docker-compose-linter dockerfile-linter dotenv-linter check-moco-refs
+infra-quality:
+	$(call parallel_runner,docker-compose-linter dockerfile-linter dotenv-linter check-moco-refs,infra-quality checks)
 
 .PHONY: iq
 iq: ## Alias of infra-quality
@@ -186,7 +247,8 @@ dotenv-fixer: ## Run DotEnv fixer
 
 .PHONY: code-quality
 code-quality: ## Execute all code quality analyses
-code-quality: editorconfig-linter jsonlint validate-autoloader phpcsfixer phpmd psalm phpstan deptrac
+code-quality:
+	$(call parallel_runner,editorconfig-linter jsonlint validate-autoloader phpcsfixer phpmd psalm phpstan deptrac,code-quality checks)
 
 .PHONY: cq
 cq: ## Alias of code-quality
@@ -297,7 +359,8 @@ infection: build/coverage/coverage-xml tools/infection/vendor/bin/infection clea
 ## —— Security 🛡️ ———————————————————————————————————————————————————————————————
 .PHONY: security
 security: ## Execute all security commands
-security: composer-audit composer-audit-tools security-check
+security:
+	$(call parallel_runner,composer-audit composer-audit-tools security-check,security checks)
 
 .PHONY: s
 s: ## Alias of security
