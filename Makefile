@@ -328,7 +328,14 @@ phpmd: tools/phpmd/vendor/bin/phpmd
 psalm: ## Execute psalm
 psalm: tools/psalm/vendor/bin/psalm
 	@$(PHP_CONT) rm -Rf var/cache/psalm
+	$(call parallel_runner,psalm-xml psalm-src-xml,psalm analyses)
+
+.PHONY: psalm-xml
+psalm-xml: tools/psalm/vendor/bin/psalm
 	@$(PHP) tools/psalm/vendor/bin/psalm -c psalm.xml --no-diff --show-info=false --no-cache --find-unused-psalm-suppress --no-suggestions
+
+.PHONY: psalm-src-xml
+psalm-src-xml: tools/psalm/vendor/bin/psalm
 	@$(PHP) tools/psalm/vendor/bin/psalm -c psalm-src-only.xml --no-diff --show-info=false --no-cache --find-unused-psalm-suppress --no-suggestions
 
 .PHONY: phpstan
