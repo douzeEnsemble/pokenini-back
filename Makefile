@@ -411,6 +411,7 @@ clear-infection-cache:
 infection: ## Execute all Infection testing
 infection: build/coverage/coverage-xml tools/infection/vendor/bin/infection clear-infection-cache
 	@$(PHP) tools/infection/vendor/bin/infection --threads=4 --no-progress \
+		--test-framework-options="--process-isolation" \
 		--skip-initial-tests --coverage=build/coverage \
 		--min-msi=100 --min-covered-msi=100 \
 		--filter=src
