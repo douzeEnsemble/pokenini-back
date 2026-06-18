@@ -23,7 +23,7 @@ final class UserProviderTest extends TestCase
         $provider = new UserProvider();
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Not use in this project');
+        $this->expectExceptionMessageIsOrContains('Not use in this project');
 
         $provider->loadUserByIdentifier('douze');
     }

@@ -119,7 +119,7 @@ final class AccessTokenHandlerTest extends TestCase
         );
 
         $this->expectException(BadCredentialsException::class);
-        $this->expectExceptionMessage('No current request available.');
+        $this->expectExceptionMessageIsOrContains('No current request available.');
 
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
@@ -155,7 +155,7 @@ final class AccessTokenHandlerTest extends TestCase
         );
 
         $this->expectException(BadCredentialsException::class);
-        $this->expectExceptionMessage('The "X-Provider" header is missing.');
+        $this->expectExceptionMessageIsOrContains('The "X-Provider" header is missing.');
 
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
@@ -200,7 +200,7 @@ final class AccessTokenHandlerTest extends TestCase
         );
 
         $this->expectException(BadCredentialsException::class);
-        $this->expectExceptionMessage('The "X-Provider" header is empty.');
+        $this->expectExceptionMessageIsOrContains('The "X-Provider" header is empty.');
 
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
@@ -245,7 +245,7 @@ final class AccessTokenHandlerTest extends TestCase
         );
 
         $this->expectException(BadCredentialsException::class);
-        $this->expectExceptionMessage('The "X-Provider" header is empty.');
+        $this->expectExceptionMessageIsOrContains('The "X-Provider" header is empty.');
 
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
@@ -375,7 +375,7 @@ final class AccessTokenHandlerTest extends TestCase
         );
 
         $this->expectException(BadCredentialsException::class);
-        $this->expectExceptionMessage('Token is invalid, maybe expired');
+        $this->expectExceptionMessageIsOrContains('Token is invalid, maybe expired');
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
 
