@@ -51,7 +51,7 @@ final class CacheInvalidatorServiceTest extends TestCase
         $service = new CacheInvalidatorService([$invalidator]);
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid type 'unknown'");
+        $this->expectExceptionMessageIsOrContains("Invalid type 'unknown'");
         $service->invalidate('unknown');
     }
 }

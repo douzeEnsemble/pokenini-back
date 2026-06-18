@@ -103,7 +103,7 @@ final class TotalRoundCountHelperTest extends TestCase
     public function testCalculateZeroPerViewCount(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("perViewCount can't be egals to 0");
+        $this->expectExceptionMessageIsOrContains("perViewCount can't be egals to 0");
         TotalRoundCountHelper::calculate(
             12,
             0,

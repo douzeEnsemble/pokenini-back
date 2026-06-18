@@ -174,7 +174,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
         $service = new GetTrainerPokedexService($userTokenService, $getPokedexService);
 
         $this->expectException(DexNotFoundException::class);
-        $this->expectExceptionMessage('Dex not found');
+        $this->expectExceptionMessageIsOrContains('Dex not found');
 
         $service->getPokedexData('douze', []);
     }
@@ -205,7 +205,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
         $service = new GetTrainerPokedexService($userTokenService, $getPokedexService);
 
         $this->expectException(DexNotFoundException::class);
-        $this->expectExceptionMessage('Dex not found');
+        $this->expectExceptionMessageIsOrContains('Dex not found');
 
         $service->getPokedexData('douze', []);
     }
@@ -236,7 +236,7 @@ final class GetTrainerPokedexServiceTest extends TestCase
         $service = new GetTrainerPokedexService($userTokenService, $getPokedexService);
 
         $this->expectException(DexNotFoundException::class);
-        $this->expectExceptionMessage('Dex not found');
+        $this->expectExceptionMessageIsOrContains('Dex not found');
 
         $service->getPokedexData('douze', []);
     }
