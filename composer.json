@@ -31,7 +31,7 @@
         "symfony/security-bundle": "8.0.*",
         "symfony/serializer": "8.0.*",
         "symfony/validator": "8.0.*",
-        "symfony/yaml": "8.0.*",
+        "symfony/yaml": "8.1.*",
         "wohali/oauth2-discord-new": "^1.2.1"
     },
     "require-dev": {
