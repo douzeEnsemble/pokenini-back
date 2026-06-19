@@ -52,11 +52,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Install
+      - name: Composer install
+        uses: ./.github/actions/local-composer
+      - name: Tool's Composer install
         uses: ./.github/actions/tools-composer
         with:
           dir: psalm
-      - name: Run 
+      - name: Run
         run: |
           tools/psalm/vendor/bin/psalm -c psalm.xml  --show-info=false --no-cache --find-unused-psalm-suppress --no-suggestions --root=.
           tools/psalm/vendor/bin/psalm -c psalm-src-only.xml --show-info=false --no-cache --find-unused-psalm-suppress --no-suggestions --root=.
@@ -67,7 +69,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Install
+      - name: Composer install
+        uses: ./.github/actions/local-composer
+      - name: Tool's Composer install
         uses: ./.github/actions/tools-composer
         with:
           dir: phpstan
