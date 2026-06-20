@@ -17,9 +17,6 @@ class FormsCacheInvalidatorService extends AbstractCacheInvalidatorService imple
     #[\Override]
     public function invalidate(): void
     {
-        $this->cache->delete(KeyMaker::getFormsCategoryKey());
-        $this->cache->delete(KeyMaker::getFormsRegionalKey());
-        $this->cache->delete(KeyMaker::getFormsSpecialKey());
-        $this->cache->delete(KeyMaker::getFormsVariantKey());
+        $this->cache->delete(KeyMaker::getFormsKey());
     }
 }

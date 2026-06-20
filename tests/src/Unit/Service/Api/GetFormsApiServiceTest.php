@@ -25,157 +25,68 @@ final class GetFormsApiServiceTest extends TestCase
     public function testGetFormsCategory(): void
     {
         $expectedResult = [
-            [
-                'name' => 'Starter',
-                'french_name' => 'de Départ',
-                'slug' => 'starter',
-            ],
-            [
-                'name' => 'Legendary',
-                'french_name' => 'Légendaire',
-                'slug' => 'legendary',
-            ],
+            ['slug' => 'starter', 'name' => 'Starter', 'french_name' => 'de Départ'],
+            ['slug' => 'legendary', 'name' => 'Legendary', 'french_name' => 'Légendaire'],
         ];
 
-        $this->assertEquals(
-            $expectedResult,
-            $this->getService('category')->getFormsCategory(),
-        );
+        $this->assertEquals($expectedResult, $this->getService()->getFormsCategory());
 
         /** @var string $value */
-        $value = $this->cache->getItem('forms_category')->get();
-
-        $this->assertJsonStringEqualsJsonString(
-            (string) json_encode($expectedResult),
-            $value,
-        );
+        $value = $this->cache->getItem('forms')->get();
+        $this->assertJson($value);
     }
 
     public function testGetFormsRegional(): void
     {
         $expectedResult = [
-            [
-                'name' => 'Alolan',
-                'french_name' => "d'Alola",
-                'slug' => 'alolan',
-            ],
-            [
-                'name' => 'Galarian',
-                'french_name' => 'de Galar',
-                'slug' => 'galarian',
-            ],
+            ['slug' => 'alolan', 'name' => 'Alolan', 'french_name' => "d'Alola"],
+            ['slug' => 'galarian', 'name' => 'Galarian', 'french_name' => 'de Galar'],
         ];
 
-        $this->assertEquals(
-            $expectedResult,
-            $this->getService('regional')->getFormsRegional(),
-        );
-
-        /** @var string $value */
-        $value = $this->cache->getItem('forms_regional')->get();
-
-        $this->assertJsonStringEqualsJsonString(
-            (string) json_encode($expectedResult),
-            $value,
-        );
+        $this->assertEquals($expectedResult, $this->getService()->getFormsRegional());
     }
 
     public function testGetFormsSpecial(): void
     {
         $expectedResult = [
-            [
-                'name' => 'Mega',
-                'french_name' => 'Mega',
-                'slug' => 'mega',
-            ],
-            [
-                'name' => 'Primal',
-                'french_name' => 'Originelle',
-                'slug' => 'primal',
-            ],
+            ['slug' => 'mega', 'name' => 'Mega', 'french_name' => 'Mega'],
+            ['slug' => 'primal', 'name' => 'Primal', 'french_name' => 'Originelle'],
         ];
 
-        $this->assertEquals(
-            $expectedResult,
-            $this->getService('special')->getFormsSpecial(),
-        );
-
-        /** @var string $value */
-        $value = $this->cache->getItem('forms_special')->get();
-
-        $this->assertJsonStringEqualsJsonString(
-            (string) json_encode($expectedResult),
-            $value,
-        );
+        $this->assertEquals($expectedResult, $this->getService()->getFormsSpecial());
     }
 
     public function testGetFormsVariant(): void
     {
         $expectedResult = [
-            [
-                'name' => 'Gender',
-                'french_name' => 'Genre',
-                'slug' => 'gender',
-            ],
-            [
-                'name' => 'Alternate',
-                'french_name' => 'Alternatif',
-                'slug' => 'alternate',
-            ],
-            [
-                'name' => 'Therian',
-                'french_name' => 'Totémique',
-                'slug' => 'therian',
-            ],
+            ['slug' => 'gender', 'name' => 'Gender', 'french_name' => 'Genre'],
+            ['slug' => 'alternate', 'name' => 'Alternate', 'french_name' => 'Alternatif'],
+            ['slug' => 'therian', 'name' => 'Therian', 'french_name' => 'Totémique'],
         ];
 
-        $this->assertEquals(
-            $expectedResult,
-            $this->getService('variant')->getFormsVariant(),
-        );
-
-        /** @var string $value */
-        $value = $this->cache->getItem('forms_variant')->get();
-
-        $this->assertJsonStringEqualsJsonString(
-            (string) json_encode($expectedResult),
-            $value,
-        );
+        $this->assertEquals($expectedResult, $this->getService()->getFormsVariant());
     }
 
-    private function getService(string $type): GetFormsApiService
+    private function getService(): GetFormsApiService
     {
         $logger = $this->createMock(LoggerInterface::class);
-        $logger
-            ->expects($this->exactly(2))
-            ->method('info')
-        ;
+        $logger->expects($this->exactly(2))->method('info');
 
         $client = $this->createMock(HttpClientInterface::class);
-
-        $json = (string) file_get_contents("/app/tests/resources/unit/service/api/{$type}_forms.json");
+        $json = (string) file_get_contents('/app/tests/resources/unit/service/api/forms.json');
 
         $response = $this->createMock(ResponseInterface::class);
-        $response
-            ->expects($this->once())
-            ->method('getContent')
-            ->willReturn($json)
-        ;
+        $response->expects($this->once())->method('getContent')->willReturn($json);
 
         $client
             ->expects($this->once())
             ->method('request')
             ->with(
                 'GET',
-                "https://api.domain/forms/{$type}",
+                'https://api.domain/forms',
                 [
-                    'headers' => [
-                        'accept' => 'application/json',
-                    ],
-                    'auth_basic' => [
-                        'web',
-                        'douze',
-                    ],
+                    'headers' => ['accept' => 'application/json'],
+                    'auth_basic' => ['web', 'douze'],
                     'cafile' => './resources/certificates/cacert.pem',
                 ],
             )

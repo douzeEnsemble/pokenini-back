@@ -113,7 +113,7 @@ Non-breaking (fixtures à mettre à jour si désiré, optionnel) : `game_bundles
 - `GetFormsApiService::getFormsCategory/Regional/Special/Variant()` : signatures inchangées (retournent toujours `string[][]`)
 - `KeyMaker::getFormsKey() : string` — remplace les 4 méthodes individuelles
 
-- [ ] **Étape 1 — Créer la fixture unit unifiée**
+- [x] **Étape 1 — Créer la fixture unit unifiée**
 
 Créer `tests/resources/unit/service/api/forms.json` :
 ```json
@@ -139,7 +139,7 @@ Créer `tests/resources/unit/service/api/forms.json` :
 ```
 (Les valeurs doivent correspondre exactement à ce que les tests `testGetFormsCategory` etc. vérifient actuellement — voir `GetFormsApiServiceTest.php`.)
 
-- [ ] **Étape 2 — Mettre à jour `KeyMaker.php`**
+- [x] **Étape 2 — Mettre à jour `KeyMaker.php`**
 
 Remplacer les 4 constantes et méthodes de forms par une seule :
 
@@ -164,7 +164,7 @@ public static function getFormsKey(): string
 }
 ```
 
-- [ ] **Étape 3 — Mettre à jour `GetFormsApiService.php`**
+- [x] **Étape 3 — Mettre à jour `GetFormsApiService.php`**
 
 ```php
 <?php
@@ -229,7 +229,7 @@ class GetFormsApiService extends AbstractApiService
 }
 ```
 
-- [ ] **Étape 4 — Mettre à jour `FormsCacheInvalidatorService.php`**
+- [x] **Étape 4 — Mettre à jour `FormsCacheInvalidatorService.php`**
 
 ```php
 #[\Override]
@@ -239,7 +239,7 @@ public function invalidate(): void
 }
 ```
 
-- [ ] **Étape 5 — Mettre à jour `GetFormsApiServiceTest.php`**
+- [x] **Étape 5 — Mettre à jour `GetFormsApiServiceTest.php`**
 
 Le test doit maintenant :
 - Attendre **un seul** appel HTTP vers `https://api.domain/forms` (sans type dans l'URL)
@@ -328,7 +328,7 @@ private function getService(): GetFormsApiService
 }
 ```
 
-- [ ] **Étape 6 — Mettre à jour `KeyMakerTest.php`**
+- [x] **Étape 6 — Mettre à jour `KeyMakerTest.php`**
 
 Remplacer les 4 tests `testGetForms*Key()` par un seul `testGetFormsKey()` :
 ```php
@@ -339,11 +339,11 @@ public function testGetFormsKey(): void
 ```
 Supprimer les tests `testGetFormsCategoryKey`, `testGetFormsRegionalKey`, `testGetFormsSpecialKey`, `testGetFormsVariantKey`.
 
-- [ ] **Étape 7 — Mettre à jour `FormsCacheInvalidatorServiceTest.php`**
+- [x] **Étape 7 — Mettre à jour `FormsCacheInvalidatorServiceTest.php`**
 
 Adapter pour s'attendre à 1 seul `delete('forms')` au lieu de 4 appels.
 
-- [ ] **Étape 8 — Supprimer les 4 anciennes fixtures unit**
+- [x] **Étape 8 — Supprimer les 4 anciennes fixtures unit**
 
 ```bash
 rm tests/resources/unit/service/api/category_forms.json
@@ -352,11 +352,11 @@ rm tests/resources/unit/service/api/special_forms.json
 rm tests/resources/unit/service/api/variant_forms.json
 ```
 
-- [ ] **Étape 9 — Créer la fixture moco unifiée**
+- [x] **Étape 9 — Créer la fixture moco unifiée**
 
 Créer `tests/resources/moco/Api/responses/forms.json` avec le même contenu que `forms.json` ci-dessus (même structure, valeurs cohérentes avec les réponses moco actuelles — combiner les données de `category_forms.json`, `regional_forms.json`, `special_forms.json`, `variant_forms.json` en un seul objet).
 
-- [ ] **Étape 10 — Supprimer les 4 anciennes fixtures moco et les fichiers correspondants**
+- [x] **Étape 10 — Supprimer les 4 anciennes fixtures moco et les fichiers correspondants**
 
 ```bash
 rm tests/resources/moco/Api/responses/category_forms.json
@@ -365,7 +365,7 @@ rm tests/resources/moco/Api/responses/special_forms.json
 rm tests/resources/moco/Api/responses/variant_forms.json
 ```
 
-- [ ] **Étape 11 — Mettre à jour `moco.json`**
+- [x] **Étape 11 — Mettre à jour `moco.json`**
 
 Dans `tests/resources/moco/Api/moco.json`, remplacer les 4 entrées pour `/forms/category`, `/forms/regional`, `/forms/special`, `/forms/variant` par une seule :
 
@@ -384,14 +384,14 @@ Dans `tests/resources/moco/Api/moco.json`, remplacer les 4 entrées pour `/forms
 }
 ```
 
-- [ ] **Étape 12 — Lancer les tests unitaires**
+- [x] **Étape 12 — Lancer les tests unitaires**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Unit/Service/Api/GetFormsApiServiceTest.php tests/src/Unit/Cache/KeyMakerTest.php tests/src/Unit/Service/CacheInvalidator/FormsCacheInvalidatorServiceTest.php -v
 ```
 Attendu : PASS (tous verts).
 
-- [ ] **Étape 13 — Lancer les tests d'intégration Labels**
+- [x] **Étape 13 — Lancer les tests d'intégration Labels**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Integration/Labels/LabelsTest.php -v

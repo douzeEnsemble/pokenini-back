@@ -1,0 +1,34 @@
+{
+    "category": [
+        { "name": "Starter", "french_name": "de Départ", "slug": "starter" },
+        { "name": "Legendary", "french_name": "Légendaire", "slug": "legendary" },
+        { "name": "Mythical", "french_name": "Fabuleux", "slug": "mythical" },
+        { "name": "Ultra Beast", "french_name": "Ultra Chimère", "slug": "ultrabeast" },
+        { "name": "Baby", "french_name": "Bébé", "slug": "baby" },
+        { "name": "Paradox", "french_name": "Paradoxe", "slug": "paradox" }
+    ],
+    "regional": [
+        { "name": "Alolan", "french_name": "d'Alola", "slug": "alolan" },
+        { "name": "Galarian", "french_name": "de Galar", "slug": "galarian" },
+        { "name": "Hisuian", "french_name": "de Hisui", "slug": "hisuian" },
+        { "name": "Paldean", "french_name": "de Paldea", "slug": "paldean" }
+    ],
+    "special": [
+        { "name": "Mega", "french_name": "Mega", "slug": "mega" },
+        { "name": "Primal", "french_name": "Originelle", "slug": "primal" },
+        { "name": "Gigantamax", "french_name": "Gigamax", "slug": "gigantamax" },
+        { "name": "Totem", "french_name": "Dominant", "slug": "totem" },
+        { "name": "Alpha", "french_name": "Baron", "slug": "alpha" },
+        { "name": "Event", "french_name": "Événementiel", "slug": "event" },
+        { "name": "Terastal", "french_name": "Stellaire", "slug": "terastal" }
+    ],
+    "variant": [
+        { "name": "Gender", "french_name": "Genre", "slug": "gender" },
+        { "name": "Alternate", "french_name": "Alternatif", "slug": "alternate" },
+        { "name": "Therian", "french_name": "Totémique", "slug": "therian" },
+        { "name": "Battle", "french_name": "Combat", "slug": "battle" },
+        { "name": "Item", "french_name": "Objet", "slug": "item" },
+        { "name": "Fusion", "french_name": "Fusion", "slug": "fusion" },
+        { "name": "Unobtainable", "french_name": "Non obtenable", "slug": "unobtainable" }
+    ]
+}

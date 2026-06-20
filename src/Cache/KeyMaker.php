@@ -15,10 +15,7 @@ final class KeyMaker
     private const string CACHE_KEY_TYPES = 'types';
     private const string CACHE_KEY_GAME_BUNDLES = 'game_bundles';
     private const string CACHE_KEY_COLLECTIONS = 'collections';
-    private const string CACHE_KEY_FORMS_CATEGORY = 'forms_category';
-    private const string CACHE_KEY_FORMS_REGIONAL = 'forms_regional';
-    private const string CACHE_KEY_FORMS_SPECIAL = 'forms_special';
-    private const string CACHE_KEY_FORMS_VARIANT = 'forms_variant';
+    private const string CACHE_KEY_FORMS = 'forms';
     private const string CACHE_KEY_ALBUM = 'album';
     private const string CACHE_KEY_REPORTS = 'reports';
     private const string CACHE_KEY_TRAINER = 'trainer';
@@ -48,24 +45,9 @@ final class KeyMaker
         return self::CACHE_KEY_COLLECTIONS;
     }
 
-    public static function getFormsCategoryKey(): string
+    public static function getFormsKey(): string
     {
-        return self::CACHE_KEY_FORMS_CATEGORY;
-    }
-
-    public static function getFormsRegionalKey(): string
-    {
-        return self::CACHE_KEY_FORMS_REGIONAL;
-    }
-
-    public static function getFormsSpecialKey(): string
-    {
-        return self::CACHE_KEY_FORMS_SPECIAL;
-    }
-
-    public static function getFormsVariantKey(): string
-    {
-        return self::CACHE_KEY_FORMS_VARIANT;
+        return self::CACHE_KEY_FORMS;
     }
 
     public static function getAlbumKey(): string
