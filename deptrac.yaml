@@ -118,6 +118,10 @@ parameters:
       collectors:
         - type: classLike
           value: '^Symfony\\Component\\Serializer\\.*'
+    - name: SymfonyExpressionLanguage
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\ExpressionLanguage\\.*'
     - name: SymfonyHttpKernel
       collectors:
         - type: classLike
@@ -137,11 +141,9 @@ parameters:
     AppCache:
     AppEventSubscriber:
       - Logger
-      - SymfonyAttribute
       - SymfonyEventDispatcher
       - SymfonyHttpFoundation
       - SymfonyHttpKernel
-      - SymfonyRateLimiter
       - SymfonySecurity
     AppController:
       - AppAlbumFilters
@@ -151,8 +153,10 @@ parameters:
       - AppService
       - AppValidator
       - Logger
+      - SymfonyExpressionLanguage
       - SymfonyFrameworkBundle
       - SymfonyHttpFoundation
+      - SymfonyHttpKernel
       - SymfonyRouting
       - SymfonySecurity
       - SymfonySerializer

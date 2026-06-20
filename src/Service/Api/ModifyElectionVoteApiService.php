@@ -20,8 +20,8 @@ class ModifyElectionVoteApiService extends AbstractApiService
                     'trainer_external_id' => $trainerId,
                     'dex_slug' => $electionVote->dexSlug,
                     'election_slug' => $electionVote->electionSlug,
-                    'winners_slugs' => $electionVote->winnersSlugs,
-                    'losers_slugs' => $electionVote->losersSlugs,
+                    'winners_slugs' => $electionVote->filteredWinners(),
+                    'losers_slugs' => $electionVote->filteredLosers(),
                 ]),
             ]
         );

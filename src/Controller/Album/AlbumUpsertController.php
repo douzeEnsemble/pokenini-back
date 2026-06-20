@@ -13,8 +13,10 @@ use App\Service\ModifyTrainerAlbumService;
 use App\Service\RequestedContentService;
 use App\Validator\CatchStates;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\RateLimit;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -29,6 +31,7 @@ final class AlbumUpsertController extends AbstractController
 
     #[Route('/{dexSlug}/{pokemonSlug}', methods: ['PATCH', 'PUT'])]
     #[IsGranted('ROLE_TRAINER')]
+    #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function upsert(
         string $dexSlug,
         string $pokemonSlug,

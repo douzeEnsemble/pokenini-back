@@ -7,8 +7,6 @@ namespace App\Tests\Unit\DTO;
 use App\DTO\ElectionVote;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
-use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 /**
  * @internal
@@ -16,167 +14,63 @@ use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 #[CoversClass(ElectionVote::class)]
 final class ElectionVoteTest extends TestCase
 {
-    public function testOk(): void
+    public function testFilteredWinnersRemovesEmptyStrings(): void
     {
-        $object = new ElectionVote(
-            'pokedex',
-            'douze',
-            [
-                'winners_slugs' => ['pikachu'],
-                'losers_slugs' => ['pichu', 'raichu'],
-            ],
-        );
+        $vote = new ElectionVote();
+        $vote->winnersSlugs = ['pikachu', '', 'ivysaur'];
 
-        $this->assertSame('pokedex', $object->dexSlug);
-        $this->assertSame('douze', $object->electionSlug);
-        $this->assertSame(['pikachu'], $object->winnersSlugs);
-        $this->assertSame(['pichu', 'raichu'], $object->losersSlugs);
+        $this->assertSame(['pikachu', 'ivysaur'], $vote->filteredWinners());
     }
 
-    public function testWinnerAsLoser(): void
+    public function testFilteredLosersRemovesEmptyStringsAndWinners(): void
     {
-        $object = new ElectionVote(
-            'pokedex',
-            'douze',
-            [
-                'winners_slugs' => ['pikachu'],
-                'losers_slugs' => ['pichu', 'pikachu', 'raichu'],
-            ],
-        );
+        $vote = new ElectionVote();
+        $vote->winnersSlugs = ['bulbasaur', '', 'ivysaur'];
+        $vote->losersSlugs = ['charmander', 'bulbasaur', ''];
 
-        $this->assertSame('pokedex', $object->dexSlug);
-        $this->assertSame('douze', $object->electionSlug);
-        $this->assertSame(['pikachu'], $object->winnersSlugs);
-        $this->assertSame(['pichu', 'raichu'], $object->losersSlugs);
+        $this->assertSame(['bulbasaur', 'ivysaur'], $vote->filteredWinners());
+        $this->assertSame(['charmander'], $vote->filteredLosers());
     }
 
-    public function testWinnersAsLosers(): void
+    public function testFilteredWinnersWithNoDuplication(): void
     {
-        $object = new ElectionVote(
-            'pokedex',
-            'douze',
-            [
-                'winners_slugs' => ['pikachu', 'pichu'],
-                'losers_slugs' => ['pichu', 'pikachu', 'raichu'],
-            ],
-        );
+        $vote = new ElectionVote();
+        $vote->winnersSlugs = ['pikachu', 'pichu'];
+        $vote->losersSlugs = ['pichu', 'pikachu', 'raichu'];
 
-        $this->assertSame('pokedex', $object->dexSlug);
-        $this->assertSame('douze', $object->electionSlug);
-        $this->assertSame(['pikachu', 'pichu'], $object->winnersSlugs);
-        $this->assertSame(['raichu'], $object->losersSlugs);
+        $this->assertSame(['pikachu', 'pichu'], $vote->filteredWinners());
+        $this->assertSame(['raichu'], $vote->filteredLosers());
     }
 
-    public function testWithEmptyWinners(): void
+    public function testFilteredLosersWithAllLosers(): void
     {
-        $object = new ElectionVote(
-            'pokedex',
-            'douze',
-            [
-                'winners_slugs' => ['pichu', ''],
-                'losers_slugs' => ['pikachu', 'raichu'],
-            ],
-        );
+        $vote = new ElectionVote();
+        $vote->winnersSlugs = [];
+        $vote->losersSlugs = ['pikachu', 'pichu', 'raichu'];
 
-        $this->assertSame('pokedex', $object->dexSlug);
-        $this->assertSame('douze', $object->electionSlug);
-        $this->assertSame(['pichu'], $object->winnersSlugs);
-        $this->assertSame(['pikachu', 'raichu'], $object->losersSlugs);
+        $this->assertSame([], $vote->filteredWinners());
+        $this->assertSame(['pikachu', 'pichu', 'raichu'], $vote->filteredLosers());
     }
 
-    public function testWithEmptyLosers(): void
+    public function testFilteredWinnersWithAllWinners(): void
     {
-        $object = new ElectionVote(
-            'pokedex',
-            'douze',
-            [
-                'winners_slugs' => ['pichu'],
-                'losers_slugs' => ['pikachu', 'raichu', ''],
-            ],
-        );
+        $vote = new ElectionVote();
+        $vote->winnersSlugs = ['pikachu', 'pichu', 'raichu'];
+        $vote->losersSlugs = [];
 
-        $this->assertSame('pokedex', $object->dexSlug);
-        $this->assertSame('douze', $object->electionSlug);
-        $this->assertSame(['pichu'], $object->winnersSlugs);
-        $this->assertSame(['pikachu', 'raichu'], $object->losersSlugs);
+        $this->assertSame(['pikachu', 'pichu', 'raichu'], $vote->filteredWinners());
+        $this->assertSame([], $vote->filteredLosers());
     }
 
-    public function testMissingDexSlug(): void
+    public function testDefaultValues(): void
     {
-        $object = new ElectionVote(
-            '',
-            'douze',
-            [
-                'winners_slugs' => ['pikachu'],
-                'losers_slugs' => ['pichu', 'raichu'],
-            ],
-        );
+        $vote = new ElectionVote();
 
-        $this->assertSame('', $object->dexSlug);
-        $this->assertSame('douze', $object->electionSlug);
-        $this->assertSame(['pikachu'], $object->winnersSlugs);
-        $this->assertSame(['pichu', 'raichu'], $object->losersSlugs);
-    }
-
-    public function testMissingElectionSlug(): void
-    {
-        $object = new ElectionVote(
-            'pokedex',
-            '',
-            [
-                'winners_slugs' => ['pikachu'],
-                'losers_slugs' => ['pichu', 'raichu'],
-            ],
-        );
-
-        $this->assertSame('pokedex', $object->dexSlug);
-        $this->assertSame('', $object->electionSlug);
-        $this->assertSame(['pikachu'], $object->winnersSlugs);
-        $this->assertSame(['pichu', 'raichu'], $object->losersSlugs);
-    }
-
-    public function testWrongValueForWinnerSlug(): void
-    {
-        $this->expectException(InvalidOptionsException::class);
-
-        /**
-         * @psalm-suppress InvalidArgument
-         */
-        new ElectionVote(
-            'pokedex',
-            'douze',
-            /** @phpstan-ignore argument.type */
-            [
-                'winners_slugs' => [54654],
-                'losers_slugs' => ['pichu', 'raichu'],
-            ],
-        );
-    }
-
-    public function testWrongValueForLosersSlugs(): void
-    {
-        $this->expectException(InvalidOptionsException::class);
-        new ElectionVote(
-            'pokedex',
-            'douze',
-            [
-                'winners_slugs' => ['pikachu'],
-                'losers_slugs' => 'pichu',
-            ],
-        );
-    }
-
-    public function testAnotherValue(): void
-    {
-        $this->expectException(UndefinedOptionsException::class);
-        new ElectionVote(
-            'pokedex',
-            'douze',
-            [
-                'winners_slugs' => ['pikachu'],
-                'losers_slugs' => ['pichu', 'raichu'],
-                'other' => 'idk',
-            ]
-        );
+        $this->assertSame('', $vote->dexSlug);
+        $this->assertSame('', $vote->electionSlug);
+        $this->assertSame([], $vote->winnersSlugs);
+        $this->assertSame([], $vote->losersSlugs);
+        $this->assertSame([], $vote->filteredWinners());
+        $this->assertSame([], $vote->filteredLosers());
     }
 }
