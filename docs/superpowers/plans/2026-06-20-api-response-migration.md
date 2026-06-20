@@ -950,7 +950,7 @@ Attendu : PASS.
 - `GetElectionTopApiService::getTop()` : toujours `string[][]` (pass-through)
 - `ElectionIndexController` accède à `$pokemon['score']['significance']` au lieu de `$pokemon['significance']`
 
-- [ ] **Étape 1 — Mettre à jour `ElectionIndexController.php`**
+- [x] **Étape 1 — Mettre à jour `ElectionIndexController.php`**
 
 ```php
 $detachedCount = 0;
@@ -961,7 +961,7 @@ foreach ($electionTop as $pokemon) {
 }
 ```
 
-- [ ] **Étape 2 — Mettre à jour la fixture unit `election_top_5_4564650_home_fav.json`**
+- [x] **Étape 2 — Mettre à jour la fixture unit `election_top_5_4564650_home_fav.json`**
 
 Convertir chaque entrée plate vers la nouvelle structure imbriquée. Exemple pour une entrée existante (actuellement plate avec `elo`, `significance`, `pokemon_slug`, etc.) :
 
@@ -991,11 +991,11 @@ Convertir chaque entrée plate vers la nouvelle structure imbriquée. Exemple po
 
 Appliquer cette structure pour toutes les entrées du fichier (5 Pokémon actuellement).
 
-- [ ] **Étape 3 — Mettre à jour la fixture unit `election_top_10_87654_demo_pref.json`**
+- [x] **Étape 3 — Mettre à jour la fixture unit `election_top_10_87654_demo_pref.json`**
 
 Même conversion que l'étape 2, pour les 10 entrées de ce fichier.
 
-- [ ] **Étape 4 — Mettre à jour la fixture moco `demolite_top_5.json`**
+- [x] **Étape 4 — Mettre à jour la fixture moco `demolite_top_5.json`**
 
 Même conversion pour les 5 entrées (Bulbasaur, Ivysaur, Venusaur, Venusaur-f, Venusaur-mega).
 
@@ -1023,7 +1023,7 @@ docker compose exec php php vendor/bin/phpunit tests/src/Unit/Service/Api/GetEle
 ```
 Attendu : PASS.
 
-- [ ] **Étape 6 — Lancer les tests d'intégration ElectionIndex et régénérer les snapshots**
+- [x] **Étape 6 — Lancer les tests d'intégration ElectionIndex et régénérer les snapshots**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Integration/Election/ElectionIndexTest.php -v
