@@ -683,7 +683,7 @@ Si le snapshot `Admin/action-logs.json` est différent, le mettre à jour en dé
 - `ElectionMetrics::configureOptions()` accepte maintenant les clés `under_max_count` et `at_max_count`
 - `GetElectionMetricsApiService::getMetrics()` aplatit `completion` avant de passer au DTO
 
-- [ ] **Étape 1 — Mettre à jour `GetElectionMetricsApiService.php`**
+- [x] **Étape 1 — Mettre à jour `GetElectionMetricsApiService.php`**
 
 Après `JsonDecoder::decode()`, aplatir le sous-objet `completion` avant de retourner :
 
@@ -740,7 +740,7 @@ public function getMetrics(
 
 Donc `view_count_sum` et `view_count_max` sont maintenant `view_count.sum` et `view_count.max`. Le service doit tout aplatir.
 
-- [ ] **Étape 2 — Mettre à jour `ElectionMetrics.php`**
+- [x] **Étape 2 — Mettre à jour `ElectionMetrics.php`**
 
 Renommer les clés dans `configureOptions()` : `under_max_view_count` → `under_max_count`, `max_view_count` → `at_max_count`. Aussi renommer les clés `view_count_sum`, `win_count_sum`, `view_count_max`, `win_count_max` qui restent les mêmes (l'aplatissement est fait dans le service). Les propriétés PHP (`$underMaxViewCount`, `$maxViewCount`) ne changent pas.
 
@@ -776,7 +776,7 @@ $this->underMaxViewCount = $options['under_max_count'];
 $this->maxViewCount = $options['at_max_count'];
 ```
 
-- [ ] **Étape 3 — Mettre à jour `ElectionMetricsTest.php`**
+- [x] **Étape 3 — Mettre à jour `ElectionMetricsTest.php`**
 
 Dans **tous** les tests, remplacer les clés `under_max_view_count` par `under_max_count` et `max_view_count` par `at_max_count`. Exemple :
 
@@ -794,7 +794,7 @@ Appliquer ce remplacement dans les ~13 tests (tous les `testOk`, `testZeros`, `t
 
 Les assertions sur `$object->underMaxViewCount` et `$object->maxViewCount` restent inchangées (les propriétés PHP n'ont pas changé de nom).
 
-- [ ] **Étape 4 — Mettre à jour les fixtures unit election metrics**
+- [x] **Étape 4 — Mettre à jour les fixtures unit election metrics**
 
 Pour `tests/resources/unit/service/api/election_metrics_4564650_home_fav.json` :
 ```json
@@ -818,7 +818,7 @@ Pour `tests/resources/unit/service/api/election_metrics_87654_demo_pref.json` :
 
 Vérifier aussi les variantes avec filtres (`*_cflegendary`, `*_at0poison_*`) et les mettre à jour.
 
-- [ ] **Étape 5 — Mettre à jour `GetElectionMetricsApiServiceTest.php`**
+- [x] **Étape 5 — Mettre à jour `GetElectionMetricsApiServiceTest.php`**
 
 Les assertions `assertSame([ ... ], $items)` doivent maintenant vérifier le tableau aplati produit par le service. Mettre à jour les valeurs attendues :
 
@@ -837,7 +837,7 @@ $this->assertSame(
 );
 ```
 
-- [ ] **Étape 6 — Mettre à jour les 5 fixtures moco election metrics**
+- [x] **Étape 6 — Mettre à jour les 5 fixtures moco election metrics**
 
 Appliquer la même transformation à chacun des 5 fichiers sous `tests/resources/moco/Api/responses/election/`:
 - `demolite_metrics.json`
