@@ -14,24 +14,24 @@
         "nelmio/security-bundle": "^3.9",
         "phpdocumentor/reflection-docblock": "^6.0.3",
         "phpstan/phpdoc-parser": "^2.3.2",
-        "symfony/asset": "8.0.*",
-        "symfony/console": "8.0.*",
-        "symfony/dotenv": "8.0.*",
-        "symfony/expression-language": "8.0.*",
+        "symfony/asset": "8.1.*",
+        "symfony/console": "8.1.*",
+        "symfony/dotenv": "8.1.*",
+        "symfony/expression-language": "8.1.*",
         "symfony/flex": "^2.11.0",
-        "symfony/framework-bundle": "8.0.*",
-        "symfony/http-client": "8.0.*",
-        "symfony/http-foundation": "8.0.*",
+        "symfony/framework-bundle": "8.1.*",
+        "symfony/http-client": "8.1.*",
+        "symfony/http-foundation": "8.1.*",
         "symfony/monolog-bundle": "^4.0.2",
-        "symfony/options-resolver": "8.0.*",
-        "symfony/property-access": "8.0.*",
-        "symfony/property-info": "8.0.*",
-        "symfony/rate-limiter": "8.0.*",
-        "symfony/runtime": "8.0.*",
-        "symfony/security-bundle": "8.0.*",
-        "symfony/serializer": "8.0.*",
-        "symfony/validator": "8.0.*",
-        "symfony/yaml": "8.0.*",
+        "symfony/options-resolver": "8.1.*",
+        "symfony/property-access": "8.1.*",
+        "symfony/property-info": "8.1.*",
+        "symfony/rate-limiter": "8.1.*",
+        "symfony/runtime": "8.1.*",
+        "symfony/security-bundle": "8.1.*",
+        "symfony/serializer": "8.1.*",
+        "symfony/validator": "8.1.*",
+        "symfony/yaml": "8.1.*",
         "wohali/oauth2-discord-new": "^1.2.1"
     },
     "require-dev": {
@@ -44,12 +44,12 @@
         "ext-xml": "*",
         "ext-xmlwriter": "*",
         "phpunit/phpunit": "^13.2.1",
-        "symfony/browser-kit": "8.0.*",
-        "symfony/css-selector": "8.0.*",
-        "symfony/debug-bundle": "8.0.*",
-        "symfony/phpunit-bridge": "8.0.*",
-        "symfony/stopwatch": "8.0.*",
-        "symfony/var-dumper": "8.0.*"
+        "symfony/browser-kit": "8.1.*",
+        "symfony/css-selector": "8.1.*",
+        "symfony/debug-bundle": "8.1.*",
+        "symfony/phpunit-bridge": "8.1.*",
+        "symfony/stopwatch": "8.1.*",
+        "symfony/var-dumper": "8.1.*"
     },
     "config": {
         "optimize-autoloader": true,
@@ -104,7 +104,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "8.0.*",
+            "require": "8.1.*",
             "docker": true
         }
     }
