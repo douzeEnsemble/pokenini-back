@@ -39,8 +39,8 @@ final class GetElectionMetricsServiceTest extends TestCase
                 'win_count_sum' => 5,
                 'view_count_max' => 4,
                 'win_count_max' => 14,
-                'under_max_view_count' => 24,
-                'max_view_count' => 5,
+                'under_max_count' => 24,
+                'at_max_count' => 5,
                 'dex_total_count' => 48,
             ])
         ;

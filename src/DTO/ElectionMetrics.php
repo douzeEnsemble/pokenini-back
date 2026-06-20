@@ -35,8 +35,8 @@ final class ElectionMetrics
          *  win_count_sum: int,
          *  view_count_max: int,
          *  win_count_max: int,
-         *  under_max_view_count: int,
-         *  max_view_count: int,
+         *  under_max_count: int,
+         *  at_max_count: int,
          *  dex_total_count: int,
          * } $options
          */
@@ -46,8 +46,8 @@ final class ElectionMetrics
         $this->winCountSum = $options['win_count_sum'];
         $this->viewCountMax = $options['view_count_max'];
         $this->winCountMax = $options['win_count_max'];
-        $this->underMaxViewCount = $options['under_max_view_count'];
-        $this->maxViewCount = $options['max_view_count'];
+        $this->underMaxViewCount = $options['under_max_count'];
+        $this->maxViewCount = $options['at_max_count'];
         $this->dexTotalCount = $options['dex_total_count'];
 
         $this->roundCount = (int) round($this->viewCountSum / $perViewCount);
@@ -77,11 +77,11 @@ final class ElectionMetrics
         $resolver->setDefault('win_count_max', 0);
         $resolver->setAllowedTypes('win_count_max', 'int');
 
-        $resolver->setDefault('under_max_view_count', 0);
-        $resolver->setAllowedTypes('under_max_view_count', 'int');
+        $resolver->setDefault('under_max_count', 0);
+        $resolver->setAllowedTypes('under_max_count', 'int');
 
-        $resolver->setDefault('max_view_count', 0);
-        $resolver->setAllowedTypes('max_view_count', 'int');
+        $resolver->setDefault('at_max_count', 0);
+        $resolver->setAllowedTypes('at_max_count', 'int');
 
         $resolver->setDefault('dex_total_count', 0);
         $resolver->setAllowedTypes('dex_total_count', 'int');
