@@ -14,10 +14,8 @@ class GetFormsApiService extends AbstractApiService
      */
     public function getFormsCategory(): array
     {
-        return $this->getFormsByType(
-            'category',
-            KeyMaker::getFormsCategoryKey(),
-        );
+        /** @var string[][] */
+        return $this->getForms()['category'];
     }
 
     /**
@@ -25,10 +23,8 @@ class GetFormsApiService extends AbstractApiService
      */
     public function getFormsRegional(): array
     {
-        return $this->getFormsByType(
-            'regional',
-            KeyMaker::getFormsRegionalKey(),
-        );
+        /** @var string[][] */
+        return $this->getForms()['regional'];
     }
 
     /**
@@ -36,10 +32,8 @@ class GetFormsApiService extends AbstractApiService
      */
     public function getFormsSpecial(): array
     {
-        return $this->getFormsByType(
-            'special',
-            KeyMaker::getFormsSpecialKey(),
-        );
+        /** @var string[][] */
+        return $this->getForms()['special'];
     }
 
     /**
@@ -47,25 +41,20 @@ class GetFormsApiService extends AbstractApiService
      */
     public function getFormsVariant(): array
     {
-        return $this->getFormsByType(
-            'variant',
-            KeyMaker::getFormsVariantKey(),
-        );
+        /** @var string[][] */
+        return $this->getForms()['variant'];
     }
 
     /**
-     * @return string[][]
+     * @return array{category: string[][], regional: string[][], special: string[][], variant: string[][]}
      */
-    private function getFormsByType(string $type, string $key): array
+    private function getForms(): array
     {
-        $json = $this->cache->get($key, function () use ($type) {
-            return $this->requestContent(
-                'GET',
-                "/forms/{$type}",
-            );
+        $json = $this->cache->get(KeyMaker::getFormsKey(), function () {
+            return $this->requestContent('GET', '/forms');
         });
 
-        /** @var string[][] */
+        /** @var array{category: string[][], regional: string[][], special: string[][], variant: string[][]} */
         return JsonDecoder::decode($json);
     }
 }

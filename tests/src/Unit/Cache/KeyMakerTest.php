@@ -39,24 +39,9 @@ final class KeyMakerTest extends TestCase
         $this->assertEquals('collections', KeyMaker::getCollectionsKey());
     }
 
-    public function testGetFormsCategoryKey(): void
+    public function testGetFormsKey(): void
     {
-        $this->assertEquals('forms_category', KeyMaker::getFormsCategoryKey());
-    }
-
-    public function testGetFormsRegionalKey(): void
-    {
-        $this->assertEquals('forms_regional', KeyMaker::getFormsRegionalKey());
-    }
-
-    public function testGetFormsSpecialKey(): void
-    {
-        $this->assertEquals('forms_special', KeyMaker::getFormsSpecialKey());
-    }
-
-    public function testGetFormsVariantKey(): void
-    {
-        $this->assertEquals('forms_variant', KeyMaker::getFormsVariantKey());
+        $this->assertSame('forms', KeyMaker::getFormsKey());
     }
 
     public function testGetAlbumKey(): void

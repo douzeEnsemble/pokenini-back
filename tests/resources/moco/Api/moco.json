@@ -25,50 +25,14 @@
   },
   {
     "request": {
-      "uri": "/forms/category",
+      "uri": "/forms",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"
       }
     },
     "response": {
-      "file": "/var/moco/responses/category_forms.json"
-    }
-  },
-  {
-    "request": {
-      "uri": "/forms/regional",
-      "headers": {
-        "accept": "application/json",
-        "authorization": "Basic d2ViOmRvdXpl"
-      }
-    },
-    "response": {
-      "file": "/var/moco/responses/regional_forms.json"
-    }
-  },
-  {
-    "request": {
-      "uri": "/forms/special",
-      "headers": {
-        "accept": "application/json",
-        "authorization": "Basic d2ViOmRvdXpl"
-      }
-    },
-    "response": {
-      "file": "/var/moco/responses/special_forms.json"
-    }
-  },
-  {
-    "request": {
-      "uri": "/forms/variant",
-      "headers": {
-        "accept": "application/json",
-        "authorization": "Basic d2ViOmRvdXpl"
-      }
-    },
-    "response": {
-      "file": "/var/moco/responses/variant_forms.json"
+      "file": "/var/moco/responses/forms.json"
     }
   },
   {

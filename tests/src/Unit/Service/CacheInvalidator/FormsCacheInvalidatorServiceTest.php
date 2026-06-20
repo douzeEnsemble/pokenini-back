@@ -29,19 +29,13 @@ final class FormsCacheInvalidatorServiceTest extends TestCase
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
 
         $cache->get('douze', fn () => 'DouZe');
-        $cache->get('forms_category', fn () => 'whatever');
-        $cache->get('forms_regional', fn () => 'whatever');
-        $cache->get('forms_special', fn () => 'whatever');
-        $cache->get('forms_variant', fn () => 'whatever');
+        $cache->get('forms', fn () => 'whatever');
 
         $service = new FormsCacheInvalidatorService($cache);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
-        $this->assertFalse($cache->hasItem('forms_category'));
-        $this->assertFalse($cache->hasItem('forms_regional'));
-        $this->assertFalse($cache->hasItem('forms_special'));
-        $this->assertFalse($cache->hasItem('forms_variant'));
+        $this->assertFalse($cache->hasItem('forms'));
     }
 
     public function testInvalidateWithAMissingOne(): void
@@ -50,17 +44,11 @@ final class FormsCacheInvalidatorServiceTest extends TestCase
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
 
         $cache->get('douze', fn () => 'DouZe');
-        $cache->get('forms_category', fn () => 'whatever');
-        $cache->get('forms_regional', fn () => 'whatever');
-        $cache->get('forms_variant', fn () => 'whatever');
 
         $service = new FormsCacheInvalidatorService($cache);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
-        $this->assertFalse($cache->hasItem('forms_category'));
-        $this->assertFalse($cache->hasItem('forms_regional'));
-        $this->assertFalse($cache->hasItem('forms_special'));
-        $this->assertFalse($cache->hasItem('forms_variant'));
+        $this->assertFalse($cache->hasItem('forms'));
     }
 }
