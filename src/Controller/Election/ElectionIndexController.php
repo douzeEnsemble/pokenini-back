@@ -53,7 +53,7 @@ final class ElectionIndexController extends AbstractController
 
         $detachedCount = 0;
         foreach ($electionTop as $pokemon) {
-            if ($pokemon['significance']) {
+            if ($pokemon['score']['significance']) {
                 ++$detachedCount;
             }
         }
