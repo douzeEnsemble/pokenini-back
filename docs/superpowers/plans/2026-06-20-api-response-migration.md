@@ -891,7 +891,7 @@ Si les snapshots `ElectionIndex/*.json` échouent sur le champ `metrics`, les r�
 **Interfaces:**
 - `ModifyElectionVoteApiService::vote()` : signature inchangée, seul le body JSON change
 
-- [ ] **Étape 1 — Mettre à jour `ModifyElectionVoteApiService.php`**
+- [x] **Étape 1 — Mettre à jour `ModifyElectionVoteApiService.php`**
 
 ```php
 public function vote(
@@ -914,7 +914,7 @@ public function vote(
 }
 ```
 
-- [ ] **Étape 2 — Mettre à jour `ModifyElectionVoteApiServiceTest.php`**
+- [x] **Étape 2 — Mettre à jour `ModifyElectionVoteApiServiceTest.php`**
 
 Dans `getService()`, mettre à jour la valeur attendue par le mock `->with(...)` :
 
