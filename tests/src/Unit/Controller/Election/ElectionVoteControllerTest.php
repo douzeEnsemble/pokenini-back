@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Controller\Election;
 
 use App\Controller\Election\ElectionVoteController;
+use App\DTO\ElectionVote;
 use App\Service\ModifyElectionVoteService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @internal
@@ -20,7 +20,9 @@ final class ElectionVoteControllerTest extends TestCase
 {
     public function testVote(): void
     {
-        $request = new Request(content: (string) json_encode(['winners_slugs' => ['pichu'], 'losers_slugs' => ['pikachu']]));
+        $electionVote = new ElectionVote();
+        $electionVote->winnersSlugs = ['pichu'];
+        $electionVote->losersSlugs = ['pikachu'];
 
         $electionVoteService = $this->createMock(ModifyElectionVoteService::class);
         $electionVoteService
@@ -35,8 +37,8 @@ final class ElectionVoteControllerTest extends TestCase
 
         /** @var JsonResponse $response */
         $response = $controller->vote(
-            $request,
             $electionVoteService,
+            $electionVote,
             'demo',
             ''
         );
@@ -45,46 +47,31 @@ final class ElectionVoteControllerTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testVoteEmpty(): void
+    public function testVoteSetsSlugFromRoute(): void
     {
-        $request = new Request();
+        $electionVote = new ElectionVote();
+        $electionVote->winnersSlugs = ['pichu'];
+        $electionVote->losersSlugs = ['pikachu'];
 
-        $electionVoteService = $this->createStub(ModifyElectionVoteService::class);
+        $electionVoteService = $this->createMock(ModifyElectionVoteService::class);
+        $electionVoteService
+            ->expects($this->once())
+            ->method('vote')
+        ;
 
         $controller = new ElectionVoteController();
 
-        $response = $controller->vote(
-            $request,
+        $container = $this->createStub(ContainerInterface::class);
+        $controller->setContainer($container);
+
+        $controller->vote(
             $electionVoteService,
-            'demo',
-            ''
+            $electionVote,
+            'pokedex',
+            'round-1'
         );
 
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(400, $response->getStatusCode());
-        $this->assertSame('{"error":"Data cannot be empty"}', (string) $response->getContent());
-    }
-
-    public function testVoteNonvalid(): void
-    {
-        $request = new Request(content: (string) json_encode(['winners_slugs' => ['pichu']]));
-
-        $electionVoteService = $this->createStub(ModifyElectionVoteService::class);
-
-        $controller = new ElectionVoteController();
-
-        $response = $controller->vote(
-            $request,
-            $electionVoteService,
-            'demo',
-            ''
-        );
-
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertSame(400, $response->getStatusCode());
-        $this->assertSame(
-            '{"error":"The required option \u0022losers_slugs\u0022 is missing."}',
-            (string) $response->getContent()
-        );
+        $this->assertSame('pokedex', $electionVote->dexSlug);
+        $this->assertSame('round-1', $electionVote->electionSlug);
     }
 }

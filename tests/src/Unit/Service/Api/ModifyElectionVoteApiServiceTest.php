@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
-use App\DTO\ElectionVote;
 use App\Service\Api\ModifyElectionVoteApiService;
+use App\Tests\Unit\Trait\ElectionVoteFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -20,19 +20,14 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(ModifyElectionVoteApiService::class)]
 final class ModifyElectionVoteApiServiceTest extends TestCase
 {
+    use ElectionVoteFactory;
+
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
     public function testVote(): void
     {
-        $electionVote = new ElectionVote(
-            'demo',
-            'whatever',
-            [
-                'winners_slugs' => ['pichu'],
-                'losers_slugs' => ['pikachu', 'raichu'],
-            ],
-        );
+        $electionVote = $this->makeVote('demo', 'whatever', ['pichu'], ['pikachu', 'raichu']);
 
         $this
             ->getService('5465465', 'demo', 'whatever', ['pichu'], ['pikachu', 'raichu'])
@@ -45,14 +40,7 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
 
     public function testVoteAllLosers(): void
     {
-        $electionVote = new ElectionVote(
-            'demo',
-            'whatever',
-            [
-                'winners_slugs' => [],
-                'losers_slugs' => ['pikachu', 'pichu', 'raichu'],
-            ],
-        );
+        $electionVote = $this->makeVote('demo', 'whatever', [], ['pikachu', 'pichu', 'raichu']);
 
         $this
             ->getService('5465465', 'demo', 'whatever', [], ['pikachu', 'pichu', 'raichu'])
@@ -65,14 +53,7 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
 
     public function testVoteAllWinners(): void
     {
-        $electionVote = new ElectionVote(
-            'demo',
-            'whatever',
-            [
-                'winners_slugs' => ['pikachu', 'pichu', 'raichu'],
-                'losers_slugs' => [],
-            ],
-        );
+        $electionVote = $this->makeVote('demo', 'whatever', ['pikachu', 'pichu', 'raichu'], []);
 
         $this
             ->getService('5465465', 'demo', 'whatever', ['pikachu', 'pichu', 'raichu'], [])
@@ -85,6 +66,10 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
         $this->assertEmpty($this->cachePool->getValues());
     }
 
+    /**
+     * @param string[] $winnersSlugs
+     * @param string[] $losersSlugs
+     */
     /**
      * @param string[] $winnersSlugs
      * @param string[] $losersSlugs

@@ -12,8 +12,10 @@ use App\Service\GetTrainerPokedexService;
 use App\Service\ModifyTrainerDexService;
 use App\Service\RequestedContentService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\RateLimit;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\Json;
@@ -29,6 +31,7 @@ final class TrainerUpsertController extends AbstractController
 
     #[Route('/dex/{dexSlug}', methods: ['PUT'])]
     #[IsGranted('ROLE_TRAINER')]
+    #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function upsert(
         string $dexSlug,
     ): Response {

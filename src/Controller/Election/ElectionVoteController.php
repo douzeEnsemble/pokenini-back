@@ -7,9 +7,11 @@ namespace App\Controller\Election;
 use App\DTO\ElectionVote;
 use App\Service\ModifyElectionVoteService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\HttpKernel\Attribute\RateLimit;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/election')]
@@ -23,40 +25,19 @@ final class ElectionVoteController extends AbstractController
         ],
         methods: ['POST']
     )]
+    #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function vote(
-        Request $request,
         ModifyElectionVoteService $electionVoteService,
+        #[MapRequestPayload]
+        ElectionVote $electionVote,
         string $dexSlug,
         string $electionSlug = '',
     ): Response {
-        /** @var array<string, array<int, string>> $data */
-        $data = json_decode(
-            $request->getContent(),
-            associative: true,
-            depth: 3,
-        );
-
-        if (empty($data)) {
-            return new JsonResponse(
-                ['error' => 'Data cannot be empty'],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
-
-        try {
-            $electionVote = new ElectionVote($dexSlug, $electionSlug, $data);
-        } catch (\InvalidArgumentException $e) {
-            return new JsonResponse(
-                ['error' => $e->getMessage()],
-                Response::HTTP_BAD_REQUEST
-            );
-        }
+        $electionVote->dexSlug = $dexSlug;
+        $electionVote->electionSlug = $electionSlug;
 
         $electionVoteService->vote($electionVote);
 
-        return new JsonResponse(
-            [],
-            Response::HTTP_OK
-        );
+        return new JsonResponse([], Response::HTTP_OK);
     }
 }

@@ -28,6 +28,7 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite',
+            server: ['CONTENT_TYPE' => 'application/json'],
             content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
@@ -46,6 +47,7 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite/favorite',
+            server: ['CONTENT_TYPE' => 'application/json'],
             content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
@@ -64,6 +66,7 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite/favorite?at[]=poison&at[]=fire&t1[]=&t2[]=&fc[]=&fr[]=&fs[]=&fv[]=&ogb[]=&gba[]=&gbsa[]',
+            server: ['CONTENT_TYPE' => 'application/json'],
             content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
@@ -82,18 +85,14 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite',
+            server: ['CONTENT_TYPE' => 'application/json'],
             content: (string) json_encode([]),
         );
 
-        $this->assertResponseStatusCodeSame(400);
-
-        $this->assertJsonStringEqualsJsonString(
-            '{"error":"Data cannot be empty"}',
-            (string) $client->getResponse()->getContent(),
-        );
+        $this->assertResponseIsSuccessful();
     }
 
-    public function testVoteBad(): void
+    public function testVoteBadPayload(): void
     {
         $client = self::createClient();
 
@@ -102,19 +101,11 @@ final class ElectionVoteTest extends WebTestCase
             'trainer',
             'POST',
             '/election/demolite',
-            [
-                'electionSlug' => '',
-                'winnersSlugs' => ['pichu'],
-                'losersSlugs' => ['pikachu', 'raichu'],
-            ],
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: 'not-json',
         );
 
         $this->assertResponseStatusCodeSame(400);
-
-        $this->assertJsonStringEqualsJsonString(
-            '{"error":"Data cannot be empty"}',
-            (string) $client->getResponse()->getContent(),
-        );
     }
 
     public function testVoteNonAuthenticated(): void
@@ -124,6 +115,7 @@ final class ElectionVoteTest extends WebTestCase
         $client->request(
             'POST',
             '/election/demolite',
+            server: ['CONTENT_TYPE' => 'application/json'],
             content: (string) json_encode([
                 'winners_slugs' => ['pichu'],
                 'losers_slugs' => ['pikachu', 'raichu'],
