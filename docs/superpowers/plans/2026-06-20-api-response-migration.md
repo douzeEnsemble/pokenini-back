@@ -413,7 +413,7 @@ Attendu : PASS.
 - `GetActionLogsApiService::get()` : retourne toujours `array<string, ActionLogData>` (keyed par `action_type`)
 - La signature publique ne change pas
 
-- [ ] **Étape 1 — Mettre à jour `GetActionLogsApiService.php`**
+- [x] **Étape 1 — Mettre à jour `GetActionLogsApiService.php`**
 
 La boucle doit maintenant itérer sur un tableau et extraire `action_type` :
 
@@ -476,7 +476,7 @@ public function get(): array
 }
 ```
 
-- [ ] **Étape 2 — Mettre à jour la fixture unit `action_logs.json`**
+- [x] **Étape 2 — Mettre à jour la fixture unit `action_logs.json`**
 
 Convertir l'objet en tableau. Copier le contenu actuel et transformer en tableau d'objets avec `action_type` :
 
@@ -649,7 +649,7 @@ Convertir l'objet en tableau. Copier le contenu actuel et transformer en tableau
 
 Note : `update_collections_availabilities` est présent dans l'ancien fichier moco mais pas dans la fixture unit (9 entrées dans unit, 10 dans moco). Garder le même nombre.
 
-- [ ] **Étape 3 — Mettre à jour la fixture moco `action_logs.json`**
+- [x] **Étape 3 — Mettre à jour la fixture moco `action_logs.json`**
 
 Appliquer la même conversion (objet → tableau) à `tests/resources/moco/Api/responses/action_logs.json`. Inclure toutes les entrées présentes dans ce fichier (9 entrées).
 
