@@ -17,7 +17,7 @@ class ModifyElectionVoteApiService extends AbstractApiService
             '/election/vote',
             [
                 'body' => json_encode([
-                    'trainer_external_id' => $trainerId,
+                    'trainer' => ['external_id' => $trainerId],
                     'dex_slug' => $electionVote->dexSlug,
                     'election_slug' => $electionVote->electionSlug,
                     'winners_slugs' => $electionVote->filteredWinners(),

@@ -114,7 +114,7 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
                     ],
                     'cafile' => './resources/certificates/cacert.pem',
                     'body' => json_encode([
-                        'trainer_external_id' => $trainerId,
+                        'trainer' => ['external_id' => $trainerId],
                         'dex_slug' => $dexSlug,
                         'election_slug' => $electionSlug,
                         'winners_slugs' => $winnersSlugs,
