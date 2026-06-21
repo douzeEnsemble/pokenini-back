@@ -51,7 +51,7 @@ Ces deux commandes sont cochées dans « Vérification finale » du plan mais n'
 
 ---
 
-## 4. Fixture `reports.json` non à jour (non-breaking, optionnel)
+## ~~4. Fixture `reports.json` non à jour (non-breaking, optionnel)~~ ✅ TRAITÉ
 
 Le moco `tests/resources/moco/Api/responses/reports.json` a une structure très ancienne (champs plats `nb`/`name` sans objets imbriqués) qui ne correspond pas au nouveau format de migration.md :
 
@@ -74,4 +74,4 @@ Les champs `slug` manquants dans `dex` et `catch_state` ne sont pas bloquants po
 | ~~`GET /game_bundles` fixtures~~ | ~~Oui~~ ✅ | 4 fichiers JSON — déjà au nouveau format |
 | ~~Tests non exécutés~~ | ~~Oui~~ ✅ | 441/441 tests passent |
 | ~~`make quality`~~ | ~~Oui~~ ✅ | PHPStan/Psalm/Deptrac OK, couverture 100%, MSI 100% |
-| `reports.json` moco | Non (non-breaking, pass-through) | 1 fichier moco + snapshot |
+| ~~`reports.json` moco~~ | ~~Non~~ ✅ | 3 fichiers mis à jour (moco, unit, snapshot) |
