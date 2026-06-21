@@ -24,7 +24,7 @@ Après : { "slug": "redgreenblueyellow", "generation": { "slug": "1" } }
 
 ---
 
-## 2. Tests non exécutés (cases non cochées dans le plan)
+## ~~2. Tests non exécutés (cases non cochées dans le plan)~~ ✅ TRAITÉ
 
 Les implémentations des tâches 2–5 n'ont pas eu leurs tests exécutés. À vérifier :
 
@@ -40,7 +40,7 @@ Les implémentations des tâches 2–5 n'ont pas eu leurs tests exécutés. À v
 
 ---
 
-## 3. Vérification qualité non exécutée
+## ~~3. Vérification qualité non exécutée~~ ✅ TRAITÉ
 
 ```bash
 make quality   # PHPStan, Psalm, PHPMD, CS Fixer, Deptrac
@@ -72,6 +72,6 @@ Les champs `slug` manquants dans `dex` et `catch_state` ne sont pas bloquants po
 | Point | Bloquant ? | Fichiers concernés |
 |-------|-----------|-------------------|
 | ~~`GET /game_bundles` fixtures~~ | ~~Oui~~ ✅ | 4 fichiers JSON — déjà au nouveau format |
-| Tests non exécutés | Oui (validation manquante) | PHPUnit CLI |
-| `make quality` | Oui (gate requis avant push) | — |
+| ~~Tests non exécutés~~ | ~~Oui~~ ✅ | 441/441 tests passent |
+| ~~`make quality`~~ | ~~Oui~~ ✅ | PHPStan/Psalm/Deptrac OK, couverture 100%, MSI 100% |
 | `reports.json` moco | Non (non-breaking, pass-through) | 1 fichier moco + snapshot |
