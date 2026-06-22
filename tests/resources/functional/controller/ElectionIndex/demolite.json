@@ -3607,9 +3607,12 @@
     {
       "pokemon": {
         "slug": "bulbasaur",
+        "pokemon_icon": "bulbasaur",
         "labels": {
           "name": "Bulbasaur",
-          "french_name": "Bulbizarre"
+          "simplified_name": "Bulbasaur",
+          "french_name": "Bulbizarre",
+          "simplified_french_name": "Bulbizarre"
         },
         "national_dex_number": 1
       },
@@ -3636,9 +3639,12 @@
     {
       "pokemon": {
         "slug": "ivysaur",
+        "pokemon_icon": "ivysaur",
         "labels": {
           "name": "Ivysaur",
-          "french_name": "Herbizarre"
+          "simplified_name": "Ivysaur",
+          "french_name": "Herbizarre",
+          "simplified_french_name": "Herbizarre"
         },
         "national_dex_number": 2
       },
@@ -3665,9 +3671,12 @@
     {
       "pokemon": {
         "slug": "venusaur",
+        "pokemon_icon": "venusaur",
         "labels": {
           "name": "Venusaur ♂️",
-          "french_name": "Florizarre ♂️"
+          "simplified_name": "Venusaur",
+          "french_name": "Florizarre ♂️",
+          "simplified_french_name": "Florizarre"
         },
         "national_dex_number": 3
       },
@@ -3694,9 +3703,12 @@
     {
       "pokemon": {
         "slug": "venusaur-f",
+        "pokemon_icon": "venusaur-f",
         "labels": {
           "name": "Venusaur ♀",
-          "french_name": "Florizarre ♀"
+          "simplified_name": "Venusaur",
+          "french_name": "Florizarre ♀",
+          "simplified_french_name": "Florizarre"
         },
         "national_dex_number": 3
       },
@@ -3729,9 +3741,12 @@
     {
       "pokemon": {
         "slug": "venusaur-mega",
+        "pokemon_icon": "venusaur-mega",
         "labels": {
           "name": "Mega Venusaur",
-          "french_name": "Mega Florizarre"
+          "simplified_name": "Venusaur",
+          "french_name": "Mega Florizarre",
+          "simplified_french_name": "Florizarre"
         },
         "national_dex_number": 3
       },

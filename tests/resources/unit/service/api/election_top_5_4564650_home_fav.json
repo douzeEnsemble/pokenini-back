@@ -4,7 +4,9 @@
             "slug": "rattata-f",
             "labels": {
                 "name": "Rattata ♀",
-                "french_name": "Rattata ♀️"
+                "simplified_name": "Rattata",
+                "french_name": "Rattata ♀️",
+                "simplified_french_name": "Rattata"
             },
             "national_dex_number": 19
         },
@@ -25,7 +27,9 @@
             "slug": "rattata-alola",
             "labels": {
                 "name": "Rattata-Alola",
-                "french_name": "Rattata d'Alola"
+                "simplified_name": "Rattata",
+                "french_name": "Rattata d'Alola",
+                "simplified_french_name": "Rattata"
             },
             "national_dex_number": 19
         },
@@ -46,7 +50,9 @@
             "slug": "fearow",
             "labels": {
                 "name": "Fearow",
-                "french_name": "Rapasdepic"
+                "simplified_name": "Fearow",
+                "french_name": "Rapasdepic",
+                "simplified_french_name": "Rapasdepic"
             },
             "national_dex_number": 22
         },
@@ -65,7 +71,9 @@
             "slug": "ekans",
             "labels": {
                 "name": "Ekans",
-                "french_name": "Abo"
+                "simplified_name": "Ekans",
+                "french_name": "Abo",
+                "simplified_french_name": "Abo"
             },
             "national_dex_number": 23
         },
@@ -84,7 +92,9 @@
             "slug": "arbok",
             "labels": {
                 "name": "Arbok",
-                "french_name": "Arbok"
+                "simplified_name": "Arbok",
+                "french_name": "Arbok",
+                "simplified_french_name": "Arbok"
             },
             "national_dex_number": 24
         },
