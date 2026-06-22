@@ -4,7 +4,9 @@
             "slug": "bulbasaur",
             "labels": {
                 "name": "Bulbasaur",
-                "french_name": "Bulbizarre"
+                "simplified_name": "Bulbasaur",
+                "french_name": "Bulbizarre",
+                "simplified_french_name": "Bulbizarre"
             },
             "national_dex_number": 1
         },
@@ -23,7 +25,9 @@
             "slug": "ivysaur",
             "labels": {
                 "name": "Ivysaur",
-                "french_name": "Herbizarre"
+                "simplified_name": "Ivysaur",
+                "french_name": "Herbizarre",
+                "simplified_french_name": "Herbizarre"
             },
             "national_dex_number": 2
         },
@@ -42,7 +46,9 @@
             "slug": "venusaur",
             "labels": {
                 "name": "Venusaur ♂️",
-                "french_name": "Florizarre ♂️"
+                "simplified_name": "Venusaur",
+                "french_name": "Florizarre ♂️",
+                "simplified_french_name": "Florizarre"
             },
             "national_dex_number": 3
         },
@@ -61,7 +67,9 @@
             "slug": "venusaur-f",
             "labels": {
                 "name": "Venusaur ♀",
-                "french_name": "Florizarre ♀"
+                "simplified_name": "Venusaur",
+                "french_name": "Florizarre ♀",
+                "simplified_french_name": "Florizarre"
             },
             "national_dex_number": 3
         },
@@ -82,7 +90,9 @@
             "slug": "venusaur-mega",
             "labels": {
                 "name": "Mega Venusaur",
-                "french_name": "Mega Florizarre"
+                "simplified_name": "Venusaur",
+                "french_name": "Mega Florizarre",
+                "simplified_french_name": "Florizarre"
             },
             "national_dex_number": 3
         },

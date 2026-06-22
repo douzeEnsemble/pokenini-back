@@ -653,14 +653,14 @@ Note : `update_collections_availabilities` est présent dans l'ancien fichier mo
 
 Appliquer la même conversion (objet → tableau) à `tests/resources/moco/Api/responses/action_logs.json`. Inclure toutes les entrées présentes dans ce fichier (9 entrées).
 
-- [ ] **Étape 4 — Lancer les tests unitaires `GetActionLogsApiServiceTest`**
+- [x] **Étape 4 — Lancer les tests unitaires `GetActionLogsApiServiceTest`**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Unit/Service/Api/GetActionLogsApiServiceTest.php -v
 ```
 Attendu : PASS.
 
-- [ ] **Étape 5 — Lancer les tests d'intégration `ActionLogsTest`**
+- [x] **Étape 5 — Lancer les tests d'intégration `ActionLogsTest`**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Integration/Admin/ActionLogsTest.php -v
@@ -866,14 +866,14 @@ Exemple pour `demolite_metrics.json` (actuel : `view_count_sum: 82, win_count_su
 }
 ```
 
-- [ ] **Étape 7 — Lancer les tests unitaires ElectionMetrics**
+- [x] **Étape 7 — Lancer les tests unitaires ElectionMetrics**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Unit/DTO/ElectionMetricsTest.php tests/src/Unit/Service/Api/GetElectionMetricsApiServiceTest.php -v
 ```
 Attendu : PASS.
 
-- [ ] **Étape 8 — Lancer les tests d'intégration ElectionIndex**
+- [x] **Étape 8 — Lancer les tests d'intégration ElectionIndex**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Integration/Election/ElectionIndexTest.php -v
@@ -928,7 +928,7 @@ Dans `getService()`, mettre à jour la valeur attendue par le mock `->with(...)`
 ]),
 ```
 
-- [ ] **Étape 3 — Lancer les tests unitaires**
+- [x] **Étape 3 — Lancer les tests unitaires**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Unit/Service/Api/ModifyElectionVoteApiServiceTest.php -v
@@ -941,14 +941,35 @@ Attendu : PASS.
 
 **Files:**
 - Modify: `src/Controller/Election/ElectionIndexController.php`
+- Modify: `src/Service/GetElectionTopService.php` *(enrichissement BFF ajouté en post-migration)*
+- Modify: `src/Service/Api/GetElectionTopApiService.php` *(type hint étendu)*
+- Modify: `tests/src/Unit/Service/GetElectionTopServiceTest.php`
 - Modify: `tests/resources/unit/service/api/election_top_5_4564650_home_fav.json`
 - Modify: `tests/resources/unit/service/api/election_top_10_87654_demo_pref.json`
 - Modify: `tests/resources/moco/Api/responses/election/demolite_top_5.json`
 - Modify (via snapshot regen): 5 fichiers `ElectionIndex/*.json`
 
 **Interfaces:**
-- `GetElectionTopApiService::getTop()` : toujours `string[][]` (pass-through)
+- `GetElectionTopApiService::getTop()` : retourne la structure imbriquée avec `labels` enrichis (`simplified_name`, `simplified_french_name`)
+- `GetElectionTopService::getTop()` : ajoute `pokemon.pokemon_icon` (= `pokemon.slug`) avant de retourner
 - `ElectionIndexController` accède à `$pokemon['score']['significance']` au lieu de `$pokemon['significance']`
+
+**Enrichissement BFF post-migration (découvert par pokenini-web) :**
+Le web utilisait `pokemon_icon` et `simplified_name` de l'ancien format plat. La nouvelle structure imbriquée ne les exposait plus. Fix :
+- `pokenini-api` doit retourner `labels.simplified_name` et `labels.simplified_french_name` dans `/election/top`
+- `GetElectionTopService` injecte `pokemon.pokemon_icon` (= `pokemon.slug`) côté BFF
+- Structure de sortie par item :
+```json
+{
+  "pokemon": { "slug": "venusaur-mega", "pokemon_icon": "venusaur-mega",
+    "labels": { "name": "Mega Venusaur", "simplified_name": "Venusaur",
+                "french_name": "Mega Florizarre", "simplified_french_name": "Florizarre" },
+    "national_dex_number": 3 },
+  "forms": { "special": { "slug": "mega", "name": "Mega", "french_name": "Mega" } },
+  "types": { "primary": {...}, "secondary": {...} },
+  "score": { "elo": 1040, "significance": false }
+}
+```
 
 - [x] **Étape 1 — Mettre à jour `ElectionIndexController.php`**
 
@@ -1016,7 +1037,7 @@ Exemple pour Bulbasaur :
 }
 ```
 
-- [ ] **Étape 5 — Lancer les tests unitaires GetElectionTopApiServiceTest**
+- [x] **Étape 5 — Lancer les tests unitaires GetElectionTopApiServiceTest**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit tests/src/Unit/Service/Api/GetElectionTopApiServiceTest.php -v
@@ -1031,30 +1052,30 @@ docker compose exec php php vendor/bin/phpunit tests/src/Integration/Election/El
 
 Les snapshots `ElectionIndex/*.json` échoueront car `election_top` a changé de format. Utiliser la procédure de régénération (`file_put_contents` dans `JsonResponseTrait`) pour chacun des 5 cas, puis copier les fichiers générés dans le répertoire de référence.
 
-- [ ] **Étape 7 — Lancer tous les tests**
+- [x] **Étape 7 — Lancer tous les tests**
 
 ```bash
 docker compose exec php php vendor/bin/phpunit -v
 ```
-Attendu : tous verts.
+Attendu : tous verts. ✅ 441 tests, 2009 assertions.
 
 ---
 
 ## Vérification finale
 
-- [ ] **Lancer `make quality`**
+- [ ] **Lancer `make quality`** *(à valider)*
 
 ```bash
 cd /home/renaud/projects/pokenini-back && make quality
 ```
 Attendu : 0 erreur PHPStan, 0 erreur Psalm, 0 erreur PHPMD, 0 violation Deptrac, 0 erreur CS Fixer.
 
-- [ ] **Lancer `make tests` complet**
+- [x] **Lancer `make tests` complet**
 
 ```bash
 cd /home/renaud/projects/pokenini-back && make tests
 ```
-Attendu : tous verts.
+Attendu : tous verts. ✅ 441 tests, 2009 assertions.
 
 ---
 

@@ -4,7 +4,9 @@
             "slug": "rattata-f",
             "labels": {
                 "name": "Rattata ♀",
-                "french_name": "Rattata ♀️"
+                "simplified_name": "Rattata",
+                "french_name": "Rattata ♀️",
+                "simplified_french_name": "Rattata"
             },
             "national_dex_number": 19
         },
@@ -25,7 +27,9 @@
             "slug": "rattata-alola",
             "labels": {
                 "name": "Rattata-Alola",
-                "french_name": "Rattata d'Alola"
+                "simplified_name": "Rattata",
+                "french_name": "Rattata d'Alola",
+                "simplified_french_name": "Rattata"
             },
             "national_dex_number": 19
         },
@@ -46,7 +50,9 @@
             "slug": "raticate",
             "labels": {
                 "name": "Raticate ♂️",
-                "french_name": "Rattatac ♂️"
+                "simplified_name": "Raticate",
+                "french_name": "Rattatac ♂️",
+                "simplified_french_name": "Rattatac"
             },
             "national_dex_number": 20
         },
@@ -65,7 +71,9 @@
             "slug": "raticate-f",
             "labels": {
                 "name": "Raticate ♀",
-                "french_name": "Rattatac ♀"
+                "simplified_name": "Raticate",
+                "french_name": "Rattatac ♀",
+                "simplified_french_name": "Rattatac"
             },
             "national_dex_number": 20
         },
@@ -86,7 +94,9 @@
             "slug": "raticate-alola",
             "labels": {
                 "name": "Raticate-Alola",
-                "french_name": "Rattatac d'Alola"
+                "simplified_name": "Raticate",
+                "french_name": "Rattatac d'Alola",
+                "simplified_french_name": "Rattatac"
             },
             "national_dex_number": 20
         },
@@ -107,7 +117,9 @@
             "slug": "raticate-alola-totem",
             "labels": {
                 "name": "Totem Raticate-Alola",
-                "french_name": "Totem Rattatac d'Alola"
+                "simplified_name": "Raticate",
+                "french_name": "Totem Rattatac d'Alola",
+                "simplified_french_name": "Rattatac"
             },
             "national_dex_number": 20
         },
@@ -129,7 +141,9 @@
             "slug": "spearow",
             "labels": {
                 "name": "Spearow",
-                "french_name": "Piafabec"
+                "simplified_name": "Spearow",
+                "french_name": "Piafabec",
+                "simplified_french_name": "Piafabec"
             },
             "national_dex_number": 21
         },
@@ -148,7 +162,9 @@
             "slug": "fearow",
             "labels": {
                 "name": "Fearow",
-                "french_name": "Rapasdepic"
+                "simplified_name": "Fearow",
+                "french_name": "Rapasdepic",
+                "simplified_french_name": "Rapasdepic"
             },
             "national_dex_number": 22
         },
@@ -167,7 +183,9 @@
             "slug": "ekans",
             "labels": {
                 "name": "Ekans",
-                "french_name": "Abo"
+                "simplified_name": "Ekans",
+                "french_name": "Abo",
+                "simplified_french_name": "Abo"
             },
             "national_dex_number": 23
         },
@@ -186,7 +204,9 @@
             "slug": "arbok",
             "labels": {
                 "name": "Arbok",
-                "french_name": "Arbok"
+                "simplified_name": "Arbok",
+                "french_name": "Arbok",
+                "simplified_french_name": "Arbok"
             },
             "national_dex_number": 24
         },
