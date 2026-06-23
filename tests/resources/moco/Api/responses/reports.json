@@ -2,91 +2,175 @@
   "catch_state_counts_defined_by_trainer": [
     {
       "count": 5735,
-      "trainer": "f86cbe805674d85f7806b175b70647a6a9334631"
+      "trainer": {
+        "external_id": "f86cbe805674d85f7806b175b70647a6a9334631"
+      }
     },
     {
       "count": 94,
-      "trainer": "48372ccfb7a21abc6c5e024a4fcb1eb1d86bb947"
+      "trainer": {
+        "external_id": "48372ccfb7a21abc6c5e024a4fcb1eb1d86bb947"
+      }
     },
     {
       "count": 9,
-      "trainer": "9f948cad5ce9173c3533d4cb4eac4d2589d64244"
+      "trainer": {
+        "external_id": "9f948cad5ce9173c3533d4cb4eac4d2589d64244"
+      }
     }
   ],
   "dex_usage": [
     {
       "count": 2,
-      "dex": { "slug": "homeshiny", "name": "Home Shiny", "french_name": "Home Chromatique" }
+      "dex": {
+        "slug": "homeshiny",
+        "name": "Home Shiny",
+        "french_name": "Home Chromatique"
+      }
     },
     {
       "count": 2,
-      "dex": { "slug": "scarletviolet", "name": "Scarlet, Violet", "french_name": "Écarlate, Violet" }
+      "dex": {
+        "slug": "scarletviolet",
+        "name": "Scarlet, Violet",
+        "french_name": "Écarlate, Violet"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "home", "name": "Home", "french_name": "Home" }
+      "dex": {
+        "slug": "home",
+        "name": "Home",
+        "french_name": "Home"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "homeshinyot", "name": "Home Shiny OT", "french_name": "Home Chromatique OT" }
+      "dex": {
+        "slug": "homeshinyot",
+        "name": "Home Shiny OT",
+        "french_name": "Home Chromatique OT"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "homepogo", "name": "Home Pokemon Go", "french_name": "Home Pokemon Go" }
+      "dex": {
+        "slug": "homepogo",
+        "name": "Home Pokemon Go",
+        "french_name": "Home Pokemon Go"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "redgreenblueyellow", "name": "Red, Green, Blue, Yellow", "french_name": "Rouge, Vert, Bleu, Jaune" }
+      "dex": {
+        "slug": "redgreenblueyellow",
+        "name": "Red, Green, Blue, Yellow",
+        "french_name": "Rouge, Vert, Bleu, Jaune"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "swordshield", "name": "Sword, Shield", "french_name": "Épée, Bouclier" }
+      "dex": {
+        "slug": "swordshield",
+        "name": "Sword, Shield",
+        "french_name": "Épée, Bouclier"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "newmonsscarletviolet", "name": "New mons Scarlet, Violet", "french_name": "Écarlate, Violet Nouveaux pokémons" }
+      "dex": {
+        "slug": "newmonsscarletviolet",
+        "name": "New mons Scarlet, Violet",
+        "french_name": "Écarlate, Violet Nouveaux pokémons"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "pokemongo", "name": "Pokémon Go", "french_name": "Pokémon Go" }
+      "dex": {
+        "slug": "pokemongo",
+        "name": "Pokémon Go",
+        "french_name": "Pokémon Go"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "alpha", "name": "Alpha", "french_name": "Baron" }
+      "dex": {
+        "slug": "alpha",
+        "name": "Alpha",
+        "french_name": "Baron"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "mega", "name": "Mega", "french_name": "Méga" }
+      "dex": {
+        "slug": "mega",
+        "name": "Mega",
+        "french_name": "Méga"
+      }
     },
     {
       "count": 1,
-      "dex": { "slug": "totem", "name": "Totem", "french_name": "Dominant" }
+      "dex": {
+        "slug": "totem",
+        "name": "Totem",
+        "french_name": "Dominant"
+      }
     }
   ],
   "catch_state_usage": [
     {
       "count": 36,
-      "catch_state": { "slug": "no", "name": "No", "french_name": "Non", "color": "#e57373" }
+      "catch_state": {
+        "slug": "no",
+        "name": "No",
+        "french_name": "Non",
+        "color": "#e57373"
+      }
     },
     {
       "count": 28,
-      "catch_state": { "slug": "toevolve", "name": "To evolve", "french_name": "Af. évoluer", "color": "#9575cd" }
+      "catch_state": {
+        "slug": "toevolve",
+        "name": "To evolve",
+        "french_name": "Af. évoluer",
+        "color": "#9575cd"
+      }
     },
     {
       "count": 6,
-      "catch_state": { "slug": "tobreed", "name": "To breed", "french_name": "Af. reproduire", "color": "#4fc3f7" }
+      "catch_state": {
+        "slug": "tobreed",
+        "name": "To breed",
+        "french_name": "Af. reproduire",
+        "color": "#4fc3f7"
+      }
     },
     {
       "count": 54,
-      "catch_state": { "slug": "totransfer", "name": "To transfer", "french_name": "À transférer", "color": "#ffd54f" }
+      "catch_state": {
+        "slug": "totransfer",
+        "name": "To transfer",
+        "french_name": "À transférer",
+        "color": "#ffd54f"
+      }
     },
     {
       "count": 1,
-      "catch_state": { "slug": "totrade", "name": "To trade", "french_name": "À échanger", "color": "#ff9100" }
+      "catch_state": {
+        "slug": "totrade",
+        "name": "To trade",
+        "french_name": "À échanger",
+        "color": "#ff9100"
+      }
     },
     {
       "count": 5713,
-      "catch_state": { "slug": "yes", "name": "Yes", "french_name": "Oui", "color": "#66bb6a" }
+      "catch_state": {
+        "slug": "yes",
+        "name": "Yes",
+        "french_name": "Oui",
+        "color": "#66bb6a"
+      }
     }
   ]
 }

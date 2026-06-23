@@ -28,7 +28,7 @@ final class GetActionLogsApiServiceTest extends TestCase
 
         $this->assertCount(9, $actionLogs);
 
-        $expectedLogs = [
+        $expectedActionTypes = [
             'calculate_dex_availabilities',
             'calculate_pokemon_availabilities',
             'calculate_game_bundles_availabilities',
@@ -39,9 +39,15 @@ final class GetActionLogsApiServiceTest extends TestCase
             'update_labels',
             'update_pokemons',
         ];
-        foreach ($expectedLogs as $key) {
-            $this->assertArrayHasKey($key, $actionLogs);
+
+        $actualActionTypes = array_column($actionLogs, 'action_type');
+        foreach ($expectedActionTypes as $actionType) {
+            $this->assertContains($actionType, $actualActionTypes);
         }
+
+        $this->assertArrayHasKey('action_type', $actionLogs[0]);
+        $this->assertArrayHasKey('current', $actionLogs[0]);
+        $this->assertArrayHasKey('last', $actionLogs[0]);
 
         $this->assertEmpty($this->cachePool->getValues());
     }
