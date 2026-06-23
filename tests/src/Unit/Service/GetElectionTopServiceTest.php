@@ -33,8 +33,20 @@ final class GetElectionTopServiceTest extends TestCase
                     'simplified_name' => 'Bulbasaur',
                     'french_name' => 'Bulbizarre',
                     'simplified_french_name' => 'Bulbizarre',
+                    'forms_label' => null,
+                    'forms_french_label' => null,
                 ],
                 'national_dex_number' => 1,
+                'regional_dex_number' => null,
+                'icon' => 'bulbasaur',
+                'family_order' => 0,
+                'family_lead' => ['slug' => 'bulbasaur'],
+                'original_game_bundle' => ['slug' => 'redgreenblueyellow'],
+                'order_number' => '9999-0001-000',
+                'game_bundles' => [
+                    'normal' => [['slug' => 'redgreenblueyellow']],
+                    'shiny' => [['slug' => 'redgreenblueyellow']],
+                ],
             ],
             'forms' => null,
             'types' => [
@@ -62,7 +74,7 @@ final class GetElectionTopServiceTest extends TestCase
         $result = $service->getTop('demo', 'whatever');
 
         $this->assertCount(1, $result);
-        $this->assertSame('bulbasaur', $result[0]['pokemon']['pokemon_icon']);
+        $this->assertSame('bulbasaur', $result[0]['pokemon']['icon']);
         $this->assertSame('bulbasaur', $result[0]['pokemon']['slug']);
         $this->assertSame('Bulbasaur', $result[0]['pokemon']['labels']['simplified_name']);
         $this->assertSame('Bulbizarre', $result[0]['pokemon']['labels']['simplified_french_name']);

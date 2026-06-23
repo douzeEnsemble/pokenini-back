@@ -6,9 +6,21 @@
                 "name": "Rattata ♀",
                 "simplified_name": "Rattata",
                 "french_name": "Rattata ♀️",
-                "simplified_french_name": "Rattata"
+                "simplified_french_name": "Rattata",
+                "forms_label": "♀",
+                "forms_french_label": "♀"
             },
-            "national_dex_number": 19
+            "national_dex_number": 19,
+            "regional_dex_number": null,
+            "icon": "rattata-f",
+            "family_order": 0,
+            "family_lead": { "slug": "rattata" },
+            "original_game_bundle": { "slug": "redgreenblueyellow" },
+            "order_number": "9999-0019-010",
+            "game_bundles": {
+                "normal": [{ "slug": "redgreenblueyellow" }],
+                "shiny": [{ "slug": "redgreenblueyellow" }]
+            }
         },
         "forms": {
             "variant": { "slug": "gender", "name": "Gender", "french_name": "Sexe" }
@@ -29,9 +41,21 @@
                 "name": "Rattata-Alola",
                 "simplified_name": "Rattata",
                 "french_name": "Rattata d'Alola",
-                "simplified_french_name": "Rattata"
+                "simplified_french_name": "Rattata",
+                "forms_label": "Alolan",
+                "forms_french_label": "d'Alola"
             },
-            "national_dex_number": 19
+            "national_dex_number": 19,
+            "regional_dex_number": null,
+            "icon": "rattata-alola",
+            "family_order": 0,
+            "family_lead": { "slug": "rattata" },
+            "original_game_bundle": { "slug": "sunmoon" },
+            "order_number": "9999-0019-020",
+            "game_bundles": {
+                "normal": [{ "slug": "sunmoon" }],
+                "shiny": [{ "slug": "sunmoon" }]
+            }
         },
         "forms": {
             "regional": { "slug": "alolan", "name": "Alolan", "french_name": "d'Alola" }
@@ -52,9 +76,21 @@
                 "name": "Fearow",
                 "simplified_name": "Fearow",
                 "french_name": "Rapasdepic",
-                "simplified_french_name": "Rapasdepic"
+                "simplified_french_name": "Rapasdepic",
+                "forms_label": null,
+                "forms_french_label": null
             },
-            "national_dex_number": 22
+            "national_dex_number": 22,
+            "regional_dex_number": null,
+            "icon": "fearow",
+            "family_order": 1,
+            "family_lead": { "slug": "spearow" },
+            "original_game_bundle": { "slug": "redgreenblueyellow" },
+            "order_number": "9999-0022-000",
+            "game_bundles": {
+                "normal": [{ "slug": "redgreenblueyellow" }],
+                "shiny": [{ "slug": "redgreenblueyellow" }]
+            }
         },
         "forms": null,
         "types": {
@@ -73,9 +109,21 @@
                 "name": "Ekans",
                 "simplified_name": "Ekans",
                 "french_name": "Abo",
-                "simplified_french_name": "Abo"
+                "simplified_french_name": "Abo",
+                "forms_label": null,
+                "forms_french_label": null
             },
-            "national_dex_number": 23
+            "national_dex_number": 23,
+            "regional_dex_number": null,
+            "icon": "ekans",
+            "family_order": 0,
+            "family_lead": { "slug": "ekans" },
+            "original_game_bundle": { "slug": "redgreenblueyellow" },
+            "order_number": "9999-0023-000",
+            "game_bundles": {
+                "normal": [{ "slug": "redgreenblueyellow" }],
+                "shiny": [{ "slug": "redgreenblueyellow" }]
+            }
         },
         "forms": null,
         "types": {
@@ -94,9 +142,21 @@
                 "name": "Arbok",
                 "simplified_name": "Arbok",
                 "french_name": "Arbok",
-                "simplified_french_name": "Arbok"
+                "simplified_french_name": "Arbok",
+                "forms_label": null,
+                "forms_french_label": null
             },
-            "national_dex_number": 24
+            "national_dex_number": 24,
+            "regional_dex_number": null,
+            "icon": "arbok",
+            "family_order": 1,
+            "family_lead": { "slug": "ekans" },
+            "original_game_bundle": { "slug": "redgreenblueyellow" },
+            "order_number": "9999-0024-000",
+            "game_bundles": {
+                "normal": [{ "slug": "redgreenblueyellow" }],
+                "shiny": [{ "slug": "redgreenblueyellow" }]
+            }
         },
         "forms": null,
         "types": {
