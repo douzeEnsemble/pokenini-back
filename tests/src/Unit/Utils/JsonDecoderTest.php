@@ -207,7 +207,17 @@ final class JsonDecoderTest extends TestCase
                     "lvl2": {
                         "lvl3": {
                             "lvl4": {
-                                "value": "Douze"
+                                "lvl5": {
+                                    "lvl6": {
+                                        "lvl7": {
+                                            "lvl8": {
+                                                "lvl9": {
+                                                    "value": "Douze"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

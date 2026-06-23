@@ -103,14 +103,37 @@
     {
       "pokemon": {
         "slug": "bulbasaur",
-        "pokemon_icon": "bulbasaur",
         "labels": {
           "name": "Bulbasaur",
           "simplified_name": "Bulbasaur",
           "french_name": "Bulbizarre",
-          "simplified_french_name": "Bulbizarre"
+          "simplified_french_name": "Bulbizarre",
+          "forms_label": null,
+          "forms_french_label": null
         },
-        "national_dex_number": 1
+        "national_dex_number": 1,
+        "regional_dex_number": null,
+        "icon": "bulbasaur",
+        "family_order": 0,
+        "family_lead": {
+          "slug": "bulbasaur"
+        },
+        "original_game_bundle": {
+          "slug": "redgreenblueyellow"
+        },
+        "order_number": "9999-0001-000",
+        "game_bundles": {
+          "normal": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ],
+          "shiny": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ]
+        }
       },
       "forms": null,
       "types": {
@@ -135,14 +158,37 @@
     {
       "pokemon": {
         "slug": "ivysaur",
-        "pokemon_icon": "ivysaur",
         "labels": {
           "name": "Ivysaur",
           "simplified_name": "Ivysaur",
           "french_name": "Herbizarre",
-          "simplified_french_name": "Herbizarre"
+          "simplified_french_name": "Herbizarre",
+          "forms_label": null,
+          "forms_french_label": null
         },
-        "national_dex_number": 2
+        "national_dex_number": 2,
+        "regional_dex_number": null,
+        "icon": "ivysaur",
+        "family_order": 1,
+        "family_lead": {
+          "slug": "bulbasaur"
+        },
+        "original_game_bundle": {
+          "slug": "redgreenblueyellow"
+        },
+        "order_number": "9999-0002-000",
+        "game_bundles": {
+          "normal": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ],
+          "shiny": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ]
+        }
       },
       "forms": null,
       "types": {
@@ -167,14 +213,37 @@
     {
       "pokemon": {
         "slug": "venusaur",
-        "pokemon_icon": "venusaur",
         "labels": {
           "name": "Venusaur ♂️",
           "simplified_name": "Venusaur",
           "french_name": "Florizarre ♂️",
-          "simplified_french_name": "Florizarre"
+          "simplified_french_name": "Florizarre",
+          "forms_label": null,
+          "forms_french_label": null
         },
-        "national_dex_number": 3
+        "national_dex_number": 3,
+        "regional_dex_number": null,
+        "icon": "venusaur",
+        "family_order": 2,
+        "family_lead": {
+          "slug": "bulbasaur"
+        },
+        "original_game_bundle": {
+          "slug": "redgreenblueyellow"
+        },
+        "order_number": "9999-0003-000",
+        "game_bundles": {
+          "normal": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ],
+          "shiny": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ]
+        }
       },
       "forms": null,
       "types": {
@@ -199,14 +268,37 @@
     {
       "pokemon": {
         "slug": "venusaur-f",
-        "pokemon_icon": "venusaur-f",
         "labels": {
           "name": "Venusaur ♀",
           "simplified_name": "Venusaur",
           "french_name": "Florizarre ♀",
-          "simplified_french_name": "Florizarre"
+          "simplified_french_name": "Florizarre",
+          "forms_label": "♀",
+          "forms_french_label": "♀"
         },
-        "national_dex_number": 3
+        "national_dex_number": 3,
+        "regional_dex_number": null,
+        "icon": "venusaur-f",
+        "family_order": 2,
+        "family_lead": {
+          "slug": "bulbasaur"
+        },
+        "original_game_bundle": {
+          "slug": "redgreenblueyellow"
+        },
+        "order_number": "9999-0003-010",
+        "game_bundles": {
+          "normal": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ],
+          "shiny": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ]
+        }
       },
       "forms": {
         "variant": {
@@ -237,14 +329,37 @@
     {
       "pokemon": {
         "slug": "venusaur-mega",
-        "pokemon_icon": "venusaur-mega",
         "labels": {
           "name": "Mega Venusaur",
           "simplified_name": "Venusaur",
           "french_name": "Mega Florizarre",
-          "simplified_french_name": "Florizarre"
+          "simplified_french_name": "Florizarre",
+          "forms_label": "Mega",
+          "forms_french_label": "Mega"
         },
-        "national_dex_number": 3
+        "national_dex_number": 3,
+        "regional_dex_number": null,
+        "icon": "venusaur-mega",
+        "family_order": 2,
+        "family_lead": {
+          "slug": "bulbasaur"
+        },
+        "original_game_bundle": {
+          "slug": "redgreenblueyellow"
+        },
+        "order_number": "9999-0003-020",
+        "game_bundles": {
+          "normal": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ],
+          "shiny": [
+            {
+              "slug": "redgreenblueyellow"
+            }
+          ]
+        }
       },
       "forms": {
         "special": {
