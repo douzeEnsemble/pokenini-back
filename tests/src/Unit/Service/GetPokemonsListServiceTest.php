@@ -42,14 +42,14 @@ final class GetPokemonsListServiceTest extends TestCase
                         'type' => 'pick',
                         'items' => [
                             [
-                                'poke' => '1',
-                                'numb' => 1,
-                                'exist' => null,
+                                'pokemon' => ['slug' => 'pichu', 'name' => 'Pichu', 'french_name' => 'Pichu', 'national_dex_number' => 172, 'regional_dex_number' => null, 'simplified_name' => 'Pichu', 'forms_label' => '', 'simplified_french_name' => 'Pichu', 'forms_french_label' => '', 'icon' => 'pichu', 'family_order' => 0, 'family_lead' => null, 'original_game_bundle' => ['slug' => 'goldsilvercrystal'], 'order_number' => '9999-0172-000', 'game_bundles' => [['slug' => 'goldsilvercrystal']], 'game_bundles_shiny' => [['slug' => 'goldsilvercrystal']]],
+                                'forms' => ['category' => null, 'regional' => null, 'special' => null, 'variant' => null],
+                                'types' => ['primary' => ['slug' => 'electric', 'name' => 'Electric', 'french_name' => 'Électrik', 'color' => '#F8D030'], 'secondary' => null],
                             ],
                             [
-                                'poke' => '2',
-                                'numb' => 2,
-                                'exist' => null,
+                                'pokemon' => ['slug' => 'raichu', 'name' => 'Raichu', 'french_name' => 'Raichu', 'national_dex_number' => 26, 'regional_dex_number' => null, 'simplified_name' => 'Raichu', 'forms_label' => '', 'simplified_french_name' => 'Raichu', 'forms_french_label' => '', 'icon' => 'raichu', 'family_order' => 2, 'family_lead' => ['slug' => 'pichu'], 'original_game_bundle' => ['slug' => 'redgreenblueyellow'], 'order_number' => '9999-0026-002', 'game_bundles' => [['slug' => 'redgreenblueyellow']], 'game_bundles_shiny' => [['slug' => 'redgreenblueyellow']]],
+                                'forms' => ['category' => null, 'regional' => null, 'special' => null, 'variant' => null],
+                                'types' => ['primary' => ['slug' => 'electric', 'name' => 'Electric', 'french_name' => 'Électrik', 'color' => '#F8D030'], 'secondary' => null],
                             ],
                         ],
                     ]
@@ -61,21 +61,9 @@ final class GetPokemonsListServiceTest extends TestCase
         $list = $service->get('douze', '', []);
 
         $this->assertSame('pick', $list->type);
-        $this->assertSame(
-            [
-                [
-                    'poke' => '1',
-                    'numb' => 1,
-                    'exist' => null,
-                ],
-                [
-                    'poke' => '2',
-                    'numb' => 2,
-                    'exist' => null,
-                ],
-            ],
-            $list->items
-        );
+        $this->assertCount(2, $list->items);
+        $this->assertSame('pichu', $list->items[0]['pokemon']['slug']);
+        $this->assertSame('raichu', $list->items[1]['pokemon']['slug']);
     }
 
     public function testGetWithFilters(): void
@@ -104,14 +92,14 @@ final class GetPokemonsListServiceTest extends TestCase
                         'type' => 'pick',
                         'items' => [
                             [
-                                'poke' => '1',
-                                'numb' => 1,
-                                'exist' => null,
+                                'pokemon' => ['slug' => 'pichu', 'name' => 'Pichu', 'french_name' => 'Pichu', 'national_dex_number' => 172, 'regional_dex_number' => null, 'simplified_name' => 'Pichu', 'forms_label' => '', 'simplified_french_name' => 'Pichu', 'forms_french_label' => '', 'icon' => 'pichu', 'family_order' => 0, 'family_lead' => null, 'original_game_bundle' => ['slug' => 'goldsilvercrystal'], 'order_number' => '9999-0172-000', 'game_bundles' => [['slug' => 'goldsilvercrystal']], 'game_bundles_shiny' => [['slug' => 'goldsilvercrystal']]],
+                                'forms' => ['category' => null, 'regional' => null, 'special' => null, 'variant' => null],
+                                'types' => ['primary' => ['slug' => 'electric', 'name' => 'Electric', 'french_name' => 'Électrik', 'color' => '#F8D030'], 'secondary' => null],
                             ],
                             [
-                                'poke' => '2',
-                                'numb' => 2,
-                                'exist' => null,
+                                'pokemon' => ['slug' => 'raichu', 'name' => 'Raichu', 'french_name' => 'Raichu', 'national_dex_number' => 26, 'regional_dex_number' => null, 'simplified_name' => 'Raichu', 'forms_label' => '', 'simplified_french_name' => 'Raichu', 'forms_french_label' => '', 'icon' => 'raichu', 'family_order' => 2, 'family_lead' => ['slug' => 'pichu'], 'original_game_bundle' => ['slug' => 'redgreenblueyellow'], 'order_number' => '9999-0026-002', 'game_bundles' => [['slug' => 'redgreenblueyellow']], 'game_bundles_shiny' => [['slug' => 'redgreenblueyellow']]],
+                                'forms' => ['category' => null, 'regional' => null, 'special' => null, 'variant' => null],
+                                'types' => ['primary' => ['slug' => 'electric', 'name' => 'Electric', 'french_name' => 'Électrik', 'color' => '#F8D030'], 'secondary' => null],
                             ],
                         ],
                     ]
@@ -123,20 +111,8 @@ final class GetPokemonsListServiceTest extends TestCase
         $list = $service->get('douze', '', ['at' => ['poison', 'fire'], 'cf' => ['legendary']]);
 
         $this->assertSame('pick', $list->type);
-        $this->assertSame(
-            [
-                [
-                    'poke' => '1',
-                    'numb' => 1,
-                    'exist' => null,
-                ],
-                [
-                    'poke' => '2',
-                    'numb' => 2,
-                    'exist' => null,
-                ],
-            ],
-            $list->items
-        );
+        $this->assertCount(2, $list->items);
+        $this->assertSame('pichu', $list->items[0]['pokemon']['slug']);
+        $this->assertSame('raichu', $list->items[1]['pokemon']['slug']);
     }
 }
