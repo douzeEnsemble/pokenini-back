@@ -4,18 +4,24 @@
     "original_slug": "demo",
     "name": "Demo",
     "french_name": "Démo",
-    "is_shiny": false,
-    "is_private": false,
-    "is_display_form": true,
+    "flags": {
+      "is_shiny": false,
+      "is_private": false,
+      "is_on_home": false,
+      "is_display_form": true,
+      "is_released": true,
+      "is_premium": false,
+      "is_custom": false
+    },
     "display_template": "box",
-    "region_name": "",
-    "region_french_name": "",
+    "region": {
+      "name": "",
+      "french_name": ""
+    },
+    "selection_rule": "",
     "description": "List of pokémons for demo purpose",
-    "french_description": "Tous les pok\u00e9mons de la démo",
-    "version": 412,
-    "is_released": true,
-    "is_premium": false,
-    "is_custom": false
+    "french_description": "Tous les pokémons de la démo",
+    "version": "412"
   },
   "pokemons": [],
   "report": {
@@ -24,39 +30,57 @@
     "total_uncaught": 0,
     "detail": [
       {
-        "slug": "no",
-        "name": "No",
-        "french_name": "Non",
+        "catch_state": {
+          "slug": "no",
+          "name": "No",
+          "french_name": "Non",
+          "color": "#e57373"
+        },
         "count": 0
       },
       {
-        "slug": "toevolve",
-        "name": "To evolve",
-        "french_name": "Af. \u00e9voluer",
+        "catch_state": {
+          "slug": "toevolve",
+          "name": "To evolve",
+          "french_name": "af. évoluer",
+          "color": "#9575cd"
+        },
         "count": 0
       },
       {
-        "slug": "tobreed",
-        "name": "To breed",
-        "french_name": "Af. reproduire",
+        "catch_state": {
+          "slug": "tobreed",
+          "name": "To breed",
+          "french_name": "af. reproduire",
+          "color": "#4fc3f7"
+        },
         "count": 0
       },
       {
-        "slug": "totransfer",
-        "name": "To transfer",
-        "french_name": "\u00c0 transf\u00e9rer",
+        "catch_state": {
+          "slug": "totransfer",
+          "name": "To transfer",
+          "french_name": "à transférer",
+          "color": "#ffd54f"
+        },
         "count": 0
       },
       {
-        "slug": "totrade",
-        "name": "To trade",
-        "french_name": "\u00c0 \u00e9changer",
+        "catch_state": {
+          "slug": "totrade",
+          "name": "To trade",
+          "french_name": "À échanger",
+          "color": "#ff9100"
+        },
         "count": 0
       },
       {
-        "slug": "yes",
-        "name": "Yes",
-        "french_name": "Oui",
+        "catch_state": {
+          "slug": "yes",
+          "name": "Yes",
+          "french_name": "Oui",
+          "color": "#66bb6a"
+        },
         "count": 0
       }
     ]
@@ -67,39 +91,57 @@
     "total_uncaught": 0,
     "detail": [
       {
-        "slug": "no",
-        "name": "No",
-        "french_name": "Non",
+        "catch_state": {
+          "slug": "no",
+          "name": "No",
+          "french_name": "Non",
+          "color": "#e57373"
+        },
         "count": 0
       },
       {
-        "slug": "toevolve",
-        "name": "To evolve",
-        "french_name": "Af. \u00e9voluer",
+        "catch_state": {
+          "slug": "toevolve",
+          "name": "To evolve",
+          "french_name": "af. évoluer",
+          "color": "#9575cd"
+        },
         "count": 0
       },
       {
-        "slug": "tobreed",
-        "name": "To breed",
-        "french_name": "Af. reproduire",
+        "catch_state": {
+          "slug": "tobreed",
+          "name": "To breed",
+          "french_name": "af. reproduire",
+          "color": "#4fc3f7"
+        },
         "count": 0
       },
       {
-        "slug": "totransfer",
-        "name": "To transfer",
-        "french_name": "\u00c0 transf\u00e9rer",
+        "catch_state": {
+          "slug": "totransfer",
+          "name": "To transfer",
+          "french_name": "à transférer",
+          "color": "#ffd54f"
+        },
         "count": 0
       },
       {
-        "slug": "totrade",
-        "name": "To trade",
-        "french_name": "\u00c0 \u00e9changer",
+        "catch_state": {
+          "slug": "totrade",
+          "name": "To trade",
+          "french_name": "À échanger",
+          "color": "#ff9100"
+        },
         "count": 0
       },
       {
-        "slug": "yes",
-        "name": "Yes",
-        "french_name": "Oui",
+        "catch_state": {
+          "slug": "yes",
+          "name": "Yes",
+          "french_name": "Oui",
+          "color": "#66bb6a"
+        },
         "count": 0
       }
     ]

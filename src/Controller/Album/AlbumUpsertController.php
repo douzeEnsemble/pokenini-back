@@ -50,7 +50,10 @@ final class AlbumUpsertController extends AbstractController
 
         $dex = $pokedex['dex'];
 
-        if ($dex['is_premium'] && !$this->isGranted('ROLE_COLLECTOR')) {
+        /** @var array{is_premium: bool} $flags */
+        $flags = $dex['flags'];
+
+        if ($flags['is_premium'] && !$this->isGranted('ROLE_COLLECTOR')) {
             return new JsonResponse([], 404);
         }
 

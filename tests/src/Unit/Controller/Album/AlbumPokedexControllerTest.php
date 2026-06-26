@@ -39,8 +39,10 @@ final class AlbumPokedexControllerTest extends TestCase
                 'dex' => [
                     'slug' => 'machi',
                     'name' => 'Machi Pokedex',
-                    'is_private' => false,
-                    'is_released' => true,
+                    'flags' => [
+                        'is_private' => false,
+                        'is_released' => true,
+                    ],
                 ],
             ])
         ;
