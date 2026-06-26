@@ -407,16 +407,10 @@ Retourne les données nécessaires à l'affichage d'une page d'élection. Suppor
     }
   ],
   "metrics": {
-    "view_count_sum": 82,
-    "win_count_sum": 41,
-    "view_count_max": 1,
-    "win_count_max": 1,
-    "under_max_view_count": 1,
-    "max_view_count": 5,
-    "dex_total_count": 48,
-    "round_count": 7,
-    "winner_average": 5.86,
-    "total_round_count": 8
+    "view_count": { "sum": 82, "max": 1 },
+    "win_count":  { "sum": 41, "max": 1 },
+    "completion": { "under_max_count": 1, "at_max_count": 5 },
+    "dex_total_count": 48
   },
   "detached_count": 1,
   "is_the_last_one": false,
@@ -432,8 +426,9 @@ Retourne les données nécessaires à l'affichage d'une page d'élection. Suppor
 - `election_top[].pokemon.game_bundles` : objet `{ normal: [...], shiny: [...] }` — différent de `pokemons[].pokemon.game_bundles` qui est un tableau plat
 - `election_top[].pokemon.labels.forms_label` : `null` si non applicable (vs `""` dans les pokemon du pokédex)
 - `score.significance` : `true` si l'Elo est statistiquement significatif (contribue à `detached_count`)
-- `metrics.under_max_view_count` : nombre de Pokémon n'ayant pas atteint le max de vues
-- `metrics.max_view_count` : nombre de Pokémon ayant atteint le max de vues
+- `metrics` : passthrough direct du format retourné par l'API (`/election/metrics`)
+- `metrics.completion.under_max_count` : nombre de Pokémon n'ayant pas atteint le max de vues
+- `metrics.completion.at_max_count` : nombre de Pokémon ayant atteint le max de vues
 - `is_the_last_page` : vrai si tous les Pokémon ont atteint le max de vues et remplissent une page
 - `is_the_last_one` : vrai si `is_the_last_page` et qu'il ne reste qu'un seul Pokémon
 

@@ -68,7 +68,7 @@ final class ElectionIndexController extends AbstractController
                     'pokemons' => $list->items,
                     'pokedex' => $pokedex,
                     'election_top' => $electionTop,
-                    'metrics' => $metrics,
+                    'metrics' => $metrics->raw,
                     'detached_count' => $detachedCount,
                     'is_the_last_one' => $isTheLastOne,
                     'is_the_last_page' => $isTheLastPage,

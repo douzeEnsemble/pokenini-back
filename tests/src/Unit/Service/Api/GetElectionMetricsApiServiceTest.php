@@ -39,12 +39,9 @@ final class GetElectionMetricsApiServiceTest extends TestCase
 
         $this->assertSame(
             [
-                'view_count_sum' => 6,
-                'win_count_sum' => 2,
-                'view_count_max' => 1,
-                'win_count_max' => 1,
-                'under_max_count' => 1,
-                'at_max_count' => 5,
+                'view_count' => ['sum' => 6, 'max' => 1],
+                'win_count' => ['sum' => 2, 'max' => 1],
+                'completion' => ['under_max_count' => 1, 'at_max_count' => 5],
                 'dex_total_count' => 48,
             ],
             $items
@@ -70,12 +67,9 @@ final class GetElectionMetricsApiServiceTest extends TestCase
 
         $this->assertSame(
             [
-                'view_count_sum' => 5,
-                'win_count_sum' => 10,
-                'view_count_max' => 1,
-                'win_count_max' => 1,
-                'under_max_count' => 1,
-                'at_max_count' => 5,
+                'view_count' => ['sum' => 5, 'max' => 1],
+                'win_count' => ['sum' => 10, 'max' => 1],
+                'completion' => ['under_max_count' => 1, 'at_max_count' => 5],
                 'dex_total_count' => 48,
             ],
             $items
@@ -101,12 +95,9 @@ final class GetElectionMetricsApiServiceTest extends TestCase
 
         $this->assertSame(
             [
-                'view_count_sum' => 6,
-                'win_count_sum' => 2,
-                'view_count_max' => 1,
-                'win_count_max' => 1,
-                'under_max_count' => 1,
-                'at_max_count' => 5,
+                'view_count' => ['sum' => 6, 'max' => 1],
+                'win_count' => ['sum' => 2, 'max' => 1],
+                'completion' => ['under_max_count' => 1, 'at_max_count' => 5],
                 'dex_total_count' => 48,
             ],
             $items
@@ -132,12 +123,9 @@ final class GetElectionMetricsApiServiceTest extends TestCase
 
         $this->assertSame(
             [
-                'view_count_sum' => 5,
-                'win_count_sum' => 10,
-                'view_count_max' => 1,
-                'win_count_max' => 1,
-                'under_max_count' => 1,
-                'at_max_count' => 5,
+                'view_count' => ['sum' => 5, 'max' => 1],
+                'win_count' => ['sum' => 10, 'max' => 1],
+                'completion' => ['under_max_count' => 1, 'at_max_count' => 5],
                 'dex_total_count' => 48,
             ],
             $items

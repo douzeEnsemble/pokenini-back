@@ -110,6 +110,9 @@ Référence : `src/Cache/KeyMaker.php`
 ### Validator (`src/Validator/`)
 Contrainte Symfony `CatchStates` + `CatchStatesValidator` — valide les états de capture transmis lors d'une mise à jour d'album.
 
+### Helper (`src/Helper/`)
+Helpers statiques purs. Actuellement vide — le répertoire est conservé pour usage futur.
+
 ### Utils (`src/Utils/`)
 `JsonDecoder::decode()` : wrapper `json_decode` avec `JSON_THROW_ON_ERROR`, profondeur 5.
 
