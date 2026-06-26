@@ -13,7 +13,12 @@ class GetPokedexApiService extends AbstractApiService
     /**
      * @param string[]|string[][] $filters
      *
-     * @return string[][]
+     * @return array{
+     *   dex: null|array<string, mixed>,
+     *   pokemons: array<int, array<string, mixed>>,
+     *   report?: array<string, mixed>,
+     *   filtered_report?: array<string, mixed>,
+     * }
      */
     public function get(
         string $dexSlug,
@@ -39,7 +44,7 @@ class GetPokedexApiService extends AbstractApiService
             );
         });
 
-        /** @var string[][] */
+        /** @var array{dex: null|array<string, mixed>, pokemons: array<int, array<string, mixed>>, report?: array<string, mixed>, filtered_report?: array<string, mixed>} */
         return JsonDecoder::decode($json);
     }
 }

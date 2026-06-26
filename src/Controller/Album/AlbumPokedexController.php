@@ -56,11 +56,14 @@ final class AlbumPokedexController extends AbstractController
     }
 
     /**
-     * @param string[]|string[][] $dex
+     * @param array<string, mixed> $dex
      */
     private function accessDexIsGranted(array $dex): bool
     {
-        if ($dex['is_private']
+        /** @var array{is_private: bool, is_released: bool} $flags */
+        $flags = $dex['flags'];
+
+        if ($flags['is_private']
             && $this->trainerIdsService->getTrainerId() !== $this->trainerIdsService->getLoggedTrainerId()
         ) {
             return false;
@@ -69,7 +72,7 @@ final class AlbumPokedexController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        if (!$dex['is_released'] && !$user->isAnAdmin()) {
+        if (!$flags['is_released'] && !$user->isAnAdmin()) {
             return false;
         }
 

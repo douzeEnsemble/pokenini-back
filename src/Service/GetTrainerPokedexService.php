@@ -20,7 +20,12 @@ class GetTrainerPokedexService
     /**
      * @param string[]|string[][] $filters
      *
-     * @return string[][]
+     * @return array{
+     *   dex: array<string, mixed>,
+     *   pokemons: array<int, array<string, mixed>>,
+     *   report?: array<string, mixed>,
+     *   filtered_report?: array<string, mixed>,
+     * }
      */
     public function getPokedexData(string $dexSlug, array $filters): array
     {
@@ -32,7 +37,12 @@ class GetTrainerPokedexService
     /**
      * @param string[]|string[][] $filters
      *
-     * @return string[][]
+     * @return array{
+     *   dex: array<string, mixed>,
+     *   pokemons: array<int, array<string, mixed>>,
+     *   report?: array<string, mixed>,
+     *   filtered_report?: array<string, mixed>,
+     * }
      */
     public function getPokedexDataByTrainerId(string $dexSlug, array $filters, string $trainerId): array
     {

@@ -4,83 +4,112 @@
     "original_slug": "lite",
     "name": "Demo light",
     "french_name": "Démo, extrait",
-    "is_shiny": false,
-    "is_private": false,
-    "is_display_form": true,
+    "flags": {
+      "is_shiny": false,
+      "is_private": false,
+      "is_on_home": false,
+      "is_display_form": true,
+      "is_released": true,
+      "is_premium": false,
+      "is_custom": false
+    },
     "display_template": "box",
-    "region_name":null,
-    "region_french_name":null,
+    "region": null,
+    "selection_rule": "",
     "description": "",
     "french_description": "",
-    "version": 0,
-    "is_released": true,
-    "is_premium": false,
-    "is_custom": false
+    "version": "0"
   },
   "pokemons": [
     {
-      "pokemon_slug": "charmander",
-      "pokemon_name": "Charmander",
-      "pokemon_national_dex_number": 4,
-      "pokemon_simplified_name": "Charmander",
-      "pokemon_forms_label": "",
-      "pokemon_french_name": "Salam\u00e8che",
-      "pokemon_simplified_french_name": "Salam\u00e8che",
-      "pokemon_forms_french_label": "",
-      "pokemon_icon": "charmander",
-      "pokemon_family_order": 0,
-      "family_lead_slug": null,
-      "category_form_slug": "starter",
-      "category_form_name": "Starter",
-      "regional_form_slug": null,
-      "regional_form_name": null,
-      "special_form_slug": null,
-      "special_form_name": null,
-      "variant_form_slug": null,
-      "variant_form_name": null,
-      "catch_state_slug": "yes",
-      "catch_state_name": "Yes",
-      "catch_state_french_name": "Oui",
-      "pokemon_regional_dex_number": null,
-      "primary_type_slug": "fire",
-      "primary_type_name": "Fire",
-      "primary_type_french_name": "Feu",
-      "secondary_type_slug": null,
-      "secondary_type_name": null,
-      "secondary_type_french_name": null,
-      "pokemon_order_number": "9999-0004-000"
+      "pokemon": {
+        "slug": "charmander",
+        "name": "Charmander",
+        "french_name": "Salamèche",
+        "national_dex_number": 4,
+        "regional_dex_number": null,
+        "simplified_name": "Charmander",
+        "forms_label": "",
+        "simplified_french_name": "Salamèche",
+        "forms_french_label": "",
+        "icon": "charmander",
+        "family_order": 0,
+        "family_lead": {
+          "slug": "charmander"
+        },
+        "original_game_bundle": null,
+        "order_number": "9999-0004-000",
+        "game_bundles": [],
+        "game_bundles_shiny": []
+      },
+      "catch_state": {
+        "slug": "yes",
+        "name": "Yes",
+        "french_name": "Oui",
+        "color": "#66bb6a"
+      },
+      "forms": {
+        "category": {
+          "slug": "starter",
+          "name": "Starter",
+          "french_name": "de Départ"
+        },
+        "regional": null,
+        "special": null,
+        "variant": null
+      },
+      "types": {
+        "primary": {
+          "slug": "fire",
+          "name": "Fire",
+          "french_name": "Feu",
+          "color": "#F08030"
+        },
+        "secondary": null
+      }
     },
     {
-      "pokemon_slug": "charmeleon",
-      "pokemon_name": "Charmeleon",
-      "pokemon_national_dex_number": 5,
-      "pokemon_simplified_name": "Charmeleon",
-      "pokemon_forms_label": "",
-      "pokemon_french_name": "Reptincel",
-      "pokemon_simplified_french_name": "Reptincel",
-      "pokemon_forms_french_label": "",
-      "pokemon_icon": "charmeleon",
-      "pokemon_family_order": 1,
-      "family_lead_slug": "charmander",
-      "category_form_slug": null,
-      "category_form_name": null,
-      "regional_form_slug": null,
-      "regional_form_name": null,
-      "special_form_slug": null,
-      "special_form_name": null,
-      "variant_form_slug": null,
-      "variant_form_name": null,
-      "catch_state_slug": "yes",
-      "catch_state_name": "Yes",
-      "catch_state_french_name": "Oui",
-      "pokemon_regional_dex_number": null,
-      "primary_type_slug": "fire",
-      "primary_type_name": "Fire",
-      "primary_type_french_name": "Feu",
-      "secondary_type_slug": null,
-      "secondary_type_name": null,
-      "secondary_type_french_name": null,
-      "pokemon_order_number": "9999-0005-001"
+      "pokemon": {
+        "slug": "charmeleon",
+        "name": "Charmeleon",
+        "french_name": "Reptincel",
+        "national_dex_number": 5,
+        "regional_dex_number": null,
+        "simplified_name": "Charmeleon",
+        "forms_label": "",
+        "simplified_french_name": "Reptincel",
+        "forms_french_label": "",
+        "icon": "charmeleon",
+        "family_order": 1,
+        "family_lead": {
+          "slug": "charmander"
+        },
+        "original_game_bundle": null,
+        "order_number": "9999-0005-001",
+        "game_bundles": [],
+        "game_bundles_shiny": []
+      },
+      "catch_state": {
+        "slug": "yes",
+        "name": "Yes",
+        "french_name": "Oui",
+        "color": "#66bb6a"
+      },
+      "forms": {
+        "category": null,
+        "regional": null,
+        "special": null,
+        "variant": null
+      },
+      "types": {
+        "primary": {
+          "slug": "fire",
+          "name": "Fire",
+          "french_name": "Feu",
+          "color": "#F08030"
+        },
+        "secondary": null
+      }
     }
   ],
   "report": {
@@ -89,39 +118,57 @@
     "total_uncaught": 0,
     "detail": [
       {
-        "slug": "no",
-        "name": "No",
-        "french_name": "Non",
+        "catch_state": {
+          "slug": "no",
+          "name": "No",
+          "french_name": "Non",
+          "color": "#e57373"
+        },
         "count": 0
       },
       {
-        "slug": "toevolve",
-        "name": "To evolve",
-        "french_name": "Af. \u00e9voluer",
+        "catch_state": {
+          "slug": "toevolve",
+          "name": "To evolve",
+          "french_name": "af. évoluer",
+          "color": "#9575cd"
+        },
         "count": 0
       },
       {
-        "slug": "tobreed",
-        "name": "To breed",
-        "french_name": "Af. reproduire",
+        "catch_state": {
+          "slug": "tobreed",
+          "name": "To breed",
+          "french_name": "af. reproduire",
+          "color": "#4fc3f7"
+        },
         "count": 0
       },
       {
-        "slug": "totransfer",
-        "name": "To transfer",
-        "french_name": "\u00c0 transf\u00e9rer",
+        "catch_state": {
+          "slug": "totransfer",
+          "name": "To transfer",
+          "french_name": "à transférer",
+          "color": "#ffd54f"
+        },
         "count": 0
       },
       {
-        "slug": "totrade",
-        "name": "To trade",
-        "french_name": "\u00c0 \u00e9changer",
+        "catch_state": {
+          "slug": "totrade",
+          "name": "To trade",
+          "french_name": "À échanger",
+          "color": "#ff9100"
+        },
         "count": 0
       },
       {
-        "slug": "yes",
-        "name": "Yes",
-        "french_name": "Oui",
+        "catch_state": {
+          "slug": "yes",
+          "name": "Yes",
+          "french_name": "Oui",
+          "color": "#66bb6a"
+        },
         "count": 2
       }
     ]
@@ -132,39 +179,57 @@
     "total_uncaught": 0,
     "detail": [
       {
-        "slug": "no",
-        "name": "No",
-        "french_name": "Non",
+        "catch_state": {
+          "slug": "no",
+          "name": "No",
+          "french_name": "Non",
+          "color": "#e57373"
+        },
         "count": 0
       },
       {
-        "slug": "toevolve",
-        "name": "To evolve",
-        "french_name": "Af. \u00e9voluer",
+        "catch_state": {
+          "slug": "toevolve",
+          "name": "To evolve",
+          "french_name": "af. évoluer",
+          "color": "#9575cd"
+        },
         "count": 0
       },
       {
-        "slug": "tobreed",
-        "name": "To breed",
-        "french_name": "Af. reproduire",
+        "catch_state": {
+          "slug": "tobreed",
+          "name": "To breed",
+          "french_name": "af. reproduire",
+          "color": "#4fc3f7"
+        },
         "count": 0
       },
       {
-        "slug": "totransfer",
-        "name": "To transfer",
-        "french_name": "\u00c0 transf\u00e9rer",
+        "catch_state": {
+          "slug": "totransfer",
+          "name": "To transfer",
+          "french_name": "à transférer",
+          "color": "#ffd54f"
+        },
         "count": 0
       },
       {
-        "slug": "totrade",
-        "name": "To trade",
-        "french_name": "\u00c0 \u00e9changer",
+        "catch_state": {
+          "slug": "totrade",
+          "name": "To trade",
+          "french_name": "À échanger",
+          "color": "#ff9100"
+        },
         "count": 0
       },
       {
-        "slug": "yes",
-        "name": "Yes",
-        "french_name": "Oui",
+        "catch_state": {
+          "slug": "yes",
+          "name": "Yes",
+          "french_name": "Oui",
+          "color": "#66bb6a"
+        },
         "count": 2
       }
     ]

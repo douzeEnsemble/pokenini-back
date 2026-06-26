@@ -34,7 +34,9 @@ final class TrainerUpsertControllerTest extends TestCase
             ->willReturn([
                 'dex' => [
                     'slug' => 'douze',
-                    'is_premium' => true,
+                    'flags' => [
+                        'is_premium' => true,
+                    ],
                 ],
                 'pokemons' => [],
             ])
@@ -287,7 +289,9 @@ final class TrainerUpsertControllerTest extends TestCase
             ->willReturn([
                 'dex' => [
                     'slug' => 'douze',
-                    'is_premium' => false,
+                    'flags' => [
+                        'is_premium' => false,
+                    ],
                 ],
                 'pokemons' => [],
             ])
@@ -344,7 +348,9 @@ final class TrainerUpsertControllerTest extends TestCase
             ->willReturn([
                 'dex' => [
                     'slug' => 'douze',
-                    'is_premium' => true,
+                    'flags' => [
+                        'is_premium' => true,
+                    ],
                 ],
                 'pokemons' => [],
             ])
@@ -407,7 +413,9 @@ final class TrainerUpsertControllerTest extends TestCase
             ->willReturn([
                 'dex' => [
                     'slug' => 'douze',
-                    'is_premium' => true,
+                    'flags' => [
+                        'is_premium' => true,
+                    ],
                 ],
                 'pokemons' => [],
             ])

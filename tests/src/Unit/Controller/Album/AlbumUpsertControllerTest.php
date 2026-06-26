@@ -42,7 +42,9 @@ final class AlbumUpsertControllerTest extends TestCase
             ->willReturn([
                 'dex' => [
                     'slug' => 'douze',
-                    'is_premium' => true,
+                    'flags' => [
+                        'is_premium' => true,
+                    ],
                 ],
                 'pokemons' => [],
             ])
