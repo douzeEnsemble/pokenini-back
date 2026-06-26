@@ -349,16 +349,10 @@
     }
   ],
   "metrics": {
-    "view_count_sum": 82,
-    "win_count_sum": 41,
-    "view_count_max": 2,
-    "win_count_max": 2,
-    "under_max_view_count": 0,
-    "max_view_count": 1,
-    "dex_total_count": 48,
-    "round_count": 7,
-    "winner_average": 5.86,
-    "total_round_count": 8
+    "view_count": { "sum": 82, "max": 2 },
+    "win_count": { "sum": 41, "max": 2 },
+    "completion": { "under_max_count": 0, "at_max_count": 1 },
+    "dex_total_count": 48
   },
   "detached_count": 1,
   "is_the_last_one": true,

@@ -25,6 +25,13 @@ final class GetElectionMetricsServiceTest extends TestCase
             ->willReturn('8800088')
         ;
 
+        $rawData = [
+            'view_count' => ['sum' => 12, 'max' => 4],
+            'win_count' => ['sum' => 5, 'max' => 14],
+            'completion' => ['under_max_count' => 24, 'at_max_count' => 5],
+            'dex_total_count' => 48,
+        ];
+
         $apiService = $this->createMock(GetElectionMetricsApiService::class);
         $apiService
             ->expects($this->once())
@@ -34,29 +41,15 @@ final class GetElectionMetricsServiceTest extends TestCase
                 'demo',
                 'whatever',
             )
-            ->willReturn([
-                'view_count_sum' => 12,
-                'win_count_sum' => 5,
-                'view_count_max' => 4,
-                'win_count_max' => 14,
-                'under_max_count' => 24,
-                'at_max_count' => 5,
-                'dex_total_count' => 48,
-            ])
+            ->willReturn($rawData)
         ;
 
-        $service = new GetElectionMetricsService($userTokenService, $apiService, 12);
+        $service = new GetElectionMetricsService($userTokenService, $apiService);
 
         $metrics = $service->getMetrics('demo', 'whatever');
 
-        $this->assertSame(12, $metrics->viewCountSum);
-        $this->assertSame(5, $metrics->winCountSum);
-        $this->assertSame(4, $metrics->viewCountMax);
-        $this->assertSame(14, $metrics->winCountMax);
         $this->assertSame(24, $metrics->underMaxViewCount);
         $this->assertSame(5, $metrics->maxViewCount);
-        $this->assertSame(1, $metrics->roundCount);
-        $this->assertSame(5.0, $metrics->winnerAverage);
-        $this->assertSame(8, $metrics->totalRoundCount);
+        $this->assertSame($rawData, $metrics->raw);
     }
 }

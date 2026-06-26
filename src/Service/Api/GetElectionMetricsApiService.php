@@ -9,7 +9,12 @@ use App\Utils\JsonDecoder;
 class GetElectionMetricsApiService extends AbstractApiService
 {
     /**
-     * @return float[]|int[]
+     * @return array{
+     *   view_count: array{sum: int, max: int},
+     *   win_count: array{sum: int, max: int},
+     *   completion: array{under_max_count: int, at_max_count: int},
+     *   dex_total_count: int,
+     * }
      */
     public function getMetrics(
         string $trainerId,
@@ -28,24 +33,7 @@ class GetElectionMetricsApiService extends AbstractApiService
             ],
         );
 
-        /** @var array{
-         *  view_count: array{sum: int, max: int},
-         *  win_count: array{sum: int, max: int},
-         *  completion: array{under_max_count: int, at_max_count: int},
-         *  dex_total_count: int,
-         * } $raw
-         */
-        $raw = JsonDecoder::decode($json);
-
-        /** @var float[]|int[] */
-        return [
-            'view_count_sum' => $raw['view_count']['sum'],
-            'win_count_sum' => $raw['win_count']['sum'],
-            'view_count_max' => $raw['view_count']['max'],
-            'win_count_max' => $raw['win_count']['max'],
-            'under_max_count' => $raw['completion']['under_max_count'],
-            'at_max_count' => $raw['completion']['at_max_count'],
-            'dex_total_count' => $raw['dex_total_count'],
-        ];
+        /** @var array{view_count: array{sum: int, max: int}, win_count: array{sum: int, max: int}, completion: array{under_max_count: int, at_max_count: int}, dex_total_count: int} */
+        return JsonDecoder::decode($json);
     }
 }
