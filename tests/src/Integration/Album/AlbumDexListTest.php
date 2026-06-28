@@ -69,7 +69,22 @@ final class AlbumDexListTest extends WebTestCase
         $this->assertResponseContent($client, 'AlbumDexList/admin.json');
     }
 
-    public function testDexPublic(): void
+    public function testDexPublicWithTrainerId(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/album/dex',
+            ['trainer_id' => '963f1e5284a86d4a60fb5eb81cb75b22fbe683ec'],
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertResponseContent($client, 'AlbumDexList/trainer.json');
+    }
+
+    public function testDexPublicWithoutTrainerId(): void
     {
         $client = self::createClient();
 
