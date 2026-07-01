@@ -102,7 +102,13 @@ final class JsonDecoderTest extends TestCase
                             'lvl3' => [
                                 'lvl4' => [
                                     'lvl5' => [
-                                        'value' => 'Douze',
+                                        'lvl6' => [
+                                            'lvl7' => [
+                                                'lvl8' => [
+                                                    'value' => 'Douze',
+                                                ],
+                                            ],
+                                        ],
                                     ],
                                 ],
                             ],
@@ -197,7 +203,13 @@ final class JsonDecoderTest extends TestCase
                         "lvl3": {
                             "lvl4": {
                                 "lvl5": {
-                                    "value": "Douze"
+                                    "lvl6": {
+                                        "lvl7": {
+                                            "lvl8": {
+                                                "value": "Douze"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -217,7 +229,13 @@ final class JsonDecoderTest extends TestCase
                             "lvl4": {
                                 "lvl5": {
                                     "lvl6": {
-                                        "value": "Douze"
+                                        "lvl7": {
+                                            "lvl8": {
+                                                "lvl9": {
+                                                    "value": "Douze"
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

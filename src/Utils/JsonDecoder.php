@@ -11,7 +11,7 @@ final class JsonDecoder
         return json_decode(
             $json,
             true,
-            depth: 7,
+            depth: 10,
             flags: JSON_THROW_ON_ERROR,
         );
     }
