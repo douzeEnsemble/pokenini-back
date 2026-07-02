@@ -15,7 +15,7 @@
         "is_custom": false
       },
       "display_template": "list-7",
-      "region": null,
+      "region": {"name": "", "french_name": ""},
       "selection_rule": "",
       "description": "The list of all known pokemon in the shiny version by Pokénini",
       "french_description": "La liste des tous les pokémons connu dans le version chromatique par Pokénini",
