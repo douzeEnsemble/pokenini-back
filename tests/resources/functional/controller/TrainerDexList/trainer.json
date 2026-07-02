@@ -1,18 +1,7 @@
 [
   {
     "dex": {
-      "slug": "redgreenblueyellow",
-      "region": {
-        "slug": "kanto",
-        "parent": {
-          "slug": "world",
-          "metadata": {
-            "info": {
-              "code": 1
-            }
-          }
-        }
-      }
+      "slug": "redgreenblueyellow"
     },
     "name": "Red, Green, Blue, Yellow",
     "french_name": "Rouge, Vert, Bleu, Jaune",

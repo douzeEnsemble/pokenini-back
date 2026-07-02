@@ -15,7 +15,7 @@
         "is_custom": false
       },
       "display_template": "list-3",
-      "region": null,
+      "region": {"name": "", "french_name": ""},
       "selection_rule": "",
       "description": "List of pokémons for demo purpose, display as list by 3",
       "french_description": "Tous les pokémons de la démo affiché en liste, 3 éléments par colonnes",
