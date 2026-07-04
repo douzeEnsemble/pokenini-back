@@ -13,6 +13,7 @@ services:
             string $apiPassword: '%env(API_PASSWORD)%'
             int $topCount: '%env(ELECTION_TOP_COUNT)%'
             int $electionCandidateCount: '%env(ELECTION_CANDIDATE_COUNT)%'
+            string $env: '%kernel.environment%'
 
     App\:
         resource: '../src/'
