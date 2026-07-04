@@ -80,6 +80,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id',
             false,
             $logger,
+            'prod',
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
@@ -116,6 +117,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id',
             false,
             $logger,
+            'prod',
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -152,6 +154,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id',
             false,
             $logger,
+            'prod',
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -197,6 +200,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id',
             false,
             $logger,
+            'prod',
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -242,6 +246,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id',
             false,
             $logger,
+            'prod',
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -372,6 +377,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id,    some-trainer-id    ',
             false,
             $logger,
+            'prod',
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -380,6 +386,106 @@ final class AccessTokenHandlerTest extends TestCase
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
 
         $userBadge->getUser();
+    }
+
+    public function testGetUserBadgeFromWithFakeProviderInDevAsAdmin(): void
+    {
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry->expects($this->never())->method('getClient');
+
+        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'FaKe']);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('info')->with('Authentication succeeded for provider FaKe');
+
+        $accessTokenHandler = new AccessTokenHandler(
+            $clientRegistry,
+            $requestStack,
+            'admin,some-admin-id',
+            'collector,admin,some-admin-id',
+            'trainer,collector,admin,some-admin-id',
+            false,
+            $logger,
+            'dev',
+        );
+
+        $userBadge = $accessTokenHandler->getUserBadgeFrom('admin');
+
+        $this->assertSame('admin', $userBadge->getUserIdentifier());
+        $user = $userBadge->getUser();
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertTrue($user->isAnAdmin());
+        $this->assertTrue($user->isACollector());
+        $this->assertTrue($user->isATrainer());
+    }
+
+    public function testGetUserBadgeFromWithFakeProviderInDevAsTrainer(): void
+    {
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry->expects($this->never())->method('getClient');
+
+        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'FaKe']);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('info')->with('Authentication succeeded for provider FaKe');
+
+        $accessTokenHandler = new AccessTokenHandler(
+            $clientRegistry,
+            $requestStack,
+            'admin',
+            'collector,admin',
+            'trainer,collector,admin',
+            false,
+            $logger,
+            'dev',
+        );
+
+        $userBadge = $accessTokenHandler->getUserBadgeFrom('trainer');
+
+        $user = $userBadge->getUser();
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertFalse($user->isAnAdmin());
+        $this->assertFalse($user->isACollector());
+        $this->assertTrue($user->isATrainer());
+    }
+
+    public function testGetUserBadgeFromWithLowercaseFakeProviderInDev(): void
+    {
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry->expects($this->never())->method('getClient');
+
+        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'fake']);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('info')->with('Authentication succeeded for provider fake');
+
+        $accessTokenHandler = new AccessTokenHandler(
+            $clientRegistry,
+            $requestStack,
+            'admin',
+            'collector,admin',
+            'trainer,collector,admin',
+            false,
+            $logger,
+            'dev',
+        );
+
+        $userBadge = $accessTokenHandler->getUserBadgeFrom('admin');
+
+        $user = $userBadge->getUser();
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertTrue($user->isAnAdmin());
+        $this->assertTrue($user->isACollector());
+        $this->assertTrue($user->isATrainer());
     }
 
     private function getUserFromUserBadge(string $userId, bool $isInvitationRequired): User
@@ -439,6 +545,7 @@ final class AccessTokenHandlerTest extends TestCase
             'some-id,    some-trainer-id    ',
             $isInvitationRequired,
             $logger,
+            'prod',
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');

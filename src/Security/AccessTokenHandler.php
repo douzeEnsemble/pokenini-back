@@ -23,6 +23,7 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         private readonly string $listTrainer,
         private readonly bool $isInvitationRequired,
         private readonly LoggerInterface $logger,
+        private readonly string $env,
     ) {}
 
     #[\Override]
@@ -48,6 +49,19 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
             $this->logger->info('Authentication failed: empty X-Provider header');
 
             throw new BadCredentialsException('The "X-Provider" header is empty.');
+        }
+
+        if ('fake' === strtolower($provider) && \in_array($this->env, ['dev', 'test'], true)) {
+            if ('' === $accessToken) {
+                throw new BadCredentialsException('Empty fake token.');
+            }
+
+            return new UserBadge($accessToken, function () use ($accessToken, $provider) {
+                $user = $this->loadUserFromLists($accessToken, $provider);
+                $this->logger->info("Authentication succeeded for provider {$provider}");
+
+                return $user;
+            });
         }
 
         $client = $this->clientRegistry->getClient($provider);
