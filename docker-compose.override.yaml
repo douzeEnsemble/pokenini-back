@@ -1,0 +1,15 @@
+networks:
+  pokenini-local:
+    external: true
+
+services:
+  php:
+    networks:
+      - default
+      - pokenini-local
+  web:
+    networks:
+      default: {}
+      pokenini-local:
+        aliases:
+          - back.pokenini.local
