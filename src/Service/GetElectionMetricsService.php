@@ -13,6 +13,7 @@ class GetElectionMetricsService
     public function __construct(
         private readonly UserTokenService $userTokenService,
         private readonly GetElectionMetricsApiService $apiService,
+        private readonly int $electionCandidateCount,
     ) {}
 
     public function getMetrics(string $dexSlug, string $electionSlug): ElectionMetrics
@@ -21,6 +22,6 @@ class GetElectionMetricsService
 
         $data = $this->apiService->getMetrics($trainerId, $dexSlug, $electionSlug);
 
-        return new ElectionMetrics($data);
+        return new ElectionMetrics($data, $this->electionCandidateCount);
     }
 }
