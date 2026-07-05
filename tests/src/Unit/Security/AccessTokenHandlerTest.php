@@ -455,6 +455,87 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
+    public function testGetUserBadgeFromWithNonFakeProviderInDevUsesOAuth2Client(): void
+    {
+        $authUser = $this->createMock(ResourceOwnerInterface::class);
+        $authUser
+            ->expects($this->once())
+            ->method('getId')
+            ->willReturn('some-id')
+        ;
+
+        $client = $this->createMock(OAuth2ClientInterface::class);
+        $client
+            ->expects($this->once())
+            ->method('fetchUserFromToken')
+            ->with('some-access-token')
+            ->willReturn($authUser)
+        ;
+
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry
+            ->expects($this->once())
+            ->method('getClient')
+            ->willReturn($client)
+        ;
+
+        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'some-provider']);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('info')->with('Authentication succeeded for provider some-provider');
+
+        $accessTokenHandler = new AccessTokenHandler(
+            $clientRegistry,
+            $requestStack,
+            'some-id',
+            'some-id',
+            'some-id',
+            false,
+            $logger,
+            'dev',
+        );
+
+        $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
+
+        $this->assertSame('some-access-token', $userBadge->getUserIdentifier());
+        $user = $userBadge->getUser();
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertSame('some-id', $user->getId());
+    }
+
+    public function testGetUserBadgeFromWithFakeProviderInDevAndEmptyToken(): void
+    {
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry->expects($this->never())->method('getClient');
+
+        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'fake']);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->never())->method('info');
+
+        $accessTokenHandler = new AccessTokenHandler(
+            $clientRegistry,
+            $requestStack,
+            'admin',
+            'collector,admin',
+            'trainer,collector,admin',
+            false,
+            $logger,
+            'dev',
+        );
+
+        $this->expectException(BadCredentialsException::class);
+        $this->expectExceptionMessageIsOrContains('Empty fake token.');
+
+        $accessTokenHandler->getUserBadgeFrom('');
+    }
+
     public function testGetUserBadgeFromWithLowercaseFakeProviderInDev(): void
     {
         $clientRegistry = $this->createMock(ClientRegistry::class);
