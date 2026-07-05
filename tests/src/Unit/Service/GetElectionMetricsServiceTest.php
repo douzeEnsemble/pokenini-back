@@ -44,12 +44,15 @@ final class GetElectionMetricsServiceTest extends TestCase
             ->willReturn($rawData)
         ;
 
-        $service = new GetElectionMetricsService($userTokenService, $apiService);
+        $service = new GetElectionMetricsService($userTokenService, $apiService, 12);
 
         $metrics = $service->getMetrics('demo', 'whatever');
 
         $this->assertSame(24, $metrics->underMaxViewCount);
         $this->assertSame(5, $metrics->maxViewCount);
         $this->assertSame($rawData, $metrics->raw);
+        $this->assertSame(1, $metrics->roundCount);
+        $this->assertSame(5.0, $metrics->winnerAverage);
+        $this->assertSame(8, $metrics->totalRoundCount);
     }
 }
