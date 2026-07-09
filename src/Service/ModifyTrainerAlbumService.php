@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Exception\ModifyFailedException;
 use App\Security\UserTokenService;
 use App\Service\Api\ModifyAlbumApiService;
+use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
 use App\Service\CacheInvalidator\AlbumsCacheInvalidatorService;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
@@ -18,6 +19,7 @@ class ModifyTrainerAlbumService
         private readonly UserTokenService $userTokenService,
         private readonly ModifyAlbumApiService $modifyAlbumService,
         private readonly AlbumsCacheInvalidatorService $albumsCacheInvalidatorService,
+        private readonly AlbumCacheInvalidatorService $albumCacheInvalidatorService,
         private readonly RequestStack $requestStack,
     ) {}
 
@@ -43,6 +45,7 @@ class ModifyTrainerAlbumService
             );
 
             $this->albumsCacheInvalidatorService->invalidate();
+            $this->albumCacheInvalidatorService->invalidate($dexSlug, $trainerId);
         } catch (HttpExceptionInterface|TransportExceptionInterface $e) {
             throw new ModifyFailedException();
         }
