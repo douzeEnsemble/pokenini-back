@@ -6,8 +6,7 @@ namespace App\Controller\Election;
 
 use App\AlbumFilters\FromRequest;
 use App\Exception\DexNotFoundException;
-use App\Service\GetElectionMetricsService;
-use App\Service\GetElectionTopService;
+use App\Service\GetElectionReportService;
 use App\Service\GetPokemonsListService;
 use App\Service\GetTrainerPokedexService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,8 +29,7 @@ final class ElectionIndexController extends AbstractController
     )]
     public function index(
         GetPokemonsListService $getPokemonsListService,
-        GetElectionTopService $electionTopService,
-        GetElectionMetricsService $metricsService,
+        GetElectionReportService $electionReportService,
         GetTrainerPokedexService $getTrainerPokedexService,
         Request $request,
         SerializerInterface $serializer,
@@ -40,10 +38,11 @@ final class ElectionIndexController extends AbstractController
     ): JsonResponse {
         $filters = FromRequest::get($request);
 
-        $electionTop = $electionTopService->getTop($dexSlug, $electionSlug);
+        $report = $electionReportService->getReport($dexSlug, $electionSlug);
+        $electionTop = $report['top'];
 
         $list = $getPokemonsListService->get($dexSlug, $electionSlug, $filters);
-        $metrics = $metricsService->getMetrics($dexSlug, $electionSlug);
+        $metrics = $report['metrics'];
 
         try {
             $pokedex = $getTrainerPokedexService->getPokedexData($dexSlug, $filters);

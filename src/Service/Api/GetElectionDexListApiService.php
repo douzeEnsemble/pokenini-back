@@ -13,17 +13,17 @@ class GetElectionDexListApiService extends AbstractApiService
     /**
      * @return string[][]
      */
-    public function get(): array
+    public function get(string $trainerId): array
     {
-        return $this->getDexWithParam([]);
+        return $this->getDexWithParam($trainerId, []);
     }
 
     /**
      * @return string[][]
      */
-    public function getWithPremium(): array
+    public function getWithPremium(string $trainerId): array
     {
-        return $this->getDexWithParam([
+        return $this->getDexWithParam($trainerId, [
             'include_premium_dex' => '1',
         ]);
     }
@@ -31,9 +31,9 @@ class GetElectionDexListApiService extends AbstractApiService
     /**
      * @return string[][]
      */
-    public function getWithUnreleasedAndPremium(): array
+    public function getWithUnreleasedAndPremium(string $trainerId): array
     {
-        return $this->getDexWithParam([
+        return $this->getDexWithParam($trainerId, [
             'include_unreleased_dex' => '1',
             'include_premium_dex' => '1',
         ]);
@@ -44,21 +44,22 @@ class GetElectionDexListApiService extends AbstractApiService
      *
      * @return string[][]
      */
-    private function getDexWithParam(array $queryParams = []): array
+    private function getDexWithParam(string $trainerId, array $queryParams = []): array
     {
-        $key = KeyMaker::getElectionDexListKey($queryParams);
+        $key = KeyMaker::getElectionDexListKeyForTrainer($trainerId, $queryParams);
 
-        $urlQueryParams = http_build_query($queryParams);
+        $urlQueryParams = http_build_query(array_merge(['count' => '0'], $queryParams));
 
-        $json = $this->cache->get($key, function (ItemInterface $item) use ($urlQueryParams) {
+        $json = $this->cache->get($key, function (ItemInterface $item) use ($trainerId, $urlQueryParams) {
             $item->tag([
                 KeyMaker::getDexKey(),
                 KeyMaker::getElectionDexListKey(),
+                KeyMaker::getTrainerIdKey($trainerId),
             ]);
 
             return $this->requestContent(
                 'GET',
-                '/dex/can_hold_election'.($urlQueryParams ? '?'.$urlQueryParams : ''),
+                "/election/{$trainerId}/list?{$urlQueryParams}",
             );
         });
 

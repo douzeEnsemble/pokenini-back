@@ -798,8 +798,11 @@
   },
   {
     "request": {
-      "uri": "/dex/can_hold_election",
+      "uri": {
+        "match": "/election/[\\w\\d]*/list"
+      },
       "queries": {
+        "count": "0",
         "include_premium_dex": "1",
         "include_unreleased_dex": "1"
       },
@@ -816,8 +819,11 @@
   },
   {
     "request": {
-      "uri": "/dex/can_hold_election",
+      "uri": {
+        "match": "/election/[\\w\\d]*/list"
+      },
       "queries": {
+        "count": "0",
         "include_premium_dex": "1"
       },
       "method": "get",
@@ -833,7 +839,12 @@
   },
   {
     "request": {
-      "uri": "/dex/can_hold_election",
+      "uri": {
+        "match": "/election/[\\w\\d]*/list"
+      },
+      "queries": {
+        "count": "0"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -903,109 +914,97 @@
   },
   {
     "request": {
-      "uri": "/election/top",
+      "uri": {
+        "match": "/election/[\\w\\d]*/demolitelastpage"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
-        "dex_slug": {
-          "match": "^demolite.*$"
-        },
         "count": "5"
       }
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election/demolite_top_5.json"
+      "file": "/var/moco/responses/election/demolitelastpage_report.json"
     }
   },
   {
     "request": {
-      "uri": "/election/metrics",
+      "uri": {
+        "match": "/election/[\\w\\d]*/demolitelastone"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
-        "dex_slug": "demolitelastpage"
+        "count": "5"
       }
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election/demolitelastpage_metrics.json"
+      "file": "/var/moco/responses/election/demolitelastone_report.json"
     }
   },
   {
     "request": {
-      "uri": "/election/metrics",
+      "uri": {
+        "match": "/election/[\\w\\d]*/demolitenotlastpage"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
-        "dex_slug": "demolitelastone"
+        "count": "5"
       }
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election/demolitelastone_metrics.json"
+      "file": "/var/moco/responses/election/demolitenotlastpage_report.json"
     }
   },
   {
     "request": {
-      "uri": "/election/metrics",
+      "uri": {
+        "match": "/election/[\\w\\d]*/demolitenotlastone"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
-        "dex_slug": "demolitenotlastpage"
+        "count": "5"
       }
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election/demolitenotlastpage_metrics.json"
+      "file": "/var/moco/responses/election/demolitenotlastone_report.json"
     }
   },
   {
     "request": {
-      "uri": "/election/metrics",
+      "uri": {
+        "match": "/election/[\\w\\d]*/demolite.*"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "queries": {
-        "dex_slug": "demolitenotlastone"
+        "count": "5"
       }
     },
     "response": {
       "status": "200",
-      "file": "/var/moco/responses/election/demolitenotlastone_metrics.json"
-    }
-  },
-  {
-    "request": {
-      "uri": "/election/metrics",
-      "method": "get",
-      "headers": {
-        "accept": "application/json",
-        "authorization": "Basic d2ViOmRvdXpl"
-      },
-      "queries": {
-        "dex_slug": {
-          "match": "^demolite.*$"
-        }
-      }
-    },
-    "response": {
-      "status": "200",
-      "file": "/var/moco/responses/election/demolite_metrics.json"
+      "file": "/var/moco/responses/election/demolite_report_5.json"
     }
   }
 ]

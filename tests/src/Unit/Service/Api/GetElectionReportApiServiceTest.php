@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
-use App\Service\Api\GetElectionTopApiService;
+use App\Service\Api\GetElectionReportApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -16,26 +16,38 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 /**
  * @internal
  */
-#[CoversClass(GetElectionTopApiService::class)]
-final class GetElectionTopApiServiceTest extends TestCase
+#[CoversClass(GetElectionReportApiService::class)]
+final class GetElectionReportApiServiceTest extends TestCase
 {
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testGet(): void
+    public function testGetReport(): void
     {
-        $items = $this->getService('4564650', 'home', 'fav', 5)->getTop('4564650', 'home', 'fav', 5);
+        $rawJson = json_encode([
+            'top' => array_fill(0, 5, ['pokemon' => ['slug' => 'bulbasaur']]),
+            'metrics' => [
+                'view_count' => ['sum' => 6, 'max' => 1],
+                'win_count' => ['sum' => 2, 'max' => 1],
+                'completion' => ['under_max_count' => 1, 'at_max_count' => 5],
+                'dex_total_count' => 48,
+            ],
+        ]);
 
-        $this->assertCount(5, $items);
+        $result = $this->getService('4564650', 'home', 'fav', 5, (string) $rawJson)
+            ->getReport('4564650', 'home', 'fav', 5)
+        ;
 
-        $this->assertEmpty($this->cachePool->getValues());
-    }
-
-    public function testGetBis(): void
-    {
-        $items = $this->getService('87654', 'demo', 'pref', 10)->getTop('87654', 'demo', 'pref', 10);
-
-        $this->assertCount(10, $items);
+        $this->assertCount(5, $result['top']);
+        $this->assertSame(
+            [
+                'view_count' => ['sum' => 6, 'max' => 1],
+                'win_count' => ['sum' => 2, 'max' => 1],
+                'completion' => ['under_max_count' => 1, 'at_max_count' => 5],
+                'dex_total_count' => 48,
+            ],
+            $result['metrics'],
+        );
 
         $this->assertEmpty($this->cachePool->getValues());
     }
@@ -45,7 +57,8 @@ final class GetElectionTopApiServiceTest extends TestCase
         string $dexSlug,
         string $electionSlug,
         int $count,
-    ): GetElectionTopApiService {
+        string $json,
+    ): GetElectionReportApiService {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
             ->expects($this->exactly(2))
@@ -53,8 +66,6 @@ final class GetElectionTopApiServiceTest extends TestCase
         ;
 
         $client = $this->createMock(HttpClientInterface::class);
-
-        $json = (string) file_get_contents("/app/tests/resources/unit/service/api/election_top_{$count}_{$trainerId}_{$dexSlug}_{$electionSlug}.json");
 
         $response = $this->createMock(ResponseInterface::class);
         $response
@@ -68,8 +79,12 @@ final class GetElectionTopApiServiceTest extends TestCase
             ->method('request')
             ->with(
                 'GET',
-                "https://api.domain/election/top?trainer_external_id={$trainerId}&dex_slug={$dexSlug}&election_slug={$electionSlug}&count={$count}",
+                "https://api.domain/election/{$trainerId}/{$dexSlug}",
                 [
+                    'query' => [
+                        'election_slug' => $electionSlug,
+                        'count' => $count,
+                    ],
                     'headers' => [
                         'accept' => 'application/json',
                     ],
@@ -86,7 +101,7 @@ final class GetElectionTopApiServiceTest extends TestCase
         $this->cachePool = new ArrayAdapter();
         $this->cache = new TagAwareAdapter($this->cachePool, new ArrayAdapter());
 
-        return new GetElectionTopApiService(
+        return new GetElectionReportApiService(
             $logger,
             $client,
             'https://api.domain',

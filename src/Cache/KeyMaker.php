@@ -82,6 +82,17 @@ final class KeyMaker
     }
 
     /**
+     * @param string[] $queryParams
+     */
+    public static function getElectionDexListKeyForTrainer(string $trainerId, array $queryParams = []): string
+    {
+        $cacheKeySuffixe = http_build_query($queryParams, '', self::CACHE_KEY_SEPARATOR);
+
+        return self::CACHE_KEY_ELECTION_DEX_LIST.self::CACHE_KEY_SEPARATOR.$trainerId
+            .($cacheKeySuffixe ? self::CACHE_KEY_SEPARATOR.$cacheKeySuffixe : '');
+    }
+
+    /**
      * @param string[]|string[][] $filters
      */
     public static function getPokedexKey(string $dexSlug, string $trainerId, array $filters = []): string
