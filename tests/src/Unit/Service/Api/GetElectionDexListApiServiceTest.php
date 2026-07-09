@@ -24,16 +24,14 @@ final class GetElectionDexListApiServiceTest extends TestCase
 
     public function testGet(): void
     {
-        $expectedSlugs = [
-            'homeshiny',
-        ];
+        $expectedSlugs = ['homeshiny'];
 
         $this->assertEquals(
             $expectedSlugs,
-            self::extractSlugs($this->getService()->get()),
+            self::extractSlugs($this->getService('8800088', 'election/8800088/list?count=0')->get('8800088')),
         );
 
-        $cacheItem = $this->cache->getItem('election_dex_list');
+        $cacheItem = $this->cache->getItem('election_dex_list_8800088');
 
         /** @var string $value */
         $value = $cacheItem->get();
@@ -41,15 +39,13 @@ final class GetElectionDexListApiServiceTest extends TestCase
         /** @var string[][] */
         $jsonData = json_decode($value, true);
 
-        $this->assertEquals(
-            $expectedSlugs,
-            self::extractSlugs($jsonData),
-        );
+        $this->assertEquals($expectedSlugs, self::extractSlugs($jsonData));
 
         $this->assertSame(
             [
                 'dex' => 'dex',
                 'election_dex_list' => 'election_dex_list',
+                'trainer#8800088' => 'trainer#8800088',
             ],
             $cacheItem->getMetadata()['tags'],
         );
@@ -57,33 +53,24 @@ final class GetElectionDexListApiServiceTest extends TestCase
 
     public function testGetWithPremium(): void
     {
-        $expectedSlugs = [
-            'home',
-            'redgreenblueyellow',
-        ];
+        $expectedSlugs = ['home', 'redgreenblueyellow'];
 
         $this->assertEquals(
             $expectedSlugs,
-            self::extractSlugs($this->getServiceWithPremium()->getWithPremium()),
+            self::extractSlugs(
+                $this
+                    ->getService('8800088', 'election/8800088/list?count=0&include_premium_dex=1', 'election_dex_list_premium.json')
+                    ->getWithPremium('8800088'),
+            ),
         );
 
-        $cacheItem = $this->cache->getItem('election_dex_list_include_premium_dex=1');
-
-        /** @var string $value */
-        $value = $cacheItem->get();
-
-        /** @var string[][] */
-        $jsonData = json_decode($value, true);
-
-        $this->assertEquals(
-            $expectedSlugs,
-            self::extractSlugs($jsonData),
-        );
+        $cacheItem = $this->cache->getItem('election_dex_list_8800088_include_premium_dex=1');
 
         $this->assertSame(
             [
                 'dex' => 'dex',
                 'election_dex_list' => 'election_dex_list',
+                'trainer#8800088' => 'trainer#8800088',
             ],
             $cacheItem->getMetadata()['tags'],
         );
@@ -91,80 +78,53 @@ final class GetElectionDexListApiServiceTest extends TestCase
 
     public function testGetWithUnreleasedAndPremium(): void
     {
-        $expectedSlugs = [
-            'home',
-            'homeshiny',
-            'redgreenblueyellow',
-            'redgreenblueyellowshiny',
-        ];
+        $expectedSlugs = ['home', 'homeshiny', 'redgreenblueyellow', 'redgreenblueyellowshiny'];
 
         $this->assertEquals(
             $expectedSlugs,
-            self::extractSlugs($this->getServiceWithUnreleasedAndPremium()->getWithUnreleasedAndPremium()),
+            self::extractSlugs(
+                $this
+                    ->getService(
+                        '8800088',
+                        'election/8800088/list?count=0&include_unreleased_dex=1&include_premium_dex=1',
+                        'election_dex_list_unreleased_and_premium.json',
+                    )
+                    ->getWithUnreleasedAndPremium('8800088'),
+            ),
         );
 
-        $cacheItem = $this->cache->getItem('election_dex_list_include_unreleased_dex=1_include_premium_dex=1');
-
-        /** @var string $value */
-        $value = $cacheItem->get();
-
-        /** @var string[][] */
-        $jsonData = json_decode($value, true);
-
-        $this->assertEquals(
-            $expectedSlugs,
-            self::extractSlugs($jsonData),
-        );
+        $cacheItem = $this->cache->getItem('election_dex_list_8800088_include_unreleased_dex=1_include_premium_dex=1');
 
         $this->assertSame(
             [
                 'dex' => 'dex',
                 'election_dex_list' => 'election_dex_list',
+                'trainer#8800088' => 'trainer#8800088',
             ],
             $cacheItem->getMetadata()['tags'],
         );
     }
 
-    private function getService(): GetElectionDexListApiService
+    public function testGetIsScopedPerTrainer(): void
     {
-        $json = (string) file_get_contents(
-            '/app/tests/resources/unit/service/api/election_dex_list.json'
-        );
+        $expectedSlugs = ['homeshiny'];
 
-        return $this->getMockService(
-            $json,
-            'dex/can_hold_election',
-        );
+        $service = $this->getService('123', 'election/123/list?count=0');
+        $this->assertEquals($expectedSlugs, self::extractSlugs($service->get('123')));
+
+        $this->assertTrue($this->cache->hasItem('election_dex_list_123'));
+        $this->assertFalse($this->cache->hasItem('election_dex_list_456'));
     }
 
-    private function getServiceWithPremium(): GetElectionDexListApiService
-    {
-        $json = (string) file_get_contents(
-            '/app/tests/resources/unit/service/api/election_dex_list_premium.json'
-        );
-
-        return $this->getMockService(
-            $json,
-            'dex/can_hold_election?include_premium_dex=1',
-        );
-    }
-
-    private function getServiceWithUnreleasedAndPremium(): GetElectionDexListApiService
-    {
-        $json = (string) file_get_contents(
-            '/app/tests/resources/unit/service/api/election_dex_list_unreleased_and_premium.json'
-        );
-
-        return $this->getMockService(
-            $json,
-            'dex/can_hold_election?include_unreleased_dex=1&include_premium_dex=1',
-        );
-    }
-
-    private function getMockService(
-        string $json,
+    private function getService(
+        string $trainerId,
         string $endpoint,
+        string $jsonFile = 'election_dex_list.json',
     ): GetElectionDexListApiService {
+        $json = (string) file_get_contents(
+            "/app/tests/resources/unit/service/api/{$jsonFile}"
+        );
+
         $logger = $this->createMock(LoggerInterface::class);
         $logger
             ->expects($this->exactly(2))

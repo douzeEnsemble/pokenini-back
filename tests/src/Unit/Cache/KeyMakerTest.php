@@ -77,6 +77,21 @@ final class KeyMakerTest extends TestCase
         $this->assertEquals('election_dex_list_1=1_2=2', KeyMaker::getElectionDexListKey(['1' => '1', '2' => '2']));
     }
 
+    public function testGetElectionDexListKeyForTrainer(): void
+    {
+        $this->assertEquals('election_dex_list_1', KeyMaker::getElectionDexListKeyForTrainer('1'));
+        $this->assertEquals('election_dex_list_12', KeyMaker::getElectionDexListKeyForTrainer('12'));
+    }
+
+    public function testGetElectionDexListKeyForTrainerWithQueryParams(): void
+    {
+        $this->assertEquals('election_dex_list_1_1=1', KeyMaker::getElectionDexListKeyForTrainer('1', ['1' => '1']));
+        $this->assertEquals(
+            'election_dex_list_12_1=1_2=2',
+            KeyMaker::getElectionDexListKeyForTrainer('12', ['1' => '1', '2' => '2']),
+        );
+    }
+
     public function testGetPokedexKey(): void
     {
         $this->assertEquals('album_douze_12', KeyMaker::getPokedexKey('douze', '12'));

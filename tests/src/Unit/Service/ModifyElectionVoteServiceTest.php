@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service;
 
 use App\Security\UserTokenService;
 use App\Service\Api\ModifyElectionVoteApiService;
+use App\Service\CacheInvalidator\ElectionCacheInvalidatorService;
 use App\Service\ModifyElectionVoteService;
 use App\Tests\Unit\Trait\ElectionVoteFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -40,7 +41,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ModifyElectionVoteService($userTokenService, $apiService);
+        $electionCacheInvalidatorService = $this->createMock(ElectionCacheInvalidatorService::class);
+        $electionCacheInvalidatorService
+            ->expects($this->once())
+            ->method('invalidate')
+            ->with('8800088')
+        ;
+
+        $service = new ModifyElectionVoteService($userTokenService, $apiService, $electionCacheInvalidatorService);
         $service->vote($electionVote);
     }
 
@@ -65,7 +73,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ModifyElectionVoteService($userTokenService, $apiService);
+        $electionCacheInvalidatorService = $this->createMock(ElectionCacheInvalidatorService::class);
+        $electionCacheInvalidatorService
+            ->expects($this->once())
+            ->method('invalidate')
+            ->with('8800088')
+        ;
+
+        $service = new ModifyElectionVoteService($userTokenService, $apiService, $electionCacheInvalidatorService);
         $service->vote($electionVote);
     }
 
@@ -90,7 +105,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ModifyElectionVoteService($userTokenService, $apiService);
+        $electionCacheInvalidatorService = $this->createMock(ElectionCacheInvalidatorService::class);
+        $electionCacheInvalidatorService
+            ->expects($this->once())
+            ->method('invalidate')
+            ->with('8800088')
+        ;
+
+        $service = new ModifyElectionVoteService($userTokenService, $apiService, $electionCacheInvalidatorService);
         $service->vote($electionVote);
     }
 
@@ -115,7 +137,14 @@ final class ModifyElectionVoteServiceTest extends TestCase
             )
         ;
 
-        $service = new ModifyElectionVoteService($userTokenService, $apiService);
+        $electionCacheInvalidatorService = $this->createMock(ElectionCacheInvalidatorService::class);
+        $electionCacheInvalidatorService
+            ->expects($this->once())
+            ->method('invalidate')
+            ->with('8800088')
+        ;
+
+        $service = new ModifyElectionVoteService($userTokenService, $apiService, $electionCacheInvalidatorService);
         $service->vote($electionVote);
     }
 

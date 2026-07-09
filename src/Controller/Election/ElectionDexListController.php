@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Election;
 
+use App\Security\UserTokenService;
 use App\Service\Api\GetElectionDexListApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,20 +21,23 @@ final class ElectionDexListController extends AbstractController
     )]
     public function index(
         GetElectionDexListApiService $getDexListService,
+        UserTokenService $userTokenService,
     ): JsonResponse {
+        $trainerId = $userTokenService->getLoggedUserToken();
+
         switch (true) {
             case $this->isGranted('ROLE_ADMIN'):
-                $dex = $getDexListService->getWithUnreleasedAndPremium();
+                $dex = $getDexListService->getWithUnreleasedAndPremium($trainerId);
 
                 break;
 
             case $this->isGranted('ROLE_COLLECTOR'):
-                $dex = $getDexListService->getWithPremium();
+                $dex = $getDexListService->getWithPremium($trainerId);
 
                 break;
 
             default:
-                $dex = $getDexListService->get();
+                $dex = $getDexListService->get($trainerId);
 
                 break;
         }
