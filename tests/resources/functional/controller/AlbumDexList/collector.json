@@ -15,7 +15,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 4,
+      "total_caught": 2,
+      "total_uncaught": 2,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 2
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 2
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -33,7 +58,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 2,
+      "total_caught": 1,
+      "total_uncaught": 1,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 1
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 1
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -51,7 +101,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 6,
+      "total_caught": 5,
+      "total_uncaught": 1,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 5
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 1
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -69,7 +144,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 7,
+      "total_caught": 4,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 4
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -87,7 +187,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 5,
+      "total_caught": 2,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 2
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -105,7 +230,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 7,
+      "total_caught": 5,
+      "total_uncaught": 2,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 5
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 2
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -123,7 +273,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 8,
+      "total_caught": 5,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 5
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -141,7 +316,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 4,
+      "total_caught": 2,
+      "total_uncaught": 2,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 2
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 2
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -159,7 +359,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 6,
+      "total_caught": 5,
+      "total_uncaught": 1,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 5
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 1
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -177,7 +402,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 5,
+      "total_caught": 4,
+      "total_uncaught": 1,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 4
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 1
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -195,7 +445,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 4,
+      "total_caught": 3,
+      "total_uncaught": 1,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 3
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 1
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -213,7 +488,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 3,
+      "total_caught": 2,
+      "total_uncaught": 1,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 2
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 1
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -231,7 +531,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 5,
+      "total_caught": 3,
+      "total_uncaught": 2,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 3
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 2
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -249,7 +574,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 5,
+      "total_caught": 3,
+      "total_uncaught": 2,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 3
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 2
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -267,7 +617,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 4,
+      "total_caught": 3,
+      "total_uncaught": 1,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 3
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 1
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -285,7 +660,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 4,
+      "total_caught": 1,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 1
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -303,7 +703,32 @@
       "is_premium": true,
       "is_custom": false
     },
-    "display_template": "box"
+    "display_template": "box",
+    "report": {
+      "total": 4,
+      "total_caught": 1,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 1
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -321,7 +746,32 @@
       "is_premium": false,
       "is_custom": false
     },
-    "display_template": "list-7"
+    "display_template": "list-7",
+    "report": {
+      "total": 4,
+      "total_caught": 1,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 1
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -339,7 +789,32 @@
       "is_premium": true,
       "is_custom": false
     },
-    "display_template": "list-3"
+    "display_template": "list-3",
+    "report": {
+      "total": 7,
+      "total_caught": 4,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 4
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   },
   {
     "dex": {
@@ -357,6 +832,31 @@
       "is_premium": true,
       "is_custom": false
     },
-    "display_template": "list-3"
+    "display_template": "list-3",
+    "report": {
+      "total": 4,
+      "total_caught": 1,
+      "total_uncaught": 3,
+      "detail": [
+        {
+          "catch_state": {
+            "slug": "yes",
+            "name": "Caught",
+            "french_name": "Capturé",
+            "color": "#37b24d"
+          },
+          "count": 1
+        },
+        {
+          "catch_state": {
+            "slug": "no",
+            "name": "Uncaught",
+            "french_name": "Non capturé",
+            "color": "#e03131"
+          },
+          "count": 3
+        }
+      ]
+    }
   }
 ]
