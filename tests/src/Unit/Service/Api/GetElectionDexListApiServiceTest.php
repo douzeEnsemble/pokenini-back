@@ -28,7 +28,7 @@ final class GetElectionDexListApiServiceTest extends TestCase
 
         $this->assertEquals(
             $expectedSlugs,
-            self::extractSlugs($this->getService('8800088', 'election/8800088/list?count=0')->get('8800088')),
+            self::extractSlugs($this->getService('election/8800088/list?count=0')->get('8800088')),
         );
 
         $cacheItem = $this->cache->getItem('election_dex_list_8800088');
@@ -59,7 +59,7 @@ final class GetElectionDexListApiServiceTest extends TestCase
             $expectedSlugs,
             self::extractSlugs(
                 $this
-                    ->getService('8800088', 'election/8800088/list?count=0&include_premium_dex=1', 'election_dex_list_premium.json')
+                    ->getService('election/8800088/list?count=0&include_premium_dex=1', 'election_dex_list_premium.json')
                     ->getWithPremium('8800088'),
             ),
         );
@@ -85,7 +85,6 @@ final class GetElectionDexListApiServiceTest extends TestCase
             self::extractSlugs(
                 $this
                     ->getService(
-                        '8800088',
                         'election/8800088/list?count=0&include_unreleased_dex=1&include_premium_dex=1',
                         'election_dex_list_unreleased_and_premium.json',
                     )
@@ -109,7 +108,7 @@ final class GetElectionDexListApiServiceTest extends TestCase
     {
         $expectedSlugs = ['homeshiny'];
 
-        $service = $this->getService('123', 'election/123/list?count=0');
+        $service = $this->getService('election/123/list?count=0');
         $this->assertEquals($expectedSlugs, self::extractSlugs($service->get('123')));
 
         $this->assertTrue($this->cache->hasItem('election_dex_list_123'));
@@ -117,7 +116,6 @@ final class GetElectionDexListApiServiceTest extends TestCase
     }
 
     private function getService(
-        string $trainerId,
         string $endpoint,
         string $jsonFile = 'election_dex_list.json',
     ): GetElectionDexListApiService {

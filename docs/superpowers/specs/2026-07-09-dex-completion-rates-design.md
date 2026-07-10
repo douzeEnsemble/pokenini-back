@@ -26,17 +26,17 @@ progression, pourcentages) fait l'objet d'un travail séparé, non traité ici.
 ## Objectifs
 
 1. `GET /album/dex` renvoie, pour chaque dex, le même `report` que celui
-   renvoyé par `GET /album/{trainerId}/{dexSlug}` (total, total_caught,
-   total_uncaught, détail par `catch_state`).
+    renvoyé par `GET /album/{trainerId}/{dexSlug}` (total, total_caught,
+    total_uncaught, détail par `catch_state`).
 2. `GET /election/dex` renvoie, pour chaque dex, les mêmes métriques que
-   celles utilisées par `ElectionIndexController` pour la page élection
-   individuelle (round_count, total_round_count, completion brute,
-   dex_total_count).
+    celles utilisées par `ElectionIndexController` pour la page élection
+    individuelle (round_count, total_round_count, completion brute,
+    dex_total_count).
 3. Les métriques d'élection (jusqu'ici jamais mises en cache) sont mises en
-   cache côté Back, avec invalidation au moment du vote — bénéfice à la fois
-   pour la nouvelle liste et pour la page élection individuelle existante.
+    cache côté Back, avec invalidation au moment du vote — bénéfice à la fois
+    pour la nouvelle liste et pour la page élection individuelle existante.
 4. Un échec ponctuel sur un dex (erreur API) ne doit pas faire échouer toute
-   la liste.
+    la liste.
 
 ## Non-objectifs
 

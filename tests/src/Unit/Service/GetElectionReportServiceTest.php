@@ -27,7 +27,28 @@ final class GetElectionReportServiceTest extends TestCase
 
         $apiTop = [
             [
-                'pokemon' => ['slug' => 'bulbasaur'],
+                'pokemon' => [
+                    'slug' => 'bulbasaur',
+                    'labels' => [
+                        'name' => 'Bulbasaur',
+                        'simplified_name' => 'Bulbasaur',
+                        'french_name' => 'Bulbizarre',
+                        'simplified_french_name' => 'Bulbizarre',
+                        'forms_label' => null,
+                        'forms_french_label' => null,
+                    ],
+                    'national_dex_number' => 1,
+                    'regional_dex_number' => null,
+                    'icon' => 'bulbasaur',
+                    'family_order' => 0,
+                    'family_lead' => ['slug' => 'bulbasaur'],
+                    'original_game_bundle' => ['slug' => 'redgreenblueyellow'],
+                    'order_number' => '0001-0001-010',
+                    'game_bundles' => [
+                        'normal' => [['slug' => 'redgreenblueyellow']],
+                        'shiny' => [['slug' => 'redgreenblueyellow']],
+                    ],
+                ],
                 'forms' => null,
                 'types' => ['primary' => ['slug' => 'grass', 'name' => 'Grass', 'french_name' => 'Plante', 'color' => '#78C850'], 'secondary' => null],
                 'score' => ['elo' => 1040, 'significance' => true],
