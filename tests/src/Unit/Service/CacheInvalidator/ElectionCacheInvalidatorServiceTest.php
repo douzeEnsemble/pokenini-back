@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 /**
  * @internal
@@ -21,8 +22,16 @@ final class ElectionCacheInvalidatorServiceTest extends TestCase
         $cachePool = new ArrayAdapter();
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
 
-        $cache->get('election_dex_list_123', fn ($item) => $item->tag(['trainer#123']) && false ?: 'whatever');
-        $cache->get('election_dex_list_456', fn ($item) => $item->tag(['trainer#456']) && false ?: 'whatever');
+        $cache->get('election_dex_list_123', function (ItemInterface $item) {
+            $item->tag(['trainer#123']);
+
+            return 'whatever';
+        });
+        $cache->get('election_dex_list_456', function (ItemInterface $item) {
+            $item->tag(['trainer#456']);
+
+            return 'whatever';
+        });
 
         $service = new ElectionCacheInvalidatorService($cache);
         $service->invalidate('123');
