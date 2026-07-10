@@ -15,7 +15,25 @@
     },
     "description": "All Pokémons that can be transferred to Pokémon Home.\r\n\r\nIncluding males/female, different shapes and transformations (some are not kept during the transfer, but I wanted to have the Pokémons anyway, in case it changes)",
     "french_description": "Tous les pokémons pouvant être transférés sur Pokémon Home.  les mâles/femelles, les formes différentes et les transformations (certains ne sont pas conservés lors du transfert, mais je voulais avoir les pokémons quand même, au cas où ça change)",
-    "dex_total_count": 61
+    "dex_total_count": 61,
+    "report": {
+      "top": [],
+      "metrics": {
+        "view_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "win_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "completion": {
+          "under_max_count": 43,
+          "at_max_count": 18
+        },
+        "dex_total_count": 61
+      }
+    }
   },
   {
     "slug": "homeshiny",
@@ -33,7 +51,25 @@
     },
     "description": "All Pokémons that can be transferred to Pokémon Home.\r\n\r\nIncluding males/female, different shapes and transformations (some are not kept during the transfer, but I wanted to have the Pokémons anyway, in case it changes)",
     "french_description": "Tous les pokémons pouvant être transférés sur Pokémon Home.  les mâles/femelles, les formes différentes et les transformations (certains ne sont pas conservés lors du transfert, mais je voulais avoir les pokémons quand même, au cas où ça change)",
-    "dex_total_count": 33
+    "dex_total_count": 33,
+    "report": {
+      "top": [],
+      "metrics": {
+        "view_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "win_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "completion": {
+          "under_max_count": 15,
+          "at_max_count": 18
+        },
+        "dex_total_count": 33
+      }
+    }
   },
   {
     "slug": "homepogo",
@@ -51,7 +87,25 @@
     },
     "description": "All Pokémons that can be transferred to Pokémon Home.\r\n\r\nIncluding males/female, different shapes and transformations (some are not kept during the transfer, but I wanted to have the Pokémons anyway, in case it changes)",
     "french_description": "Tous les pokémons pouvant être transférés sur Pokémon Home.  les mâles/femelles, les formes différentes et les transformations (certains ne sont pas conservés lors du transfert, mais je voulais avoir les pokémons quand même, au cas où ça change)",
-    "dex_total_count": 5
+    "dex_total_count": 5,
+    "report": {
+      "top": [],
+      "metrics": {
+        "view_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "win_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "completion": {
+          "under_max_count": 1,
+          "at_max_count": 4
+        },
+        "dex_total_count": 5
+      }
+    }
   },
   {
     "slug": "mega",
@@ -69,6 +123,24 @@
     },
     "description": "All Pokémons that can be transferred to Pokémon Home.\r\n\r\nIncluding males/female, different shapes and transformations (some are not kept during the transfer, but I wanted to have the Pokémons anyway, in case it changes)",
     "french_description": "Tous les pokémons pouvant être transférés sur Pokémon Home.  les mâles/femelles, les formes différentes et les transformations (certains ne sont pas conservés lors du transfert, mais je voulais avoir les pokémons quand même, au cas où ça change)",
-    "dex_total_count": 76
+    "dex_total_count": 76,
+    "report": {
+      "top": [],
+      "metrics": {
+        "view_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "win_count": {
+          "sum": 0,
+          "max": 0
+        },
+        "completion": {
+          "under_max_count": 0,
+          "at_max_count": 76
+        },
+        "dex_total_count": 76
+      }
+    }
   }
 ]
