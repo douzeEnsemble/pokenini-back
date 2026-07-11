@@ -31,7 +31,10 @@
           "under_max_count": 43,
           "at_max_count": 18
         },
-        "dex_total_count": 61
+        "dex_total_count": 61,
+        "round_count": 0,
+        "total_round_count": 10,
+        "winner_average": 4
       }
     }
   },
@@ -67,7 +70,10 @@
           "under_max_count": 15,
           "at_max_count": 18
         },
-        "dex_total_count": 33
+        "dex_total_count": 33,
+        "round_count": 0,
+        "total_round_count": 5,
+        "winner_average": 4
       }
     }
   },
@@ -103,7 +109,10 @@
           "under_max_count": 1,
           "at_max_count": 4
         },
-        "dex_total_count": 5
+        "dex_total_count": 5,
+        "round_count": 0,
+        "total_round_count": 2,
+        "winner_average": 4
       }
     }
   },
@@ -139,7 +148,10 @@
           "under_max_count": 0,
           "at_max_count": 76
         },
-        "dex_total_count": 76
+        "dex_total_count": 76,
+        "round_count": 0,
+        "total_round_count": 12,
+        "winner_average": 4
       }
     }
   }
