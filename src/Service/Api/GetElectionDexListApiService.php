@@ -11,7 +11,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 class GetElectionDexListApiService extends AbstractApiService
 {
     /**
-     * @return string[][]
+     * @return array<int, array<string, mixed>>
      */
     public function get(string $trainerId): array
     {
@@ -19,7 +19,7 @@ class GetElectionDexListApiService extends AbstractApiService
     }
 
     /**
-     * @return string[][]
+     * @return array<int, array<string, mixed>>
      */
     public function getWithPremium(string $trainerId): array
     {
@@ -29,7 +29,7 @@ class GetElectionDexListApiService extends AbstractApiService
     }
 
     /**
-     * @return string[][]
+     * @return array<int, array<string, mixed>>
      */
     public function getWithUnreleasedAndPremium(string $trainerId): array
     {
@@ -42,7 +42,7 @@ class GetElectionDexListApiService extends AbstractApiService
     /**
      * @param string[] $queryParams
      *
-     * @return string[][]
+     * @return array<int, array<string, mixed>>
      */
     private function getDexWithParam(string $trainerId, array $queryParams = []): array
     {
@@ -63,7 +63,7 @@ class GetElectionDexListApiService extends AbstractApiService
             );
         });
 
-        /** @var string[][] */
+        /** @var array<int, array<string, mixed>> */
         return JsonDecoder::decode($json);
     }
 }

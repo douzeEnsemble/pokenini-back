@@ -36,7 +36,7 @@ final class GetElectionDexListApiServiceTest extends TestCase
         /** @var string $value */
         $value = $cacheItem->get();
 
-        /** @var string[][] */
+        /** @var array<int, array<string, mixed>> */
         $jsonData = json_decode($value, true);
 
         $this->assertEquals($expectedSlugs, self::extractSlugs($jsonData));
@@ -173,7 +173,7 @@ final class GetElectionDexListApiServiceTest extends TestCase
     }
 
     /**
-     * @param string[][] $items
+     * @param array<int, array<string, mixed>> $items
      *
      * @return string[]
      */
@@ -182,7 +182,9 @@ final class GetElectionDexListApiServiceTest extends TestCase
         $slugs = [];
 
         foreach ($items as $item) {
-            $slugs[] = $item['slug'];
+            /** @var string $slug */
+            $slug = $item['slug'];
+            $slugs[] = $slug;
         }
 
         return $slugs;

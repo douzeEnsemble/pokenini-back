@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Election;
 
 use App\Security\UserTokenService;
-use App\Service\Api\GetElectionDexListApiService;
+use App\Service\GetElectionDexListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ final class ElectionDexListController extends AbstractController
         priority: 2,
     )]
     public function index(
-        GetElectionDexListApiService $getDexListService,
+        GetElectionDexListService $getDexListService,
         UserTokenService $userTokenService,
     ): JsonResponse {
         $trainerId = $userTokenService->getLoggedUserToken();
