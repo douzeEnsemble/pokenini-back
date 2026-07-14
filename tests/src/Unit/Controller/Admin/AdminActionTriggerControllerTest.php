@@ -76,4 +76,36 @@ final class AdminActionTriggerControllerTest extends TestCase
 
         $this->assertSame(500, $response->getStatusCode());
     }
+
+    public function testFailTriggerLogsWithInvalidArgumentException(): void
+    {
+        $triggerImagesPipelineService = $this->createMock(TriggerImagesPipelineService::class);
+        $triggerImagesPipelineService
+            ->expects($this->once())
+            ->method('triggerUpdateImages')
+            ->willThrowException(new \InvalidArgumentException('Aouch'))
+        ;
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('critical')
+            ->with(
+                $this->equalTo('Aouch'),
+                $this->equalTo([
+                    'name' => 'update_images',
+                    'action' => 'trigger',
+                ])
+            )
+        ;
+
+        $controller = new AdminActionTriggerController(
+            $triggerImagesPipelineService,
+            $logger
+        );
+
+        $response = $controller->process('update_images');
+
+        $this->assertSame(500, $response->getStatusCode());
+    }
 }
