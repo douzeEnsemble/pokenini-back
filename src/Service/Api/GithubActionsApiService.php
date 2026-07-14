@@ -44,6 +44,8 @@ class GithubActionsApiService implements ApiServiceInterface
                 ],
             );
 
+            $response->getHeaders();
+
             $this->logger->info("Response status code: {$response->getStatusCode()}", []);
         } catch (ExceptionInterface $e) {
             throw new ModifyFailedException($e->getMessage(), previous: $e);
