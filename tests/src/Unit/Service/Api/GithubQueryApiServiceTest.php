@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
+use App\Exception\ModifyFailedException;
 use App\Service\Api\GithubQueryApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpClient\Exception\TransportException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -166,5 +168,57 @@ final class GithubQueryApiServiceTest extends TestCase
         $service = new GithubQueryApiService($this->createMock(LoggerInterface::class), $client, 'secret-token');
 
         $this->assertNull($service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2'));
+    }
+
+    public function testFindWorkflowRunByDisplayTitleFailsOnHttpError(): void
+    {
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+        ;
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client
+            ->expects($this->once())
+            ->method('request')
+            ->willThrowException(new TransportException('Network error'))
+        ;
+
+        $service = new GithubQueryApiService(
+            $logger,
+            $client,
+            'secret-token',
+        );
+
+        $this->expectException(ModifyFailedException::class);
+
+        $service->findWorkflowRunByDisplayTitle('douzeensemble/pokenini-icon', 'update-images.yml', 'Update images (corr-123)');
+    }
+
+    public function testFindPullRequestByBranchFailsOnHttpError(): void
+    {
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+        ;
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client
+            ->expects($this->once())
+            ->method('request')
+            ->willThrowException(new TransportException('Network error'))
+        ;
+
+        $service = new GithubQueryApiService(
+            $logger,
+            $client,
+            'secret-token',
+        );
+
+        $this->expectException(ModifyFailedException::class);
+
+        $service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2');
     }
 }
