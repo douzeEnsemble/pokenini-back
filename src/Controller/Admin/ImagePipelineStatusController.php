@@ -30,13 +30,33 @@ final class ImagePipelineStatusController extends AbstractController
 
         /** @var string $correlationId */
         $correlationId = $latest['correlation_id'];
+        /** @var ?string $workflowAStatus */
+        $workflowAStatus = $latest['workflow_a_status'] ?? null;
+        /** @var ?string $workflowAConclusion */
+        $workflowAConclusion = $latest['workflow_a_conclusion'] ?? null;
+        /** @var ?string $workflowAUrl */
+        $workflowAUrl = $latest['workflow_a_url'] ?? null;
+        /** @var ?string $iconPrState */
+        $iconPrState = $latest['icon_pr_state'] ?? null;
+        /** @var ?string $iconPrUrl */
+        $iconPrUrl = $latest['icon_pr_url'] ?? null;
+        /** @var ?string $workflowBStatus */
+        $workflowBStatus = $latest['workflow_b_status'] ?? null;
+        /** @var ?string $workflowBConclusion */
+        $workflowBConclusion = $latest['workflow_b_conclusion'] ?? null;
+        /** @var ?string $workflowBUrl */
+        $workflowBUrl = $latest['workflow_b_url'] ?? null;
+        /** @var ?string $resourcesPrState */
+        $resourcesPrState = $latest['resources_pr_state'] ?? null;
+        /** @var ?string $resourcesPrUrl */
+        $resourcesPrUrl = $latest['resources_pr_url'] ?? null;
 
         $status = new ImagePipelineStatus(
             correlationId: $correlationId,
-            workflowA: $this->runStage($latest['workflow_a_status'] ?? null, $latest['workflow_a_conclusion'] ?? null, $latest['workflow_a_url'] ?? null),
-            iconPr: $this->prStage($latest['icon_pr_state'] ?? null, $latest['icon_pr_url'] ?? null),
-            workflowB: $this->runStage($latest['workflow_b_status'] ?? null, $latest['workflow_b_conclusion'] ?? null, $latest['workflow_b_url'] ?? null),
-            resourcesPr: $this->prStage($latest['resources_pr_state'] ?? null, $latest['resources_pr_url'] ?? null),
+            workflowA: $this->runStage($workflowAStatus, $workflowAConclusion, $workflowAUrl),
+            iconPr: $this->prStage($iconPrState, $iconPrUrl),
+            workflowB: $this->runStage($workflowBStatus, $workflowBConclusion, $workflowBUrl),
+            resourcesPr: $this->prStage($resourcesPrState, $resourcesPrUrl),
         );
 
         return new JsonResponse($status);

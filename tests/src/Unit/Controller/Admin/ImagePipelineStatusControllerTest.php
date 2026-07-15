@@ -19,7 +19,7 @@ final class ImagePipelineStatusControllerTest extends TestCase
     public function testNoRunReturnsEmptyObject(): void
     {
         $service = $this->createMock(ImagePipelineStatusService::class);
-        $service->method('getStatus')->with(false)->willReturn(null);
+        $service->expects($this->once())->method('getStatus')->with(false)->willReturn(null);
 
         $controller = new ImagePipelineStatusController($service);
 
@@ -32,7 +32,7 @@ final class ImagePipelineStatusControllerTest extends TestCase
     public function testIdleStagesWhenNothingKnownYet(): void
     {
         $service = $this->createMock(ImagePipelineStatusService::class);
-        $service->method('getStatus')->with(false)->willReturn([
+        $service->expects($this->once())->method('getStatus')->with(false)->willReturn([
             'correlation_id' => 'corr-1',
             'workflow_a_status' => null,
             'workflow_a_conclusion' => null,
@@ -49,6 +49,13 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $controller = new ImagePipelineStatusController($service);
 
         $response = $controller->get(new Request());
+        /**
+         * @var array{
+         *     correlationId: string,
+         *     workflowA: array{state: string},
+         *     iconPr: array{state: string},
+         * }
+         */
         $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
 
         $this->assertSame('corr-1', $data['correlationId']);
@@ -86,6 +93,12 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $controller = new ImagePipelineStatusController($service);
 
         $response = $controller->get(new Request());
+        /**
+         * @var array{
+         *     workflowA: array{state: string},
+         *     workflowB: array{state: string},
+         * }
+         */
         $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
 
         $this->assertSame('running', $data['workflowA']['state']);
@@ -112,6 +125,13 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $controller = new ImagePipelineStatusController($service);
 
         $response = $controller->get(new Request());
+        /**
+         * @var array{
+         *     workflowA: array{state: string},
+         *     iconPr: array{state: string},
+         *     resourcesPr: array{state: string},
+         * }
+         */
         $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
 
         $this->assertSame('done', $data['workflowA']['state']);

@@ -134,6 +134,10 @@ parameters:
       collectors:
         - type: classLike
           value: '^Symfony\\Component\\Validator\\.*'
+    - name: SymfonyUid
+      collectors:
+        - type: classLike
+          value: '^Symfony\\Component\\Uid\\.*'
 
   ruleset:
     AppAlbumFilters:
@@ -189,6 +193,7 @@ parameters:
       - SymfonyContractsHttpClient
       - SymfonyHttpFoundation
       - SymfonySecurityBundle
+      - SymfonyUid
       - SymfonyValidator
     AppUtils:
     AppValidator:

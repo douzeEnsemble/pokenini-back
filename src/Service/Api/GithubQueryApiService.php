@@ -75,7 +75,7 @@ class GithubQueryApiService implements ApiServiceInterface
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<array-key, mixed>
      */
     private function request(string $endpointUrl): array
     {
@@ -107,28 +107,50 @@ class GithubQueryApiService implements ApiServiceInterface
      */
     private function mapRun(array $run): array
     {
+        /** @var int|string $id */
+        $id = $run['id'];
+        /** @var int|string $status */
+        $status = $run['status'];
+        /** @var null|int|string $conclusion */
+        $conclusion = $run['conclusion'];
+        /** @var int|string $htmlUrl */
+        $htmlUrl = $run['html_url'];
+        /** @var int|string $headSha */
+        $headSha = $run['head_sha'];
+
         return [
-            'id' => (int) $run['id'],
-            'status' => (string) $run['status'],
-            'conclusion' => null !== $run['conclusion'] ? (string) $run['conclusion'] : null,
-            'htmlUrl' => (string) $run['html_url'],
-            'headSha' => (string) $run['head_sha'],
+            'id' => (int) $id,
+            'status' => (string) $status,
+            'conclusion' => null !== $conclusion ? (string) $conclusion : null,
+            'htmlUrl' => (string) $htmlUrl,
+            'headSha' => (string) $headSha,
         ];
     }
 
     /**
-     * @param array<string, mixed> $pr
+     * @param array<string, mixed> $pullRequest
      *
      * @return array{number: int, htmlUrl: string, state: string, mergedAt: ?string, mergeCommitSha: ?string}
      */
-    private function mapPullRequest(array $pr): array
+    private function mapPullRequest(array $pullRequest): array
     {
+        /** @var int|string $number */
+        $number = $pullRequest['number'];
+        /** @var int|string $htmlUrl */
+        $htmlUrl = $pullRequest['html_url'];
+        /** @var null|int|string $mergedAt */
+        $mergedAt = $pullRequest['merged_at'];
+        /** @var int|string $state */
+        $state = $pullRequest['state'];
+        /** @var null|int|string $mergeCommitSha */
+        $mergeCommitSha = $pullRequest['merge_commit_sha'];
+
         return [
-            'number' => (int) $pr['number'],
-            'htmlUrl' => (string) $pr['html_url'],
-            'state' => null !== $pr['merged_at'] ? 'merged' : (string) $pr['state'],
-            'mergedAt' => null !== $pr['merged_at'] ? (string) $pr['merged_at'] : null,
-            'mergeCommitSha' => null !== $pr['merge_commit_sha'] ? (string) $pr['merge_commit_sha'] : null,
+            'number' => (int) $number,
+            'htmlUrl' => (string) $htmlUrl,
+            'state' => null !== $mergedAt ? 'merged' : (string) $state,
+            'mergedAt' => null !== $mergedAt ? (string) $mergedAt : null,
+            'mergeCommitSha' => null !== $mergeCommitSha ? (string) $mergeCommitSha : null,
         ];
     }
 }
