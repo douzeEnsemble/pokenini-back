@@ -91,4 +91,31 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $this->assertSame('running', $data['workflowA']['state']);
         $this->assertSame('failed', $data['workflowB']['state']);
     }
+
+    public function testDoneAndPrPassthroughStates(): void
+    {
+        $service = $this->createMock(ImagePipelineStatusService::class);
+        $service->method('getStatus')->willReturn([
+            'correlation_id' => 'corr-1',
+            'workflow_a_status' => 'completed',
+            'workflow_a_conclusion' => 'success',
+            'workflow_a_url' => 'https://github.com/x/y/actions/runs/1',
+            'icon_pr_state' => 'merged',
+            'icon_pr_url' => 'https://github.com/x/y/pull/1',
+            'workflow_b_status' => null,
+            'workflow_b_conclusion' => null,
+            'workflow_b_url' => null,
+            'resources_pr_state' => 'open',
+            'resources_pr_url' => 'https://github.com/x/z/pull/2',
+        ]);
+
+        $controller = new ImagePipelineStatusController($service);
+
+        $response = $controller->get(new Request());
+        $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
+
+        $this->assertSame('done', $data['workflowA']['state']);
+        $this->assertSame('merged', $data['iconPr']['state']);
+        $this->assertSame('open', $data['resourcesPr']['state']);
+    }
 }
