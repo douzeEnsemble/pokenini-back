@@ -14,6 +14,8 @@ services:
             string $githubImagesWorkflowToken: '%env(GITHUB_IMAGES_WORKFLOW_TOKEN)%'
             string $githubImagesRepo: '%env(GITHUB_IMAGES_REPO)%'
             string $githubImagesWorkflowFile: '%env(GITHUB_IMAGES_WORKFLOW_FILE)%'
+            string $githubImagesWorkflowBFile: '%env(GITHUB_IMAGES_WORKFLOW_B_FILE)%'
+            string $githubResourcesRepo: '%env(GITHUB_RESOURCES_REPO)%'
             int $topCount: '%env(ELECTION_TOP_COUNT)%'
             int $electionCandidateCount: '%env(ELECTION_CANDIDATE_COUNT)%'
             string $env: '%kernel.environment%'
