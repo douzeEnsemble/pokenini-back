@@ -51,12 +51,13 @@ final class GithubQueryApiServiceTest extends TestCase
             ->with(
                 'GET',
                 'https://api.github.com/repos/douzeensemble/pokenini-icon/actions/workflows/update-images.yml/runs',
-                $this->callback(
-                    /**
-                     * @param array{headers: array{authorization: string}} $options
-                     */
-                    static fn (array $options): bool => 'Bearer secret-token' === $options['headers']['authorization'],
-                ),
+                [
+                    'headers' => [
+                        'accept' => 'application/vnd.github+json',
+                        'authorization' => 'Bearer secret-token',
+                        'X-GitHub-Api-Version' => '2022-11-28',
+                    ],
+                ],
             )
             ->willReturn($response)
         ;
@@ -161,6 +162,100 @@ final class GithubQueryApiServiceTest extends TestCase
             'mergedAt' => '2026-07-15T10:00:00Z',
             'mergeCommitSha' => 'merge-sha-7',
         ], $pullRequest);
+    }
+
+    public function testFindWorkflowRunByHeadShaCastsMismatchedRawTypes(): void
+    {
+        // GitHub's real API always sends these as strings/int, but the raw
+        // array is typed `mixed` - feed deliberately mismatched scalar types
+        // here to prove mapRun()'s casts actually convert them, rather than
+        // just passing through values that already happened to match.
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('toArray')->willReturn([
+            'workflow_runs' => [
+                [
+                    'id' => '9',
+                    'status' => 200,
+                    'conclusion' => 1,
+                    'html_url' => 12345,
+                    'head_sha' => 67890,
+                ],
+            ],
+        ]);
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->method('request')->willReturn($response);
+
+        $service = new GithubQueryApiService($this->createMock(LoggerInterface::class), $client, 'secret-token');
+
+        $run = $service->findWorkflowRunByHeadSha('douzeensemble/pokenini-icon', 'publish-images-to-resources.yml', 'sha');
+
+        $this->assertSame([
+            'id' => 9,
+            'status' => '200',
+            'conclusion' => '1',
+            'htmlUrl' => '12345',
+            'headSha' => '67890',
+        ], $run);
+    }
+
+    public function testFindPullRequestByBranchCastsMismatchedRawTypes(): void
+    {
+        // Same rationale as testFindWorkflowRunByHeadShaCastsMismatchedRawTypes:
+        // deliberately mismatched raw types prove mapPullRequest()'s casts
+        // (and the 'state' passthrough branch) actually convert, not just
+        // pass through already-correctly-typed values.
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('toArray')->willReturn([
+            [
+                'number' => '42',
+                'html_url' => 999,
+                'state' => 111,
+                'merged_at' => null,
+                'merge_commit_sha' => 222,
+            ],
+        ]);
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->method('request')->willReturn($response);
+
+        $service = new GithubQueryApiService($this->createMock(LoggerInterface::class), $client, 'secret-token');
+
+        $pullRequest = $service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2');
+
+        $this->assertSame([
+            'number' => 42,
+            'htmlUrl' => '999',
+            'state' => '111',
+            'mergedAt' => null,
+            'mergeCommitSha' => '222',
+        ], $pullRequest);
+    }
+
+    public function testFindPullRequestByBranchCastsMismatchedMergedAtType(): void
+    {
+        // testFindPullRequestByBranchCastsMismatchedRawTypes leaves merged_at
+        // null, which never exercises (string) $mergedAt's cast - cover that
+        // branch here with a non-null, mismatched-type value.
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('toArray')->willReturn([
+            [
+                'number' => 1,
+                'html_url' => 'https://github.com/x/y/pull/1',
+                'state' => 'closed',
+                'merged_at' => 20260715,
+                'merge_commit_sha' => 'sha',
+            ],
+        ]);
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->method('request')->willReturn($response);
+
+        $service = new GithubQueryApiService($this->createMock(LoggerInterface::class), $client, 'secret-token');
+
+        $pullRequest = $service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2');
+
+        $this->assertSame('20260715', $pullRequest['mergedAt'] ?? null);
     }
 
     public function testFindPullRequestByBranchReturnsNullWhenNoMatch(): void
