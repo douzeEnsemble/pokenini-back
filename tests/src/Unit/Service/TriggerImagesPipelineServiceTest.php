@@ -19,18 +19,25 @@ final class TriggerImagesPipelineServiceTest extends TestCase
 {
     public function testTriggerUpdateImagesDispatchesAndRegistersRun(): void
     {
+        $dispatchedCorrelationId = null;
+
         $githubActionsApiService = $this->createMock(GithubActionsApiService::class);
         $githubActionsApiService
             ->expects($this->once())
             ->method('dispatchWorkflow')
             ->with($this->matchesRegularExpression('/^[0-9a-f-]{36}$/'))
+            ->willReturnCallback(function (string $correlationId) use (&$dispatchedCorrelationId): void {
+                $dispatchedCorrelationId = $correlationId;
+            })
         ;
 
         $imagePipelineApiService = $this->createMock(ImagePipelineApiService::class);
         $imagePipelineApiService
             ->expects($this->once())
             ->method('create')
-            ->with($this->matchesRegularExpression('/^[0-9a-f-]{36}$/'))
+            ->with($this->callback(function (string $correlationId) use (&$dispatchedCorrelationId): bool {
+                return $correlationId === $dispatchedCorrelationId;
+            }))
         ;
 
         $logger = $this->createMock(LoggerInterface::class);
