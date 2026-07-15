@@ -79,19 +79,21 @@ final class ImagePipelineApiServiceTest extends TestCase
 
     public function testGetLatestReturnsNullOn404(): void
     {
+        $errorResponse = $this->createMock(ResponseInterface::class);
+        $errorResponse->method('getStatusCode')->willReturn(404);
+
+        $exception = $this->createStub(ClientExceptionInterface::class);
+        $exception->method('getResponse')->willReturn($errorResponse);
+
         $response = $this->createMock(ResponseInterface::class);
-        $response->method('getStatusCode')->willReturn(404);
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willThrowException($exception)
+        ;
 
         $client = $this->createMock(HttpClientInterface::class);
-        $client
-            ->method('request')
-            ->willReturnCallback(function () use ($response): ResponseInterface {
-                $exception = $this->createStub(ClientExceptionInterface::class);
-                $exception->method('getResponse')->willReturn($response);
-
-                throw $exception;
-            })
-        ;
+        $client->method('request')->willReturn($response);
 
         $this->assertNull($this->getService($client)->getLatest());
     }

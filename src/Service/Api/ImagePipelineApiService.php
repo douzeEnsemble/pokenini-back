@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Api;
 
 use App\Exception\ModifyFailedException;
+use App\Utils\JsonDecoder;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 
@@ -53,6 +54,6 @@ class ImagePipelineApiService extends AbstractApiService
         }
 
         /** @var array<string, mixed> */
-        return json_decode($content, true);
+        return JsonDecoder::decode($content);
     }
 }
