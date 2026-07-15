@@ -50,6 +50,9 @@ final class GithubActionsApiServiceTest extends TestCase
                     ],
                     'json' => [
                         'ref' => 'main',
+                        'inputs' => [
+                            'correlation_id' => 'corr-123',
+                        ],
                     ],
                 ],
             )
@@ -64,7 +67,7 @@ final class GithubActionsApiServiceTest extends TestCase
             'update-images.yml',
         );
 
-        $service->dispatchWorkflow();
+        $service->dispatchWorkflow('corr-123');
     }
 
     public function testDispatchWorkflowFails(): void
@@ -92,7 +95,7 @@ final class GithubActionsApiServiceTest extends TestCase
 
         $this->expectException(ModifyFailedException::class);
 
-        $service->dispatchWorkflow();
+        $service->dispatchWorkflow('corr-123');
     }
 
     public function testDispatchWorkflowFailsOnHttpErrorStatus(): void
@@ -127,6 +130,6 @@ final class GithubActionsApiServiceTest extends TestCase
 
         $this->expectException(ModifyFailedException::class);
 
-        $service->dispatchWorkflow();
+        $service->dispatchWorkflow('corr-123');
     }
 }
