@@ -51,92 +51,135 @@ class ImagePipelineStatusService
     private function pollNextStage(array $latest): array
     {
         if (null === $latest['workflow_a_conclusion']) {
-            /** @var string $correlationId */
-            $correlationId = $latest['correlation_id'];
-
-            $run = $this->githubQueryApiService->findWorkflowRunByDisplayTitle(
-                $this->githubImagesRepo,
-                $this->githubImagesWorkflowFile,
-                "Update images ({$correlationId})",
-            );
-
-            if (null === $run) {
-                return [];
-            }
-
-            return [
-                'workflowARunId' => $run['id'],
-                'workflowAStatus' => $run['status'],
-                'workflowAConclusion' => $run['conclusion'] ?? '',
-                'workflowAUrl' => $run['htmlUrl'],
-            ];
+            return $this->pollWorkflowA($latest);
         }
 
         if ('success' === $latest['workflow_a_conclusion'] && 'merged' !== $latest['icon_pr_state']) {
-            $pr = $this->githubQueryApiService->findPullRequestByBranch(
-                $this->githubImagesRepo,
-                "update-images-{$latest['workflow_a_run_id']}",
-            );
-
-            if (null === $pr) {
-                return [];
-            }
-
-            $updates = [
-                'iconPrNumber' => $pr['number'],
-                'iconPrUrl' => $pr['htmlUrl'],
-                'iconPrState' => $pr['state'],
-            ];
-
-            if (null !== $pr['mergeCommitSha']) {
-                $updates['iconPrMergeCommitSha'] = $pr['mergeCommitSha'];
-            }
-
-            return $updates;
+            return $this->pollIconPr($latest);
         }
 
         if (null !== $latest['icon_pr_merge_commit_sha'] && null === $latest['workflow_b_conclusion']) {
-            /** @var string $mergeCommitSha */
-            $mergeCommitSha = $latest['icon_pr_merge_commit_sha'];
-
-            $run = $this->githubQueryApiService->findWorkflowRunByHeadSha(
-                $this->githubImagesRepo,
-                $this->githubImagesWorkflowBFile,
-                $mergeCommitSha,
-            );
-
-            if (null === $run) {
-                return [];
-            }
-
-            return [
-                'workflowBRunId' => $run['id'],
-                'workflowBStatus' => $run['status'],
-                'workflowBConclusion' => $run['conclusion'] ?? '',
-                'workflowBUrl' => $run['htmlUrl'],
-            ];
+            return $this->pollWorkflowB($latest);
         }
 
         if ('success' === $latest['workflow_b_conclusion']) {
-            /** @var string $mergeCommitSha */
-            $mergeCommitSha = $latest['icon_pr_merge_commit_sha'];
-
-            $pr = $this->githubQueryApiService->findPullRequestByBranch(
-                $this->githubResourcesRepo,
-                "sync-images-{$mergeCommitSha}",
-            );
-
-            if (null === $pr) {
-                return [];
-            }
-
-            return [
-                'resourcesPrNumber' => $pr['number'],
-                'resourcesPrUrl' => $pr['htmlUrl'],
-                'resourcesPrState' => $pr['state'],
-            ];
+            return $this->pollResourcesPr($latest);
         }
 
         return [];
+    }
+
+    /**
+     * @param array<string, mixed> $latest
+     *
+     * @return array<string, int|string>
+     */
+    private function pollWorkflowA(array $latest): array
+    {
+        /** @var string $correlationId */
+        $correlationId = $latest['correlation_id'];
+
+        $run = $this->githubQueryApiService->findWorkflowRunByDisplayTitle(
+            $this->githubImagesRepo,
+            $this->githubImagesWorkflowFile,
+            "Update images ({$correlationId})",
+        );
+
+        if (null === $run) {
+            return [];
+        }
+
+        return [
+            'workflowARunId' => $run['id'],
+            'workflowAStatus' => $run['status'],
+            'workflowAConclusion' => $run['conclusion'] ?? '',
+            'workflowAUrl' => $run['htmlUrl'],
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $latest
+     *
+     * @return array<string, int|string>
+     */
+    private function pollIconPr(array $latest): array
+    {
+        /** @var int|string $workflowARunId */
+        $workflowARunId = $latest['workflow_a_run_id'];
+
+        $pullRequest = $this->githubQueryApiService->findPullRequestByBranch(
+            $this->githubImagesRepo,
+            "update-images-{$workflowARunId}",
+        );
+
+        if (null === $pullRequest) {
+            return [];
+        }
+
+        $updates = [
+            'iconPrNumber' => $pullRequest['number'],
+            'iconPrUrl' => $pullRequest['htmlUrl'],
+            'iconPrState' => $pullRequest['state'],
+        ];
+
+        if (null !== $pullRequest['mergeCommitSha']) {
+            $updates['iconPrMergeCommitSha'] = $pullRequest['mergeCommitSha'];
+        }
+
+        return $updates;
+    }
+
+    /**
+     * @param array<string, mixed> $latest
+     *
+     * @return array<string, int|string>
+     */
+    private function pollWorkflowB(array $latest): array
+    {
+        /** @var string $mergeCommitSha */
+        $mergeCommitSha = $latest['icon_pr_merge_commit_sha'];
+
+        $run = $this->githubQueryApiService->findWorkflowRunByHeadSha(
+            $this->githubImagesRepo,
+            $this->githubImagesWorkflowBFile,
+            $mergeCommitSha,
+        );
+
+        if (null === $run) {
+            return [];
+        }
+
+        return [
+            'workflowBRunId' => $run['id'],
+            'workflowBStatus' => $run['status'],
+            'workflowBConclusion' => $run['conclusion'] ?? '',
+            'workflowBUrl' => $run['htmlUrl'],
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $latest
+     *
+     * @return array<string, int|string>
+     */
+    private function pollResourcesPr(array $latest): array
+    {
+        /** @var string $mergeCommitSha */
+        $mergeCommitSha = $latest['icon_pr_merge_commit_sha'];
+
+        $pullRequest = $this->githubQueryApiService->findPullRequestByBranch(
+            $this->githubResourcesRepo,
+            "sync-images-{$mergeCommitSha}",
+        );
+
+        if (null === $pullRequest) {
+            return [];
+        }
+
+        return [
+            'resourcesPrNumber' => $pullRequest['number'],
+            'resourcesPrUrl' => $pullRequest['htmlUrl'],
+            'resourcesPrState' => $pullRequest['state'],
+        ];
     }
 }

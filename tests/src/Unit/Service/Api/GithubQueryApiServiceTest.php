@@ -51,7 +51,12 @@ final class GithubQueryApiServiceTest extends TestCase
             ->with(
                 'GET',
                 'https://api.github.com/repos/douzeensemble/pokenini-icon/actions/workflows/update-images.yml/runs',
-                $this->callback(fn (array $options): bool => 'Bearer secret-token' === $options['headers']['authorization']),
+                $this->callback(
+                    /**
+                     * @param array{headers: array{authorization: string}} $options
+                     */
+                    static fn (array $options): bool => 'Bearer secret-token' === $options['headers']['authorization'],
+                ),
             )
             ->willReturn($response)
         ;
@@ -147,7 +152,7 @@ final class GithubQueryApiServiceTest extends TestCase
 
         $service = new GithubQueryApiService($this->createMock(LoggerInterface::class), $client, 'secret-token');
 
-        $pr = $service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2');
+        $pullRequest = $service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2');
 
         $this->assertSame([
             'number' => 7,
@@ -155,7 +160,7 @@ final class GithubQueryApiServiceTest extends TestCase
             'state' => 'merged',
             'mergedAt' => '2026-07-15T10:00:00Z',
             'mergeCommitSha' => 'merge-sha-7',
-        ], $pr);
+        ], $pullRequest);
     }
 
     public function testFindPullRequestByBranchReturnsNullWhenNoMatch(): void
