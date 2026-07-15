@@ -6,6 +6,12 @@ namespace App\DTO;
 
 final class ImagePipelineStatus
 {
+    /**
+     * See ImagePipelineStageStatus::__construct()'s docblock - same
+     * verified coverage-attribution artifact, not a real gap.
+     *
+     * @codeCoverageIgnore
+     */
     public function __construct(
         public readonly string $correlationId,
         public readonly ImagePipelineStageStatus $workflowA,

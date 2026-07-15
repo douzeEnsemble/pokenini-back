@@ -110,6 +110,53 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->getService($client)->create('corr-1');
     }
 
+    public function testUpdateFieldsFailsOnTransportError(): void
+    {
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->method('request')->willThrowException(
+            $this->createMock(\Symfony\Component\HttpClient\Exception\TransportException::class)
+        );
+
+        $this->expectException(ModifyFailedException::class);
+
+        $this->getService($client)->updateFields('corr-1', ['workflowARunId' => 42]);
+    }
+
+    public function testGetLatestFailsOnNonNotFoundHttpError(): void
+    {
+        $errorResponse = $this->createMock(ResponseInterface::class);
+        $errorResponse->method('getStatusCode')->willReturn(500);
+
+        $exception = $this->createStub(ClientExceptionInterface::class);
+        $exception->method('getResponse')->willReturn($errorResponse);
+
+        $response = $this->createMock(ResponseInterface::class);
+        $response
+            ->expects($this->once())
+            ->method('getContent')
+            ->willThrowException($exception)
+        ;
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->method('request')->willReturn($response);
+
+        $this->expectException(ModifyFailedException::class);
+
+        $this->getService($client)->getLatest();
+    }
+
+    public function testGetLatestFailsOnTransportError(): void
+    {
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->method('request')->willThrowException(
+            $this->createMock(\Symfony\Component\HttpClient\Exception\TransportException::class)
+        );
+
+        $this->expectException(ModifyFailedException::class);
+
+        $this->getService($client)->getLatest();
+    }
+
     private function getService(HttpClientInterface $client): ImagePipelineApiService
     {
         $cache = new TagAwareAdapter(new ArrayAdapter(), new ArrayAdapter());
