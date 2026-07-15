@@ -8,7 +8,6 @@ use App\Exception\ModifyFailedException;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class GithubQueryApiService implements ApiServiceInterface
 {
@@ -53,7 +52,7 @@ class GithubQueryApiService implements ApiServiceInterface
         $endpointUrl = self::GITHUB_API_URL."/repos/{$repo}/pulls?head=".rawurlencode("{$owner}:{$branch}").'&state=all';
 
         /** @var list<array<string, mixed>> $prs */
-        $prs = $this->request($endpointUrl)->toArray();
+        $prs = $this->request($endpointUrl);
 
         return isset($prs[0]) ? $this->mapPullRequest($prs[0]) : null;
     }
@@ -70,17 +69,20 @@ class GithubQueryApiService implements ApiServiceInterface
         }
 
         /** @var array{workflow_runs: list<array<string, mixed>>} $data */
-        $data = $this->request($endpointUrl)->toArray();
+        $data = $this->request($endpointUrl);
 
         return $data['workflow_runs'];
     }
 
-    private function request(string $endpointUrl): ResponseInterface
+    /**
+     * @return array<string, mixed>
+     */
+    private function request(string $endpointUrl): array
     {
         try {
             $this->logger->info("Requesting GET {$endpointUrl}", []);
 
-            return $this->client->request(
+            $response = $this->client->request(
                 'GET',
                 $endpointUrl,
                 [
@@ -91,6 +93,8 @@ class GithubQueryApiService implements ApiServiceInterface
                     ],
                 ],
             );
+
+            return $response->toArray();
         } catch (ExceptionInterface $e) {
             throw new ModifyFailedException($e->getMessage(), previous: $e);
         }
