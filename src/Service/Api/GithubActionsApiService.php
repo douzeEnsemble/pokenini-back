@@ -22,7 +22,7 @@ class GithubActionsApiService implements ApiServiceInterface
         private readonly string $githubImagesWorkflowFile,
     ) {}
 
-    public function dispatchWorkflow(): void
+    public function dispatchWorkflow(string $correlationId): void
     {
         $endpointUrl = self::GITHUB_API_URL."/repos/{$this->githubImagesRepo}/actions/workflows/{$this->githubImagesWorkflowFile}/dispatches";
 
@@ -40,6 +40,9 @@ class GithubActionsApiService implements ApiServiceInterface
                     ],
                     'json' => [
                         'ref' => self::REF,
+                        'inputs' => [
+                            'correlation_id' => $correlationId,
+                        ],
                     ],
                 ],
             );
