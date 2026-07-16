@@ -37,7 +37,7 @@ class ImagePipelineApiService extends AbstractApiService
     }
 
     /**
-     * @return array<string, mixed>|null
+     * @return null|array<string, mixed>
      */
     public function getLatest(): ?array
     {

@@ -19,7 +19,7 @@ class ImagePipelineStatusService
     ) {}
 
     /**
-     * @return array<string, mixed>|null
+     * @return null|array<string, mixed>
      */
     public function getStatus(bool $refresh): ?array
     {

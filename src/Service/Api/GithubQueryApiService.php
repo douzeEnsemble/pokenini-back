@@ -20,7 +20,7 @@ class GithubQueryApiService implements ApiServiceInterface
     ) {}
 
     /**
-     * @return array{id: int, status: string, conclusion: ?string, htmlUrl: string, headSha: string}|null
+     * @return null|array{id: int, status: string, conclusion: ?string, htmlUrl: string, headSha: string}
      */
     public function findWorkflowRunByDisplayTitle(string $repo, string $workflowFile, string $displayTitle): ?array
     {
@@ -34,7 +34,7 @@ class GithubQueryApiService implements ApiServiceInterface
     }
 
     /**
-     * @return array{id: int, status: string, conclusion: ?string, htmlUrl: string, headSha: string}|null
+     * @return null|array{id: int, status: string, conclusion: ?string, htmlUrl: string, headSha: string}
      */
     public function findWorkflowRunByHeadSha(string $repo, string $workflowFile, string $headSha): ?array
     {
@@ -44,7 +44,7 @@ class GithubQueryApiService implements ApiServiceInterface
     }
 
     /**
-     * @return array{number: int, htmlUrl: string, state: string, mergedAt: ?string, mergeCommitSha: ?string}|null
+     * @return null|array{number: int, htmlUrl: string, state: string, mergedAt: ?string, mergeCommitSha: ?string}
      */
     public function findPullRequestByBranch(string $repo, string $branch): ?array
     {
@@ -107,19 +107,23 @@ class GithubQueryApiService implements ApiServiceInterface
      */
     private function mapRun(array $run): array
     {
-        /** @var int|string $id */
-        $id = $run['id'];
+        /** @var int|string $runId */
+        $runId = $run['id'];
+
         /** @var int|string $status */
         $status = $run['status'];
+
         /** @var null|int|string $conclusion */
         $conclusion = $run['conclusion'];
+
         /** @var int|string $htmlUrl */
         $htmlUrl = $run['html_url'];
+
         /** @var int|string $headSha */
         $headSha = $run['head_sha'];
 
         return [
-            'id' => (int) $id,
+            'id' => (int) $runId,
             'status' => (string) $status,
             'conclusion' => null !== $conclusion ? (string) $conclusion : null,
             'htmlUrl' => (string) $htmlUrl,
@@ -136,12 +140,16 @@ class GithubQueryApiService implements ApiServiceInterface
     {
         /** @var int|string $number */
         $number = $pullRequest['number'];
+
         /** @var int|string $htmlUrl */
         $htmlUrl = $pullRequest['html_url'];
+
         /** @var null|int|string $mergedAt */
         $mergedAt = $pullRequest['merged_at'];
+
         /** @var int|string $state */
         $state = $pullRequest['state'];
+
         /** @var null|int|string $mergeCommitSha */
         $mergeCommitSha = $pullRequest['merge_commit_sha'];
 
