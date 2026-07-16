@@ -30,24 +30,34 @@ final class ImagePipelineStatusController extends AbstractController
 
         /** @var string $correlationId */
         $correlationId = $latest['correlation_id'];
+
         /** @var ?string $workflowAStatus */
         $workflowAStatus = $latest['workflow_a_status'] ?? null;
+
         /** @var ?string $workflowAConclusion */
         $workflowAConclusion = $latest['workflow_a_conclusion'] ?? null;
+
         /** @var ?string $workflowAUrl */
         $workflowAUrl = $latest['workflow_a_url'] ?? null;
+
         /** @var ?string $iconPrState */
         $iconPrState = $latest['icon_pr_state'] ?? null;
+
         /** @var ?string $iconPrUrl */
         $iconPrUrl = $latest['icon_pr_url'] ?? null;
+
         /** @var ?string $workflowBStatus */
         $workflowBStatus = $latest['workflow_b_status'] ?? null;
+
         /** @var ?string $workflowBConclusion */
         $workflowBConclusion = $latest['workflow_b_conclusion'] ?? null;
+
         /** @var ?string $workflowBUrl */
         $workflowBUrl = $latest['workflow_b_url'] ?? null;
+
         /** @var ?string $resourcesPrState */
         $resourcesPrState = $latest['resources_pr_state'] ?? null;
+
         /** @var ?string $resourcesPrUrl */
         $resourcesPrUrl = $latest['resources_pr_url'] ?? null;
 

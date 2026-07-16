@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Component\HttpClient\Exception\TransportException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -102,7 +103,7 @@ final class ImagePipelineApiServiceTest extends TestCase
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
-            $this->createMock(\Symfony\Component\HttpClient\Exception\TransportException::class)
+            $this->createMock(TransportException::class)
         );
 
         $this->expectException(ModifyFailedException::class);
@@ -114,7 +115,7 @@ final class ImagePipelineApiServiceTest extends TestCase
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
-            $this->createMock(\Symfony\Component\HttpClient\Exception\TransportException::class)
+            $this->createMock(TransportException::class)
         );
 
         $this->expectException(ModifyFailedException::class);
@@ -149,7 +150,7 @@ final class ImagePipelineApiServiceTest extends TestCase
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
-            $this->createMock(\Symfony\Component\HttpClient\Exception\TransportException::class)
+            $this->createMock(TransportException::class)
         );
 
         $this->expectException(ModifyFailedException::class);

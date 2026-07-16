@@ -49,6 +49,7 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $controller = new ImagePipelineStatusController($service);
 
         $response = $controller->get(new Request());
+
         /**
          * @var array{
          *     correlationId: string,
@@ -93,6 +94,7 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $controller = new ImagePipelineStatusController($service);
 
         $response = $controller->get(new Request());
+
         /**
          * @var array{
          *     workflowA: array{state: string},
@@ -125,6 +127,7 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $controller = new ImagePipelineStatusController($service);
 
         $response = $controller->get(new Request());
+
         /**
          * @var array{
          *     workflowA: array{state: string},
