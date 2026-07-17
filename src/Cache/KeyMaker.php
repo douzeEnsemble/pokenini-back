@@ -19,6 +19,7 @@ final class KeyMaker
     private const string CACHE_KEY_ALBUM = 'album';
     private const string CACHE_KEY_REPORTS = 'reports';
     private const string CACHE_KEY_TRAINER = 'trainer';
+    private const string CACHE_KEY_CREDITS = 'credits';
 
     public static function getDexKey(): string
     {
@@ -58,6 +59,11 @@ final class KeyMaker
     public static function getReportsKey(): string
     {
         return self::CACHE_KEY_REPORTS;
+    }
+
+    public static function getCreditsKey(): string
+    {
+        return self::CACHE_KEY_CREDITS;
     }
 
     /**

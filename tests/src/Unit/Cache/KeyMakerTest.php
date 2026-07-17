@@ -54,6 +54,11 @@ final class KeyMakerTest extends TestCase
         $this->assertEquals('reports', KeyMaker::getReportsKey());
     }
 
+    public function testGetCreditsKey(): void
+    {
+        $this->assertEquals('credits', KeyMaker::getCreditsKey());
+    }
+
     public function testGetDexKeyForTrainer(): void
     {
         $this->assertEquals('dex_1', KeyMaker::getDexKeyForTrainer('1'));
