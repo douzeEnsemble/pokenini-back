@@ -23,4 +23,5 @@ security:
     - { path: ^/album, methods: [GET], roles: PUBLIC_ACCESS }
     - { path: ^/album, methods: [PATCH, POST, PUT], roles: ROLE_USER }
     - { path: ^/labels, roles: PUBLIC_ACCESS }
+    - { path: ^/credits, roles: PUBLIC_ACCESS }
     - { path: ^/, roles: ROLE_USER }
