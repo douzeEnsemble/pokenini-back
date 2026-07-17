@@ -37,6 +37,10 @@ final class ElectionPokemonsListTest extends TestCase
                     'order_number' => '9999-0172-000',
                     'game_bundles' => [['slug' => 'goldsilvercrystal']],
                     'game_bundles_shiny' => [['slug' => 'goldsilvercrystal']],
+                    'small_regular_credit' => null,
+                    'small_shiny_credit' => null,
+                    'big_regular_credit' => null,
+                    'big_shiny_credit' => null,
                 ],
                 'forms' => ['category' => null, 'regional' => null, 'special' => null, 'variant' => null],
                 'types' => [
@@ -62,6 +66,10 @@ final class ElectionPokemonsListTest extends TestCase
                     'order_number' => '9999-0026-002',
                     'game_bundles' => [['slug' => 'redgreenblueyellow']],
                     'game_bundles_shiny' => [['slug' => 'redgreenblueyellow']],
+                    'small_regular_credit' => null,
+                    'small_shiny_credit' => null,
+                    'big_regular_credit' => null,
+                    'big_shiny_credit' => null,
                 ],
                 'forms' => ['category' => null, 'regional' => null, 'special' => null, 'variant' => null],
                 'types' => [
