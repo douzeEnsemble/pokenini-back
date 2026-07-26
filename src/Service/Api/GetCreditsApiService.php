@@ -10,7 +10,7 @@ use App\Utils\JsonDecoder;
 class GetCreditsApiService extends AbstractApiService
 {
     /**
-     * @return array<int, array{name: string, url: string}>
+     * @return array<int, array{credit: string}>
      */
     public function get(): array
     {
@@ -23,7 +23,7 @@ class GetCreditsApiService extends AbstractApiService
             );
         });
 
-        /** @var array<int, array{name: string, url: string}> */
+        /** @var array<int, array{credit: string}> */
         return JsonDecoder::decode($json);
     }
 }
