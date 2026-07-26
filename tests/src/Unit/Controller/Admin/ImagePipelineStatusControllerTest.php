@@ -9,6 +9,13 @@ use App\Service\ImagePipelineStatusService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @internal
@@ -21,7 +28,7 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $service = $this->createMock(ImagePipelineStatusService::class);
         $service->expects($this->once())->method('getStatus')->with(false)->willReturn(null);
 
-        $controller = new ImagePipelineStatusController($service);
+        $controller = new ImagePipelineStatusController($service, $this->buildSerializer());
 
         $response = $controller->get(new Request());
 
@@ -46,22 +53,22 @@ final class ImagePipelineStatusControllerTest extends TestCase
             'resources_pr_url' => null,
         ]);
 
-        $controller = new ImagePipelineStatusController($service);
+        $controller = new ImagePipelineStatusController($service, $this->buildSerializer());
 
         $response = $controller->get(new Request());
 
         /**
          * @var array{
-         *     correlationId: string,
-         *     workflowA: array{state: string},
-         *     iconPr: array{state: string},
+         *     correlation_id: string,
+         *     workflow_a: array{state: string},
+         *     icon_pr: array{state: string},
          * }
          */
         $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
 
-        $this->assertSame('corr-1', $data['correlationId']);
-        $this->assertSame('idle', $data['workflowA']['state']);
-        $this->assertSame('idle', $data['iconPr']['state']);
+        $this->assertSame('corr-1', $data['correlation_id']);
+        $this->assertSame('idle', $data['workflow_a']['state']);
+        $this->assertSame('idle', $data['icon_pr']['state']);
     }
 
     public function testRefreshQueryParamIsForwarded(): void
@@ -69,7 +76,7 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $service = $this->createMock(ImagePipelineStatusService::class);
         $service->expects($this->once())->method('getStatus')->with(true)->willReturn(null);
 
-        $controller = new ImagePipelineStatusController($service);
+        $controller = new ImagePipelineStatusController($service, $this->buildSerializer());
 
         $controller->get(new Request(query: ['refresh' => '1']));
     }
@@ -91,20 +98,20 @@ final class ImagePipelineStatusControllerTest extends TestCase
             'resources_pr_url' => null,
         ]);
 
-        $controller = new ImagePipelineStatusController($service);
+        $controller = new ImagePipelineStatusController($service, $this->buildSerializer());
 
         $response = $controller->get(new Request());
 
         /**
          * @var array{
-         *     workflowA: array{state: string},
-         *     workflowB: array{state: string},
+         *     workflow_a: array{state: string},
+         *     workflow_b: array{state: string},
          * }
          */
         $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
 
-        $this->assertSame('running', $data['workflowA']['state']);
-        $this->assertSame('failed', $data['workflowB']['state']);
+        $this->assertSame('running', $data['workflow_a']['state']);
+        $this->assertSame('failed', $data['workflow_b']['state']);
     }
 
     public function testDoneAndPrPassthroughStates(): void
@@ -124,21 +131,32 @@ final class ImagePipelineStatusControllerTest extends TestCase
             'resources_pr_url' => 'https://github.com/x/z/pull/2',
         ]);
 
-        $controller = new ImagePipelineStatusController($service);
+        $controller = new ImagePipelineStatusController($service, $this->buildSerializer());
 
         $response = $controller->get(new Request());
 
         /**
          * @var array{
-         *     workflowA: array{state: string},
-         *     iconPr: array{state: string},
-         *     resourcesPr: array{state: string},
+         *     workflow_a: array{state: string},
+         *     icon_pr: array{state: string},
+         *     resources_pr: array{state: string},
          * }
          */
         $data = json_decode((string) $response->getContent(), true, flags: JSON_THROW_ON_ERROR);
 
-        $this->assertSame('done', $data['workflowA']['state']);
-        $this->assertSame('merged', $data['iconPr']['state']);
-        $this->assertSame('open', $data['resourcesPr']['state']);
+        $this->assertSame('done', $data['workflow_a']['state']);
+        $this->assertSame('merged', $data['icon_pr']['state']);
+        $this->assertSame('open', $data['resources_pr']['state']);
+    }
+
+    private function buildSerializer(): SerializerInterface
+    {
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
+        $nameConverter = new MetadataAwareNameConverter($classMetadataFactory);
+
+        return new Serializer(
+            [new ObjectNormalizer($classMetadataFactory, $nameConverter)],
+            [new JsonEncoder()]
+        );
     }
 }
