@@ -27,8 +27,7 @@ final class GetCreditsApiServiceTest extends TestCase
         $credits = $this->getService()->get();
 
         $this->assertCount(2, $credits);
-        $this->assertSame('PokéSprite', $credits[0]['name']);
-        $this->assertSame('https://github.com/msikma/pokesprite', $credits[0]['url']);
+        $this->assertSame('PokéSprite - https://github.com/msikma/pokesprite', $credits[0]['credit']);
 
         /** @var string $value */
         $value = $this->cache->getItem('credits')->get();
