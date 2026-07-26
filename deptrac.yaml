@@ -169,6 +169,7 @@ parameters:
       - AppHelper
       - SymfonyHttpFoundation
       - SymfonyOptionsResolver
+      - SymfonySerializer
     AppException:
     AppHelper:
     AppSecurity:

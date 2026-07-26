@@ -11,12 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/istration/action/trigger/update_images')]
 final class ImagePipelineStatusController extends AbstractController
 {
     public function __construct(
         private readonly ImagePipelineStatusService $service,
+        private readonly SerializerInterface $serializer,
     ) {}
 
     #[Route('/status', methods: ['GET'])]
@@ -69,7 +71,7 @@ final class ImagePipelineStatusController extends AbstractController
             resourcesPr: $this->prStage($resourcesPrState, $resourcesPrUrl),
         );
 
-        return new JsonResponse($status);
+        return JsonResponse::fromJsonString($this->serializer->serialize($status, 'json'));
     }
 
     private function runStage(?string $status, ?string $conclusion, ?string $url): ImagePipelineStageStatus
