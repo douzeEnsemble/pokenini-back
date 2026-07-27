@@ -29,12 +29,12 @@ final class CreditsCacheInvalidatorServiceTest extends TestCase
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
 
         $cache->get('douze', fn () => 'DouZe');
-        $cache->get('credits', fn () => 'whatever');
+        $cache->get('credits_v2', fn () => 'whatever');
 
         $service = new CreditsCacheInvalidatorService($cache);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
-        $this->assertFalse($cache->hasItem('credits'));
+        $this->assertFalse($cache->hasItem('credits_v2'));
     }
 }
