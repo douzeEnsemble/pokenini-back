@@ -19,7 +19,7 @@ final class KeyMaker
     private const string CACHE_KEY_ALBUM = 'album';
     private const string CACHE_KEY_REPORTS = 'reports';
     private const string CACHE_KEY_TRAINER = 'trainer';
-    private const string CACHE_KEY_CREDITS = 'credits';
+    private const string CACHE_KEY_CREDITS = 'credits_v2';
 
     public static function getDexKey(): string
     {
