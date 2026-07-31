@@ -11,14 +11,6 @@ framework:
     php_errors:
         log: true
 
-    session:
-        handler_id: null
-        cookie_secure: auto
-        cookie_samesite: lax
-        storage_factory_id: session.storage.factory.native
-        cookie_lifetime: "%env(SESSION_TTL)%"
-        gc_maxlifetime: "%env(SESSION_TTL)%"
-
     property_info:
         enabled: false
         with_constructor_extractor: false
@@ -26,12 +18,7 @@ framework:
 when@dev:
     framework:
         test: true
-        session:
-            handler_id: ~
 
 when@test:
     framework:
         test: true
-        session:
-            handler_id: ~
-            storage_factory_id: session.storage.factory.mock_file

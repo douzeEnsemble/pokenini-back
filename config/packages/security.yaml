@@ -12,6 +12,7 @@ security:
       security: false
     main:
       lazy: true
+      stateless: true
       provider: users
       access_token:
         token_handler: App\Security\AccessTokenHandler

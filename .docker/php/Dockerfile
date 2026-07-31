@@ -10,12 +10,6 @@ ENV XDEBUG_MODE=off
 RUN docker-php-ext-enable opcache 2>/dev/null || true
 
 # hadolint ignore=DL3018,SC2086
-RUN apk add --no-cache $PHPIZE_DEPS \
-	&& pecl install redis \
-	&& docker-php-ext-enable redis \
-	&& apk del $PHPIZE_DEPS
-
-# hadolint ignore=DL3018,SC2086
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
 	&& pecl install apcu \
 	&& docker-php-ext-enable apcu \
