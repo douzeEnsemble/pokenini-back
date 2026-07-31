@@ -1,19 +1,22 @@
 [
     {
-        "credit": "PokéSprite - https://github.com/msikma/pokesprite",
-        "images": [
-            {
-                "pokemon_slug": "bulbasaur",
-                "pokemon_name": "Bulbasaur",
-                "pokemon_french_name": "Bulbizarre",
-                "pokemon_icon": "bulbasaur",
-                "size": "small",
-                "is_shiny": false
-            }
-        ]
+        "pokemon_slug": "bulbasaur",
+        "pokemon_name": "Bulbasaur",
+        "pokemon_french_name": "Bulbizarre",
+        "pokemon_icon": "bulbasaur",
+        "small_regular_credit": { "credit": "PokéSprite - https://github.com/msikma/pokesprite" },
+        "small_shiny_credit": null,
+        "big_regular_credit": null,
+        "big_shiny_credit": null
     },
     {
-        "credit": "PokemonDB - https://pokemondb.net",
-        "images": []
+        "pokemon_slug": "venusaur",
+        "pokemon_name": "Venusaur",
+        "pokemon_french_name": "Florizarre",
+        "pokemon_icon": "venusaur",
+        "small_regular_credit": null,
+        "small_shiny_credit": null,
+        "big_regular_credit": null,
+        "big_shiny_credit": null
     }
 ]

@@ -27,9 +27,9 @@ final class GetCreditsApiServiceTest extends TestCase
         $credits = $this->getService()->get();
 
         self::assertCount(2, $credits);
-        self::assertSame('PokéSprite - https://github.com/msikma/pokesprite', $credits[0]['credit']);
-        self::assertCount(1, $credits[0]['images']);
-        self::assertSame('bulbasaur', $credits[0]['images'][0]['pokemon_slug']);
+        self::assertSame('bulbasaur', $credits[0]['pokemon_slug']);
+        self::assertSame('PokéSprite - https://github.com/msikma/pokesprite', $credits[0]['small_regular_credit']['credit']);
+        self::assertNull($credits[1]['small_regular_credit']);
 
         /** @var string $value */
         $value = $this->cache->getItem('credits_v2')->get();
