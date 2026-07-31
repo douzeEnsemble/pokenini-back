@@ -28,7 +28,9 @@ final class GetCreditsApiServiceTest extends TestCase
 
         self::assertCount(2, $credits);
         self::assertSame('bulbasaur', $credits[0]['pokemon_slug']);
-        self::assertSame('PokéSprite - https://github.com/msikma/pokesprite', $credits[0]['small_regular_credit']['credit']);
+        $smallRegularCredit = $credits[0]['small_regular_credit'];
+        self::assertNotNull($smallRegularCredit);
+        self::assertSame('PokéSprite - https://github.com/msikma/pokesprite', $smallRegularCredit['credit']);
         self::assertNull($credits[1]['small_regular_credit']);
 
         /** @var string $value */
