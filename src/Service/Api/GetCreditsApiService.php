@@ -10,7 +10,7 @@ use App\Utils\JsonDecoder;
 class GetCreditsApiService extends AbstractApiService
 {
     /**
-     * @return array<int, array{credit: string, images: array<int, array{pokemon_slug: string, pokemon_name: string, pokemon_french_name: string, pokemon_icon: string, size: string, is_shiny: bool}>}>
+     * @return array<int, array{pokemon_slug: string, pokemon_name: string, pokemon_french_name: string, pokemon_icon: string, small_regular_credit: ?array{credit: string}, small_shiny_credit: ?array{credit: string}, big_regular_credit: ?array{credit: string}, big_shiny_credit: ?array{credit: string}}>
      */
     public function get(): array
     {
@@ -23,7 +23,7 @@ class GetCreditsApiService extends AbstractApiService
             );
         });
 
-        /** @var array<int, array{credit: string, images: array<int, array{pokemon_slug: string, pokemon_name: string, pokemon_french_name: string, pokemon_icon: string, size: string, is_shiny: bool}>}> */
+        /** @var array<int, array{pokemon_slug: string, pokemon_name: string, pokemon_french_name: string, pokemon_icon: string, small_regular_credit: ?array{credit: string}, small_shiny_credit: ?array{credit: string}, big_regular_credit: ?array{credit: string}, big_shiny_credit: ?array{credit: string}}> */
         return JsonDecoder::decode($json);
     }
 }
