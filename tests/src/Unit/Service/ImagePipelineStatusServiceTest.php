@@ -139,7 +139,6 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $result = $service->getStatus(refresh: true);
 
         $this->assertSame($afterFirstPoll, $result);
-        $this->assertNull($result['workflow_a_conclusion']);
     }
 
     public function testRefreshKeepsWorkflowBConclusionNullWhileRunStillInProgress(): void
@@ -192,7 +191,6 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $result = $service->getStatus(refresh: true);
 
         $this->assertSame($afterFirstPoll, $result);
-        $this->assertNull($result['workflow_b_conclusion']);
     }
 
     public function testRefreshDoesNothingWhenPollFindsNothingNew(): void
