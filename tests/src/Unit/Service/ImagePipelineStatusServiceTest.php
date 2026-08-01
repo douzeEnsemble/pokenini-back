@@ -89,6 +89,112 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($refreshed, $service->getStatus(refresh: true));
     }
 
+    public function testRefreshKeepsWorkflowAConclusionNullWhileRunStillInProgress(): void
+    {
+        $latest = [
+            'correlation_id' => 'corr-1',
+            'workflow_a_run_id' => null,
+            'workflow_a_conclusion' => null,
+            'icon_pr_state' => null,
+            'icon_pr_merge_commit_sha' => null,
+            'workflow_b_conclusion' => null,
+        ];
+        $afterFirstPoll = array_merge($latest, [
+            'workflow_a_run_id' => 2,
+            'workflow_a_status' => 'in_progress',
+            'workflow_a_url' => 'https://github.com/x/y/actions/runs/2',
+        ]);
+
+        $imagePipelineApiService = $this->createMock(ImagePipelineApiService::class);
+        $imagePipelineApiService
+            ->method('getLatest')
+            ->willReturnOnConsecutiveCalls($latest, $afterFirstPoll)
+        ;
+        $imagePipelineApiService
+            ->expects($this->once())
+            ->method('updateFields')
+            ->with('corr-1', [
+                'workflowARunId' => 2,
+                'workflowAStatus' => 'in_progress',
+                'workflowAUrl' => 'https://github.com/x/y/actions/runs/2',
+            ])
+        ;
+
+        $githubQueryApiService = $this->createMock(GithubQueryApiService::class);
+        $githubQueryApiService
+            ->expects($this->once())
+            ->method('findWorkflowRunByDisplayTitle')
+            ->with('douzeensemble/pokenini-icon', 'update-images.yml', 'Update images (corr-1)')
+            ->willReturn([
+                'id' => 2,
+                'status' => 'in_progress',
+                'conclusion' => null,
+                'htmlUrl' => 'https://github.com/x/y/actions/runs/2',
+                'headSha' => 'sha2',
+            ])
+        ;
+
+        $service = $this->getService($imagePipelineApiService, $githubQueryApiService);
+
+        $result = $service->getStatus(refresh: true);
+
+        $this->assertSame($afterFirstPoll, $result);
+        $this->assertNull($result['workflow_a_conclusion']);
+    }
+
+    public function testRefreshKeepsWorkflowBConclusionNullWhileRunStillInProgress(): void
+    {
+        $latest = [
+            'correlation_id' => 'corr-1',
+            'workflow_a_run_id' => 2,
+            'workflow_a_conclusion' => 'success',
+            'icon_pr_state' => 'merged',
+            'icon_pr_merge_commit_sha' => 'merge-sha-5',
+            'workflow_b_conclusion' => null,
+        ];
+        $afterFirstPoll = array_merge($latest, [
+            'workflow_b_run_id' => 9,
+            'workflow_b_status' => 'in_progress',
+            'workflow_b_url' => 'https://github.com/x/y/actions/runs/9',
+        ]);
+
+        $imagePipelineApiService = $this->createMock(ImagePipelineApiService::class);
+        $imagePipelineApiService
+            ->method('getLatest')
+            ->willReturnOnConsecutiveCalls($latest, $afterFirstPoll)
+        ;
+        $imagePipelineApiService
+            ->expects($this->once())
+            ->method('updateFields')
+            ->with('corr-1', [
+                'workflowBRunId' => 9,
+                'workflowBStatus' => 'in_progress',
+                'workflowBUrl' => 'https://github.com/x/y/actions/runs/9',
+            ])
+        ;
+
+        $githubQueryApiService = $this->createMock(GithubQueryApiService::class);
+        $githubQueryApiService
+            ->expects($this->once())
+            ->method('findWorkflowRunByHeadSha')
+            ->with('douzeensemble/pokenini-icon', 'publish-images-to-resources.yml', 'merge-sha-5')
+            ->willReturn([
+                'id' => 9,
+                'status' => 'in_progress',
+                'conclusion' => null,
+                'htmlUrl' => 'https://github.com/x/y/actions/runs/9',
+                'headSha' => 'merge-sha-5',
+            ])
+        ;
+
+        $service = $this->getService($imagePipelineApiService, $githubQueryApiService);
+
+        $result = $service->getStatus(refresh: true);
+
+        $this->assertSame($afterFirstPoll, $result);
+        $this->assertNull($result['workflow_b_conclusion']);
+    }
+
     public function testRefreshDoesNothingWhenPollFindsNothingNew(): void
     {
         $latest = [
