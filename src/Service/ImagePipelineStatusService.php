@@ -89,12 +89,17 @@ class ImagePipelineStatusService
             return [];
         }
 
-        return [
+        $updates = [
             'workflowARunId' => $run['id'],
             'workflowAStatus' => $run['status'],
-            'workflowAConclusion' => $run['conclusion'] ?? '',
             'workflowAUrl' => $run['htmlUrl'],
         ];
+
+        if (null !== $run['conclusion']) {
+            $updates['workflowAConclusion'] = $run['conclusion'];
+        }
+
+        return $updates;
     }
 
     /**
@@ -149,12 +154,17 @@ class ImagePipelineStatusService
             return [];
         }
 
-        return [
+        $updates = [
             'workflowBRunId' => $run['id'],
             'workflowBStatus' => $run['status'],
-            'workflowBConclusion' => $run['conclusion'] ?? '',
             'workflowBUrl' => $run['htmlUrl'],
         ];
+
+        if (null !== $run['conclusion']) {
+            $updates['workflowBConclusion'] = $run['conclusion'];
+        }
+
+        return $updates;
     }
 
     /**
