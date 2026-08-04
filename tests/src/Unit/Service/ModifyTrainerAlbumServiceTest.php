@@ -23,45 +23,65 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[CoversClass(ModifyTrainerAlbumService::class)]
 final class ModifyTrainerAlbumServiceTest extends TestCase
 {
-    public function testModifyAlbum(): void
+    public function testModifyAlbumInvalidatesEveryUpdatedDexSlug(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
-        $userTokenService
-            ->expects($this->once())
+        $userTokenService->expects($this->once())
             ->method('getLoggedUserToken')
             ->willReturn('8800088')
         ;
 
         $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
-        $modifyAlbumService
-            ->expects($this->once())
+        $modifyAlbumService->expects($this->once())
             ->method('modify')
-            ->with(
-                'PUT',
-                'douze',
-                'treize',
-                '{"ceci": "est-du-contenu"}',
-                '8800088',
-            )
+            ->with('PUT', 'douze', 'treize', '{"ceci": "est-du-contenu"}', '8800088')
+            ->willReturn(['douze', 'treize-dex'])
         ;
 
         $albumsCacheInvalidatorService = $this->createMock(AlbumsCacheInvalidatorService::class);
-        $albumsCacheInvalidatorService
-            ->expects($this->once())
-            ->method('invalidate')
-        ;
+        $albumsCacheInvalidatorService->expects($this->once())->method('invalidate');
 
         $albumCacheInvalidatorService = $this->createMock(AlbumCacheInvalidatorService::class);
-        $albumCacheInvalidatorService
-            ->expects($this->once())
+        $albumCacheInvalidatorService->expects($this->exactly(2))
+            ->method('invalidate')
+            ->willReturnMap([
+                ['douze', '8800088', null],
+                ['treize-dex', '8800088', null],
+            ])
+        ;
+
+        $request = Request::create('test.local', 'PUT');
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        $service = new ModifyTrainerAlbumService(
+            $userTokenService,
+            $modifyAlbumService,
+            $albumsCacheInvalidatorService,
+            $albumCacheInvalidatorService,
+            $requestStack,
+        );
+        $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
+    }
+
+    public function testModifyAlbumInvalidatesOnlyTheOriginWhenNothingElseChanged(): void
+    {
+        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
+
+        $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
+        $modifyAlbumService->method('modify')->willReturn(['douze']);
+
+        $albumsCacheInvalidatorService = $this->createMock(AlbumsCacheInvalidatorService::class);
+        $albumsCacheInvalidatorService->expects($this->once())->method('invalidate');
+
+        $albumCacheInvalidatorService = $this->createMock(AlbumCacheInvalidatorService::class);
+        $albumCacheInvalidatorService->expects($this->once())
             ->method('invalidate')
             ->with('douze', '8800088')
         ;
 
-        $request = Request::create(
-            'test.local',
-            'PUT',
-        );
+        $request = Request::create('test.local', 'PUT');
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
@@ -78,8 +98,7 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
     public function testModifyDexWithHttpException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
-        $userTokenService
-            ->expects($this->once())
+        $userTokenService->expects($this->once())
             ->method('getLoggedUserToken')
             ->willReturn('8800088')
         ;
@@ -87,35 +106,19 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $exception = $this->createStub(HttpExceptionInterface::class);
 
         $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
-        $modifyAlbumService
-            ->expects($this->once())
+        $modifyAlbumService->expects($this->once())
             ->method('modify')
-            ->with(
-                'PUT',
-                'douze',
-                'treize',
-                '{"ceci": "est-du-contenu"}',
-                '8800088',
-            )
+            ->with('PUT', 'douze', 'treize', '{"ceci": "est-du-contenu"}', '8800088')
             ->willThrowException($exception)
         ;
 
         $albumsCacheInvalidatorService = $this->createMock(AlbumsCacheInvalidatorService::class);
-        $albumsCacheInvalidatorService
-            ->expects($this->never())
-            ->method('invalidate')
-        ;
+        $albumsCacheInvalidatorService->expects($this->never())->method('invalidate');
 
         $albumCacheInvalidatorService = $this->createMock(AlbumCacheInvalidatorService::class);
-        $albumCacheInvalidatorService
-            ->expects($this->never())
-            ->method('invalidate')
-        ;
+        $albumCacheInvalidatorService->expects($this->never())->method('invalidate');
 
-        $request = Request::create(
-            'test.local',
-            'PUT',
-        );
+        $request = Request::create('test.local', 'PUT');
         $requestStack = new RequestStack();
         $requestStack->push($request);
 
@@ -135,29 +138,19 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
     public function testModifyDexWithNoRequest(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
-        $userTokenService
-            ->expects($this->once())
+        $userTokenService->expects($this->once())
             ->method('getLoggedUserToken')
             ->willReturn('8800088')
         ;
 
         $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
-        $modifyAlbumService
-            ->expects($this->never())
-            ->method('modify')
-        ;
+        $modifyAlbumService->expects($this->never())->method('modify');
 
         $albumsCacheInvalidatorService = $this->createMock(AlbumsCacheInvalidatorService::class);
-        $albumsCacheInvalidatorService
-            ->expects($this->never())
-            ->method('invalidate')
-        ;
+        $albumsCacheInvalidatorService->expects($this->never())->method('invalidate');
 
         $albumCacheInvalidatorService = $this->createMock(AlbumCacheInvalidatorService::class);
-        $albumCacheInvalidatorService
-            ->expects($this->never())
-            ->method('invalidate')
-        ;
+        $albumCacheInvalidatorService->expects($this->never())->method('invalidate');
 
         $requestStack = new RequestStack();
 
@@ -177,8 +170,7 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
     public function testModifyDexWithTransportException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
-        $userTokenService
-            ->expects($this->once())
+        $userTokenService->expects($this->once())
             ->method('getLoggedUserToken')
             ->willReturn('8800088')
         ;
@@ -186,35 +178,19 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $exception = $this->createStub(TransportExceptionInterface::class);
 
         $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
-        $modifyAlbumService
-            ->expects($this->once())
+        $modifyAlbumService->expects($this->once())
             ->method('modify')
-            ->with(
-                'PUT',
-                'douze',
-                'treize',
-                '{"ceci": "est-du-contenu"}',
-                '8800088',
-            )
+            ->with('PUT', 'douze', 'treize', '{"ceci": "est-du-contenu"}', '8800088')
             ->willThrowException($exception)
         ;
 
         $albumsCacheInvalidatorService = $this->createMock(AlbumsCacheInvalidatorService::class);
-        $albumsCacheInvalidatorService
-            ->expects($this->never())
-            ->method('invalidate')
-        ;
+        $albumsCacheInvalidatorService->expects($this->never())->method('invalidate');
 
         $albumCacheInvalidatorService = $this->createMock(AlbumCacheInvalidatorService::class);
-        $albumCacheInvalidatorService
-            ->expects($this->never())
-            ->method('invalidate')
-        ;
+        $albumCacheInvalidatorService->expects($this->never())->method('invalidate');
 
-        $request = Request::create(
-            'test.local',
-            'PUT',
-        );
+        $request = Request::create('test.local', 'PUT');
         $requestStack = new RequestStack();
         $requestStack->push($request);
 

@@ -36,7 +36,7 @@ class ModifyTrainerAlbumService
         }
 
         try {
-            $this->modifyAlbumService->modify(
+            $updatedDexSlugs = $this->modifyAlbumService->modify(
                 $request->getMethod(),
                 $dexSlug,
                 $pokemonSlug,
@@ -45,7 +45,10 @@ class ModifyTrainerAlbumService
             );
 
             $this->albumsCacheInvalidatorService->invalidate();
-            $this->albumCacheInvalidatorService->invalidate($dexSlug, $trainerId);
+
+            foreach ($updatedDexSlugs as $updatedDexSlug) {
+                $this->albumCacheInvalidatorService->invalidate($updatedDexSlug, $trainerId);
+            }
         } catch (HttpExceptionInterface|TransportExceptionInterface $e) {
             throw new ModifyFailedException();
         }

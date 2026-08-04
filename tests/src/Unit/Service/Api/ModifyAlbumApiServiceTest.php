@@ -10,7 +10,9 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * @internal
@@ -23,11 +25,12 @@ final class ModifyAlbumApiServiceTest extends TestCase
 
     public function testModifyPatch(): void
     {
-        $this
+        $updatedDexSlugs = $this
             ->getService(
                 'PATCH',
                 'album/123/home/pikachu',
                 'yes',
+                '{"updatedDexSlugs":["home"]}',
             )
             ->modify(
                 'PATCH',
@@ -38,16 +41,18 @@ final class ModifyAlbumApiServiceTest extends TestCase
             )
         ;
 
+        $this->assertSame(['home'], $updatedDexSlugs);
         $this->assertEmpty($this->cachePool->getValues());
     }
 
     public function testModifyPut(): void
     {
-        $this
+        $updatedDexSlugs = $this
             ->getService(
                 'PUT',
                 'album/123/home/pikachu',
                 'yes',
+                '{"updatedDexSlugs":["home"]}',
             )
             ->modify(
                 'PUT',
@@ -58,7 +63,59 @@ final class ModifyAlbumApiServiceTest extends TestCase
             )
         ;
 
+        $this->assertSame(['home'], $updatedDexSlugs);
         $this->assertEmpty($this->cachePool->getValues());
+    }
+
+    public function testModifyReturnsUpdatedDexSlugs(): void
+    {
+        $response = $this->createMock(ResponseInterface::class);
+        $response->method('getContent')->willReturn('{"updatedDexSlugs":["national","shiny-living"]}');
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->expects($this->once())
+            ->method('request')
+            ->with(
+                'PUT',
+                'https://api.local/album/8800088/douze/treize',
+                $this->callback(function (array $options): bool {
+                    return 'yes' === $options['body'];
+                }),
+            )
+            ->willReturn($response)
+        ;
+
+        $service = new ModifyAlbumApiService(
+            $this->createMock(LoggerInterface::class),
+            $client,
+            'https://api.local',
+            '/path/to/cafile',
+            $this->createMock(TagAwareCacheInterface::class),
+            'login',
+            'password',
+        );
+
+        $this->assertSame(
+            ['national', 'shiny-living'],
+            $service->modify('PUT', 'douze', 'treize', 'yes', '8800088'),
+        );
+    }
+
+    public function testModifyRejectsAnInvalidHttpMethod(): void
+    {
+        $service = new ModifyAlbumApiService(
+            $this->createMock(LoggerInterface::class),
+            $this->createMock(HttpClientInterface::class),
+            'https://api.local',
+            '/path/to/cafile',
+            $this->createMock(TagAwareCacheInterface::class),
+            'login',
+            'password',
+        );
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $service->modify('GET', 'douze', 'treize', 'yes', '8800088');
     }
 
     public function testModifyPost(): void
@@ -91,9 +148,13 @@ final class ModifyAlbumApiServiceTest extends TestCase
     private function getService(
         string $method,
         string $suffix,
-        string $body
+        string $body,
+        string $responseContent = '{"updatedDexSlugs":[]}',
     ): ModifyAlbumApiService {
         $logger = $this->createStub(LoggerInterface::class);
+
+        $response = $this->createStub(ResponseInterface::class);
+        $response->method('getContent')->willReturn($responseContent);
 
         $client = $this->createMock(HttpClientInterface::class);
         $client
@@ -114,6 +175,7 @@ final class ModifyAlbumApiServiceTest extends TestCase
                     'body' => $body,
                 ],
             )
+            ->willReturn($response)
         ;
 
         $this->cachePool = new ArrayAdapter();
