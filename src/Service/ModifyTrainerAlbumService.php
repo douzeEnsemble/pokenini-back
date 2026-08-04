@@ -49,7 +49,7 @@ class ModifyTrainerAlbumService
             foreach ($updatedDexSlugs as $updatedDexSlug) {
                 $this->albumCacheInvalidatorService->invalidate($updatedDexSlug, $trainerId);
             }
-        } catch (HttpExceptionInterface|TransportExceptionInterface|\JsonException $e) {
+        } catch (HttpExceptionInterface|\JsonException|TransportExceptionInterface $e) {
             throw new ModifyFailedException();
         }
     }
