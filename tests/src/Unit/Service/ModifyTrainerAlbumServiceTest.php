@@ -135,6 +135,46 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
     }
 
+    public function testModifyDexWithMalformedJsonResponse(): void
+    {
+        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService->expects($this->once())
+            ->method('getLoggedUserToken')
+            ->willReturn('8800088')
+        ;
+
+        $exception = new \JsonException('Syntax error');
+
+        $modifyAlbumService = $this->createMock(ModifyAlbumApiService::class);
+        $modifyAlbumService->expects($this->once())
+            ->method('modify')
+            ->with('PUT', 'douze', 'treize', '{"ceci": "est-du-contenu"}', '8800088')
+            ->willThrowException($exception)
+        ;
+
+        $albumsCacheInvalidatorService = $this->createMock(AlbumsCacheInvalidatorService::class);
+        $albumsCacheInvalidatorService->expects($this->never())->method('invalidate');
+
+        $albumCacheInvalidatorService = $this->createMock(AlbumCacheInvalidatorService::class);
+        $albumCacheInvalidatorService->expects($this->never())->method('invalidate');
+
+        $request = Request::create('test.local', 'PUT');
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        $service = new ModifyTrainerAlbumService(
+            $userTokenService,
+            $modifyAlbumService,
+            $albumsCacheInvalidatorService,
+            $albumCacheInvalidatorService,
+            $requestStack,
+        );
+
+        $this->expectException(ModifyFailedException::class);
+
+        $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
+    }
+
     public function testModifyDexWithNoRequest(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
