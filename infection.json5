@@ -39,6 +39,14 @@
                 "\\$this->logger->critical.*",
             ]
         },
+        "ReturnRemoval": {
+            "ignore": [
+                // Equivalent mutant: removing this early return still falls through to the
+                // `targetDexSlug` isset() check just below, which rejects the same empty/falsy
+                // bodies with the same JsonResponse([], 400) — no externally observable difference.
+                "App\\Controller\\Album\\TrainerDexLinkController::create",
+            ],
+        },
         "ArrayItem": {
             "ignoreSourceCodeByRegex": [
                 "\\$this->logger->info.*",
