@@ -32,9 +32,7 @@
       }
     },
     "response": {
-      "json": {
-        "version": "1.9.8"
-      }
+      "json": "{\"version\": \"1.9.8\"}"
     }
   },
   {
