@@ -16,12 +16,14 @@ final class LocalVersionServiceTest extends TestCase
 {
     private string $tempDir;
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->tempDir = sys_get_temp_dir().'/local_version_service_test_'.uniqid();
         mkdir($this->tempDir);
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         $files = glob($this->tempDir.'/*');
