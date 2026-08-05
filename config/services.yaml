@@ -19,6 +19,7 @@ services:
             int $topCount: '%env(ELECTION_TOP_COUNT)%'
             int $electionCandidateCount: '%env(ELECTION_CANDIDATE_COUNT)%'
             string $env: '%kernel.environment%'
+            string $metadataDir: '%kernel.project_dir%/resources/metadata'
 
     App\:
         resource: '../src/'
