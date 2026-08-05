@@ -25,6 +25,20 @@
   },
   {
     "request": {
+      "uri": "/version",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "json": {
+        "version": "1.9.8"
+      }
+    }
+  },
+  {
+    "request": {
       "uri": "/credits",
       "headers": {
         "accept": "application/json",
