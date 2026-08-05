@@ -58,10 +58,15 @@ POKEMON_IMAGE_URL='http://localhost:8083/pokemon/big/%1$s/%2$s.png'
 Run: `grep -n "DEX_BANNER_URL\|POKEMON_ICON_URL\|POKEMON_IMAGE_URL" .env.dev.local .env.prod`
 Expected: all three lines in both files show `/banner/large/`, `/pokemon/small/`, `/pokemon/big/`.
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 4: Commit only the git-tracked env file**
+
+`.env.dev.local` is a gitignored local-override file (see `.gitignore:19`:
+`/.env.*.local`) — edit it on disk (done in Step 1 above) so local dev keeps
+working, but never force-add it to git. Only `.env.prod` is tracked and
+gets committed:
 
 ```bash
-git add .env.dev.local .env.prod
+git add .env.prod
 git commit -m "$(cat <<'EOF'
 Update image URL env vars for pokenini-icon's images/ reorg
 
