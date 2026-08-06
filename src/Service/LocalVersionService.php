@@ -20,4 +20,21 @@ class LocalVersionService
 
         return trim((string) file_get_contents($path));
     }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        $path = $this->metadataDir.'/version';
+
+        if (!is_file($path)) {
+            return null;
+        }
+
+        $mtime = filemtime($path);
+
+        if (false === $mtime) {
+            return null;
+        }
+
+        return (new \DateTimeImmutable())->setTimestamp($mtime);
+    }
 }

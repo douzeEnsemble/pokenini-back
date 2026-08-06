@@ -21,10 +21,10 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(GetVersionApiService::class)]
 final class GetVersionApiServiceTest extends TestCase
 {
-    public function testGetReturnsVersionFromDecodedBody(): void
+    public function testGetReturnsVersionAndUpdatedAtFromDecodedBody(): void
     {
         $response = $this->createStub(ResponseInterface::class);
-        $response->method('getContent')->willReturn('{"version":"1.2.12"}');
+        $response->method('getContent')->willReturn('{"version":"1.2.12","updated_at":"2026-08-05T09:12:00+00:00"}');
 
         $client = $this->createMock(HttpClientInterface::class);
         $client
@@ -47,20 +47,40 @@ final class GetVersionApiServiceTest extends TestCase
             ->willReturn($response)
         ;
 
-        $this->assertSame('1.2.12', $this->getService($client)->get());
+        $result = $this->getService($client)->get();
+
+        $this->assertSame('1.2.12', $result['version']);
+        $this->assertSame('2026-08-05T09:12:00+00:00', $result['updated_at']?->format(\DateTimeInterface::ATOM));
     }
 
-    public function testGetReturnsNullOnTransportError(): void
+    public function testGetHandlesNullUpdatedAtField(): void
+    {
+        $response = $this->createStub(ResponseInterface::class);
+        $response->method('getContent')->willReturn('{"version":"1.2.12","updated_at":null}');
+
+        $client = $this->createMock(HttpClientInterface::class);
+        $client->method('request')->willReturn($response);
+
+        $result = $this->getService($client)->get();
+
+        $this->assertSame('1.2.12', $result['version']);
+        $this->assertNull($result['updated_at']);
+    }
+
+    public function testGetReturnsNullFieldsOnTransportError(): void
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
             $this->createMock(TransportException::class)
         );
 
-        $this->assertNull($this->getService($client)->get());
+        $result = $this->getService($client)->get();
+
+        $this->assertNull($result['version']);
+        $this->assertNull($result['updated_at']);
     }
 
-    public function testGetReturnsNullOnHttpError(): void
+    public function testGetReturnsNullFieldsOnHttpError(): void
     {
         $errorResponse = $this->createMock(ResponseInterface::class);
         $errorResponse->method('getStatusCode')->willReturn(500);
@@ -78,10 +98,13 @@ final class GetVersionApiServiceTest extends TestCase
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willReturn($response);
 
-        $this->assertNull($this->getService($client)->get());
+        $result = $this->getService($client)->get();
+
+        $this->assertNull($result['version']);
+        $this->assertNull($result['updated_at']);
     }
 
-    public function testGetReturnsNullOnMalformedJson(): void
+    public function testGetReturnsNullFieldsOnMalformedJson(): void
     {
         $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('not json');
@@ -89,7 +112,10 @@ final class GetVersionApiServiceTest extends TestCase
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willReturn($response);
 
-        $this->assertNull($this->getService($client)->get());
+        $result = $this->getService($client)->get();
+
+        $this->assertNull($result['version']);
+        $this->assertNull($result['updated_at']);
     }
 
     private function getService(HttpClientInterface $client): GetVersionApiService
