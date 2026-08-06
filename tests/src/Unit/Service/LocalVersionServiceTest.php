@@ -49,4 +49,20 @@ final class LocalVersionServiceTest extends TestCase
 
         $this->assertSame('unknown', $service->getVersion());
     }
+
+    public function testGetUpdatedAtReturnsFileMtime(): void
+    {
+        file_put_contents($this->tempDir.'/version', "1.2.12\n");
+        $expectedMtime = filemtime($this->tempDir.'/version');
+        $service = new LocalVersionService($this->tempDir);
+
+        $this->assertSame($expectedMtime, $service->getUpdatedAt()?->getTimestamp());
+    }
+
+    public function testGetUpdatedAtReturnsNullWhenFileMissing(): void
+    {
+        $service = new LocalVersionService($this->tempDir);
+
+        $this->assertNull($service->getUpdatedAt());
+    }
 }

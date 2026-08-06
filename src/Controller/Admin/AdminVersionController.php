@@ -22,7 +22,10 @@ final class AdminVersionController extends AbstractController
     public function version(): JsonResponse
     {
         return $this->json([
-            'back' => $this->localVersionService->getVersion(),
+            'back' => [
+                'version' => $this->localVersionService->getVersion(),
+                'updated_at' => $this->localVersionService->getUpdatedAt(),
+            ],
             'api' => $this->getVersionApiService->get(),
         ]);
     }

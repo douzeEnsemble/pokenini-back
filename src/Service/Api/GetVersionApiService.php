@@ -9,17 +9,26 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 
 class GetVersionApiService extends AbstractApiService
 {
-    public function get(): ?string
+    /**
+     * @return array{version: ?string, updated_at: ?\DateTimeImmutable}
+     */
+    public function get(): array
     {
         try {
             $content = $this->requestContent('GET', '/version');
 
-            /** @var array{version: string} $decoded */
+            /** @var array{version: string, updated_at: ?string} $decoded */
             $decoded = JsonDecoder::decode($content);
 
-            return $decoded['version'];
+            return [
+                'version' => $decoded['version'],
+                'updated_at' => null !== $decoded['updated_at'] ? new \DateTimeImmutable($decoded['updated_at']) : null,
+            ];
         } catch (ExceptionInterface|\JsonException) {
-            return null;
+            return [
+                'version' => null,
+                'updated_at' => null,
+            ];
         }
     }
 }
