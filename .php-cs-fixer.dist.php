@@ -16,7 +16,7 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@PSR12' => true,
         '@PhpCsFixer' => true,
-        '@PHP85Migration' => true,
+        '@PHP83Migration' => true,
         'phpdoc_to_comment' => [
             'allow_before_return_statement' => true,
             'ignored_tags' => [

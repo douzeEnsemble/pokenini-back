@@ -40,7 +40,7 @@ final class VersionsTest extends WebTestCase
         $expectedBackUpdatedAt = (new \DateTimeImmutable())->setTimestamp((int) filemtime($versionFilePath));
 
         self::assertJsonStringEqualsJsonString(
-            (string) json_encode([
+            json_encode([
                 'back' => [
                     'version' => $expectedBackVersion,
                     'updated_at' => $expectedBackUpdatedAt->format(\DateTimeInterface::ATOM),
