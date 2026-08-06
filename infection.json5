@@ -45,6 +45,10 @@
                 // `targetDexSlug` isset() check just below, which rejects the same empty/falsy
                 // bodies with the same JsonResponse([], 400) — no externally observable difference.
                 "App\\Controller\\Album\\TrainerDexLinkController::create",
+                // Equivalent mutant: removing this early return still falls through to
+                // `filemtime()` on the now-known-missing path, which itself returns false and
+                // is caught by the `false === $mtime` check just below — same null result.
+                "App\\Service\\LocalVersionService::getUpdatedAt",
             ],
         },
         "ArrayItem": {

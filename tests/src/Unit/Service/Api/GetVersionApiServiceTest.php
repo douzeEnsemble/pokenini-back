@@ -76,6 +76,7 @@ final class GetVersionApiServiceTest extends TestCase
 
         $result = $this->getService($client)->get();
 
+        $this->assertArrayHasKey('version', $result);
         $this->assertNull($result['version']);
         $this->assertNull($result['updated_at']);
     }
@@ -100,6 +101,7 @@ final class GetVersionApiServiceTest extends TestCase
 
         $result = $this->getService($client)->get();
 
+        $this->assertArrayHasKey('version', $result);
         $this->assertNull($result['version']);
         $this->assertNull($result['updated_at']);
     }
@@ -114,6 +116,7 @@ final class GetVersionApiServiceTest extends TestCase
 
         $result = $this->getService($client)->get();
 
+        $this->assertArrayHasKey('version', $result);
         $this->assertNull($result['version']);
         $this->assertNull($result['updated_at']);
     }

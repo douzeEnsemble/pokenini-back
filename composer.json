@@ -75,7 +75,10 @@
         "psr-4": {
             "App\\Tests\\": "tests/src/",
             "App\\Tests\\Utils\\": "tests/Utils/"
-        }
+        },
+        "files": [
+            "tests/Utils/functions.php"
+        ]
     },
     "replace": {
         "paragonie/random_compat": "2.*",

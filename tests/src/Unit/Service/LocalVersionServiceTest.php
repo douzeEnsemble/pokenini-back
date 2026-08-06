@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service;
 
 use App\Service\LocalVersionService;
+use App\Tests\Utils\FilemtimeStub;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -26,6 +27,8 @@ final class LocalVersionServiceTest extends TestCase
     #[\Override]
     protected function tearDown(): void
     {
+        FilemtimeStub::$forceFailure = false;
+
         $files = glob($this->tempDir.'/*');
         if (false !== $files) {
             foreach ($files as $file) {
@@ -61,6 +64,15 @@ final class LocalVersionServiceTest extends TestCase
 
     public function testGetUpdatedAtReturnsNullWhenFileMissing(): void
     {
+        $service = new LocalVersionService($this->tempDir);
+
+        $this->assertNull($service->getUpdatedAt());
+    }
+
+    public function testGetUpdatedAtReturnsNullWhenFilemtimeFails(): void
+    {
+        file_put_contents($this->tempDir.'/version', "1.2.12\n");
+        FilemtimeStub::$forceFailure = true;
         $service = new LocalVersionService($this->tempDir);
 
         $this->assertNull($service->getUpdatedAt());
