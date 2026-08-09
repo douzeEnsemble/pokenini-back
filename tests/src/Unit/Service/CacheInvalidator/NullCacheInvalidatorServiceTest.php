@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\CacheInvalidator;
 
 use App\Service\CacheInvalidator\NullCacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,14 +15,16 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(NullCacheInvalidatorService::class)]
 final class NullCacheInvalidatorServiceTest extends TestCase
 {
-    public function testGetSupportedTypes(): void
+    #[Test]
+    public function getSupportedTypes(): void
     {
         $service = new NullCacheInvalidatorService();
 
         $this->assertSame(['pokemons'], $service->getSupportedTypes());
     }
 
-    public function testInvalidateDoesNothing(): void
+    #[Test]
+    public function invalidateDoesNothing(): void
     {
         $this->expectNotToPerformAssertions();
 

@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\CacheInvalidator;
 
 use App\Service\CacheInvalidator\DexCacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
@@ -17,7 +18,8 @@ use Symfony\Contracts\Cache\ItemInterface;
 #[CoversClass(DexCacheInvalidatorService::class)]
 final class DexCacheInvalidatorServiceTest extends TestCase
 {
-    public function testGetSupportedTypes(): void
+    #[Test]
+    public function getSupportedTypes(): void
     {
         $service = new DexCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
 
@@ -26,7 +28,8 @@ final class DexCacheInvalidatorServiceTest extends TestCase
         $this->assertContains('games_collections_and_dex', $service->getSupportedTypes());
     }
 
-    public function testInvalidate(): void
+    #[Test]
+    public function invalidate(): void
     {
         $cachePool = new ArrayAdapter();
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
@@ -66,7 +69,8 @@ final class DexCacheInvalidatorServiceTest extends TestCase
         $this->assertFalse($cache->hasItem('dex_789'));
     }
 
-    public function testInvalidateMock(): void
+    #[Test]
+    public function invalidateMock(): void
     {
         $cache = $this->createMock(TagAwareAdapter::class);
         $cache
@@ -79,7 +83,8 @@ final class DexCacheInvalidatorServiceTest extends TestCase
         $service->invalidate();
     }
 
-    public function testInvalidateByTrainerId(): void
+    #[Test]
+    public function invalidateByTrainerId(): void
     {
         $cachePool = new ArrayAdapter();
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
@@ -120,7 +125,8 @@ final class DexCacheInvalidatorServiceTest extends TestCase
         $this->assertFalse($cache->hasItem('dex_123'));
     }
 
-    public function testInvalidateByTrainerIdWithHomeDex(): void
+    #[Test]
+    public function invalidateByTrainerIdWithHomeDex(): void
     {
         $cachePool = new ArrayAdapter();
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
@@ -170,7 +176,8 @@ final class DexCacheInvalidatorServiceTest extends TestCase
         $this->assertFalse($cache->hasItem('dex_123#includeprivatedex'));
     }
 
-    public function testInvalidateByTrainerIdMock(): void
+    #[Test]
+    public function invalidateByTrainerIdMock(): void
     {
         $cache = $this->createMock(TagAwareAdapter::class);
         $cache

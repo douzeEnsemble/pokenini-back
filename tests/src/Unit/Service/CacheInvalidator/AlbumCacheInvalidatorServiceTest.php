@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\CacheInvalidator;
 
 use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
@@ -16,7 +17,8 @@ use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 #[CoversClass(AlbumCacheInvalidatorService::class)]
 final class AlbumCacheInvalidatorServiceTest extends TestCase
 {
-    public function testInvalidate(): void
+    #[Test]
+    public function invalidate(): void
     {
         $cachePool = new ArrayAdapter();
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
@@ -34,7 +36,8 @@ final class AlbumCacheInvalidatorServiceTest extends TestCase
         $this->assertFalse($cache->hasItem('album_home_123'));
     }
 
-    public function testInvalidateMock(): void
+    #[Test]
+    public function invalidateMock(): void
     {
         $cache = $this->createMock(TagAwareAdapter::class);
         $cache

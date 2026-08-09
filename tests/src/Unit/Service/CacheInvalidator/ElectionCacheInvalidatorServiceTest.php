@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\CacheInvalidator;
 
 use App\Service\CacheInvalidator\ElectionCacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
@@ -17,7 +18,8 @@ use Symfony\Contracts\Cache\ItemInterface;
 #[CoversClass(ElectionCacheInvalidatorService::class)]
 final class ElectionCacheInvalidatorServiceTest extends TestCase
 {
-    public function testInvalidate(): void
+    #[Test]
+    public function invalidate(): void
     {
         $cachePool = new ArrayAdapter();
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
@@ -40,7 +42,8 @@ final class ElectionCacheInvalidatorServiceTest extends TestCase
         $this->assertTrue($cache->hasItem('election_dex_list_456'));
     }
 
-    public function testInvalidateMock(): void
+    #[Test]
+    public function invalidateMock(): void
     {
         $cache = $this->createMock(TagAwareAdapter::class);
         $cache
