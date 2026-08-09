@@ -85,7 +85,7 @@ final class ImagePipelineApiServiceTest extends TestCase
     #[Test]
     public function getLatestReturnsNullOn404(): void
     {
-        $errorResponse = $this->createMock(ResponseInterface::class);
+        $errorResponse = $this->createStub(ResponseInterface::class);
         $errorResponse->method('getStatusCode')->willReturn(404);
 
         $exception = $this->createStub(ClientExceptionInterface::class);
@@ -133,7 +133,7 @@ final class ImagePipelineApiServiceTest extends TestCase
     #[Test]
     public function getLatestFailsOnNonNotFoundHttpError(): void
     {
-        $errorResponse = $this->createMock(ResponseInterface::class);
+        $errorResponse = $this->createStub(ResponseInterface::class);
         $errorResponse->method('getStatusCode')->willReturn(500);
 
         $exception = $this->createStub(ClientExceptionInterface::class);

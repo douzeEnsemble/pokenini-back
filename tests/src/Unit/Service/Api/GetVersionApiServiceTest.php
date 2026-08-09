@@ -88,7 +88,7 @@ final class GetVersionApiServiceTest extends TestCase
     #[Test]
     public function getReturnsNullFieldsOnHttpError(): void
     {
-        $errorResponse = $this->createMock(ResponseInterface::class);
+        $errorResponse = $this->createStub(ResponseInterface::class);
         $errorResponse->method('getStatusCode')->willReturn(500);
 
         $exception = $this->createStub(ClientExceptionInterface::class);
