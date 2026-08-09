@@ -10,6 +10,7 @@ use App\Security\User;
 use App\Service\GetTrainerPokedexService;
 use App\Service\TrainerIdsService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +23,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 #[CoversClass(AlbumPokedexController::class)]
 final class AlbumPokedexControllerTest extends TestCase
 {
-    public function testGet(): void
+    #[Test]
+    public function get(): void
     {
         $trainerIdsService = $this->createMock(TrainerIdsService::class);
         $trainerIdsService
@@ -83,7 +85,8 @@ final class AlbumPokedexControllerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testGetWithoutAuthenticatedUser(): void
+    #[Test]
+    public function getWithoutAuthenticatedUser(): void
     {
         $trainerIdsService = $this->createMock(TrainerIdsService::class);
         $trainerIdsService
@@ -104,7 +107,8 @@ final class AlbumPokedexControllerTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
-    public function testGetDexNotFound(): void
+    #[Test]
+    public function getDexNotFound(): void
     {
         $trainerIdsService = $this->createMock(TrainerIdsService::class);
         $trainerIdsService
