@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Security;
 
 use App\Security\SessionTokenService;
 use App\Security\User;
+use Firebase\JWT\JWT;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -62,6 +63,20 @@ final class SessionTokenServiceTest extends TestCase
         $service = new SessionTokenService('some-secret-that-is-at-least-32-bytes-long', -1);
 
         $token = $service->issue(new User('some-id', 'google'));
+
+        $this->assertNull($service->parse($token));
+    }
+
+    public function testParseReturnsNullWhenClaimsShapeIsInvalid(): void
+    {
+        $secret = 'some-secret-that-is-at-least-32-bytes-long';
+        $service = new SessionTokenService($secret, 604800);
+
+        $token = JWT::encode(
+            ['sub' => 'some-id', 'provider' => 'google', 'roles' => 'not-an-array'],
+            $secret,
+            'HS256',
+        );
 
         $this->assertNull($service->parse($token));
     }
