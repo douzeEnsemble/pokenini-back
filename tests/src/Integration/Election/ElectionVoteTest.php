@@ -8,6 +8,7 @@ use App\Controller\Election\ElectionVoteController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -19,7 +20,8 @@ final class ElectionVoteTest extends WebTestCase
 {
     use ClientRequestTrait;
 
-    public function testVote(): void
+    #[Test]
+    public function vote(): void
     {
         $client = self::createClient();
 
@@ -38,7 +40,8 @@ final class ElectionVoteTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testVoteWithElectionSlug(): void
+    #[Test]
+    public function voteWithElectionSlug(): void
     {
         $client = self::createClient();
 
@@ -57,7 +60,8 @@ final class ElectionVoteTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testVoteWithFilters(): void
+    #[Test]
+    public function voteWithFilters(): void
     {
         $client = self::createClient();
 
@@ -76,7 +80,8 @@ final class ElectionVoteTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testVoteEmpty(): void
+    #[Test]
+    public function voteEmpty(): void
     {
         $client = self::createClient();
 
@@ -92,7 +97,8 @@ final class ElectionVoteTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testVoteBadPayload(): void
+    #[Test]
+    public function voteBadPayload(): void
     {
         $client = self::createClient();
 
@@ -108,7 +114,8 @@ final class ElectionVoteTest extends WebTestCase
         $this->assertResponseStatusCodeSame(400);
     }
 
-    public function testVoteNonAuthenticated(): void
+    #[Test]
+    public function voteNonAuthenticated(): void
     {
         $client = self::createClient();
 
