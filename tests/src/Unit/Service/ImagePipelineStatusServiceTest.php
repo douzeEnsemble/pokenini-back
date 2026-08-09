@@ -8,6 +8,7 @@ use App\Service\Api\GithubQueryApiService;
 use App\Service\Api\ImagePipelineApiService;
 use App\Service\ImagePipelineStatusService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +17,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ImagePipelineStatusService::class)]
 final class ImagePipelineStatusServiceTest extends TestCase
 {
-    public function testReturnsNullWhenNoRunExists(): void
+    #[Test]
+    public function returnsNullWhenNoRunExists(): void
     {
         $imagePipelineApiService = $this->createMock(ImagePipelineApiService::class);
         $imagePipelineApiService->method('getLatest')->willReturn(null);
@@ -26,7 +28,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertNull($service->getStatus(refresh: false));
     }
 
-    public function testWithoutRefreshReturnsLatestUnchanged(): void
+    #[Test]
+    public function withoutRefreshReturnsLatestUnchanged(): void
     {
         $latest = ['correlation_id' => 'corr-1', 'workflow_a_conclusion' => null];
 
@@ -42,7 +45,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($latest, $service->getStatus(refresh: false));
     }
 
-    public function testRefreshPollsWorkflowAWhenNotYetConcluded(): void
+    #[Test]
+    public function refreshPollsWorkflowAWhenNotYetConcluded(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -89,7 +93,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($refreshed, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshKeepsWorkflowAConclusionNullWhileRunStillInProgress(): void
+    #[Test]
+    public function refreshKeepsWorkflowAConclusionNullWhileRunStillInProgress(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -141,7 +146,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($afterFirstPoll, $result);
     }
 
-    public function testRefreshKeepsWorkflowBConclusionNullWhileRunStillInProgress(): void
+    #[Test]
+    public function refreshKeepsWorkflowBConclusionNullWhileRunStillInProgress(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -193,7 +199,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($afterFirstPoll, $result);
     }
 
-    public function testRefreshDoesNothingWhenPollFindsNothingNew(): void
+    #[Test]
+    public function refreshDoesNothingWhenPollFindsNothingNew(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -216,7 +223,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($latest, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshPollsIconPrWhenWorkflowASucceededButNotYetMerged(): void
+    #[Test]
+    public function refreshPollsIconPrWhenWorkflowASucceededButNotYetMerged(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -263,7 +271,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($refreshed, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshPollsIconPrWithoutMergeCommitShaWhenPrNotYetMerged(): void
+    #[Test]
+    public function refreshPollsIconPrWithoutMergeCommitShaWhenPrNotYetMerged(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -307,7 +316,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($refreshed, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshDoesNothingWhenIconPrPollFindsNothingNew(): void
+    #[Test]
+    public function refreshDoesNothingWhenIconPrPollFindsNothingNew(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -330,7 +340,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($latest, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshPollsWorkflowBWhenIconPrMergedButNotYetConcluded(): void
+    #[Test]
+    public function refreshPollsWorkflowBWhenIconPrMergedButNotYetConcluded(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -377,7 +388,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($refreshed, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshDoesNothingWhenWorkflowBPollFindsNothingNew(): void
+    #[Test]
+    public function refreshDoesNothingWhenWorkflowBPollFindsNothingNew(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -400,7 +412,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($latest, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshPollsResourcesPrWhenWorkflowBSucceeded(): void
+    #[Test]
+    public function refreshPollsResourcesPrWhenWorkflowBSucceeded(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -447,7 +460,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($refreshed, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshDoesNothingWhenResourcesPrPollFindsNothingNew(): void
+    #[Test]
+    public function refreshDoesNothingWhenResourcesPrPollFindsNothingNew(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',
@@ -471,7 +485,8 @@ final class ImagePipelineStatusServiceTest extends TestCase
         $this->assertSame($latest, $service->getStatus(refresh: true));
     }
 
-    public function testRefreshDoesNothingWhenWorkflowAAlreadyFailed(): void
+    #[Test]
+    public function refreshDoesNothingWhenWorkflowAAlreadyFailed(): void
     {
         $latest = [
             'correlation_id' => 'corr-1',

@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service;
 use App\Service\Api\GetElectionDexListApiService;
 use App\Service\GetElectionDexListService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(GetElectionDexListService::class)]
 final class GetElectionDexListServiceTest extends TestCase
 {
-    public function testGetAddsRoundMetricsToEachItemWithAReport(): void
+    #[Test]
+    public function getAddsRoundMetricsToEachItemWithAReport(): void
     {
         $apiService = $this->createMock(GetElectionDexListApiService::class);
         $apiService
@@ -64,7 +66,8 @@ final class GetElectionDexListServiceTest extends TestCase
         $this->assertSame(['slug' => 'not-started-yet', 'report' => null], $result[1]);
     }
 
-    public function testGetLeavesReportUntouchedWhenMetricsKeyIsMissing(): void
+    #[Test]
+    public function getLeavesReportUntouchedWhenMetricsKeyIsMissing(): void
     {
         $apiService = $this->createMock(GetElectionDexListApiService::class);
         $apiService
@@ -96,7 +99,8 @@ final class GetElectionDexListServiceTest extends TestCase
         );
     }
 
-    public function testGetStillProcessesLaterItemsAfterSkippingAnItemWithoutAReport(): void
+    #[Test]
+    public function getStillProcessesLaterItemsAfterSkippingAnItemWithoutAReport(): void
     {
         $apiService = $this->createMock(GetElectionDexListApiService::class);
         $apiService
@@ -146,7 +150,8 @@ final class GetElectionDexListServiceTest extends TestCase
         );
     }
 
-    public function testGetWithPremiumDelegatesToApiService(): void
+    #[Test]
+    public function getWithPremiumDelegatesToApiService(): void
     {
         $apiService = $this->createMock(GetElectionDexListApiService::class);
         $apiService
@@ -161,7 +166,8 @@ final class GetElectionDexListServiceTest extends TestCase
         $this->assertSame([], $service->getWithPremium('8800088'));
     }
 
-    public function testGetWithUnreleasedAndPremiumDelegatesToApiService(): void
+    #[Test]
+    public function getWithUnreleasedAndPremiumDelegatesToApiService(): void
     {
         $apiService = $this->createMock(GetElectionDexListApiService::class);
         $apiService

@@ -9,6 +9,7 @@ use App\Security\UserTokenService;
 use App\Service\Api\GetPokedexApiService;
 use App\Service\GetTrainerPokedexService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -19,7 +20,8 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[CoversClass(GetTrainerPokedexService::class)]
 final class GetTrainerPokedexServiceTest extends TestCase
 {
-    public function testGetPokedexData(): void
+    #[Test]
+    public function getPokedexData(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -59,7 +61,8 @@ final class GetTrainerPokedexServiceTest extends TestCase
         );
     }
 
-    public function testGetPokedexDataWithFilters(): void
+    #[Test]
+    public function getPokedexDataWithFilters(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -108,7 +111,8 @@ final class GetTrainerPokedexServiceTest extends TestCase
         );
     }
 
-    public function testGetPokedexDataByTrainerId(): void
+    #[Test]
+    public function getPokedexDataByTrainerId(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -147,7 +151,8 @@ final class GetTrainerPokedexServiceTest extends TestCase
         );
     }
 
-    public function testGetPokedexDataEmptyDe(): void
+    #[Test]
+    public function getPokedexDataEmptyDe(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -179,7 +184,8 @@ final class GetTrainerPokedexServiceTest extends TestCase
         $service->getPokedexData('douze', []);
     }
 
-    public function testGetPokedexDataHttpException(): void
+    #[Test]
+    public function getPokedexDataHttpException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -210,7 +216,8 @@ final class GetTrainerPokedexServiceTest extends TestCase
         $service->getPokedexData('douze', []);
     }
 
-    public function testGetPokedexDataTransportException(): void
+    #[Test]
+    public function getPokedexDataTransportException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService

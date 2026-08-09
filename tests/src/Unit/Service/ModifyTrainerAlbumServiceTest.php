@@ -11,6 +11,7 @@ use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
 use App\Service\CacheInvalidator\AlbumsCacheInvalidatorService;
 use App\Service\ModifyTrainerAlbumService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,7 +24,8 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[CoversClass(ModifyTrainerAlbumService::class)]
 final class ModifyTrainerAlbumServiceTest extends TestCase
 {
-    public function testModifyAlbumInvalidatesEveryUpdatedDexSlug(): void
+    #[Test]
+    public function modifyAlbumInvalidatesEveryUpdatedDexSlug(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->expects($this->once())
@@ -64,7 +66,8 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
     }
 
-    public function testModifyAlbumInvalidatesOnlyTheOriginWhenNothingElseChanged(): void
+    #[Test]
+    public function modifyAlbumInvalidatesOnlyTheOriginWhenNothingElseChanged(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
@@ -95,7 +98,8 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
     }
 
-    public function testModifyDexWithHttpException(): void
+    #[Test]
+    public function modifyDexWithHttpException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->expects($this->once())
@@ -135,7 +139,8 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
     }
 
-    public function testModifyDexWithMalformedJsonResponse(): void
+    #[Test]
+    public function modifyDexWithMalformedJsonResponse(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->expects($this->once())
@@ -175,7 +180,8 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
     }
 
-    public function testModifyDexWithNoRequest(): void
+    #[Test]
+    public function modifyDexWithNoRequest(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->expects($this->once())
@@ -207,7 +213,8 @@ final class ModifyTrainerAlbumServiceTest extends TestCase
         $service->modifyAlbum('douze', 'treize', '{"ceci": "est-du-contenu"}');
     }
 
-    public function testModifyDexWithTransportException(): void
+    #[Test]
+    public function modifyDexWithTransportException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->expects($this->once())

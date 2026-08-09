@@ -8,6 +8,7 @@ use App\Exception\NoLoggedUserException;
 use App\Security\UserTokenService;
 use App\Service\TrainerIdsService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -18,7 +19,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 #[CoversClass(TrainerIdsService::class)]
 final class TrainerIdsServiceTest extends TestCase
 {
-    public function testWithoutRequested(): void
+    #[Test]
+    public function withoutRequested(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -37,7 +39,8 @@ final class TrainerIdsServiceTest extends TestCase
         $this->assertSame('8800088', $service->getTrainerId());
     }
 
-    public function testWithoutLogged(): void
+    #[Test]
+    public function withoutLogged(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -56,7 +59,8 @@ final class TrainerIdsServiceTest extends TestCase
         $this->assertSame('2100012', $service->getTrainerId());
     }
 
-    public function testWithoutLoggedAndRequested(): void
+    #[Test]
+    public function withoutLoggedAndRequested(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -75,7 +79,8 @@ final class TrainerIdsServiceTest extends TestCase
         $this->assertNull($service->getTrainerId());
     }
 
-    public function testGetTrainerIdUsesLazyInit(): void
+    #[Test]
+    public function getTrainerIdUsesLazyInit(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -92,7 +97,8 @@ final class TrainerIdsServiceTest extends TestCase
         $this->assertSame('2100012', $service->getTrainerId());
     }
 
-    public function testGetLoggedTrainerIdUsesLazyInit(): void
+    #[Test]
+    public function getLoggedTrainerIdUsesLazyInit(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
