@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Security;
 
 use App\Security\AuthenticationEntryPoint;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,8 @@ use Symfony\Component\Routing\RouterInterface;
 #[CoversClass(AuthenticationEntryPoint::class)]
 final class AuthenticationEntryPointTest extends TestCase
 {
-    public function testStart(): void
+    #[Test]
+    public function start(): void
     {
         $router = $this->createMock(RouterInterface::class);
         $router

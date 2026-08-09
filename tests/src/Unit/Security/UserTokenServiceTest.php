@@ -8,6 +8,7 @@ use App\Exception\NoLoggedUserException;
 use App\Security\User;
 use App\Security\UserTokenService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -17,7 +18,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 #[CoversClass(UserTokenService::class)]
 final class UserTokenServiceTest extends TestCase
 {
-    public function testGetLoggedUserToken(): void
+    #[Test]
+    public function getLoggedUserToken(): void
     {
         $security = $this->createMock(Security::class);
         $security
@@ -33,7 +35,8 @@ final class UserTokenServiceTest extends TestCase
         );
     }
 
-    public function testFailGetLoggedUserToken(): void
+    #[Test]
+    public function failGetLoggedUserToken(): void
     {
         $security = $this->createStub(Security::class);
 

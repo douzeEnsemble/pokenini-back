@@ -8,6 +8,7 @@ use App\Security\MockProvider;
 use GuzzleHttp\Psr7\Request;
 use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +17,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(MockProvider::class)]
 final class MockProviderTest extends TestCase
 {
-    public function testGetBaseAuthorizationUrl(): void
+    #[Test]
+    public function getBaseAuthorizationUrl(): void
     {
         $provider = new MockProvider();
 
@@ -26,7 +28,8 @@ final class MockProviderTest extends TestCase
         );
     }
 
-    public function testGetBaseAccessTokenUrl(): void
+    #[Test]
+    public function getBaseAccessTokenUrl(): void
     {
         $provider = new MockProvider();
 
@@ -36,7 +39,8 @@ final class MockProviderTest extends TestCase
         );
     }
 
-    public function testGetResourceOwnerDetailsUrl(): void
+    #[Test]
+    public function getResourceOwnerDetailsUrl(): void
     {
         $provider = new MockProvider();
 
@@ -50,7 +54,8 @@ final class MockProviderTest extends TestCase
         );
     }
 
-    public function testGetAuthorizationUrl(): void
+    #[Test]
+    public function getAuthorizationUrl(): void
     {
         $provider = new MockProvider();
 
@@ -60,7 +65,8 @@ final class MockProviderTest extends TestCase
         );
     }
 
-    public function testCheckResponseWithoutError(): void
+    #[Test]
+    public function checkResponseWithoutError(): void
     {
         $request = new Request('GET', 'http://moco.oauth2/getparsedresponse/without-error');
 
@@ -74,7 +80,8 @@ final class MockProviderTest extends TestCase
         );
     }
 
-    public function testCheckResponseWithError(): void
+    #[Test]
+    public function checkResponseWithError(): void
     {
         $request = new Request('GET', 'http://moco.oauth2/getparsedresponse/with-error');
 
@@ -88,7 +95,8 @@ final class MockProviderTest extends TestCase
         );
     }
 
-    public function testCreateResourceOwner(): void
+    #[Test]
+    public function createResourceOwner(): void
     {
         $provider = new MockProvider();
 
@@ -109,7 +117,8 @@ final class MockProviderTest extends TestCase
         );
     }
 
-    public function testGetAuthorizationHeaders(): void
+    #[Test]
+    public function getAuthorizationHeaders(): void
     {
         $provider = new MockProvider();
 

@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Security;
 
 use App\Security\User;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,7 +15,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(User::class)]
 final class UserTest extends TestCase
 {
-    public function testConstructor(): void
+    #[Test]
+    public function constructor(): void
     {
         $user = new User('12', 'TestProvider');
 
@@ -24,7 +26,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
     }
 
-    public function testAddAdminRole(): void
+    #[Test]
+    public function addAdminRole(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -34,7 +37,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_ADMIN'], $user->getRoles());
     }
 
-    public function testAddTrainerRole(): void
+    #[Test]
+    public function addTrainerRole(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -44,7 +48,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_TRAINER'], $user->getRoles());
     }
 
-    public function testAddCollectorRole(): void
+    #[Test]
+    public function addCollectorRole(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -54,7 +59,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_COLLECTOR'], $user->getRoles());
     }
 
-    public function testAddTrainerAndAdminRole(): void
+    #[Test]
+    public function addTrainerAndAdminRole(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -65,7 +71,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_TRAINER', 'ROLE_ADMIN'], $user->getRoles());
     }
 
-    public function testAddTrainerAndCollectorRole(): void
+    #[Test]
+    public function addTrainerAndCollectorRole(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -76,7 +83,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_TRAINER', 'ROLE_COLLECTOR'], $user->getRoles());
     }
 
-    public function testAddTrainerRoleTwice(): void
+    #[Test]
+    public function addTrainerRoleTwice(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -87,7 +95,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_TRAINER'], $user->getRoles());
     }
 
-    public function testAddAdminRoleTwice(): void
+    #[Test]
+    public function addAdminRoleTwice(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -98,7 +107,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_ADMIN'], $user->getRoles());
     }
 
-    public function testAddCollectorRoleTwice(): void
+    #[Test]
+    public function addCollectorRoleTwice(): void
     {
         $user = new User('12', 'TestProvider');
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
@@ -109,7 +119,8 @@ final class UserTest extends TestCase
         $this->assertEquals(['ROLE_USER', 'ROLE_COLLECTOR'], $user->getRoles());
     }
 
-    public function testIsATrainer(): void
+    #[Test]
+    public function isATrainer(): void
     {
         $user = new User('12', 'TestProvider');
 
@@ -120,7 +131,8 @@ final class UserTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testIsACollector(): void
+    #[Test]
+    public function isACollector(): void
     {
         $user = new User('12', 'TestProvider');
 
@@ -131,7 +143,8 @@ final class UserTest extends TestCase
         $this->assertTrue($user->isACollector());
     }
 
-    public function testIsAnAdmin(): void
+    #[Test]
+    public function isAnAdmin(): void
     {
         $user = new User('12', 'TestProvider');
 
@@ -142,7 +155,8 @@ final class UserTest extends TestCase
         $this->assertTrue($user->isAnAdmin());
     }
 
-    public function testIsATrainerAndAnAdmin(): void
+    #[Test]
+    public function isATrainerAndAnAdmin(): void
     {
         $user = new User('12', 'TestProvider');
 
@@ -158,7 +172,8 @@ final class UserTest extends TestCase
         $this->assertFalse($user->isACollector());
     }
 
-    public function testIsATrainerAndACollector(): void
+    #[Test]
+    public function isATrainerAndACollector(): void
     {
         $user = new User('12', 'TestProvider');
 
