@@ -10,6 +10,7 @@ use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -22,7 +23,8 @@ final class AlbumPokedexTest extends WebTestCase
     use ClientRequestTrait;
     use JsonResponseTrait;
 
-    public function testGet(): void
+    #[Test]
+    public function get(): void
     {
         $client = self::createClient();
 
@@ -38,7 +40,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseContent($client, 'Pokedex/demo.json');
     }
 
-    public function testGetForAPublicDex(): void
+    #[Test]
+    public function getForAPublicDex(): void
     {
         $client = self::createClient();
 
@@ -57,7 +60,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseContent($client, 'Pokedex/demolite_f86cbe805674d85f7806b175b70647a6a9334631.json');
     }
 
-    public function testGetForAPrivateDex(): void
+    #[Test]
+    public function getForAPrivateDex(): void
     {
         $client = self::createClient();
 
@@ -74,7 +78,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testGetForAnOwnPrivateDex(): void
+    #[Test]
+    public function getForAnOwnPrivateDex(): void
     {
         $client = self::createClient();
 
@@ -90,7 +95,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseContent($client, 'Pokedex/demolist3.json');
     }
 
-    public function testGetForAnOwnPublicDex(): void
+    #[Test]
+    public function getForAnOwnPublicDex(): void
     {
         $client = self::createClient();
 
@@ -106,7 +112,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseContent($client, 'Pokedex/demolite.json');
     }
 
-    public function testGetForANonReleasedDexAsTrainer(): void
+    #[Test]
+    public function getForANonReleasedDexAsTrainer(): void
     {
         $client = self::createClient();
 
@@ -120,7 +127,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testGetForANonReleasedDexAsAdmin(): void
+    #[Test]
+    public function getForANonReleasedDexAsAdmin(): void
     {
         $client = self::createClient();
 
@@ -136,7 +144,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseContent($client, 'Pokedex/allshinies.json');
     }
 
-    public function testGetNonExistingDex(): void
+    #[Test]
+    public function getNonExistingDex(): void
     {
         $client = self::createClient();
 
@@ -156,8 +165,9 @@ final class AlbumPokedexTest extends WebTestCase
     /**
      * @param array<string, array<string>|string> $parameters
      */
+    #[Test]
     #[DataProvider('getFilteredProvider')]
-    public function testGetFiltered(array $parameters, string $filename): void
+    public function getFiltered(array $parameters, string $filename): void
     {
         $client = self::createClient();
 
@@ -282,7 +292,8 @@ final class AlbumPokedexTest extends WebTestCase
         ];
     }
 
-    public function testGetPrivateDexNonAuthentificated(): void
+    #[Test]
+    public function getPrivateDexNonAuthentificated(): void
     {
         $client = self::createClient();
 
@@ -297,7 +308,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testGetNonAuthentificated(): void
+    #[Test]
+    public function getNonAuthentificated(): void
     {
         $client = self::createClient();
 
@@ -309,7 +321,8 @@ final class AlbumPokedexTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testGetTrainerPublicDexNonAuthentificated(): void
+    #[Test]
+    public function getTrainerPublicDexNonAuthentificated(): void
     {
         $client = self::createClient();
 

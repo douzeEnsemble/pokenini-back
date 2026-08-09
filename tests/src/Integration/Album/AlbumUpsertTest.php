@@ -8,6 +8,7 @@ use App\Controller\Album\AlbumUpsertController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -19,7 +20,8 @@ final class AlbumUpsertTest extends WebTestCase
 {
     use ClientRequestTrait;
 
-    public function testUpsertAsTrainer(): void
+    #[Test]
+    public function upsertAsTrainer(): void
     {
         $client = self::createClient();
 
@@ -37,7 +39,8 @@ final class AlbumUpsertTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testUpsertPremuimAsCollector(): void
+    #[Test]
+    public function upsertPremuimAsCollector(): void
     {
         $client = self::createClient();
 
@@ -55,7 +58,8 @@ final class AlbumUpsertTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testUpsertPremuimAsTrainer(): void
+    #[Test]
+    public function upsertPremuimAsTrainer(): void
     {
         $client = self::createClient();
 
@@ -73,7 +77,8 @@ final class AlbumUpsertTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testUpsertFailed(): void
+    #[Test]
+    public function upsertFailed(): void
     {
         $client = self::createClient();
 
@@ -94,7 +99,8 @@ final class AlbumUpsertTest extends WebTestCase
         $this->assertSame('{"error":"Fail to modify resources"}', $content);
     }
 
-    public function testUpsertAsNonAuthenticated(): void
+    #[Test]
+    public function upsertAsNonAuthenticated(): void
     {
         $client = self::createClient();
 
