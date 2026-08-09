@@ -8,6 +8,7 @@ use App\Service\Api\GetCatchStatesApiService;
 use App\Validator\CatchStates;
 use App\Validator\CatchStatesValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -23,21 +24,24 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 #[UsesClass(CatchStates::class)]
 final class CatchStatesValidatorTest extends ConstraintValidatorTestCase
 {
-    public function testNullIsValid(): void
+    #[Test]
+    public function nullIsValid(): void
     {
         $this->validator->validate(null, new CatchStates());
 
         $this->assertNoViolation();
     }
 
-    public function testUnexpectedType(): void
+    #[Test]
+    public function unexpectedType(): void
     {
         $this->expectException(UnexpectedTypeException::class);
 
         $this->validator->validate('maybenot', new NotNull());
     }
 
-    public function testUnexpectedValue(): void
+    #[Test]
+    public function unexpectedValue(): void
     {
         $this->expectException(UnexpectedValueException::class);
 

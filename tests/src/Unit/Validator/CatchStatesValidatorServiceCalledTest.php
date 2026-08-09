@@ -8,6 +8,7 @@ use App\Service\Api\GetCatchStatesApiService;
 use App\Validator\CatchStates;
 use App\Validator\CatchStatesValidator;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\UsesClass;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
@@ -20,7 +21,8 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 #[UsesClass(CatchStates::class)]
 final class CatchStatesValidatorServiceCalledTest extends ConstraintValidatorTestCase
 {
-    public function testTrueIsInvalid(): void
+    #[Test]
+    public function trueIsInvalid(): void
     {
         $this->validator->validate('douze', new CatchStates());
 
@@ -30,7 +32,8 @@ final class CatchStatesValidatorServiceCalledTest extends ConstraintValidatorTes
         ;
     }
 
-    public function testTrueIsValid(): void
+    #[Test]
+    public function trueIsValid(): void
     {
         $this->validator->validate('maybenot', new CatchStates());
 
