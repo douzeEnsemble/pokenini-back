@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Helper;
 use App\Helper\TotalRoundCountHelper;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,8 +16,9 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(TotalRoundCountHelper::class)]
 final class TotalRoundCountHelperTest extends TestCase
 {
+    #[Test]
     #[DataProvider('providerCalculate')]
-    public function testCalculate(
+    public function calculate(
         int $dexTotalCount,
         int $perViewCount,
         float $winnerAverage,
@@ -100,7 +102,8 @@ final class TotalRoundCountHelperTest extends TestCase
         ];
     }
 
-    public function testCalculateZeroPerViewCount(): void
+    #[Test]
+    public function calculateZeroPerViewCount(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageIsOrContains("perViewCount can't be egals to 0");
