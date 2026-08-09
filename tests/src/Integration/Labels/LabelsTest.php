@@ -9,6 +9,7 @@ use App\Tests\Integration\Trait\ClientRequestTrait;
 use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -21,7 +22,8 @@ final class LabelsTest extends WebTestCase
     use ClientRequestTrait;
     use JsonResponseTrait;
 
-    public function testGet(): void
+    #[Test]
+    public function get(): void
     {
         $client = self::createClient();
 
@@ -37,7 +39,8 @@ final class LabelsTest extends WebTestCase
         $this->assertResponseContent($client, 'Labels/all.json');
     }
 
-    public function testGetNonAuthenticated(): void
+    #[Test]
+    public function getNonAuthenticated(): void
     {
         $client = self::createClient();
 
