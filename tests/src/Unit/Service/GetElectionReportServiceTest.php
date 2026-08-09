@@ -8,6 +8,7 @@ use App\Security\UserTokenService;
 use App\Service\Api\GetElectionReportApiService;
 use App\Service\GetElectionReportService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +17,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(GetElectionReportService::class)]
 final class GetElectionReportServiceTest extends TestCase
 {
-    public function testGetReport(): void
+    #[Test]
+    public function getReport(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService

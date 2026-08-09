@@ -8,6 +8,7 @@ use App\Service\Api\GithubActionsApiService;
 use App\Service\Api\ImagePipelineApiService;
 use App\Service\TriggerImagesPipelineService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -17,7 +18,8 @@ use Psr\Log\LoggerInterface;
 #[CoversClass(TriggerImagesPipelineService::class)]
 final class TriggerImagesPipelineServiceTest extends TestCase
 {
-    public function testTriggerUpdateImagesDispatchesAndRegistersRun(): void
+    #[Test]
+    public function triggerUpdateImagesDispatchesAndRegistersRun(): void
     {
         $dispatchedCorrelationId = null;
 
@@ -48,7 +50,8 @@ final class TriggerImagesPipelineServiceTest extends TestCase
         $service->triggerUpdateImages();
     }
 
-    public function testRegistrationFailureIsLoggedButDoesNotThrow(): void
+    #[Test]
+    public function registrationFailureIsLoggedButDoesNotThrow(): void
     {
         $githubActionsApiService = $this->createMock(GithubActionsApiService::class);
 

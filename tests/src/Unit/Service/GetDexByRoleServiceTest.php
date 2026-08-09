@@ -9,6 +9,7 @@ use App\Security\UserTokenService;
 use App\Service\Api\GetDexListApiService;
 use App\Service\GetDexByRoleService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -18,7 +19,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 #[CoversClass(GetDexByRoleService::class)]
 final class GetDexByRoleServiceTest extends TestCase
 {
-    public function testGetUserDexAsTrainer(): void
+    #[Test]
+    public function getUserDexAsTrainer(): void
     {
         $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService
@@ -73,7 +75,8 @@ final class GetDexByRoleServiceTest extends TestCase
         );
     }
 
-    public function testGetUserDexAsCollector(): void
+    #[Test]
+    public function getUserDexAsCollector(): void
     {
         $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService
@@ -129,7 +132,8 @@ final class GetDexByRoleServiceTest extends TestCase
         );
     }
 
-    public function testGetUserDexAsAdmin(): void
+    #[Test]
+    public function getUserDexAsAdmin(): void
     {
         $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService
@@ -185,7 +189,8 @@ final class GetDexByRoleServiceTest extends TestCase
         );
     }
 
-    public function testGetUserDexAsNull(): void
+    #[Test]
+    public function getUserDexAsNull(): void
     {
         $getDexListService = $this->createMock(GetDexListApiService::class);
         $getDexListService

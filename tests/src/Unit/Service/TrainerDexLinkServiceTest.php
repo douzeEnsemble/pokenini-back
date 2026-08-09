@@ -9,6 +9,7 @@ use App\Security\UserTokenService;
 use App\Service\Api\TrainerDexLinkApiService;
 use App\Service\TrainerDexLinkService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -20,7 +21,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(ApiValidationException::class)]
 final class TrainerDexLinkServiceTest extends TestCase
 {
-    public function testList(): void
+    #[Test]
+    public function list(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
@@ -37,7 +39,8 @@ final class TrainerDexLinkServiceTest extends TestCase
         $this->assertSame([['id' => 'link-1']], $service->list('douze'));
     }
 
-    public function testCreate(): void
+    #[Test]
+    public function create(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
@@ -53,7 +56,8 @@ final class TrainerDexLinkServiceTest extends TestCase
         $service->create('douze', 'treize', true);
     }
 
-    public function testCreateTranslatesApiHttpExceptionIntoApiValidationException(): void
+    #[Test]
+    public function createTranslatesApiHttpExceptionIntoApiValidationException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
@@ -80,7 +84,8 @@ final class TrainerDexLinkServiceTest extends TestCase
         }
     }
 
-    public function testDelete(): void
+    #[Test]
+    public function delete(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');

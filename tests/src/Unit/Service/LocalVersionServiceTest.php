@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service;
 use App\Service\LocalVersionService;
 use App\Tests\Utils\FilemtimeStub;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -38,7 +39,8 @@ final class LocalVersionServiceTest extends TestCase
         rmdir($this->tempDir);
     }
 
-    public function testGetVersionReturnsTrimmedFileContent(): void
+    #[Test]
+    public function getVersionReturnsTrimmedFileContent(): void
     {
         file_put_contents($this->tempDir.'/version', "1.2.12\n");
         $service = new LocalVersionService($this->tempDir);
@@ -46,14 +48,16 @@ final class LocalVersionServiceTest extends TestCase
         $this->assertSame('1.2.12', $service->getVersion());
     }
 
-    public function testGetVersionReturnsFallbackWhenFileMissing(): void
+    #[Test]
+    public function getVersionReturnsFallbackWhenFileMissing(): void
     {
         $service = new LocalVersionService($this->tempDir);
 
         $this->assertSame('unknown', $service->getVersion());
     }
 
-    public function testGetUpdatedAtReturnsFileMtime(): void
+    #[Test]
+    public function getUpdatedAtReturnsFileMtime(): void
     {
         file_put_contents($this->tempDir.'/version', "1.2.12\n");
         $expectedMtime = filemtime($this->tempDir.'/version');
@@ -62,14 +66,16 @@ final class LocalVersionServiceTest extends TestCase
         $this->assertSame($expectedMtime, $service->getUpdatedAt()?->getTimestamp());
     }
 
-    public function testGetUpdatedAtReturnsNullWhenFileMissing(): void
+    #[Test]
+    public function getUpdatedAtReturnsNullWhenFileMissing(): void
     {
         $service = new LocalVersionService($this->tempDir);
 
         $this->assertNull($service->getUpdatedAt());
     }
 
-    public function testGetUpdatedAtReturnsNullWhenFilemtimeFails(): void
+    #[Test]
+    public function getUpdatedAtReturnsNullWhenFilemtimeFails(): void
     {
         file_put_contents($this->tempDir.'/version', "1.2.12\n");
         FilemtimeStub::$forceFailure = true;

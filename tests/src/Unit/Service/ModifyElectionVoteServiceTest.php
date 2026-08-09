@@ -10,6 +10,7 @@ use App\Service\CacheInvalidator\ElectionCacheInvalidatorService;
 use App\Service\ModifyElectionVoteService;
 use App\Tests\Unit\Trait\ElectionVoteFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,7 +21,8 @@ final class ModifyElectionVoteServiceTest extends TestCase
 {
     use ElectionVoteFactory;
 
-    public function testVote(): void
+    #[Test]
+    public function vote(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -52,7 +54,8 @@ final class ModifyElectionVoteServiceTest extends TestCase
         $service->vote($electionVote);
     }
 
-    public function testVoteWinnerAsLoser(): void
+    #[Test]
+    public function voteWinnerAsLoser(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -84,7 +87,8 @@ final class ModifyElectionVoteServiceTest extends TestCase
         $service->vote($electionVote);
     }
 
-    public function testVoteAllLosers(): void
+    #[Test]
+    public function voteAllLosers(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -116,7 +120,8 @@ final class ModifyElectionVoteServiceTest extends TestCase
         $service->vote($electionVote);
     }
 
-    public function testVoteAllWinners(): void
+    #[Test]
+    public function voteAllWinners(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService

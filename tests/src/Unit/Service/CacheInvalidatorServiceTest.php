@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service;
 
-use App\Service\CacheInvalidator\CacheInvalidatorInterface;
 use App\Service\CacheInvalidatorService;
+use App\Service\CacheInvalidator\CacheInvalidatorInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(CacheInvalidatorService::class)]
 final class CacheInvalidatorServiceTest extends TestCase
 {
-    public function testInvalidateCallsMatchingInvalidator(): void
+    #[Test]
+    public function invalidateCallsMatchingInvalidator(): void
     {
         $matchingInvalidator = $this->createMock(CacheInvalidatorInterface::class);
         $matchingInvalidator->method('getSupportedTypes')->willReturn(['foo']);
@@ -29,7 +31,8 @@ final class CacheInvalidatorServiceTest extends TestCase
         $service->invalidate('foo');
     }
 
-    public function testInvalidateCallsAllMatchingInvalidators(): void
+    #[Test]
+    public function invalidateCallsAllMatchingInvalidators(): void
     {
         $invalidator1 = $this->createMock(CacheInvalidatorInterface::class);
         $invalidator1->method('getSupportedTypes')->willReturn(['foo', 'bar']);
@@ -43,7 +46,8 @@ final class CacheInvalidatorServiceTest extends TestCase
         $service->invalidate('foo');
     }
 
-    public function testInvalidateUnknownTypeThrows(): void
+    #[Test]
+    public function invalidateUnknownTypeThrows(): void
     {
         $invalidator = $this->createStub(CacheInvalidatorInterface::class);
         $invalidator->method('getSupportedTypes')->willReturn(['foo']);

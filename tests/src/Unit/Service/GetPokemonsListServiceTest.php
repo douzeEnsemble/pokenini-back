@@ -9,6 +9,7 @@ use App\Security\UserTokenService;
 use App\Service\Api\GetPokemonsApiService;
 use App\Service\GetPokemonsListService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,7 +18,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(GetPokemonsListService::class)]
 final class GetPokemonsListServiceTest extends TestCase
 {
-    public function testGet(): void
+    #[Test]
+    public function get(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -66,7 +68,8 @@ final class GetPokemonsListServiceTest extends TestCase
         $this->assertSame('raichu', $list->items[1]['pokemon']['slug']);
     }
 
-    public function testGetWithFilters(): void
+    #[Test]
+    public function getWithFilters(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService

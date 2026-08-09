@@ -11,6 +11,7 @@ use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
 use App\Service\CacheInvalidator\DexCacheInvalidatorService;
 use App\Service\ModifyTrainerDexService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -21,7 +22,8 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 #[CoversClass(ModifyTrainerDexService::class)]
 final class ModifyTrainerDexServiceTest extends TestCase
 {
-    public function testModifyDex(): void
+    #[Test]
+    public function modifyDex(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -69,7 +71,8 @@ final class ModifyTrainerDexServiceTest extends TestCase
         $service->modifyDex('douze', '{"ceci": "est-du-contenu"}');
     }
 
-    public function testModifyDexWithHttpException(): void
+    #[Test]
+    public function modifyDexWithHttpException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
@@ -116,7 +119,8 @@ final class ModifyTrainerDexServiceTest extends TestCase
         $service->modifyDex('douze', '{"ceci": "est-du-contenu"}');
     }
 
-    public function testModifyDexWithTransportException(): void
+    #[Test]
+    public function modifyDexWithTransportException(): void
     {
         $userTokenService = $this->createMock(UserTokenService::class);
         $userTokenService
