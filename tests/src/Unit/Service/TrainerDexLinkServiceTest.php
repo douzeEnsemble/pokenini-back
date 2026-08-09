@@ -24,7 +24,7 @@ final class TrainerDexLinkServiceTest extends TestCase
     #[Test]
     public function list(): void
     {
-        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService = $this->createStub(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
 
         $apiService = $this->createMock(TrainerDexLinkApiService::class);
@@ -42,7 +42,7 @@ final class TrainerDexLinkServiceTest extends TestCase
     #[Test]
     public function create(): void
     {
-        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService = $this->createStub(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
 
         $apiService = $this->createMock(TrainerDexLinkApiService::class);
@@ -59,13 +59,13 @@ final class TrainerDexLinkServiceTest extends TestCase
     #[Test]
     public function createTranslatesApiHttpExceptionIntoApiValidationException(): void
     {
-        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService = $this->createStub(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
 
-        $apiResponse = $this->createMock(ResponseInterface::class);
+        $apiResponse = $this->createStub(ResponseInterface::class);
         $apiResponse->method('getStatusCode')->willReturn(409);
 
-        $exception = $this->createMock(HttpExceptionInterface::class);
+        $exception = $this->createStub(HttpExceptionInterface::class);
         $exception->method('getResponse')->willReturn($apiResponse);
 
         $apiService = $this->createMock(TrainerDexLinkApiService::class);
@@ -87,7 +87,7 @@ final class TrainerDexLinkServiceTest extends TestCase
     #[Test]
     public function delete(): void
     {
-        $userTokenService = $this->createMock(UserTokenService::class);
+        $userTokenService = $this->createStub(UserTokenService::class);
         $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
 
         $apiService = $this->createMock(TrainerDexLinkApiService::class);
