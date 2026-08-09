@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Controller\Admin;
 use App\Controller\Admin\AdminActionTriggerController;
 use App\Service\TriggerImagesPipelineService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -16,7 +17,8 @@ use Psr\Log\LoggerInterface;
 #[CoversClass(AdminActionTriggerController::class)]
 final class AdminActionTriggerControllerTest extends TestCase
 {
-    public function testAction(): void
+    #[Test]
+    public function action(): void
     {
         $triggerImagesPipelineService = $this->createMock(TriggerImagesPipelineService::class);
         $triggerImagesPipelineService
@@ -45,7 +47,8 @@ final class AdminActionTriggerControllerTest extends TestCase
         $this->assertSame(202, $response->getStatusCode());
     }
 
-    public function testFailTriggerLogs(): void
+    #[Test]
+    public function failTriggerLogs(): void
     {
         $triggerImagesPipelineService = $this->createMock(TriggerImagesPipelineService::class);
         $triggerImagesPipelineService
@@ -77,7 +80,8 @@ final class AdminActionTriggerControllerTest extends TestCase
         $this->assertSame(500, $response->getStatusCode());
     }
 
-    public function testFailTriggerLogsWithInvalidArgumentException(): void
+    #[Test]
+    public function failTriggerLogsWithInvalidArgumentException(): void
     {
         $triggerImagesPipelineService = $this->createMock(TriggerImagesPipelineService::class);
         $triggerImagesPipelineService
