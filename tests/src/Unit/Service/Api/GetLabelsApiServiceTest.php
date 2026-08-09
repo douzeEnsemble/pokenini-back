@@ -11,6 +11,7 @@ use App\Service\Api\GetGameBundlesApiService;
 use App\Service\Api\GetLabelsApiService;
 use App\Service\Api\GetTypesApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,42 +20,50 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(GetLabelsApiService::class)]
 final class GetLabelsApiServiceTest extends TestCase
 {
-    public function testGetCatchStates(): void
+    #[Test]
+    public function getCatchStates(): void
     {
         $this->getService('catch_states')->getCatchStates();
     }
 
-    public function testGetTypes(): void
+    #[Test]
+    public function getTypes(): void
     {
         $this->getService('types')->getTypes();
     }
 
-    public function testGetFormsCategory(): void
+    #[Test]
+    public function getFormsCategory(): void
     {
         $this->getService('forms_category')->getFormsCategory();
     }
 
-    public function testGetFormsRegional(): void
+    #[Test]
+    public function getFormsRegional(): void
     {
         $this->getService('forms_regional')->getFormsRegional();
     }
 
-    public function testGetFormsSpecial(): void
+    #[Test]
+    public function getFormsSpecial(): void
     {
         $this->getService('forms_special')->getFormsSpecial();
     }
 
-    public function testGetFormsVariant(): void
+    #[Test]
+    public function getFormsVariant(): void
     {
         $this->getService('forms_variant')->getFormsVariant();
     }
 
-    public function testGetGameBundles(): void
+    #[Test]
+    public function getGameBundles(): void
     {
         $this->getService('game_bundles')->getGameBundles();
     }
 
-    public function testGetCollections(): void
+    #[Test]
+    public function getCollections(): void
     {
         $this->getService('collections')->getCollections();
     }

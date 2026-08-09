@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\GetElectionDexListApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -22,7 +23,8 @@ final class GetElectionDexListApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testGet(): void
+    #[Test]
+    public function get(): void
     {
         $expectedSlugs = ['homeshiny'];
 
@@ -51,7 +53,8 @@ final class GetElectionDexListApiServiceTest extends TestCase
         );
     }
 
-    public function testGetWithPremium(): void
+    #[Test]
+    public function getWithPremium(): void
     {
         $expectedSlugs = ['home', 'redgreenblueyellow'];
 
@@ -76,7 +79,8 @@ final class GetElectionDexListApiServiceTest extends TestCase
         );
     }
 
-    public function testGetWithUnreleasedAndPremium(): void
+    #[Test]
+    public function getWithUnreleasedAndPremium(): void
     {
         $expectedSlugs = ['home', 'homeshiny', 'redgreenblueyellow', 'redgreenblueyellowshiny'];
 
@@ -104,7 +108,8 @@ final class GetElectionDexListApiServiceTest extends TestCase
         );
     }
 
-    public function testGetIsScopedPerTrainer(): void
+    #[Test]
+    public function getIsScopedPerTrainer(): void
     {
         $expectedSlugs = ['homeshiny'];
 

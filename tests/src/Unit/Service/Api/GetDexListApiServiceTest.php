@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\GetDexListApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -22,7 +23,8 @@ final class GetDexListApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testGetWithPremium(): void
+    #[Test]
+    public function getWithPremium(): void
     {
         $expectedSlugs = [
             'goldsilvercrystal',
@@ -60,7 +62,8 @@ final class GetDexListApiServiceTest extends TestCase
         );
     }
 
-    public function testGetWithUnreleasedAndPremium(): void
+    #[Test]
+    public function getWithUnreleasedAndPremium(): void
     {
         $expectedSlugs = [
             'redgreenblueyellow',

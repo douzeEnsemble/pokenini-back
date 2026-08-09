@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service\Api;
 use App\Exception\ModifyFailedException;
 use App\Service\Api\GithubQueryApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\TransportException;
@@ -20,7 +21,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(GithubQueryApiService::class)]
 final class GithubQueryApiServiceTest extends TestCase
 {
-    public function testFindWorkflowRunByDisplayTitleFindsMatch(): void
+    #[Test]
+    public function findWorkflowRunByDisplayTitleFindsMatch(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('toArray')->willReturn([
@@ -75,7 +77,8 @@ final class GithubQueryApiServiceTest extends TestCase
         ], $run);
     }
 
-    public function testFindWorkflowRunByDisplayTitleReturnsNullWhenNoMatch(): void
+    #[Test]
+    public function findWorkflowRunByDisplayTitleReturnsNullWhenNoMatch(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('toArray')->willReturn(['workflow_runs' => []]);
@@ -88,7 +91,8 @@ final class GithubQueryApiServiceTest extends TestCase
         $this->assertNull($service->findWorkflowRunByDisplayTitle('douzeensemble/pokenini-icon', 'update-images.yml', 'Update images (corr-123)'));
     }
 
-    public function testFindWorkflowRunByHeadShaFindsMatch(): void
+    #[Test]
+    public function findWorkflowRunByHeadShaFindsMatch(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('toArray')->willReturn([
@@ -127,7 +131,8 @@ final class GithubQueryApiServiceTest extends TestCase
         ], $run);
     }
 
-    public function testFindPullRequestByBranchFindsMatch(): void
+    #[Test]
+    public function findPullRequestByBranchFindsMatch(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('toArray')->willReturn([
@@ -164,7 +169,8 @@ final class GithubQueryApiServiceTest extends TestCase
         ], $pullRequest);
     }
 
-    public function testFindWorkflowRunByHeadShaCastsMismatchedRawTypes(): void
+    #[Test]
+    public function findWorkflowRunByHeadShaCastsMismatchedRawTypes(): void
     {
         // GitHub's real API always sends these as strings/int, but the raw
         // array is typed `mixed` - feed deliberately mismatched scalar types
@@ -199,7 +205,8 @@ final class GithubQueryApiServiceTest extends TestCase
         ], $run);
     }
 
-    public function testFindPullRequestByBranchCastsMismatchedRawTypes(): void
+    #[Test]
+    public function findPullRequestByBranchCastsMismatchedRawTypes(): void
     {
         // Same rationale as testFindWorkflowRunByHeadShaCastsMismatchedRawTypes:
         // deliberately mismatched raw types prove mapPullRequest()'s casts
@@ -232,7 +239,8 @@ final class GithubQueryApiServiceTest extends TestCase
         ], $pullRequest);
     }
 
-    public function testFindPullRequestByBranchCastsMismatchedMergedAtType(): void
+    #[Test]
+    public function findPullRequestByBranchCastsMismatchedMergedAtType(): void
     {
         // testFindPullRequestByBranchCastsMismatchedRawTypes leaves merged_at
         // null, which never exercises (string) $mergedAt's cast - cover that
@@ -258,7 +266,8 @@ final class GithubQueryApiServiceTest extends TestCase
         $this->assertSame('20260715', $pullRequest['mergedAt'] ?? null);
     }
 
-    public function testFindPullRequestByBranchReturnsNullWhenNoMatch(): void
+    #[Test]
+    public function findPullRequestByBranchReturnsNullWhenNoMatch(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('toArray')->willReturn([]);
@@ -271,7 +280,8 @@ final class GithubQueryApiServiceTest extends TestCase
         $this->assertNull($service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2'));
     }
 
-    public function testFindWorkflowRunByDisplayTitleFailsOnHttpError(): void
+    #[Test]
+    public function findWorkflowRunByDisplayTitleFailsOnHttpError(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -297,7 +307,8 @@ final class GithubQueryApiServiceTest extends TestCase
         $service->findWorkflowRunByDisplayTitle('douzeensemble/pokenini-icon', 'update-images.yml', 'Update images (corr-123)');
     }
 
-    public function testFindPullRequestByBranchFailsOnHttpError(): void
+    #[Test]
+    public function findPullRequestByBranchFailsOnHttpError(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -323,7 +334,8 @@ final class GithubQueryApiServiceTest extends TestCase
         $service->findPullRequestByBranch('douzeensemble/pokenini-icon', 'update-images-2');
     }
 
-    public function testFindWorkflowRunByDisplayTitleFailsOnHttpErrorStatus(): void
+    #[Test]
+    public function findWorkflowRunByDisplayTitleFailsOnHttpErrorStatus(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -356,7 +368,8 @@ final class GithubQueryApiServiceTest extends TestCase
         $service->findWorkflowRunByDisplayTitle('douzeensemble/pokenini-icon', 'update-images.yml', 'Update images (corr-123)');
     }
 
-    public function testFindPullRequestByBranchFailsOnHttpErrorStatus(): void
+    #[Test]
+    public function findPullRequestByBranchFailsOnHttpErrorStatus(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger

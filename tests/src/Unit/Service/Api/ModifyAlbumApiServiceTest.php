@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\ModifyAlbumApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -23,7 +24,8 @@ final class ModifyAlbumApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testModifyPatch(): void
+    #[Test]
+    public function modifyPatch(): void
     {
         $updatedDexSlugs = $this
             ->getService(
@@ -45,7 +47,8 @@ final class ModifyAlbumApiServiceTest extends TestCase
         $this->assertEmpty($this->cachePool->getValues());
     }
 
-    public function testModifyPut(): void
+    #[Test]
+    public function modifyPut(): void
     {
         $updatedDexSlugs = $this
             ->getService(
@@ -67,7 +70,8 @@ final class ModifyAlbumApiServiceTest extends TestCase
         $this->assertEmpty($this->cachePool->getValues());
     }
 
-    public function testModifyReturnsUpdatedDexSlugs(): void
+    #[Test]
+    public function modifyReturnsUpdatedDexSlugs(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getContent')->willReturn('{"updatedDexSlugs":["national","shiny-living"]}');
@@ -101,7 +105,8 @@ final class ModifyAlbumApiServiceTest extends TestCase
         );
     }
 
-    public function testModifyRejectsAnInvalidHttpMethod(): void
+    #[Test]
+    public function modifyRejectsAnInvalidHttpMethod(): void
     {
         $service = new ModifyAlbumApiService(
             $this->createMock(LoggerInterface::class),
@@ -118,7 +123,8 @@ final class ModifyAlbumApiServiceTest extends TestCase
         $service->modify('GET', 'douze', 'treize', 'yes', '8800088');
     }
 
-    public function testModifyPost(): void
+    #[Test]
+    public function modifyPost(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 

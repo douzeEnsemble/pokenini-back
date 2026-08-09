@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\GetElectionReportApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -22,7 +23,8 @@ final class GetElectionReportApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testGetReport(): void
+    #[Test]
+    public function getReport(): void
     {
         $rawJson = json_encode([
             'top' => array_fill(0, 5, ['pokemon' => ['slug' => 'bulbasaur']]),

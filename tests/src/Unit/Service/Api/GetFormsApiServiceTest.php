@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\GetFormsApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -22,7 +23,8 @@ final class GetFormsApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testGetFormsCategory(): void
+    #[Test]
+    public function getFormsCategory(): void
     {
         $expectedResult = [
             ['slug' => 'starter', 'name' => 'Starter', 'french_name' => 'de Départ'],
@@ -36,7 +38,8 @@ final class GetFormsApiServiceTest extends TestCase
         $this->assertJson($value);
     }
 
-    public function testGetFormsRegional(): void
+    #[Test]
+    public function getFormsRegional(): void
     {
         $expectedResult = [
             ['slug' => 'alolan', 'name' => 'Alolan', 'french_name' => "d'Alola"],
@@ -46,7 +49,8 @@ final class GetFormsApiServiceTest extends TestCase
         $this->assertEquals($expectedResult, $this->getService()->getFormsRegional());
     }
 
-    public function testGetFormsSpecial(): void
+    #[Test]
+    public function getFormsSpecial(): void
     {
         $expectedResult = [
             ['slug' => 'mega', 'name' => 'Mega', 'french_name' => 'Mega'],
@@ -56,7 +60,8 @@ final class GetFormsApiServiceTest extends TestCase
         $this->assertEquals($expectedResult, $this->getService()->getFormsSpecial());
     }
 
-    public function testGetFormsVariant(): void
+    #[Test]
+    public function getFormsVariant(): void
     {
         $expectedResult = [
             ['slug' => 'gender', 'name' => 'Gender', 'french_name' => 'Genre'],

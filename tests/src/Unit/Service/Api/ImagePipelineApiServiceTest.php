@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service\Api;
 use App\Exception\ModifyFailedException;
 use App\Service\Api\ImagePipelineApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -22,7 +23,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(ImagePipelineApiService::class)]
 final class ImagePipelineApiServiceTest extends TestCase
 {
-    public function testCreate(): void
+    #[Test]
+    public function create(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getContent')->willReturn('');
@@ -43,7 +45,8 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->getService($client)->create('corr-1');
     }
 
-    public function testUpdateFields(): void
+    #[Test]
+    public function updateFields(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getContent')->willReturn('');
@@ -64,7 +67,8 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->getService($client)->updateFields('corr-1', ['workflowARunId' => 42]);
     }
 
-    public function testGetLatestReturnsDecodedBody(): void
+    #[Test]
+    public function getLatestReturnsDecodedBody(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getContent')->willReturn('{"correlation_id":"corr-1","workflow_a_run_id":null}');
@@ -78,7 +82,8 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->assertSame(['correlation_id' => 'corr-1', 'workflow_a_run_id' => null], $result);
     }
 
-    public function testGetLatestReturnsNullOn404(): void
+    #[Test]
+    public function getLatestReturnsNullOn404(): void
     {
         $errorResponse = $this->createMock(ResponseInterface::class);
         $errorResponse->method('getStatusCode')->willReturn(404);
@@ -99,7 +104,8 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->assertNull($this->getService($client)->getLatest());
     }
 
-    public function testCreateFailsOnTransportError(): void
+    #[Test]
+    public function createFailsOnTransportError(): void
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
@@ -111,7 +117,8 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->getService($client)->create('corr-1');
     }
 
-    public function testUpdateFieldsFailsOnTransportError(): void
+    #[Test]
+    public function updateFieldsFailsOnTransportError(): void
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
@@ -123,7 +130,8 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->getService($client)->updateFields('corr-1', ['workflowARunId' => 42]);
     }
 
-    public function testGetLatestFailsOnNonNotFoundHttpError(): void
+    #[Test]
+    public function getLatestFailsOnNonNotFoundHttpError(): void
     {
         $errorResponse = $this->createMock(ResponseInterface::class);
         $errorResponse->method('getStatusCode')->willReturn(500);
@@ -146,7 +154,8 @@ final class ImagePipelineApiServiceTest extends TestCase
         $this->getService($client)->getLatest();
     }
 
-    public function testGetLatestFailsOnTransportError(): void
+    #[Test]
+    public function getLatestFailsOnTransportError(): void
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
