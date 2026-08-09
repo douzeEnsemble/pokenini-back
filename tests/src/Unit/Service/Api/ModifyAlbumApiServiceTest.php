@@ -73,7 +73,7 @@ final class ModifyAlbumApiServiceTest extends TestCase
     #[Test]
     public function modifyReturnsUpdatedDexSlugs(): void
     {
-        $response = $this->createMock(ResponseInterface::class);
+        $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('{"updatedDexSlugs":["national","shiny-living"]}');
 
         $client = $this->createMock(HttpClientInterface::class);

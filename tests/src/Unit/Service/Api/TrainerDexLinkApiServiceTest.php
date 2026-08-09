@@ -22,7 +22,7 @@ final class TrainerDexLinkApiServiceTest extends TestCase
     #[Test]
     public function list(): void
     {
-        $response = $this->createMock(ResponseInterface::class);
+        $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('[{"id":"link-1"}]');
 
         $client = $this->createMock(HttpClientInterface::class);
@@ -40,7 +40,7 @@ final class TrainerDexLinkApiServiceTest extends TestCase
     #[Test]
     public function create(): void
     {
-        $response = $this->createMock(ResponseInterface::class);
+        $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('');
 
         $client = $this->createMock(HttpClientInterface::class);
@@ -67,7 +67,7 @@ final class TrainerDexLinkApiServiceTest extends TestCase
     #[Test]
     public function delete(): void
     {
-        $response = $this->createMock(ResponseInterface::class);
+        $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('');
 
         $client = $this->createMock(HttpClientInterface::class);
