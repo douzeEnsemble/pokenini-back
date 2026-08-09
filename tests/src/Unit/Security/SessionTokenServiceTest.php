@@ -17,7 +17,7 @@ final class SessionTokenServiceTest extends TestCase
 {
     public function testIssueThenParseRoundTrip(): void
     {
-        $service = new SessionTokenService('some-secret', 604800);
+        $service = new SessionTokenService('some-secret-that-is-at-least-32-bytes-long', 604800);
 
         $user = new User('some-id', 'google');
         $user->addTrainerRole();
@@ -35,22 +35,22 @@ final class SessionTokenServiceTest extends TestCase
 
     public function testParseReturnsNullForGarbageToken(): void
     {
-        $service = new SessionTokenService('some-secret', 604800);
+        $service = new SessionTokenService('some-secret-that-is-at-least-32-bytes-long', 604800);
 
         $this->assertNull($service->parse('not-a-jwt'));
     }
 
     public function testParseReturnsNullForEmptyToken(): void
     {
-        $service = new SessionTokenService('some-secret', 604800);
+        $service = new SessionTokenService('some-secret-that-is-at-least-32-bytes-long', 604800);
 
         $this->assertNull($service->parse(''));
     }
 
     public function testParseReturnsNullWhenSignedWithADifferentSecret(): void
     {
-        $issuer = new SessionTokenService('some-secret', 604800);
-        $verifier = new SessionTokenService('another-secret', 604800);
+        $issuer = new SessionTokenService('some-secret-that-is-at-least-32-bytes-long', 604800);
+        $verifier = new SessionTokenService('another-secret-that-is-at-least-32-bytes-long', 604800);
 
         $token = $issuer->issue(new User('some-id', 'google'));
 
@@ -59,7 +59,7 @@ final class SessionTokenServiceTest extends TestCase
 
     public function testParseReturnsNullForExpiredToken(): void
     {
-        $service = new SessionTokenService('some-secret', -1);
+        $service = new SessionTokenService('some-secret-that-is-at-least-32-bytes-long', -1);
 
         $token = $service->issue(new User('some-id', 'google'));
 

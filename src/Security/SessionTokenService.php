@@ -58,7 +58,6 @@ class SessionTokenService
             return null;
         }
 
-        /** @var list<string> $stringRoles */
         $stringRoles = array_values(array_filter($roles, 'is_string'));
 
         return [
