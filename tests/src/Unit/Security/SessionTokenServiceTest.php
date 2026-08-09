@@ -80,4 +80,35 @@ final class SessionTokenServiceTest extends TestCase
 
         $this->assertNull($service->parse($token));
     }
+
+    public function testParseReturnsNullWhenSubIsEmptyString(): void
+    {
+        $secret = 'some-secret-that-is-at-least-32-bytes-long';
+        $service = new SessionTokenService($secret, 604800);
+
+        $token = JWT::encode(
+            ['sub' => '', 'provider' => 'google', 'roles' => []],
+            $secret,
+            'HS256',
+        );
+
+        $this->assertNull($service->parse($token));
+    }
+
+    public function testParseFiltersNonStringRolesAndReindexesTheResult(): void
+    {
+        $secret = 'some-secret-that-is-at-least-32-bytes-long';
+        $service = new SessionTokenService($secret, 604800);
+
+        $token = JWT::encode(
+            ['sub' => 'some-id', 'provider' => 'google', 'roles' => [123, 'ROLE_ADMIN', true, 'ROLE_TRAINER']],
+            $secret,
+            'HS256',
+        );
+
+        $claims = $service->parse($token);
+
+        $this->assertNotNull($claims);
+        $this->assertSame(['ROLE_ADMIN', 'ROLE_TRAINER'], $claims['roles']);
+    }
 }
