@@ -8,6 +8,7 @@ use App\Controller\Admin\AdminVersionController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -19,7 +20,8 @@ final class VersionsTest extends WebTestCase
 {
     use ClientRequestTrait;
 
-    public function testGetVersion(): void
+    #[Test]
+    public function getVersion(): void
     {
         $client = self::createClient();
 
@@ -54,7 +56,8 @@ final class VersionsTest extends WebTestCase
         );
     }
 
-    public function testGetVersionNonAuthenticated(): void
+    #[Test]
+    public function getVersionNonAuthenticated(): void
     {
         $client = self::createClient();
 

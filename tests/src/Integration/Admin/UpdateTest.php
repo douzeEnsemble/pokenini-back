@@ -9,6 +9,7 @@ use App\Security\User;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -21,37 +22,44 @@ final class UpdateTest extends WebTestCase
 {
     use ClientRequestTrait;
 
-    public function testAdminUpdateLabels(): void
+    #[Test]
+    public function adminUpdateLabels(): void
     {
         $this->testAdminUpdate('labels');
     }
 
-    public function testAdminUpdateGamesCollectionsAndDex(): void
+    #[Test]
+    public function adminUpdateGamesCollectionsAndDex(): void
     {
         $this->testAdminUpdate('games_collections_and_dex');
     }
 
-    public function testAdminUpdatePokemons(): void
+    #[Test]
+    public function adminUpdatePokemons(): void
     {
         $this->testAdminUpdate('pokemons');
     }
 
-    public function testAdminUpdateRegionalDexNumbers(): void
+    #[Test]
+    public function adminUpdateRegionalDexNumbers(): void
     {
         $this->testAdminUpdate('regional_dex_numbers');
     }
 
-    public function testAdminUpdateGamesAvailabilities(): void
+    #[Test]
+    public function adminUpdateGamesAvailabilities(): void
     {
         $this->testAdminUpdate('games_availabilities');
     }
 
-    public function testAdminUpdateCollections(): void
+    #[Test]
+    public function adminUpdateCollections(): void
     {
         $this->testAdminUpdate('collections_availabilities');
     }
 
-    public function testAdminUpdateUnknown(): void
+    #[Test]
+    public function adminUpdateUnknown(): void
     {
         $client = self::createClient();
 
@@ -66,7 +74,8 @@ final class UpdateTest extends WebTestCase
         $client->request('GET', '/istration/action/update/truc');
     }
 
-    public function testUnknown(): void
+    #[Test]
+    public function unknown(): void
     {
         $client = self::createClient();
 
@@ -80,7 +89,8 @@ final class UpdateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testNonAuthenticate(): void
+    #[Test]
+    public function nonAuthenticate(): void
     {
         $client = self::createClient();
 
@@ -89,7 +99,8 @@ final class UpdateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testNoProvider(): void
+    #[Test]
+    public function noProvider(): void
     {
         $client = self::createClient();
 
@@ -106,7 +117,8 @@ final class UpdateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testNonAdmin(): void
+    #[Test]
+    public function nonAdmin(): void
     {
         $client = self::createClient();
 
