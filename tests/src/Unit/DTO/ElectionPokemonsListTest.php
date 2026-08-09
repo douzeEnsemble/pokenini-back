@@ -6,6 +6,7 @@ namespace App\Tests\Unit\DTO;
 
 use App\DTO\ElectionPokemonsList;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
@@ -16,7 +17,8 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 #[CoversClass(ElectionPokemonsList::class)]
 final class ElectionPokemonsListTest extends TestCase
 {
-    public function testOk(): void
+    #[Test]
+    public function ok(): void
     {
         $items = [
             [
@@ -88,7 +90,8 @@ final class ElectionPokemonsListTest extends TestCase
         $this->assertSame($items, $object->items);
     }
 
-    public function testMissingType(): void
+    #[Test]
+    public function missingType(): void
     {
         $this->expectException(MissingOptionsException::class);
 
@@ -104,7 +107,8 @@ final class ElectionPokemonsListTest extends TestCase
         ]);
     }
 
-    public function testWrongType(): void
+    #[Test]
+    public function wrongType(): void
     {
         $this->expectException(InvalidOptionsException::class);
 
@@ -121,7 +125,8 @@ final class ElectionPokemonsListTest extends TestCase
         ]);
     }
 
-    public function testMissingItems(): void
+    #[Test]
+    public function missingItems(): void
     {
         $this->expectException(MissingOptionsException::class);
 
@@ -135,7 +140,8 @@ final class ElectionPokemonsListTest extends TestCase
         ]);
     }
 
-    public function testWrongItems(): void
+    #[Test]
+    public function wrongItems(): void
     {
         $this->expectException(InvalidOptionsException::class);
 

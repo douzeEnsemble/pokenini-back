@@ -6,6 +6,7 @@ namespace App\Tests\Unit\DTO;
 
 use App\DTO\LastRoute;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,7 +15,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(LastRoute::class)]
 final class LastRouteTest extends TestCase
 {
-    public function testConstruct(): void
+    #[Test]
+    public function construct(): void
     {
         $lastRoute = new LastRoute('douze', ['un' => '1', 'deux' => '2']);
 

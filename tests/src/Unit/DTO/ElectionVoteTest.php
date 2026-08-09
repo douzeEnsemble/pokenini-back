@@ -6,6 +6,7 @@ namespace App\Tests\Unit\DTO;
 
 use App\DTO\ElectionVote;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,7 +15,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ElectionVote::class)]
 final class ElectionVoteTest extends TestCase
 {
-    public function testFilteredWinnersRemovesEmptyStrings(): void
+    #[Test]
+    public function filteredWinnersRemovesEmptyStrings(): void
     {
         $vote = new ElectionVote();
         $vote->winnersSlugs = ['pikachu', '', 'ivysaur'];
@@ -22,7 +24,8 @@ final class ElectionVoteTest extends TestCase
         $this->assertSame(['pikachu', 'ivysaur'], $vote->filteredWinners());
     }
 
-    public function testFilteredLosersRemovesEmptyStringsAndWinners(): void
+    #[Test]
+    public function filteredLosersRemovesEmptyStringsAndWinners(): void
     {
         $vote = new ElectionVote();
         $vote->winnersSlugs = ['bulbasaur', '', 'ivysaur'];
@@ -32,7 +35,8 @@ final class ElectionVoteTest extends TestCase
         $this->assertSame(['charmander'], $vote->filteredLosers());
     }
 
-    public function testFilteredWinnersWithNoDuplication(): void
+    #[Test]
+    public function filteredWinnersWithNoDuplication(): void
     {
         $vote = new ElectionVote();
         $vote->winnersSlugs = ['pikachu', 'pichu'];
@@ -42,7 +46,8 @@ final class ElectionVoteTest extends TestCase
         $this->assertSame(['raichu'], $vote->filteredLosers());
     }
 
-    public function testFilteredLosersWithAllLosers(): void
+    #[Test]
+    public function filteredLosersWithAllLosers(): void
     {
         $vote = new ElectionVote();
         $vote->winnersSlugs = [];
@@ -52,7 +57,8 @@ final class ElectionVoteTest extends TestCase
         $this->assertSame(['pikachu', 'pichu', 'raichu'], $vote->filteredLosers());
     }
 
-    public function testFilteredWinnersWithAllWinners(): void
+    #[Test]
+    public function filteredWinnersWithAllWinners(): void
     {
         $vote = new ElectionVote();
         $vote->winnersSlugs = ['pikachu', 'pichu', 'raichu'];
@@ -62,7 +68,8 @@ final class ElectionVoteTest extends TestCase
         $this->assertSame([], $vote->filteredLosers());
     }
 
-    public function testDefaultValues(): void
+    #[Test]
+    public function defaultValues(): void
     {
         $vote = new ElectionVote();
 
