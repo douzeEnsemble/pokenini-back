@@ -6,6 +6,7 @@ namespace App\Tests\Unit\AlbumFilters;
 
 use App\AlbumFilters\FromRequest;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,7 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 #[CoversClass(FromRequest::class)]
 final class FromRequestTest extends TestCase
 {
-    public function testGet(): void
+    #[Test]
+    public function get(): void
     {
         $request = new Request($this->getTestGetInput());
 
@@ -25,7 +27,8 @@ final class FromRequestTest extends TestCase
         );
     }
 
-    public function testGetWithNegatives(): void
+    #[Test]
+    public function getWithNegatives(): void
     {
         $request = new Request([
             'catch_states' => '!no',
