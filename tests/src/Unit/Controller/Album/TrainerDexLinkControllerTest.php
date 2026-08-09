@@ -25,7 +25,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function listRejectsPremiumDexForNonCollector(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => true]], 'pokemons' => []])
         ;
@@ -43,7 +43,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function listReturnsLinksWhenAccessible(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
         ;
@@ -66,7 +66,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function listReturnsLinksForNonCollectorWhenDexIsNotPremium(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
         ;
@@ -88,7 +88,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function listNotFoundWhenDexUnknown(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willThrowException(new DexNotFoundException())
         ;
@@ -106,7 +106,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function createRejectsEmptyBody(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
         ;
@@ -124,7 +124,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function createRejectsMissingTargetDexSlug(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
         ;
@@ -142,7 +142,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function createRejectsPremiumDexForNonCollector(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => true]], 'pokemons' => []])
         ;
@@ -160,7 +160,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function createRejectsNonBooleanBidirectional(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
         ;
@@ -178,7 +178,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function createForwardsTheApiStatusCodeOnFailure(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
         ;
@@ -200,7 +200,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function createSucceeds(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
             ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
         ;
@@ -221,7 +221,7 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function delete(): void
     {
-        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService = $this->createStub(GetTrainerPokedexService::class);
 
         $trainerDexLinkService = $this->createMock(TrainerDexLinkService::class);
         $trainerDexLinkService->expects($this->once())
@@ -244,7 +244,7 @@ final class TrainerDexLinkControllerTest extends TestCase
         $authorizationChecker = $this->createMock(AuthorizationCheckerInterface::class);
         $authorizationChecker->expects($this->atMost(1))->method('isGranted')->with('ROLE_COLLECTOR')->willReturn($isCollector);
 
-        $container = $this->createMock(ContainerInterface::class);
+        $container = $this->createStub(ContainerInterface::class);
         $container->method('has')->willReturn(true);
         $container->method('get')->willReturn($authorizationChecker);
 
