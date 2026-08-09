@@ -49,6 +49,11 @@
                 // `filemtime()` on the now-known-missing path, which itself returns false and
                 // is caught by the `false === $mtime` check just below — same null result.
                 "App\\Service\\LocalVersionService::getUpdatedAt",
+                // Equivalent mutant: removing this early return leaves $claims undefined, but
+                // every subsequent access goes through `?? null` (isset-context, no warning),
+                // so $sub/$provider/$roles all resolve to null and the shape-validation check
+                // just below returns null anyway — same result, no observable difference.
+                "App\\Security\\SessionTokenService::parse",
             ],
         },
         "ArrayItem": {
