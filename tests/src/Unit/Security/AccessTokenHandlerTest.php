@@ -96,6 +96,55 @@ final class AccessTokenHandlerTest extends TestCase
     }
 
     #[Test]
+    public function getUserBadgeFromWithInternalSessionToken(): void
+    {
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry->expects($this->never())->method('getClient');
+
+        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'google']);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication succeeded from internal session token for provider google')
+        ;
+
+        $sessionTokenService = $this->createSessionTokenService();
+
+        $issuingUser = new User('some-id', 'google');
+        $issuingUser->addAdminRole();
+        $issuingUser->addCollectorRole();
+        $issuingUser->addTrainerRole();
+
+        $sessionToken = $sessionTokenService->issue($issuingUser);
+
+        $accessTokenHandler = new AccessTokenHandler(
+            $clientRegistry,
+            $requestStack,
+            'some-id,another-id,more-id,extra-id',
+            'some-id,another-id',
+            'some-id',
+            false,
+            $logger,
+            'prod',
+            $sessionTokenService,
+        );
+
+        $userBadge = $accessTokenHandler->getUserBadgeFrom($sessionToken);
+
+        $this->assertSame('some-id', $userBadge->getUserIdentifier());
+        $user = $userBadge->getUser();
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertTrue($user->isAnAdmin());
+        $this->assertTrue($user->isACollector());
+        $this->assertTrue($user->isATrainer());
+    }
+
+    #[Test]
     public function getUserBadgeFromWithoutCurrentRequest(): void
     {
         $clientRegistry = $this->createStub(ClientRegistry::class);
@@ -670,6 +719,6 @@ final class AccessTokenHandlerTest extends TestCase
 
     private function createSessionTokenService(): SessionTokenService
     {
-        return new SessionTokenService('test-session-token-secret', 604800);
+        return new SessionTokenService('test-session-token-secret-that-is-at-least-32-bytes-long', 604800);
     }
 }
