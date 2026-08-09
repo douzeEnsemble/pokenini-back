@@ -24,6 +24,7 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         private readonly bool $isInvitationRequired,
         private readonly LoggerInterface $logger,
         private readonly string $env,
+        private readonly SessionTokenService $sessionTokenService,
     ) {}
 
     #[\Override]
@@ -49,6 +50,17 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
             $this->logger->info('Authentication failed: empty X-Provider header');
 
             throw new BadCredentialsException('The "X-Provider" header is empty.');
+        }
+
+        $claims = $this->sessionTokenService->parse($accessToken);
+
+        if (null !== $claims) {
+            return new UserBadge($claims['sub'], function () use ($claims) {
+                $user = $this->buildUserFromClaims($claims);
+                $this->logger->info("Authentication succeeded from internal session token for provider {$claims['provider']}");
+
+                return $user;
+            });
         }
 
         if ('fake' === strtolower($provider) && \in_array($this->env, ['dev', 'test'], true)) {
@@ -87,6 +99,25 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
 
             return $user;
         });
+    }
+
+    /**
+     * @param array{sub: non-empty-string, provider: string, roles: list<string>} $claims
+     */
+    private function buildUserFromClaims(array $claims): User
+    {
+        $user = new User($claims['sub'], $claims['provider']);
+
+        foreach ($claims['roles'] as $role) {
+            match ($role) {
+                'ROLE_ADMIN' => $user->addAdminRole(),
+                'ROLE_COLLECTOR' => $user->addCollectorRole(),
+                'ROLE_TRAINER' => $user->addTrainerRole(),
+                default => null,
+            };
+        }
+
+        return $user;
     }
 
     /**

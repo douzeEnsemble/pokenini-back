@@ -6,7 +6,6 @@ namespace App\Tests\Integration\User;
 
 use App\Controller\User\UserInfoController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
-use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -20,7 +19,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 final class UserInfoTest extends WebTestCase
 {
     use ClientRequestTrait;
-    use JsonResponseTrait;
 
     #[Test]
     public function get(): void
@@ -36,7 +34,19 @@ final class UserInfoTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $this->assertResponseContent($client, 'UserInfo/trainer.json');
+        $content = (string) $client->getResponse()->getContent();
+        $data = json_decode($content, true, flags: JSON_THROW_ON_ERROR);
+
+        // The session token is a freshly signed JWT (varies with time), so it cannot be snapshot-tested.
+        // Its presence and shape are asserted separately, then it is stripped before comparing the rest.
+        $this->assertArrayHasKey('session_token', $data);
+        $this->assertMatchesRegularExpression('/^[\w-]+\.[\w-]+\.[\w-]+$/', $data['session_token']);
+        unset($data['session_token']);
+
+        $this->assertJsonStringEqualsJsonFile(
+            __DIR__.'/../../../resources/functional/controller/UserInfo/trainer.json',
+            json_encode($data, JSON_THROW_ON_ERROR),
+        );
     }
 
     #[Test]

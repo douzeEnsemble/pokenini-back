@@ -20,6 +20,8 @@ services:
             int $electionCandidateCount: '%env(ELECTION_CANDIDATE_COUNT)%'
             string $env: '%kernel.environment%'
             string $metadataDir: '%kernel.project_dir%/resources/metadata'
+            string $sessionTokenSecret: '%env(SESSION_TOKEN_SECRET)%'
+            int $sessionTtl: '%env(int:SESSION_TTL)%'
 
     App\:
         resource: '../src/'

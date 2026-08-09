@@ -55,6 +55,12 @@ parameters:
         - type: classLike
           value: '^KnpU\\OAuth2ClientBundle\\.*'
 
+    # Firebase
+    - name: FirebaseJwt
+      collectors:
+        - type: classLike
+          value: '^Firebase\\JWT\\.*'
+
     # League
     - name: LeagueOAuth2
       collectors:
@@ -174,6 +180,7 @@ parameters:
     AppHelper:
     AppSecurity:
       - AppException
+      - FirebaseJwt
       - KnpUOAuth2ClientBundle
       - LeagueOAuth2
       - Logger

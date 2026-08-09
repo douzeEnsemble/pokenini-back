@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Security;
 
 use App\Security\AccessTokenHandler;
+use App\Security\SessionTokenService;
 use App\Security\User;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
@@ -83,6 +84,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'prod',
+            $this->createSessionTokenService(),
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
@@ -121,6 +123,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'prod',
+            $this->createSessionTokenService(),
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -159,6 +162,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'prod',
+            $this->createSessionTokenService(),
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -206,6 +210,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'prod',
+            $this->createSessionTokenService(),
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -253,6 +258,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'prod',
+            $this->createSessionTokenService(),
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -393,6 +399,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'prod',
+            $this->createSessionTokenService(),
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -426,6 +433,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'dev',
+            $this->createSessionTokenService(),
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('admin');
@@ -461,6 +469,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'dev',
+            $this->createSessionTokenService(),
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('trainer');
@@ -514,6 +523,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'dev',
+            $this->createSessionTokenService(),
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
@@ -547,6 +557,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'dev',
+            $this->createSessionTokenService(),
         );
 
         $this->expectException(BadCredentialsException::class);
@@ -578,6 +589,7 @@ final class AccessTokenHandlerTest extends TestCase
             false,
             $logger,
             'dev',
+            $this->createSessionTokenService(),
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('admin');
@@ -647,11 +659,17 @@ final class AccessTokenHandlerTest extends TestCase
             $isInvitationRequired,
             $logger,
             'prod',
+            $this->createSessionTokenService(),
         );
 
         $userBadge = $accessTokenHandler->getUserBadgeFrom('some-access-token');
 
         /** @var User */
         return $userBadge->getUser();
+    }
+
+    private function createSessionTokenService(): SessionTokenService
+    {
+        return new SessionTokenService('test-session-token-secret', 604800);
     }
 }
