@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Security;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
@@ -30,13 +33,27 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
     #[\Override]
     public function getUserBadgeFrom(string $accessToken): UserBadge
     {
-        $currentRequest = $this->requestStack->getCurrentRequest();
+        $provider = $this->resolveProvider();
 
-        if (null === $currentRequest) {
-            $this->logger->info('Authentication failed: no current request');
+        $claims = $this->sessionTokenService->parse($accessToken);
 
-            throw new BadCredentialsException('No current request available.');
+        if (null !== $claims) {
+            return $this->createSessionTokenBadge($claims);
         }
+
+        if ('fake' === strtolower($provider) && \in_array($this->env, ['dev', 'test'], true)) {
+            return $this->createFakeProviderBadge($accessToken, $provider);
+        }
+
+        return $this->createOAuthBadge($accessToken, $provider);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    private function resolveProvider(): string
+    {
+        $currentRequest = $this->getCurrentRequestOrFail();
 
         if (!$currentRequest->headers->has('X-Provider')) {
             $this->logger->info('Authentication failed: missing X-Provider header');
@@ -52,30 +69,51 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
             throw new BadCredentialsException('The "X-Provider" header is empty.');
         }
 
-        $claims = $this->sessionTokenService->parse($accessToken);
+        return $provider;
+    }
 
-        if (null !== $claims) {
-            return new UserBadge($claims['sub'], function () use ($claims) {
-                $user = $this->buildUserFromClaims($claims);
-                $this->logger->info("Authentication succeeded from internal session token for provider {$claims['provider']}");
+    private function getCurrentRequestOrFail(): Request
+    {
+        $currentRequest = $this->requestStack->getCurrentRequest();
 
-                return $user;
-            });
+        if (null === $currentRequest) {
+            $this->logger->info('Authentication failed: no current request');
+
+            throw new BadCredentialsException('No current request available.');
         }
 
-        if ('fake' === strtolower($provider) && \in_array($this->env, ['dev', 'test'], true)) {
-            if ('' === $accessToken) {
-                throw new BadCredentialsException('Empty fake token.');
-            }
+        return $currentRequest;
+    }
 
-            return new UserBadge($accessToken, function () use ($accessToken, $provider) {
-                $user = $this->loadUserFromLists($accessToken, $provider);
-                $this->logger->info("Authentication succeeded for provider {$provider}");
+    /**
+     * @param array{sub: non-empty-string, provider: string, roles: list<string>} $claims
+     */
+    private function createSessionTokenBadge(array $claims): UserBadge
+    {
+        return new UserBadge($claims['sub'], function () use ($claims) {
+            $user = $this->buildUserFromClaims($claims);
+            $this->logger->info("Authentication succeeded from internal session token for provider {$claims['provider']}");
 
-                return $user;
-            });
+            return $user;
+        });
+    }
+
+    private function createFakeProviderBadge(string $accessToken, string $provider): UserBadge
+    {
+        if ('' === $accessToken) {
+            throw new BadCredentialsException('Empty fake token.');
         }
 
+        return new UserBadge($accessToken, function () use ($accessToken, $provider) {
+            $user = $this->loadUserFromLists($accessToken, $provider);
+            $this->logger->info("Authentication succeeded for provider {$provider}");
+
+            return $user;
+        });
+    }
+
+    private function createOAuthBadge(string $accessToken, string $provider): UserBadge
+    {
         $client = $this->clientRegistry->getClient($provider);
 
         $accessTokenObj = new AccessToken([
@@ -83,13 +121,7 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         ]);
 
         return new UserBadge($accessTokenObj->getToken(), function () use ($accessTokenObj, $client, $provider) {
-            try {
-                $authUser = $client->fetchUserFromToken($accessTokenObj);
-            } catch (IdentityProviderException) {
-                $this->logger->info("Authentication failed: invalid token for provider {$provider}");
-
-                throw new BadCredentialsException('Token is invalid, maybe expired');
-            }
+            $authUser = $this->fetchUserFromToken($client, $accessTokenObj, $provider);
 
             /** @var non-empty-string $userId */
             $userId = $authUser->getId();
@@ -99,6 +131,17 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
 
             return $user;
         });
+    }
+
+    private function fetchUserFromToken(OAuth2ClientInterface $client, AccessToken $accessTokenObj, string $provider): ResourceOwnerInterface
+    {
+        try {
+            return $client->fetchUserFromToken($accessTokenObj);
+        } catch (IdentityProviderException) {
+            $this->logger->info("Authentication failed: invalid token for provider {$provider}");
+
+            throw new BadCredentialsException('Token is invalid, maybe expired');
+        }
     }
 
     /**
