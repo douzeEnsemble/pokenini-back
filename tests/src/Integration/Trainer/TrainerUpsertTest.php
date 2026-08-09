@@ -8,6 +8,7 @@ use App\Controller\Trainer\TrainerUpsertController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -19,7 +20,8 @@ final class TrainerUpsertTest extends WebTestCase
 {
     use ClientRequestTrait;
 
-    public function testUpsert(): void
+    #[Test]
+    public function upsert(): void
     {
         $client = self::createClient();
 
@@ -37,7 +39,8 @@ final class TrainerUpsertTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testUpsertOnlyPrivate(): void
+    #[Test]
+    public function upsertOnlyPrivate(): void
     {
         $client = self::createClient();
 
@@ -55,7 +58,8 @@ final class TrainerUpsertTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testUpsertOnlyOnHome(): void
+    #[Test]
+    public function upsertOnlyOnHome(): void
     {
         $client = self::createClient();
 
@@ -73,7 +77,8 @@ final class TrainerUpsertTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testUpsertOnPremiumDexAsCollector(): void
+    #[Test]
+    public function upsertOnPremiumDexAsCollector(): void
     {
         $client = self::createClient();
 
@@ -91,7 +96,8 @@ final class TrainerUpsertTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testUpsertOnPremiumDexAsTrainer(): void
+    #[Test]
+    public function upsertOnPremiumDexAsTrainer(): void
     {
         $client = self::createClient();
 
@@ -109,7 +115,8 @@ final class TrainerUpsertTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testUpsertBadRequest(): void
+    #[Test]
+    public function upsertBadRequest(): void
     {
         $client = self::createClient();
 
@@ -130,7 +137,8 @@ final class TrainerUpsertTest extends WebTestCase
         $this->assertSame('{"error":"Fail to modify resources"}', $content);
     }
 
-    public function testUpsertFail(): void
+    #[Test]
+    public function upsertFail(): void
     {
         $client = self::createClient();
 
@@ -151,7 +159,8 @@ final class TrainerUpsertTest extends WebTestCase
         $this->assertSame('{"error":"Fail to modify resources"}', $content);
     }
 
-    public function testUpsertNonAuthenticated(): void
+    #[Test]
+    public function upsertNonAuthenticated(): void
     {
         $client = self::createClient();
 

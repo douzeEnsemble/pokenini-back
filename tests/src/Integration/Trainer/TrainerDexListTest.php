@@ -9,6 +9,7 @@ use App\Tests\Integration\Trait\ClientRequestTrait;
 use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -21,7 +22,8 @@ final class TrainerDexListTest extends WebTestCase
     use ClientRequestTrait;
     use JsonResponseTrait;
 
-    public function testDexAsTrainer(): void
+    #[Test]
+    public function dexAsTrainer(): void
     {
         $client = self::createClient();
 
@@ -37,7 +39,8 @@ final class TrainerDexListTest extends WebTestCase
         $this->assertResponseContent($client, 'TrainerDexList/trainer.json');
     }
 
-    public function testDexAsCollector(): void
+    #[Test]
+    public function dexAsCollector(): void
     {
         $client = self::createClient();
 
@@ -53,7 +56,8 @@ final class TrainerDexListTest extends WebTestCase
         $this->assertResponseContent($client, 'TrainerDexList/collector.json');
     }
 
-    public function testDexAdmin(): void
+    #[Test]
+    public function dexAdmin(): void
     {
         $client = self::createClient();
 
@@ -69,7 +73,8 @@ final class TrainerDexListTest extends WebTestCase
         $this->assertResponseContent($client, 'TrainerDexList/admin.json');
     }
 
-    public function testDexPublic(): void
+    #[Test]
+    public function dexPublic(): void
     {
         $client = self::createClient();
 
