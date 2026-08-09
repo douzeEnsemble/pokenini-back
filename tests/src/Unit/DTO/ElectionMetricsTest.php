@@ -6,6 +6,7 @@ namespace App\Tests\Unit\DTO;
 
 use App\DTO\ElectionMetrics;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,7 +15,8 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(ElectionMetrics::class)]
 final class ElectionMetricsTest extends TestCase
 {
-    public function testParsesUnderMaxViewCountFromCompletion(): void
+    #[Test]
+    public function parsesUnderMaxViewCountFromCompletion(): void
     {
         $metrics = $this->make([
             'view_count' => ['sum' => 82, 'max' => 1],
@@ -26,7 +28,8 @@ final class ElectionMetricsTest extends TestCase
         $this->assertSame(3, $metrics->underMaxViewCount);
     }
 
-    public function testParsesMaxViewCountFromCompletion(): void
+    #[Test]
+    public function parsesMaxViewCountFromCompletion(): void
     {
         $metrics = $this->make([
             'view_count' => ['sum' => 82, 'max' => 1],
@@ -38,7 +41,8 @@ final class ElectionMetricsTest extends TestCase
         $this->assertSame(7, $metrics->maxViewCount);
     }
 
-    public function testStoresRaw(): void
+    #[Test]
+    public function storesRaw(): void
     {
         $input = [
             'view_count' => ['sum' => 82, 'max' => 1],
@@ -52,7 +56,8 @@ final class ElectionMetricsTest extends TestCase
         $this->assertSame($input, $metrics->raw);
     }
 
-    public function testComputesRoundCountWinnerAverageAndTotalRoundCount(): void
+    #[Test]
+    public function computesRoundCountWinnerAverageAndTotalRoundCount(): void
     {
         $metrics = $this->make([
             'view_count' => ['sum' => 82, 'max' => 1],
@@ -66,7 +71,8 @@ final class ElectionMetricsTest extends TestCase
         $this->assertSame(8, $metrics->totalRoundCount);
     }
 
-    public function testRoundCountRoundsToNearestInsteadOfCeiling(): void
+    #[Test]
+    public function roundCountRoundsToNearestInsteadOfCeiling(): void
     {
         $metrics = $this->make([
             'view_count' => ['sum' => 25, 'max' => 1],
@@ -78,7 +84,8 @@ final class ElectionMetricsTest extends TestCase
         $this->assertSame(2, $metrics->roundCount);
     }
 
-    public function testDefaultsWinnerAverageWhenRoundCountIsZero(): void
+    #[Test]
+    public function defaultsWinnerAverageWhenRoundCountIsZero(): void
     {
         $metrics = $this->make([
             'view_count' => ['sum' => 0, 'max' => 0],
