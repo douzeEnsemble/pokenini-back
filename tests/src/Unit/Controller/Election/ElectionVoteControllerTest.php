@@ -8,6 +8,7 @@ use App\Controller\Election\ElectionVoteController;
 use App\DTO\ElectionVote;
 use App\Service\ModifyElectionVoteService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +19,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 #[CoversClass(ElectionVoteController::class)]
 final class ElectionVoteControllerTest extends TestCase
 {
-    public function testVote(): void
+    #[Test]
+    public function vote(): void
     {
         $electionVote = new ElectionVote();
         $electionVote->winnersSlugs = ['pichu'];
@@ -47,7 +49,8 @@ final class ElectionVoteControllerTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testVoteSetsSlugFromRoute(): void
+    #[Test]
+    public function voteSetsSlugFromRoute(): void
     {
         $electionVote = new ElectionVote();
         $electionVote->winnersSlugs = ['pichu'];
