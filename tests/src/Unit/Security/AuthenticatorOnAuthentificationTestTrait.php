@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Security;
 use App\Security\User;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,8 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
  */
 trait AuthenticatorOnAuthentificationTestTrait
 {
-    public function testOnAuthenticationSuccessNotATrainer(): void
+    #[Test]
+    public function onAuthenticationSuccessNotATrainer(): void
     {
         $user = new User('1', 'TestProvider');
 
@@ -46,7 +48,8 @@ trait AuthenticatorOnAuthentificationTestTrait
         $this->assertEquals('/success-but-not-a-trainer', $response->getTargetUrl());
     }
 
-    public function testOnAuthenticationSuccessTrainer(): void
+    #[Test]
+    public function onAuthenticationSuccessTrainer(): void
     {
         $user = new User('1', 'TestProvider');
         $user->addTrainerRole();
@@ -75,7 +78,8 @@ trait AuthenticatorOnAuthentificationTestTrait
         $this->assertEquals('/success-trainer', $response->getTargetUrl());
     }
 
-    public function testOnAuthenticationFailure(): void
+    #[Test]
+    public function onAuthenticationFailure(): void
     {
         $authenticator = $this->getOnAuthenticationAuthenticator([]);
 

@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Security;
 use App\Security\User;
 use App\Security\UserProvider;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -18,7 +19,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[CoversClass(UserProvider::class)]
 final class UserProviderTest extends TestCase
 {
-    public function testLoadUserByIdentifier(): void
+    #[Test]
+    public function loadUserByIdentifier(): void
     {
         $provider = new UserProvider();
 
@@ -28,7 +30,8 @@ final class UserProviderTest extends TestCase
         $provider->loadUserByIdentifier('douze');
     }
 
-    public function testRefreshUser(): void
+    #[Test]
+    public function refreshUser(): void
     {
         $provider = new UserProvider();
 
@@ -39,7 +42,8 @@ final class UserProviderTest extends TestCase
         $this->assertSame($user, $freshUser);
     }
 
-    public function testRefreshUserWrongUser(): void
+    #[Test]
+    public function refreshUserWrongUser(): void
     {
         $provider = new UserProvider();
 
@@ -51,7 +55,8 @@ final class UserProviderTest extends TestCase
         $provider->refreshUser($notUser);
     }
 
-    public function testUpgradePassword(): void
+    #[Test]
+    public function upgradePassword(): void
     {
         $provider = new UserProvider();
 
@@ -62,7 +67,8 @@ final class UserProviderTest extends TestCase
         $this->assertSame($initialUser, $user);
     }
 
-    public function testSupportsClass(): void
+    #[Test]
+    public function supportsClass(): void
     {
         $provider = new UserProvider();
 

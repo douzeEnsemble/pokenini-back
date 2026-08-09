@@ -10,6 +10,7 @@ use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
 use League\OAuth2\Client\Provider\GoogleUser;
 use League\OAuth2\Client\Token\AccessToken;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
@@ -19,7 +20,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
  */
 trait AuthenticatorAuthenticateClosedTestTrait
 {
-    public function testClosedAuthenticateUser(): void
+    #[Test]
+    public function closedAuthenticateUser(): void
     {
         $authenticator = $this->getAuthenticator(
             '1313131313',
@@ -44,7 +46,8 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
-    public function testClosedAuthenticateTrainer(): void
+    #[Test]
+    public function closedAuthenticateTrainer(): void
     {
         $authenticator = $this->getAuthenticator(
             '1313131313',
@@ -68,7 +71,8 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
-    public function testClosedAuthenticateCollector(): void
+    #[Test]
+    public function closedAuthenticateCollector(): void
     {
         $authenticator = $this->getAuthenticator(
             '1313131313',
@@ -92,7 +96,8 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
-    public function testClosedAuthenticateAdmin(): void
+    #[Test]
+    public function closedAuthenticateAdmin(): void
     {
         $authenticator = $this->getAuthenticator(
             '1313131313,1212121212000000000000012',
@@ -116,7 +121,8 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
-    public function testClosedAuthenticateAdminTrainer(): void
+    #[Test]
+    public function closedAuthenticateAdminTrainer(): void
     {
         $authenticator = $this->getAuthenticator(
             '1313131313,1212121212000000000000012',
@@ -140,7 +146,8 @@ trait AuthenticatorAuthenticateClosedTestTrait
         $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
-    public function testClosedAuthenticateAdminTrainerWithEndlines(): void
+    #[Test]
+    public function closedAuthenticateAdminTrainerWithEndlines(): void
     {
         $listAdmin = <<<'LIST'
             toto,

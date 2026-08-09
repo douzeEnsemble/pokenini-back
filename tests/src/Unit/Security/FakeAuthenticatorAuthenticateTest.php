@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Security;
 use App\Security\FakeAuthenticator;
 use App\Security\User;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,7 +19,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 #[CoversClass(FakeAuthenticator::class)]
 final class FakeAuthenticatorAuthenticateTest extends TestCase
 {
-    public function testAuthenticateUser(): void
+    #[Test]
+    public function authenticateUser(): void
     {
         $fakeAuthenticator = $this->getFakeAuthenticator(
             '1313131313',
@@ -41,7 +43,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
     }
 
-    public function testAuthenticateTrainer(): void
+    #[Test]
+    public function authenticateTrainer(): void
     {
         $fakeAuthenticator = $this->getFakeAuthenticator(
             '1313131313',
@@ -64,7 +67,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
     }
 
-    public function testAuthenticateCollector(): void
+    #[Test]
+    public function authenticateCollector(): void
     {
         $fakeAuthenticator = $this->getFakeAuthenticator(
             '1313131313',
@@ -87,7 +91,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
     }
 
-    public function testAuthenticateAdmin(): void
+    #[Test]
+    public function authenticateAdmin(): void
     {
         $fakeAuthenticator = $this->getFakeAuthenticator(
             '1313131313,1212121212000000000000012',
@@ -110,7 +115,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
     }
 
-    public function testAuthenticateAdminTrainer(): void
+    #[Test]
+    public function authenticateAdminTrainer(): void
     {
         $fakeAuthenticator = $this->getFakeAuthenticator(
             '1313131313,1212121212000000000000012',
@@ -133,7 +139,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
     }
 
-    public function testAuthenticateAdminTrainerWithEndlines(): void
+    #[Test]
+    public function authenticateAdminTrainerWithEndlines(): void
     {
         $listAdmin = <<<'LIST'
             toto,

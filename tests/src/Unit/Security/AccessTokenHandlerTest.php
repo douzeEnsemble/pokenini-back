@@ -11,6 +11,7 @@ use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,8 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 #[CoversClass(AccessTokenHandler::class)]
 final class AccessTokenHandlerTest extends TestCase
 {
-    public function testGetUserBadgeFrom(): void
+    #[Test]
+    public function getUserBadgeFrom(): void
     {
         $authUser = $this->createMock(ResourceOwnerInterface::class);
         $authUser
@@ -91,7 +93,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertSame('some-id', $user->getId());
     }
 
-    public function testGetUserBadgeFromWithoutCurrentRequest(): void
+    #[Test]
+    public function getUserBadgeFromWithoutCurrentRequest(): void
     {
         $clientRegistry = $this->createStub(ClientRegistry::class);
 
@@ -126,7 +129,8 @@ final class AccessTokenHandlerTest extends TestCase
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
 
-    public function testGetUserBadgeFromWithoutProviderHeader(): void
+    #[Test]
+    public function getUserBadgeFromWithoutProviderHeader(): void
     {
         $clientRegistry = $this->createStub(ClientRegistry::class);
 
@@ -163,7 +167,8 @@ final class AccessTokenHandlerTest extends TestCase
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
 
-    public function testGetUserBadgeFromWithNullProviderHeader(): void
+    #[Test]
+    public function getUserBadgeFromWithNullProviderHeader(): void
     {
         $clientRegistry = $this->createStub(ClientRegistry::class);
 
@@ -209,7 +214,8 @@ final class AccessTokenHandlerTest extends TestCase
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
 
-    public function testGetUserBadgeFromWithEmptyProviderHeader(): void
+    #[Test]
+    public function getUserBadgeFromWithEmptyProviderHeader(): void
     {
         $clientRegistry = $this->createStub(ClientRegistry::class);
 
@@ -255,7 +261,8 @@ final class AccessTokenHandlerTest extends TestCase
         $accessTokenHandler->getUserBadgeFrom('some-access-token');
     }
 
-    public function testGetUserBadgeFromAsAdmin(): void
+    #[Test]
+    public function getUserBadgeFromAsAdmin(): void
     {
         $user = $this->getUserFromUserBadge('some-admin-id', false);
 
@@ -264,7 +271,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromAsCollector(): void
+    #[Test]
+    public function getUserBadgeFromAsCollector(): void
     {
         $user = $this->getUserFromUserBadge('some-collector-id', false);
 
@@ -273,7 +281,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromAsTrainer(): void
+    #[Test]
+    public function getUserBadgeFromAsTrainer(): void
     {
         $user = $this->getUserFromUserBadge('some-trainer-id', false);
 
@@ -282,7 +291,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromAsUnknown(): void
+    #[Test]
+    public function getUserBadgeFromAsUnknown(): void
     {
         $user = $this->getUserFromUserBadge('some-unknown-id', false);
 
@@ -291,7 +301,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromAsAdminWithInvitationRequested(): void
+    #[Test]
+    public function getUserBadgeFromAsAdminWithInvitationRequested(): void
     {
         $user = $this->getUserFromUserBadge('some-admin-id', true);
 
@@ -300,7 +311,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertFalse($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromAsCollectorWithInvitationRequested(): void
+    #[Test]
+    public function getUserBadgeFromAsCollectorWithInvitationRequested(): void
     {
         $user = $this->getUserFromUserBadge('some-collector-id', true);
 
@@ -309,7 +321,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertFalse($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromAsTrainerWithInvitationRequested(): void
+    #[Test]
+    public function getUserBadgeFromAsTrainerWithInvitationRequested(): void
     {
         $user = $this->getUserFromUserBadge('some-trainer-id', true);
 
@@ -318,7 +331,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromAsUnknownWithInvitationRequested(): void
+    #[Test]
+    public function getUserBadgeFromAsUnknownWithInvitationRequested(): void
     {
         $user = $this->getUserFromUserBadge('some-unknown-id', true);
 
@@ -327,7 +341,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertFalse($user->isATrainer());
     }
 
-    public function testGetUserFromUserBadgeWithInvalidToken(): void
+    #[Test]
+    public function getUserFromUserBadgeWithInvalidToken(): void
     {
         $client = $this->createMock(OAuth2ClientInterface::class);
         $client
@@ -388,7 +403,8 @@ final class AccessTokenHandlerTest extends TestCase
         $userBadge->getUser();
     }
 
-    public function testGetUserBadgeFromWithFakeProviderInDevAsAdmin(): void
+    #[Test]
+    public function getUserBadgeFromWithFakeProviderInDevAsAdmin(): void
     {
         $clientRegistry = $this->createMock(ClientRegistry::class);
         $clientRegistry->expects($this->never())->method('getClient');
@@ -422,7 +438,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromWithFakeProviderInDevAsTrainer(): void
+    #[Test]
+    public function getUserBadgeFromWithFakeProviderInDevAsTrainer(): void
     {
         $clientRegistry = $this->createMock(ClientRegistry::class);
         $clientRegistry->expects($this->never())->method('getClient');
@@ -455,7 +472,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    public function testGetUserBadgeFromWithNonFakeProviderInDevUsesOAuth2Client(): void
+    #[Test]
+    public function getUserBadgeFromWithNonFakeProviderInDevUsesOAuth2Client(): void
     {
         $authUser = $this->createMock(ResourceOwnerInterface::class);
         $authUser
@@ -506,7 +524,8 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertSame('some-id', $user->getId());
     }
 
-    public function testGetUserBadgeFromWithFakeProviderInDevAndEmptyToken(): void
+    #[Test]
+    public function getUserBadgeFromWithFakeProviderInDevAndEmptyToken(): void
     {
         $clientRegistry = $this->createMock(ClientRegistry::class);
         $clientRegistry->expects($this->never())->method('getClient');
@@ -536,7 +555,8 @@ final class AccessTokenHandlerTest extends TestCase
         $accessTokenHandler->getUserBadgeFrom('');
     }
 
-    public function testGetUserBadgeFromWithLowercaseFakeProviderInDev(): void
+    #[Test]
+    public function getUserBadgeFromWithLowercaseFakeProviderInDev(): void
     {
         $clientRegistry = $this->createMock(ClientRegistry::class);
         $clientRegistry->expects($this->never())->method('getClient');

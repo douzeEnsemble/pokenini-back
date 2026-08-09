@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Security;
 use App\Security\FakeAuthenticator;
 use App\Security\User;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,8 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 #[CoversClass(FakeAuthenticator::class)]
 final class FakeAuthenticatorOnAuthentificationTest extends TestCase
 {
-    public function testOnAuthenticationSuccessNotATrainer(): void
+    #[Test]
+    public function onAuthenticationSuccessNotATrainer(): void
     {
         $user = new User('1', 'TestProvider');
 
@@ -48,7 +50,8 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
         $this->assertEquals('/success-but-not-a-trainer', $response->getTargetUrl());
     }
 
-    public function testOnAuthenticationSuccessTrainer(): void
+    #[Test]
+    public function onAuthenticationSuccessTrainer(): void
     {
         $user = new User('1', 'TestProvider');
         $user->addTrainerRole();
@@ -77,7 +80,8 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
         $this->assertEquals('/success-trainer', $response->getTargetUrl());
     }
 
-    public function testOnAuthenticationFailure(): void
+    #[Test]
+    public function onAuthenticationFailure(): void
     {
         $fakeAuthenticator = $this->getFakeAuthenticator([]);
 
