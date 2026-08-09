@@ -8,6 +8,7 @@ use App\Controller\Admin\AdminActionCalculateController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -19,22 +20,26 @@ final class CalculateTest extends WebTestCase
 {
     use ClientRequestTrait;
 
-    public function testGamesBundlesAvailabilities(): void
+    #[Test]
+    public function gamesBundlesAvailabilities(): void
     {
         $this->testAction('game_bundles_availabilities');
     }
 
-    public function testGamesBundlesShiniesAvailabilities(): void
+    #[Test]
+    public function gamesBundlesShiniesAvailabilities(): void
     {
         $this->testAction('game_bundles_shinies_availabilities');
     }
 
-    public function testPokemonAvailabilities(): void
+    #[Test]
+    public function pokemonAvailabilities(): void
     {
         $this->testAction('pokemon_availabilities');
     }
 
-    public function testDexAvailabilities(): void
+    #[Test]
+    public function dexAvailabilities(): void
     {
         $client = self::createClient();
 
@@ -62,7 +67,8 @@ final class CalculateTest extends WebTestCase
         );
     }
 
-    public function testUnknown(): void
+    #[Test]
+    public function unknown(): void
     {
         $client = self::createClient();
 
@@ -76,7 +82,8 @@ final class CalculateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testNonAuthenticate(): void
+    #[Test]
+    public function nonAuthenticate(): void
     {
         $client = self::createClient();
 
@@ -85,7 +92,8 @@ final class CalculateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testNoProvider(): void
+    #[Test]
+    public function noProvider(): void
     {
         $client = self::createClient();
 
@@ -102,7 +110,8 @@ final class CalculateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testNonAdmin(): void
+    #[Test]
+    public function nonAdmin(): void
     {
         $client = self::createClient();
 

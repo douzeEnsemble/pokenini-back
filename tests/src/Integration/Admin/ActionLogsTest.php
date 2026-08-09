@@ -9,6 +9,7 @@ use App\Tests\Integration\Trait\ClientRequestTrait;
 use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -21,7 +22,8 @@ final class ActionLogsTest extends WebTestCase
     use ClientRequestTrait;
     use JsonResponseTrait;
 
-    public function testGetActionLogs(): void
+    #[Test]
+    public function getActionLogs(): void
     {
         $client = self::createClient();
 
@@ -37,7 +39,8 @@ final class ActionLogsTest extends WebTestCase
         $this->assertResponseContent($client, 'Admin/action-logs.json');
     }
 
-    public function testGetActionLogsNonAuthenticated(): void
+    #[Test]
+    public function getActionLogsNonAuthenticated(): void
     {
         $client = self::createClient();
 

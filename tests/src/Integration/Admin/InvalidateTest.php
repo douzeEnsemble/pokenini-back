@@ -9,6 +9,7 @@ use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -20,8 +21,9 @@ final class InvalidateTest extends WebTestCase
 {
     use ClientRequestTrait;
 
+    #[Test]
     #[DataProvider('providerInvalidateSuccess')]
-    public function testInvalidateSuccess(string $name): void
+    public function invalidateSuccess(string $name): void
     {
         $client = self::createClient();
 
@@ -61,8 +63,9 @@ final class InvalidateTest extends WebTestCase
         ];
     }
 
+    #[Test]
     #[DataProvider('providerInvalidateNotExists')]
-    public function testInvalidateNotExists(string $name): void
+    public function invalidateNotExists(string $name): void
     {
         $client = self::createClient();
 
@@ -98,7 +101,8 @@ final class InvalidateTest extends WebTestCase
         ];
     }
 
-    public function testUnknown(): void
+    #[Test]
+    public function unknown(): void
     {
         $client = self::createClient();
 
@@ -112,7 +116,8 @@ final class InvalidateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testNonAuthenticate(): void
+    #[Test]
+    public function nonAuthenticate(): void
     {
         $client = self::createClient();
 
@@ -121,7 +126,8 @@ final class InvalidateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testNoProvider(): void
+    #[Test]
+    public function noProvider(): void
     {
         $client = self::createClient();
 
@@ -138,7 +144,8 @@ final class InvalidateTest extends WebTestCase
         $this->assertResponseStatusCodeSame(401);
     }
 
-    public function testNonAdmin(): void
+    #[Test]
+    public function nonAdmin(): void
     {
         $client = self::createClient();
 
