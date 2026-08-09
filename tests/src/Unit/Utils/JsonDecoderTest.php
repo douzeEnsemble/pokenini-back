@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Utils;
 use App\Utils\JsonDecoder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,8 +19,9 @@ final class JsonDecoderTest extends TestCase
     /**
      * @param array<array-key, mixed> $expectedData
      */
+    #[Test]
     #[DataProvider('providerDecode')]
-    public function testDecode(string $json, array $expectedData): void
+    public function decode(string $json, array $expectedData): void
     {
         $this->assertEquals(
             $expectedData,
@@ -119,8 +121,9 @@ final class JsonDecoderTest extends TestCase
         ];
     }
 
+    #[Test]
     #[DataProvider('providerDecodeException')]
-    public function testDecodeException(string $json): void
+    public function decodeException(string $json): void
     {
         $this->expectException(\JsonException::class);
 
