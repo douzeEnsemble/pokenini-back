@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service\Api;
 use App\Exception\ModifyFailedException;
 use App\Service\Api\GithubActionsApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\Exception\TransportException;
@@ -20,7 +21,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(GithubActionsApiService::class)]
 final class GithubActionsApiServiceTest extends TestCase
 {
-    public function testDispatchWorkflow(): void
+    #[Test]
+    public function dispatchWorkflow(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -70,7 +72,8 @@ final class GithubActionsApiServiceTest extends TestCase
         $service->dispatchWorkflow('corr-123');
     }
 
-    public function testDispatchWorkflowFails(): void
+    #[Test]
+    public function dispatchWorkflowFails(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -98,7 +101,8 @@ final class GithubActionsApiServiceTest extends TestCase
         $service->dispatchWorkflow('corr-123');
     }
 
-    public function testDispatchWorkflowFailsOnHttpErrorStatus(): void
+    #[Test]
+    public function dispatchWorkflowFailsOnHttpErrorStatus(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger

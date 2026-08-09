@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\GetPokedexApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -22,7 +23,8 @@ final class GetPokedexApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testGet(): void
+    #[Test]
+    public function get(): void
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/pokedex_lite_123.json'
@@ -63,7 +65,8 @@ final class GetPokedexApiServiceTest extends TestCase
         );
     }
 
-    public function testGetTwice(): void
+    #[Test]
+    public function getTwice(): void
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/pokedex_lite_123.json'
@@ -104,7 +107,8 @@ final class GetPokedexApiServiceTest extends TestCase
         );
     }
 
-    public function testGetWithFilters(): void
+    #[Test]
+    public function getWithFilters(): void
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/pokedex_lite_123_csyes.json'
@@ -154,7 +158,8 @@ final class GetPokedexApiServiceTest extends TestCase
         );
     }
 
-    public function testGetWithMultiplesFilters(): void
+    #[Test]
+    public function getWithMultiplesFilters(): void
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/pokedex_lite_123.json'
@@ -234,7 +239,8 @@ final class GetPokedexApiServiceTest extends TestCase
         );
     }
 
-    public function testGetWithMultiplesNegativeFilters(): void
+    #[Test]
+    public function getWithMultiplesNegativeFilters(): void
     {
         $json = (string) file_get_contents(
             '/app/tests/resources/unit/service/api/pokedex_lite_123.json'

@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service\Api;
 use App\Service\Api\ModifyElectionVoteApiService;
 use App\Tests\Unit\Trait\ElectionVoteFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -25,7 +26,8 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testVote(): void
+    #[Test]
+    public function vote(): void
     {
         $electionVote = $this->makeVote('demo', 'whatever', ['pichu'], ['pikachu', 'raichu']);
 
@@ -38,7 +40,8 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
         ;
     }
 
-    public function testVoteAllLosers(): void
+    #[Test]
+    public function voteAllLosers(): void
     {
         $electionVote = $this->makeVote('demo', 'whatever', [], ['pikachu', 'pichu', 'raichu']);
 
@@ -51,7 +54,8 @@ final class ModifyElectionVoteApiServiceTest extends TestCase
         ;
     }
 
-    public function testVoteAllWinners(): void
+    #[Test]
+    public function voteAllWinners(): void
     {
         $electionVote = $this->makeVote('demo', 'whatever', ['pikachu', 'pichu', 'raichu'], []);
 

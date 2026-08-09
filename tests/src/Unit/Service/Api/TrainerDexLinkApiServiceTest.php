@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\TrainerDexLinkApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
@@ -18,7 +19,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(TrainerDexLinkApiService::class)]
 final class TrainerDexLinkApiServiceTest extends TestCase
 {
-    public function testList(): void
+    #[Test]
+    public function list(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getContent')->willReturn('[{"id":"link-1"}]');
@@ -35,7 +37,8 @@ final class TrainerDexLinkApiServiceTest extends TestCase
         $this->assertSame([['id' => 'link-1']], $service->list('douze', '8800088'));
     }
 
-    public function testCreate(): void
+    #[Test]
+    public function create(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getContent')->willReturn('');
@@ -61,7 +64,8 @@ final class TrainerDexLinkApiServiceTest extends TestCase
         $service->create('douze', 'treize', true, '8800088');
     }
 
-    public function testDelete(): void
+    #[Test]
+    public function delete(): void
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getContent')->willReturn('');

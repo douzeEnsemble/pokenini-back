@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Service\Api;
 
 use App\Service\Api\GetVersionApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -21,7 +22,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(GetVersionApiService::class)]
 final class GetVersionApiServiceTest extends TestCase
 {
-    public function testGetReturnsVersionAndUpdatedAtFromDecodedBody(): void
+    #[Test]
+    public function getReturnsVersionAndUpdatedAtFromDecodedBody(): void
     {
         $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('{"version":"1.2.12","updated_at":"2026-08-05T09:12:00+00:00"}');
@@ -53,7 +55,8 @@ final class GetVersionApiServiceTest extends TestCase
         $this->assertSame('2026-08-05T09:12:00+00:00', $result['updated_at']?->format(\DateTimeInterface::ATOM));
     }
 
-    public function testGetHandlesNullUpdatedAtField(): void
+    #[Test]
+    public function getHandlesNullUpdatedAtField(): void
     {
         $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('{"version":"1.2.12","updated_at":null}');
@@ -67,7 +70,8 @@ final class GetVersionApiServiceTest extends TestCase
         $this->assertNull($result['updated_at']);
     }
 
-    public function testGetReturnsNullFieldsOnTransportError(): void
+    #[Test]
+    public function getReturnsNullFieldsOnTransportError(): void
     {
         $client = $this->createMock(HttpClientInterface::class);
         $client->method('request')->willThrowException(
@@ -81,7 +85,8 @@ final class GetVersionApiServiceTest extends TestCase
         $this->assertNull($result['updated_at']);
     }
 
-    public function testGetReturnsNullFieldsOnHttpError(): void
+    #[Test]
+    public function getReturnsNullFieldsOnHttpError(): void
     {
         $errorResponse = $this->createMock(ResponseInterface::class);
         $errorResponse->method('getStatusCode')->willReturn(500);
@@ -106,7 +111,8 @@ final class GetVersionApiServiceTest extends TestCase
         $this->assertNull($result['updated_at']);
     }
 
-    public function testGetReturnsNullFieldsOnMalformedJson(): void
+    #[Test]
+    public function getReturnsNullFieldsOnMalformedJson(): void
     {
         $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn('not json');

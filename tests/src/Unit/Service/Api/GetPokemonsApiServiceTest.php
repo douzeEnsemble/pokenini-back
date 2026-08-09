@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service\Api;
 use App\Service\Api\GetPokemonsApiService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -23,8 +24,9 @@ final class GetPokemonsApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
+    #[Test]
     #[DataProvider('providerGet')]
-    public function testGet(
+    public function get(
         string $listType,
         string $trainerExternalId,
         string $dexSlug,
@@ -92,7 +94,8 @@ final class GetPokemonsApiServiceTest extends TestCase
         ];
     }
 
-    public function testGetWithFilters(): void
+    #[Test]
+    public function getWithFilters(): void
     {
         $electionDexList = $this
             ->getService(

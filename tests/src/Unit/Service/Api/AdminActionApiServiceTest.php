@@ -8,6 +8,7 @@ use App\Exception\ModifyFailedException;
 use App\Service\Api\AdminActionApiService;
 use App\Tests\Utils\WithConsecutive;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -25,28 +26,32 @@ final class AdminActionApiServiceTest extends TestCase
     private ArrayAdapter $cachePool;
     private TagAwareAdapter $cache;
 
-    public function testUpdate(): void
+    #[Test]
+    public function update(): void
     {
         $this->getService('update/start')->update('start');
 
         $this->assertEmpty($this->cachePool->getValues());
     }
 
-    public function testCalculate(): void
+    #[Test]
+    public function calculate(): void
     {
         $this->getService('calculate/start')->calculate('start');
 
         $this->assertEmpty($this->cachePool->getValues());
     }
 
-    public function testUpdateFails(): void
+    #[Test]
+    public function updateFails(): void
     {
         $this->expectException(ModifyFailedException::class);
 
         $this->getFailingService()->update('start');
     }
 
-    public function testCalculateFails(): void
+    #[Test]
+    public function calculateFails(): void
     {
         $this->expectException(ModifyFailedException::class);
 
