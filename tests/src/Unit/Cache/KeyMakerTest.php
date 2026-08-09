@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Cache;
 
 use App\Cache\KeyMaker;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,81 +15,96 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(KeyMaker::class)]
 final class KeyMakerTest extends TestCase
 {
-    public function testGetDexKey(): void
+    #[Test]
+    public function getDexKey(): void
     {
         $this->assertEquals('dex', KeyMaker::getDexKey());
     }
 
-    public function testGetCatchStatesKey(): void
+    #[Test]
+    public function getCatchStatesKey(): void
     {
         $this->assertEquals('catch_states', KeyMaker::getCatchStatesKey());
     }
 
-    public function testGetTypesKey(): void
+    #[Test]
+    public function getTypesKey(): void
     {
         $this->assertEquals('types', KeyMaker::getTypesKey());
     }
 
-    public function testGetGameBundlesKey(): void
+    #[Test]
+    public function getGameBundlesKey(): void
     {
         $this->assertEquals('game_bundles', KeyMaker::getGameBundlesKey());
     }
 
-    public function testGetCollectionsKey(): void
+    #[Test]
+    public function getCollectionsKey(): void
     {
         $this->assertEquals('collections', KeyMaker::getCollectionsKey());
     }
 
-    public function testGetFormsKey(): void
+    #[Test]
+    public function getFormsKey(): void
     {
         $this->assertSame('forms', KeyMaker::getFormsKey());
     }
 
-    public function testGetAlbumKey(): void
+    #[Test]
+    public function getAlbumKey(): void
     {
         $this->assertEquals('album', KeyMaker::getAlbumKey());
     }
 
-    public function testGetReportsKey(): void
+    #[Test]
+    public function getReportsKey(): void
     {
         $this->assertEquals('reports', KeyMaker::getReportsKey());
     }
 
-    public function testGetCreditsKey(): void
+    #[Test]
+    public function getCreditsKey(): void
     {
         $this->assertEquals('credits_v2', KeyMaker::getCreditsKey());
     }
 
-    public function testGetDexKeyForTrainer(): void
+    #[Test]
+    public function getDexKeyForTrainer(): void
     {
         $this->assertEquals('dex_1', KeyMaker::getDexKeyForTrainer('1'));
         $this->assertEquals('dex_12', KeyMaker::getDexKeyForTrainer('12'));
     }
 
-    public function testGetDexKeyForTrainerWithQueryParams(): void
+    #[Test]
+    public function getDexKeyForTrainerWithQueryParams(): void
     {
         $this->assertEquals('dex_1_1=1', KeyMaker::getDexKeyForTrainer('1', ['1' => '1']));
         $this->assertEquals('dex_12_1=1_2=2', KeyMaker::getDexKeyForTrainer('12', ['1' => '1', '2' => '2']));
     }
 
-    public function testGetElectionDexListKey(): void
+    #[Test]
+    public function getElectionDexListKey(): void
     {
         $this->assertEquals('election_dex_list', KeyMaker::getElectionDexListKey());
     }
 
-    public function testGetElectionDexListKeyWithQueryParams(): void
+    #[Test]
+    public function getElectionDexListKeyWithQueryParams(): void
     {
         $this->assertEquals('election_dex_list_1=1', KeyMaker::getElectionDexListKey(['1' => '1']));
         $this->assertEquals('election_dex_list_1=1_2=2', KeyMaker::getElectionDexListKey(['1' => '1', '2' => '2']));
     }
 
-    public function testGetElectionDexListKeyForTrainer(): void
+    #[Test]
+    public function getElectionDexListKeyForTrainer(): void
     {
         $this->assertEquals('election_dex_list_1', KeyMaker::getElectionDexListKeyForTrainer('1'));
         $this->assertEquals('election_dex_list_12', KeyMaker::getElectionDexListKeyForTrainer('12'));
     }
 
-    public function testGetElectionDexListKeyForTrainerWithQueryParams(): void
+    #[Test]
+    public function getElectionDexListKeyForTrainerWithQueryParams(): void
     {
         $this->assertEquals('election_dex_list_1_1=1', KeyMaker::getElectionDexListKeyForTrainer('1', ['1' => '1']));
         $this->assertEquals(
@@ -97,7 +113,8 @@ final class KeyMakerTest extends TestCase
         );
     }
 
-    public function testGetPokedexKey(): void
+    #[Test]
+    public function getPokedexKey(): void
     {
         $this->assertEquals('album_douze_12', KeyMaker::getPokedexKey('douze', '12'));
         $this->assertEquals('album_toto_0', KeyMaker::getPokedexKey('toto', '0'));
@@ -146,7 +163,8 @@ final class KeyMakerTest extends TestCase
         );
     }
 
-    public function testGetTrainerIdKey(): void
+    #[Test]
+    public function getTrainerIdKey(): void
     {
         $this->assertEquals('trainer#123', KeyMaker::getTrainerIdKey('123'));
         $this->assertEquals('trainer#1654da64faeg54a6f4a8', KeyMaker::getTrainerIdKey('1654da64faeg54a6f4a8'));
