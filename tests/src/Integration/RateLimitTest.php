@@ -8,6 +8,7 @@ use App\Controller\Album\AlbumUpsertController;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\RateLimiter\LimiterInterface;
 
@@ -47,7 +48,8 @@ final class RateLimitTest extends WebTestCase
      * A first write request below the limit is accepted: the listener lets it
      * through and the controller returns a non-429 response.
      */
-    public function testWriteRequestBelowLimitIsAccepted(): void
+    #[Test]
+    public function writeRequestBelowLimitIsAccepted(): void
     {
         $client = self::createClient();
 
@@ -80,7 +82,8 @@ final class RateLimitTest extends WebTestCase
      *      left and throws TooManyRequestsHttpException before the controller runs,
      *      so no Moco API fixture is needed for this final request.
      */
-    public function testWriteRequestExceedingLimitReturns429(): void
+    #[Test]
+    public function writeRequestExceedingLimitReturns429(): void
     {
         $client = self::createClient();
 
