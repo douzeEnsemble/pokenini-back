@@ -9,6 +9,7 @@ use App\Controller\Admin\AdminActionInvalidateController;
 use App\Service\Api\AdminActionApiService;
 use App\Service\CacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -19,7 +20,8 @@ use Psr\Log\LoggerInterface;
 #[CoversClass(AdminActionInvalidateController::class)]
 final class AdminActionInvalidateControllerTest extends TestCase
 {
-    public function testAction(): void
+    #[Test]
+    public function action(): void
     {
         $cacheInvalidatorService = $this->createMock(CacheInvalidatorService::class);
         $cacheInvalidatorService
@@ -60,7 +62,8 @@ final class AdminActionInvalidateControllerTest extends TestCase
         $this->assertSame(202, $response->getStatusCode());
     }
 
-    public function testFailInvalidateLogs(): void
+    #[Test]
+    public function failInvalidateLogs(): void
     {
         $cacheInvalidatorService = $this->createMock(CacheInvalidatorService::class);
         $cacheInvalidatorService

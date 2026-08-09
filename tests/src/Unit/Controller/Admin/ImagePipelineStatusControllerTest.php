@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Controller\Admin;
 use App\Controller\Admin\ImagePipelineStatusController;
 use App\Service\ImagePipelineStatusService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -23,7 +24,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[CoversClass(ImagePipelineStatusController::class)]
 final class ImagePipelineStatusControllerTest extends TestCase
 {
-    public function testNoRunReturnsEmptyObject(): void
+    #[Test]
+    public function noRunReturnsEmptyObject(): void
     {
         $service = $this->createMock(ImagePipelineStatusService::class);
         $service->expects($this->once())->method('getStatus')->with(false)->willReturn(null);
@@ -36,7 +38,8 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $this->assertSame('{}', $response->getContent());
     }
 
-    public function testIdleStagesWhenNothingKnownYet(): void
+    #[Test]
+    public function idleStagesWhenNothingKnownYet(): void
     {
         $service = $this->createMock(ImagePipelineStatusService::class);
         $service->expects($this->once())->method('getStatus')->with(false)->willReturn([
@@ -71,7 +74,8 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $this->assertSame('idle', $data['icon_pr']['state']);
     }
 
-    public function testRefreshQueryParamIsForwarded(): void
+    #[Test]
+    public function refreshQueryParamIsForwarded(): void
     {
         $service = $this->createMock(ImagePipelineStatusService::class);
         $service->expects($this->once())->method('getStatus')->with(true)->willReturn(null);
@@ -81,7 +85,8 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $controller->get(new Request(query: ['refresh' => '1']));
     }
 
-    public function testRunningAndFailedStates(): void
+    #[Test]
+    public function runningAndFailedStates(): void
     {
         $service = $this->createMock(ImagePipelineStatusService::class);
         $service->method('getStatus')->willReturn([
@@ -114,7 +119,8 @@ final class ImagePipelineStatusControllerTest extends TestCase
         $this->assertSame('failed', $data['workflow_b']['state']);
     }
 
-    public function testDoneAndPrPassthroughStates(): void
+    #[Test]
+    public function doneAndPrPassthroughStates(): void
     {
         $service = $this->createMock(ImagePipelineStatusService::class);
         $service->method('getStatus')->willReturn([
