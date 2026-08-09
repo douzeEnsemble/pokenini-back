@@ -10,6 +10,7 @@ use App\Tests\Integration\Trait\JsonResponseTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -22,8 +23,9 @@ final class ElectionIndexTest extends WebTestCase
     use ClientRequestTrait;
     use JsonResponseTrait;
 
+    #[Test]
     #[DataProvider('providerDex')]
-    public function testDex(string $dexName): void
+    public function dex(string $dexName): void
     {
         $client = self::createClient();
 
