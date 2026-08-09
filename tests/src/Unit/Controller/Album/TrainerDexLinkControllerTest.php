@@ -10,6 +10,7 @@ use App\Exception\DexNotFoundException;
 use App\Service\GetTrainerPokedexService;
 use App\Service\TrainerDexLinkService;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[CoversClass(TrainerDexLinkController::class)]
 final class TrainerDexLinkControllerTest extends TestCase
 {
-    public function testListRejectsPremiumDexForNonCollector(): void
+    #[Test]
+    public function listRejectsPremiumDexForNonCollector(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -38,7 +40,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(404, $response->getStatusCode());
     }
 
-    public function testListReturnsLinksWhenAccessible(): void
+    #[Test]
+    public function listReturnsLinksWhenAccessible(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -60,7 +63,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame('[{"id":"link-1"}]', $response->getContent());
     }
 
-    public function testListReturnsLinksForNonCollectorWhenDexIsNotPremium(): void
+    #[Test]
+    public function listReturnsLinksForNonCollectorWhenDexIsNotPremium(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -81,7 +85,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
     }
 
-    public function testListNotFoundWhenDexUnknown(): void
+    #[Test]
+    public function listNotFoundWhenDexUnknown(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -98,7 +103,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(404, $response->getStatusCode());
     }
 
-    public function testCreateRejectsEmptyBody(): void
+    #[Test]
+    public function createRejectsEmptyBody(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -115,7 +121,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(400, $response->getStatusCode());
     }
 
-    public function testCreateRejectsMissingTargetDexSlug(): void
+    #[Test]
+    public function createRejectsMissingTargetDexSlug(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -132,7 +139,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(400, $response->getStatusCode());
     }
 
-    public function testCreateRejectsPremiumDexForNonCollector(): void
+    #[Test]
+    public function createRejectsPremiumDexForNonCollector(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -149,7 +157,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(404, $response->getStatusCode());
     }
 
-    public function testCreateRejectsNonBooleanBidirectional(): void
+    #[Test]
+    public function createRejectsNonBooleanBidirectional(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -166,7 +175,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(400, $response->getStatusCode());
     }
 
-    public function testCreateForwardsTheApiStatusCodeOnFailure(): void
+    #[Test]
+    public function createForwardsTheApiStatusCodeOnFailure(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -187,7 +197,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(409, $response->getStatusCode());
     }
 
-    public function testCreateSucceeds(): void
+    #[Test]
+    public function createSucceeds(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
         $getTrainerPokedexService->method('getPokedexData')
@@ -207,7 +218,8 @@ final class TrainerDexLinkControllerTest extends TestCase
         $this->assertSame(201, $response->getStatusCode());
     }
 
-    public function testDelete(): void
+    #[Test]
+    public function delete(): void
     {
         $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
 

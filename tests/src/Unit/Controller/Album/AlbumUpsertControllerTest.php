@@ -13,6 +13,7 @@ use App\Service\ModifyTrainerAlbumService;
 use App\Service\RequestedContentService;
 use App\Validator\CatchStates;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -24,7 +25,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[CoversClass(ModifyTrainerAlbumService::class)]
 final class AlbumUpsertControllerTest extends TestCase
 {
-    public function testUpsert(): void
+    #[Test]
+    public function upsert(): void
     {
         $requestedContentService = $this->createMock(RequestedContentService::class);
         $requestedContentService
@@ -90,7 +92,8 @@ final class AlbumUpsertControllerTest extends TestCase
         $this->assertEmpty($response->getContent());
     }
 
-    public function testUpsertEmptyContentException(): void
+    #[Test]
+    public function upsertEmptyContentException(): void
     {
         $requestedContentService = $this->createMock(RequestedContentService::class);
         $requestedContentService
@@ -135,7 +138,8 @@ final class AlbumUpsertControllerTest extends TestCase
         $this->assertSame('{"error":"Content cannot be empty"}', $response->getContent());
     }
 
-    public function testUpsertInvalidJsonException(): void
+    #[Test]
+    public function upsertInvalidJsonException(): void
     {
         $requestedContentService = $this->createMock(RequestedContentService::class);
         $requestedContentService
@@ -180,7 +184,8 @@ final class AlbumUpsertControllerTest extends TestCase
         $this->assertSame('{"error":"Json is invalid"}', $response->getContent());
     }
 
-    public function testUpsertDexNotFound(): void
+    #[Test]
+    public function upsertDexNotFound(): void
     {
         $requestedContentService = $this->createMock(RequestedContentService::class);
         $requestedContentService
