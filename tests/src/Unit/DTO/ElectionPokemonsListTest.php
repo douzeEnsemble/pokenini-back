@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 final class ElectionPokemonsListTest extends TestCase
 {
     #[Test]
-    public function ok(): void
+    public function everythingOk(): void
     {
         $items = [
             [

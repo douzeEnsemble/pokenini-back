@@ -12,9 +12,9 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
