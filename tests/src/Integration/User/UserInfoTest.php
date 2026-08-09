@@ -35,12 +35,17 @@ final class UserInfoTest extends WebTestCase
         $this->assertResponseIsSuccessful();
 
         $content = (string) $client->getResponse()->getContent();
+
+        /** @var array<string, mixed> $data */
         $data = json_decode($content, true, flags: JSON_THROW_ON_ERROR);
 
         // The session token is a freshly signed JWT (varies with time), so it cannot be snapshot-tested.
         // Its presence and shape are asserted separately, then it is stripped before comparing the rest.
         $this->assertArrayHasKey('session_token', $data);
-        $this->assertMatchesRegularExpression('/^[\w-]+\.[\w-]+\.[\w-]+$/', $data['session_token']);
+
+        /** @var string $sessionToken */
+        $sessionToken = $data['session_token'];
+        $this->assertMatchesRegularExpression('/^[\w-]+\.[\w-]+\.[\w-]+$/', $sessionToken);
         unset($data['session_token']);
 
         $this->assertJsonStringEqualsJsonFile(
