@@ -6,6 +6,7 @@ namespace App\Tests\Unit\EventSubscriber;
 
 use App\EventSubscriber\AccessDeniedSubscriber;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 #[CoversClass(AccessDeniedSubscriber::class)]
 final class AccessDeniedSubscriberTest extends TestCase
 {
-    public function testGetSubscribedEvents(): void
+    #[Test]
+    public function getSubscribedEvents(): void
     {
         $this->assertSame(
             [
@@ -33,7 +35,8 @@ final class AccessDeniedSubscriberTest extends TestCase
         );
     }
 
-    public function testOnExceptionLogsAccessDenied(): void
+    #[Test]
+    public function onExceptionLogsAccessDenied(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -54,7 +57,8 @@ final class AccessDeniedSubscriberTest extends TestCase
         $subscriber->onException($event);
     }
 
-    public function testOnExceptionIgnoresOtherExceptions(): void
+    #[Test]
+    public function onExceptionIgnoresOtherExceptions(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -71,7 +75,8 @@ final class AccessDeniedSubscriberTest extends TestCase
         $subscriber->onException($event);
     }
 
-    public function testOnExceptionIgnoresSubRequests(): void
+    #[Test]
+    public function onExceptionIgnoresSubRequests(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects($this->never())->method('warning');
@@ -88,7 +93,8 @@ final class AccessDeniedSubscriberTest extends TestCase
         $subscriber->onException($event);
     }
 
-    public function testOnExceptionUsesUnknownWhenNoRoute(): void
+    #[Test]
+    public function onExceptionUsesUnknownWhenNoRoute(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
