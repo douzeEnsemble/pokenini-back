@@ -299,12 +299,12 @@ runs:
 
 Note the two intentional behavior changes beyond the added cache steps:
 1. `docker compose up --build --wait` loses `--build` (now just `--wait`). The images are
-   already present locally with the right tags either from the cache load or from the
-   bake+pull steps that just ran — keeping `--build` risked a redundant non-buildx
-   rebuild on the cache-hit path that would ignore the loaded archive.
+  already present locally with the right tags either from the cache load or from the
+  bake+pull steps that just ran — keeping `--build` risked a redundant non-buildx
+  rebuild on the cache-hit path that would ignore the loaded archive.
 2. `Login to Docker Hub`, `Setup Docker Buildx`, `Docker Buildx Bake`, and `Pull images`
-   all gain `if: steps.docker-images-cache.outputs.cache-hit != 'true'` — skipped
-   entirely when the archive cache hits.
+  all gain `if: steps.docker-images-cache.outputs.cache-hit != 'true'` — skipped
+  entirely when the archive cache hits.
 
 - [ ] **Step 3: Validate YAML syntax**
 
