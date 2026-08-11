@@ -177,9 +177,9 @@ final class TrainerDexLinkControllerTest extends TestCase
     #[Test]
     public function createRejectsSelfLink(): void
     {
-        $findDexBySlugService = $this->createStub(GetTrainerPokedexService::class);
-        $findDexBySlugService->method('getPokedexData')
-            ->willReturn(['dex' => ['flags' => ['is_premium' => false]], 'pokemons' => []])
+        $findDexBySlugService = $this->createStub(FindDexBySlugService::class);
+        $findDexBySlugService->method('find')
+            ->willReturn(['slug' => 'douze', 'flags' => ['is_premium' => false]])
         ;
 
         $trainerDexLinkService = $this->createMock(TrainerDexLinkService::class);
