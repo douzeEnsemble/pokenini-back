@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Album;
 
 use App\Exception\ApiValidationException;
-use App\Exception\DexNotFoundException;
-use App\Service\GetTrainerPokedexService;
+use App\Service\FindDexBySlugService;
 use App\Service\TrainerDexLinkService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class TrainerDexLinkController extends AbstractController
 {
     public function __construct(
-        private readonly GetTrainerPokedexService $getTrainerPokedexService,
+        private readonly FindDexBySlugService $findDexBySlugService,
         private readonly TrainerDexLinkService $trainerDexLinkService,
     ) {}
 
@@ -87,14 +86,14 @@ final class TrainerDexLinkController extends AbstractController
 
     private function assertDexIsAccessible(string $dexSlug): ?JsonResponse
     {
-        try {
-            $pokedex = $this->getTrainerPokedexService->getPokedexData($dexSlug, []);
-        } catch (DexNotFoundException) {
+        $dex = $this->findDexBySlugService->find($dexSlug);
+
+        if (null === $dex) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 
         /** @var array{is_premium: bool} $flags */
-        $flags = $pokedex['dex']['flags'];
+        $flags = $dex['flags'];
 
         if ($flags['is_premium'] && !$this->isGranted('ROLE_COLLECTOR')) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
