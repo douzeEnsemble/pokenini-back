@@ -56,6 +56,10 @@ final class TrainerDexLinkController extends AbstractController
             return new JsonResponse([], Response::HTTP_BAD_REQUEST);
         }
 
+        if ($content['targetDexSlug'] === $dexSlug) {
+            return new JsonResponse([], Response::HTTP_BAD_REQUEST);
+        }
+
         $bidirectional = $content['bidirectional'] ?? false;
 
         if (!\is_bool($bidirectional)) {
