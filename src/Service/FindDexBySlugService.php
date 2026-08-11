@@ -25,7 +25,10 @@ class FindDexBySlugService
         $dexList = $this->getDexListService->getWithUnreleasedAndPremium($trainerId);
 
         foreach ($dexList as $dex) {
-            if (($dex['slug'] ?? null) === $dexSlug) {
+            /** @var array{slug?: mixed} $dexIdentity */
+            $dexIdentity = $dex['dex'] ?? [];
+
+            if (($dexIdentity['slug'] ?? null) === $dexSlug) {
                 return $dex;
             }
         }

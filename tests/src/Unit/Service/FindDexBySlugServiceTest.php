@@ -26,8 +26,8 @@ final class FindDexBySlugServiceTest extends TestCase
             ->method('getWithUnreleasedAndPremium')
             ->with('1234567890')
             ->willReturn([
-                ['slug' => 'redgreenblueyellow', 'flags' => ['is_premium' => false]],
-                ['slug' => 'goldsilvercrystal', 'flags' => ['is_premium' => true]],
+                ['dex' => ['slug' => 'redgreenblueyellow'], 'flags' => ['is_premium' => false]],
+                ['dex' => ['slug' => 'goldsilvercrystal'], 'flags' => ['is_premium' => true]],
             ])
         ;
 
@@ -42,7 +42,7 @@ final class FindDexBySlugServiceTest extends TestCase
 
         $dex = $service->find('goldsilvercrystal');
 
-        $this->assertSame(['slug' => 'goldsilvercrystal', 'flags' => ['is_premium' => true]], $dex);
+        $this->assertSame(['dex' => ['slug' => 'goldsilvercrystal'], 'flags' => ['is_premium' => true]], $dex);
     }
 
     #[Test]
@@ -54,7 +54,7 @@ final class FindDexBySlugServiceTest extends TestCase
             ->method('getWithUnreleasedAndPremium')
             ->with('1234567890')
             ->willReturn([
-                ['slug' => 'redgreenblueyellow', 'flags' => ['is_premium' => false]],
+                ['dex' => ['slug' => 'redgreenblueyellow'], 'flags' => ['is_premium' => false]],
             ])
         ;
 
