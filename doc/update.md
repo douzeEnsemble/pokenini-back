@@ -124,7 +124,7 @@ Versions extraites des `composer.lock` de chaque outil.
 | Variable | Valeur par défaut (dev) | Commentaire sécurité/prod |
 |----------|------------------------|--------------------------|
 | `APP_ENV` | `dev` | `prod` en production |
-| `APP_SECRET` | `!ChangeMe!` (`.env.prod`) | **Valeur fictive — injecter un secret fort via CI/CD** |
+| `APP_SECRET` | `'$ecretf0rt3st'` (`.env.dev`, déplacé en `.env` au build prod) | **Valeur fictive — injecter un secret fort via CI/CD** |
 | `SESSION_TTL` | `604800` | Durée de session en secondes (7 jours) |
 | `TRUSTED_HOSTS` | `^localhost\|127.0.0.1\|web$` | Adapter au domaine prod |
 | `TRUSTED_PROXIES` | `127.0.0.1` | Adapter si reverse proxy différent |
@@ -137,9 +137,9 @@ Versions extraites des `composer.lock` de chaque outil.
 | `LIST_TRAINER` | IDs OAuth numériques | Gérer via secret CI/CD |
 | `REQUIRE_INVITATION` | `false` | Si `true`, seuls `LIST_TRAINER` peuvent s'authentifier |
 | `OAUTH_DISCORD_CLIENT_ID` | `1684654646846543616` | Public, OK dans le repo |
-| `OAUTH_DISCORD_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (apps dev distinctes) | Apps de développement distinctes de la prod — intentionnel. `.env.prod` supprimé. |
+| `OAUTH_DISCORD_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (apps dev distinctes) | Apps de développement distinctes de la prod — intentionnel. `.env.prod` n'existe plus — le build de prod déplace `.env.dev`. |
 | `OAUTH_GOOGLE_CLIENT_ID` | ID d'app Google | Public, OK dans le repo |
-| `OAUTH_GOOGLE_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (apps dev distinctes) | Apps de développement distinctes de la prod — intentionnel. `.env.prod` supprimé. |
+| `OAUTH_GOOGLE_CLIENT_SECRET` | `.env.dev/.env.ci/.env.int` (apps dev distinctes) | Apps de développement distinctes de la prod — intentionnel. `.env.prod` n'existe plus — le build de prod déplace `.env.dev`. |
 | `DEX_BANNER_URL` | URL avec `%1$s` | Template `sprintf` pour les bannières |
 | `POKEMON_ICON_URL` | URL avec `%1$s/%2$s` | Template `sprintf` |
 | `POKEMON_IMAGE_URL` | URL avec `%1$s/%2$s` | Template `sprintf` |
