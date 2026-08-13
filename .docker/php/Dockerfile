@@ -83,7 +83,9 @@ RUN set -eux; \
 
 COPY . ./
 
-RUN mv .env.prod .env && chown www-data:www-data .env
+# Load .env.dev as .env for build (consumed at this stage; discarded in cleanup below)
+# Depends on .dockerignore line 37 (!.env.dev) to let .env.dev through the build context
+RUN mv .env.dev .env && chown www-data:www-data .env
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \

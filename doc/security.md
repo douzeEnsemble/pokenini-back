@@ -65,7 +65,7 @@ Référence config : `config/packages/security.yaml`
 
 ### Points de vigilance
 
-- [x] `.env.prod` supprimé du dépôt (commit `06e0c95`) — secrets OAuth prod ne sont plus committés.
+- [x] `.env.prod` supprimé du dépôt (2026-08-13) — le build de l'image de prod copie désormais `.env.dev` (déjà factice, déjà maintenu) pour compiler le container Symfony ; les valeurs sont jetées avant la fin du build, comme avant. Voir `docs/superpowers/specs/2026-08-13-env-prod-build-source-design.md`.
 - [x] Credentials OAuth dans `.env.dev/.env.ci/.env.int` : **apps de développement distinctes de la production** — choix intentionnel.
 - [x] Mot de passe Redis en variable d'env `${REDIS_PASSWORD}` — `docker-compose.yaml:37`. Valeur par défaut dans `.env`, surchargeable via `.env.local`.
 - [ ] `.env.dev.local` est dans `.gitignore` (non commité) — bon. Vérifier que les secrets prod ne transitent jamais par ce fichier en dev.
