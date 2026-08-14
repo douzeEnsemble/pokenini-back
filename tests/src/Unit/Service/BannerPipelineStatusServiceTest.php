@@ -290,6 +290,78 @@ final class BannerPipelineStatusServiceTest extends TestCase
         $this->assertSame($latest, $service->getStatus(refresh: true));
     }
 
+    #[Test]
+    public function refreshDoesNothingWhenIconPrNotFound(): void
+    {
+        $latest = [
+            'correlation_id' => 'corr-1',
+            'workflow_a_run_id' => 2,
+            'workflow_a_conclusion' => 'success',
+            'icon_pr_state' => null,
+            'icon_pr_merge_commit_sha' => null,
+            'workflow_b_conclusion' => null,
+        ];
+
+        $bannerPipelineApiService = $this->createMock(BannerPipelineApiService::class);
+        $bannerPipelineApiService->method('getLatest')->willReturn($latest);
+        $bannerPipelineApiService->expects($this->never())->method('updateFields');
+
+        $githubQueryApiService = $this->createMock(GithubQueryApiService::class);
+        $githubQueryApiService->method('findPullRequestByBranch')->willReturn(null);
+
+        $service = $this->getService($bannerPipelineApiService, $githubQueryApiService);
+
+        $this->assertSame($latest, $service->getStatus(refresh: true));
+    }
+
+    #[Test]
+    public function refreshDoesNothingWhenWorkflowBRunNotFound(): void
+    {
+        $latest = [
+            'correlation_id' => 'corr-1',
+            'workflow_a_run_id' => 2,
+            'workflow_a_conclusion' => 'success',
+            'icon_pr_state' => 'merged',
+            'icon_pr_merge_commit_sha' => 'merge-sha-5',
+            'workflow_b_conclusion' => null,
+        ];
+
+        $bannerPipelineApiService = $this->createMock(BannerPipelineApiService::class);
+        $bannerPipelineApiService->method('getLatest')->willReturn($latest);
+        $bannerPipelineApiService->expects($this->never())->method('updateFields');
+
+        $githubQueryApiService = $this->createMock(GithubQueryApiService::class);
+        $githubQueryApiService->method('findWorkflowRunByHeadSha')->willReturn(null);
+
+        $service = $this->getService($bannerPipelineApiService, $githubQueryApiService);
+
+        $this->assertSame($latest, $service->getStatus(refresh: true));
+    }
+
+    #[Test]
+    public function refreshDoesNothingWhenResourcesPrNotFound(): void
+    {
+        $latest = [
+            'correlation_id' => 'corr-1',
+            'workflow_a_run_id' => 2,
+            'workflow_a_conclusion' => 'success',
+            'icon_pr_state' => 'merged',
+            'icon_pr_merge_commit_sha' => 'merge-sha-5',
+            'workflow_b_conclusion' => 'success',
+        ];
+
+        $bannerPipelineApiService = $this->createMock(BannerPipelineApiService::class);
+        $bannerPipelineApiService->method('getLatest')->willReturn($latest);
+        $bannerPipelineApiService->expects($this->never())->method('updateFields');
+
+        $githubQueryApiService = $this->createMock(GithubQueryApiService::class);
+        $githubQueryApiService->method('findPullRequestByBranch')->willReturn(null);
+
+        $service = $this->getService($bannerPipelineApiService, $githubQueryApiService);
+
+        $this->assertSame($latest, $service->getStatus(refresh: true));
+    }
+
     private function getService(
         BannerPipelineApiService $bannerPipelineApiService,
         GithubQueryApiService $githubQueryApiService,
