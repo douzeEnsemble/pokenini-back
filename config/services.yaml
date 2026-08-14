@@ -30,3 +30,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Service\Api\GithubActionsApiService $bannerGithubActionsApiService:
+        class: App\Service\Api\GithubActionsApiService
+        arguments:
+            $githubImagesWorkflowFile: '%env(GITHUB_BANNERS_WORKFLOW_FILE)%'
+
