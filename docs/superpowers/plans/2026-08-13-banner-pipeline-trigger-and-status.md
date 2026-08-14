@@ -28,7 +28,7 @@
 - Modify: `config/services.yaml`
 
 **Interfaces:**
-- Produces: bound scalars `string $githubBannersWorkflowFile` (`update-banners.yml`) and `string $githubBannersWorkflowBFile` (`publish-images-to-resources.yml`), available to any autowired constructor parameter with those exact names; a named service `GithubActionsApiService $bannerGithubActionsApiService`, autowired into any constructor parameter typed `GithubActionsApiService` and named exactly `$bannerGithubActionsApiService`.
+- Produces: a named service `GithubActionsApiService $bannerGithubActionsApiService`, autowired into any constructor parameter typed `GithubActionsApiService` and named exactly `$bannerGithubActionsApiService`. (The `GITHUB_BANNERS_WORKFLOW_FILE`/`GITHUB_BANNERS_WORKFLOW_B_FILE` env vars are added here too, but the corresponding `_defaults.bind` scalars are added later, in Task 4, at the point their first consumer exists — see that task's note. Symfony's `ResolveBindingsPass` hard-fails the container on a bind entry with zero consumers, so adding the bind before any class asks for `$githubBannersWorkflowFile`/`$githubBannersWorkflowBFile` by constructor-parameter name would break `cache:clear`, `bin/console`, and every integration test until Task 4 landed.)
 
 - [ ] **Step 1: Add the new env vars**
 
@@ -39,18 +39,11 @@ GITHUB_BANNERS_WORKFLOW_FILE=update-banners.yml
 GITHUB_BANNERS_WORKFLOW_B_FILE=publish-images-to-resources.yml
 ```
 
-(Same repo — `pokenini-icon` — and same token as images, so no new `GITHUB_BANNERS_REPO` or `GITHUB_BANNERS_WORKFLOW_TOKEN` is needed; both pipelines' workflows live in the same repo.)
+(Same repo — `pokenini-icon` — and same token as images, so no new `GITHUB_BANNERS_REPO` or `GITHUB_BANNERS_WORKFLOW_TOKEN` is needed; both pipelines' workflows live in the same repo. These two vars stay unread by any bind until Task 4 — that's fine, Symfony doesn't validate that a declared env var has a consumer, only that a declared *bind* does.)
 
-- [ ] **Step 2: Bind the new scalars and declare the named `GithubActionsApiService` instance**
+- [ ] **Step 2: Declare the named `GithubActionsApiService` instance**
 
-In `config/services.yaml`, add to the existing `_defaults.bind` map (after `string $githubImagesWorkflowBFile`, `config/services.yaml:17`):
-
-```yaml
-            string $githubBannersWorkflowFile: '%env(GITHUB_BANNERS_WORKFLOW_FILE)%'
-            string $githubBannersWorkflowBFile: '%env(GITHUB_BANNERS_WORKFLOW_B_FILE)%'
-```
-
-Then, after the `App\:` resource block (`config/services.yaml:26-31`), add a named autowiring alias for the banner-flavored `GithubActionsApiService` — `GithubActionsApiService`'s constructor takes its workflow file as a plain constructor argument, so a second differently-configured instance needs its own service id; only `$githubImagesWorkflowFile` is overridden here, the rest ($logger, $client, $githubImagesWorkflowToken, $githubImagesRepo) still resolve through the existing global binds since this service inherits `_defaults` (`autowire: true`):
+In `config/services.yaml`, after the `App\:` resource block (`config/services.yaml:26-31`), add a named autowiring alias for the banner-flavored `GithubActionsApiService` — `GithubActionsApiService`'s constructor takes its workflow file as a plain constructor argument, so a second differently-configured instance needs its own service id; only `$githubImagesWorkflowFile` is overridden here, the rest ($logger, $client, $githubImagesWorkflowToken, $githubImagesRepo) still resolve through the existing global binds since this service inherits `_defaults` (`autowire: true`):
 
 ```yaml
     App\Service\Api\GithubActionsApiService $bannerGithubActionsApiService:
@@ -809,6 +802,17 @@ git commit -m "feat: trigger update_banners from the admin action controller"
 **Interfaces:**
 - Consumes: `BannerPipelineApiService` (Task 2), `GithubQueryApiService` (existing, unmodified, reused as-is).
 - Produces: `GET /istration/action/trigger/update_banners/status?refresh=` — consumed by `pokenini-web`'s `GetBannerPipelineStatusService` (see the `pokenini-web` plan).
+
+- [ ] **Step 0: Bind the two scalars this task's service consumes**
+
+Task 1 added the `GITHUB_BANNERS_WORKFLOW_FILE`/`GITHUB_BANNERS_WORKFLOW_B_FILE` env vars but deliberately left them unbound (an unconsumed `_defaults.bind` entry hard-fails Symfony's container compilation, and this task is their first real consumer). In `config/services.yaml`, add to the existing `_defaults.bind` map (after `string $githubImagesWorkflowBFile`):
+
+```yaml
+            string $githubBannersWorkflowFile: '%env(GITHUB_BANNERS_WORKFLOW_FILE)%'
+            string $githubBannersWorkflowBFile: '%env(GITHUB_BANNERS_WORKFLOW_B_FILE)%'
+```
+
+Run `docker compose exec php php bin/console cache:clear` to confirm the container now compiles cleanly with these bound (it would have failed before this task, by design — see Task 1's note).
 
 - [ ] **Step 1: Write `BannerPipelineStageStatus` and `BannerPipelineStatus`**
 
