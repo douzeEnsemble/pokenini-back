@@ -15,6 +15,8 @@ services:
             string $githubImagesRepo: '%env(GITHUB_IMAGES_REPO)%'
             string $githubImagesWorkflowFile: '%env(GITHUB_IMAGES_WORKFLOW_FILE)%'
             string $githubImagesWorkflowBFile: '%env(GITHUB_IMAGES_WORKFLOW_B_FILE)%'
+            string $githubBannersWorkflowFile: '%env(GITHUB_BANNERS_WORKFLOW_FILE)%'
+            string $githubBannersWorkflowBFile: '%env(GITHUB_BANNERS_WORKFLOW_B_FILE)%'
             string $githubResourcesRepo: '%env(GITHUB_RESOURCES_REPO)%'
             int $topCount: '%env(ELECTION_TOP_COUNT)%'
             int $electionCandidateCount: '%env(ELECTION_CANDIDATE_COUNT)%'
