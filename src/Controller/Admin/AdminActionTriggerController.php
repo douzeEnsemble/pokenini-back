@@ -36,11 +36,10 @@ final class AdminActionTriggerController extends AbstractController
         $error = '';
 
         try {
-            if ('update_images' === $name) {
-                $this->triggerImagesPipelineService->triggerUpdateImages();
-            } else {
-                $this->triggerBannersPipelineService->triggerUpdateBanners();
-            }
+            match ($name) {
+                'update_images' => $this->triggerImagesPipelineService->triggerUpdateImages(),
+                default => $this->triggerBannersPipelineService->triggerUpdateBanners(),
+            };
 
             $this->logger->info("Admin action succeeded: trigger {$name}");
         } catch (\InvalidArgumentException|\RuntimeException $e) {
