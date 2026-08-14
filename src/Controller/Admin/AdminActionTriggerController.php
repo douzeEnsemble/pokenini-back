@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\DTO\AdminAction;
+use App\Service\TriggerBannersPipelineService;
 use App\Service\TriggerImagesPipelineService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,13 +20,14 @@ final class AdminActionTriggerController extends AbstractController
 {
     public function __construct(
         private readonly TriggerImagesPipelineService $triggerImagesPipelineService,
+        private readonly TriggerBannersPipelineService $triggerBannersPipelineService,
         private readonly LoggerInterface $logger,
     ) {}
 
     #[Route(
         '/{name}',
         methods: ['POST'],
-        condition: "params['name'] in ['update_images']"
+        condition: "params['name'] in ['update_images', 'update_banners']"
     )]
     #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function process(string $name): JsonResponse
@@ -34,7 +36,12 @@ final class AdminActionTriggerController extends AbstractController
         $error = '';
 
         try {
-            $this->triggerImagesPipelineService->triggerUpdateImages();
+            if ('update_images' === $name) {
+                $this->triggerImagesPipelineService->triggerUpdateImages();
+            } else {
+                $this->triggerBannersPipelineService->triggerUpdateBanners();
+            }
+
             $this->logger->info("Admin action succeeded: trigger {$name}");
         } catch (\InvalidArgumentException|\RuntimeException $e) {
             $state = 'ko';
