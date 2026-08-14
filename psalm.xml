@@ -70,6 +70,8 @@
             <errorLevel type="suppress">
                 <file name="src/DTO/ImagePipelineStageStatus.php" />
                 <file name="src/DTO/ImagePipelineStatus.php" />
+                <file name="src/DTO/BannerPipelineStageStatus.php" />
+                <file name="src/DTO/BannerPipelineStatus.php" />
             </errorLevel>
         </PossiblyUnusedProperty>
     </issueHandlers>
