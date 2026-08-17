@@ -199,4 +199,43 @@ final class AdminActionTriggerControllerTest extends TestCase
 
         $this->assertSame(500, $response->getStatusCode());
     }
+
+    #[Test]
+    public function unknownActionNameFailsInsteadOfSilentlyTriggeringBanners(): void
+    {
+        $triggerImagesPipelineService = $this->createMock(TriggerImagesPipelineService::class);
+        $triggerImagesPipelineService
+            ->expects($this->never())
+            ->method('triggerUpdateImages')
+        ;
+
+        $triggerBannersPipelineService = $this->createMock(TriggerBannersPipelineService::class);
+        $triggerBannersPipelineService
+            ->expects($this->never())
+            ->method('triggerUpdateBanners')
+        ;
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('critical')
+            ->with(
+                $this->equalTo('Unknown action name: update_sprites'),
+                $this->equalTo([
+                    'name' => 'update_sprites',
+                    'action' => 'trigger',
+                ])
+            )
+        ;
+
+        $controller = new AdminActionTriggerController(
+            $triggerImagesPipelineService,
+            $triggerBannersPipelineService,
+            $logger
+        );
+
+        $response = $controller->process('update_sprites');
+
+        $this->assertSame(500, $response->getStatusCode());
+    }
 }
