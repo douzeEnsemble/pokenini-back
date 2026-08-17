@@ -38,7 +38,8 @@ final class AdminActionTriggerController extends AbstractController
         try {
             match ($name) {
                 'update_images' => $this->triggerImagesPipelineService->triggerUpdateImages(),
-                default => $this->triggerBannersPipelineService->triggerUpdateBanners(),
+                'update_banners' => $this->triggerBannersPipelineService->triggerUpdateBanners(),
+                default => throw new \InvalidArgumentException("Unknown action name: {$name}"),
             };
 
             $this->logger->info("Admin action succeeded: trigger {$name}");
