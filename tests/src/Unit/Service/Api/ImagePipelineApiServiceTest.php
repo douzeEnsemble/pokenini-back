@@ -37,7 +37,7 @@ final class ImagePipelineApiServiceTest extends TestCase
             ->with(
                 'POST',
                 'https://api.domain/istration/image-pipeline-runs',
-                $this->callback(fn (array $o): bool => ['correlationId' => 'corr-1'] === $o['json']),
+                $this->callback(fn (array $options): bool => ['correlationId' => 'corr-1'] === $options['json']),
             )
             ->willReturn($response)
         ;
@@ -59,7 +59,7 @@ final class ImagePipelineApiServiceTest extends TestCase
             ->with(
                 'PATCH',
                 'https://api.domain/istration/image-pipeline-runs/corr-1',
-                $this->callback(fn (array $o): bool => ['workflowARunId' => 42] === $o['json']),
+                $this->callback(fn (array $options): bool => ['workflowARunId' => 42] === $options['json']),
             )
             ->willReturn($response)
         ;
