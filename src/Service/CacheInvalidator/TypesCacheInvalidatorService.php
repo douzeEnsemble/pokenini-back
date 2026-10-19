@@ -11,7 +11,7 @@ class TypesCacheInvalidatorService extends AbstractCacheInvalidatorService imple
     #[\Override]
     public function getSupportedTypes(): array
     {
-        return ['labels'];
+        return ['labels', 'types'];
     }
 
     #[\Override]
