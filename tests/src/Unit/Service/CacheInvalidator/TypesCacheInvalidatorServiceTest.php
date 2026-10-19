@@ -22,7 +22,7 @@ final class TypesCacheInvalidatorServiceTest extends TestCase
     {
         $service = new TypesCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
 
-        $this->assertSame(['labels'], $service->getSupportedTypes());
+        $this->assertSame(['labels', 'types'], $service->getSupportedTypes());
     }
 
     #[Test]

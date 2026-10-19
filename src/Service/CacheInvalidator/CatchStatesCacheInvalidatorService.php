@@ -11,7 +11,7 @@ class CatchStatesCacheInvalidatorService extends AbstractCacheInvalidatorService
     #[\Override]
     public function getSupportedTypes(): array
     {
-        return ['labels'];
+        return ['labels', 'catch_states'];
     }
 
     #[\Override]

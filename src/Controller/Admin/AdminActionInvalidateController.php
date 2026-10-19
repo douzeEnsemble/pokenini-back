@@ -19,6 +19,8 @@ final class AdminActionInvalidateController extends AbstractAdminActionControlle
         condition: "params['name']
             in [
                 'labels',
+                'catch_states',
+                'types',
                 'dex',
                 'albums',
                 'reports',

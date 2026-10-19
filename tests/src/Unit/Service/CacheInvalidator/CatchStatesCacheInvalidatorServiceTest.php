@@ -22,7 +22,7 @@ final class CatchStatesCacheInvalidatorServiceTest extends TestCase
     {
         $service = new CatchStatesCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
 
-        $this->assertSame(['labels'], $service->getSupportedTypes());
+        $this->assertSame(['labels', 'catch_states'], $service->getSupportedTypes());
     }
 
     #[Test]
