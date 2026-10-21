@@ -456,6 +456,112 @@ Soumet un vote d'élection. Rate-limited.
 
 ---
 
+## Jeu des couleurs (`/color_game`)
+
+Réservé aux utilisateurs connectés. Relais vers les endpoints `/color_game/{trainerExternalId}/…` de l'API, sans cache (l'état d'une partie change à chaque réponse). Les réponses de l'API sont renvoyées telles quelles ; en cas d'erreur de l'API, son code HTTP est renvoyé avec `[]`.
+
+### GET /color_game/dex
+
+Dex jouables au jeu des couleurs, avec `playable_count` et la partie en cours (`current_game`, ou `null`). Contenu selon le rôle, comme `/election/dex` : dex premium pour `collector`, dex non publiés en plus pour `admin`.
+
+```json
+[
+  {
+    "slug": "demo",
+    "name": "Demo",
+    "french_name": "Démo",
+    "is_shiny": false,
+    "is_released": true,
+    "is_premium": false,
+    "description": "",
+    "french_description": "",
+    "playable_count": 4,
+    "current_game": null
+  }
+]
+```
+
+### GET /color_game/games
+
+Historique des parties de l'utilisateur, la plus récente en premier.
+
+```json
+[
+  {
+    "id": "11111111-1111-4111-8111-111111111111",
+    "dex": { "slug": "demo", "name": "Demo", "french_name": "Démo" },
+    "is_shiny": false,
+    "status": "in_progress",
+    "round_count": 3,
+    "answered_count": 1,
+    "correct_count": 1,
+    "started_at": "2026-10-20T10:00:00+00:00",
+    "last_played_at": "2026-10-20T10:01:00+00:00",
+    "ended_at": null
+  }
+]
+```
+
+`status` vaut `in_progress`, `completed` ou `abandoned` (une nouvelle partie sur le même dex abandonne la précédente).
+
+### POST /color_game/games
+
+Crée une partie. Rate-limited. Corps : `{"dex_slug": "demo"}`.
+
+- `201` : la partie créée (même objet que dans l'historique)
+- `400` : corps invalide, ou dex sans Pokémon jouable
+- `404` : dex absent de `/color_game/dex` pour ce rôle
+
+### GET /color_game/games/{gameId}
+
+État de la partie et prochaine manche (`round` vaut `null` quand tout a été répondu). L'ordre de `choices` est tiré au sort ; la réponse ne dit pas lequel est le bon.
+
+```json
+{
+  "game": { "id": "…", "status": "in_progress", "…": "…" },
+  "round": {
+    "position": 2,
+    "pokemon": {
+      "slug": "ivysaur",
+      "name": "Ivysaur",
+      "french_name": "Herbizarre",
+      "simplified_name": "Ivysaur",
+      "simplified_french_name": "Herbizarre",
+      "forms_label": "",
+      "forms_french_label": "",
+      "national_dex_number": 2
+    },
+    "choices": [
+      { "index": 0, "codes": ["#B45AA0", "#8CE66E"], "names": ["purple", "green"], "french_names": ["violet", "vert"] },
+      { "index": 1, "codes": ["#5AA0B4", "#E66E8C"], "names": ["teal", "pink"], "french_names": ["bleu vert", "rose"] }
+    ]
+  }
+}
+```
+
+- `404` : partie inconnue pour cet utilisateur
+
+### POST /color_game/games/{gameId}/answers
+
+Répond à une manche. Corps : `{"position": 2, "choice": 0}` (`choice` = `index` du lot choisi).
+
+```json
+{
+  "position": 2,
+  "is_correct": false,
+  "chosen_choice": 0,
+  "correct_choice": 1,
+  "game": { "id": "…", "answered_count": 2, "correct_count": 1, "…": "…" }
+}
+```
+
+- `400` : corps invalide ou choix inexistant
+- `404` : partie ou manche inconnue
+- `409` : partie terminée ou manche déjà répondue
+
+---
+
+
 ## GET /labels
 
 Retourne tous les labels de référence utilisés dans l'application.

@@ -1,0 +1,81 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Service\Api;
+
+use App\Utils\JsonDecoder;
+
+class ColorGameApiService extends AbstractApiService
+{
+    /**
+     * @param string[] $queryParams
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getDexList(string $trainerId, array $queryParams = []): array
+    {
+        $urlQueryParams = http_build_query($queryParams);
+
+        $json = $this->requestContent('GET', "/color_game/{$trainerId}/dex?{$urlQueryParams}");
+
+        /** @var array<int, array<string, mixed>> */
+        return JsonDecoder::decode($json);
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getGames(string $trainerId): array
+    {
+        $json = $this->requestContent('GET', "/color_game/{$trainerId}/games");
+
+        /** @var array<int, array<string, mixed>> */
+        return JsonDecoder::decode($json);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function createGame(string $trainerId, string $dexSlug): array
+    {
+        $json = $this->requestContent(
+            'POST',
+            "/color_game/{$trainerId}/games",
+            [
+                'body' => json_encode(['dex_slug' => $dexSlug], JSON_THROW_ON_ERROR),
+            ]
+        );
+
+        /** @var array<string, mixed> */
+        return JsonDecoder::decode($json);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getGame(string $trainerId, string $gameId): array
+    {
+        $json = $this->requestContent('GET', "/color_game/{$trainerId}/games/{$gameId}");
+
+        /** @var array<string, mixed> */
+        return JsonDecoder::decode($json);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function answer(string $trainerId, string $gameId, int $position, int $choice): array
+    {
+        $json = $this->requestContent(
+            'POST',
+            "/color_game/{$trainerId}/games/{$gameId}/answers",
+            [
+                'body' => json_encode(['position' => $position, 'choice' => $choice], JSON_THROW_ON_ERROR),
+            ]
+        );
+
+        /** @var array<string, mixed> */
+        return JsonDecoder::decode($json);
+    }
+}

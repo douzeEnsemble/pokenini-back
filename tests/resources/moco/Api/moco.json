@@ -1,6 +1,203 @@
 [
   {
     "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/dex"
+      },
+      "queries": {
+        "include_premium_dex": "1",
+        "include_unreleased_dex": "1"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/color_game/dex_admin.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/dex"
+      },
+      "queries": {
+        "include_premium_dex": "1"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/color_game/dex_collector.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/dex"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/color_game/dex_trainer.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": ".*\"dex_slug\":\"demo\"[,}].*"
+      }
+    },
+    "response": {
+      "status": "201",
+      "file": "/var/moco/responses/color_game/created.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": ".*\"dex_slug\":\"homepogo\"[,}].*"
+      }
+    },
+    "response": {
+      "status": "400"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/color_game/games.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111/answers"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": ".*\"position\":2[,}].*"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/color_game/answer.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111/answers"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": ".*\"position\":1[,}].*"
+      }
+    },
+    "response": {
+      "status": "409"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/color_game/state.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games/[\\w-]*"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "404"
+    }
+  },
+  {
+    "request": {
       "uri": "/catch_states",
       "headers": {
         "accept": "application/json",
