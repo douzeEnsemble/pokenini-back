@@ -25,7 +25,8 @@
       "simplified_french_name": "Herbizarre",
       "forms_label": "",
       "forms_french_label": "",
-      "national_dex_number": 2
+      "national_dex_number": 2,
+      "icon": "ivysaur"
     },
     "choices": [
       {
