@@ -619,6 +619,59 @@ Répond à une manche. Corps : `{"position": 2, "is_shiny": true}` (`is_shiny` =
 
 ---
 
+## Jeu « Lequel est le shiny ? » (`/which_shiny_game`)
+
+Réservé aux utilisateurs connectés. Relais vers les endpoints `/which_shiny_game/{trainerExternalId}/…` de l'API, sans cache. On montre côte à côte les images normale et chromatique d'un Pokémon, le joueur doit trouver la chromatique. Mêmes dex jouables et mêmes objets que le jeu « Shiny or not ».
+
+### GET /which_shiny_game/dex
+
+Comme `/shiny_game/dex`.
+
+### GET /which_shiny_game/games
+
+Comme `/shiny_game/games`.
+
+### POST /which_shiny_game/games
+
+Comme `/shiny_game/games`. Rate-limited. Corps : `{"dex_slug": "demo"}`.
+
+### GET /which_shiny_game/games/{gameId}
+
+État de la partie et prochaine manche. `round.shiny_slot` (`1` ou `2`) dit où placer l'image chromatique : c'est la réponse, le front ne doit pas la laisser voir au joueur.
+
+```json
+{
+  "game": { "id": "…", "status": "in_progress", "…": "…" },
+  "round": {
+    "position": 2,
+    "pokemon": { "slug": "ivysaur", "…": "…", "icon": "ivysaur" },
+    "shiny_slot": 1
+  }
+}
+```
+
+- `404` : partie inconnue pour cet utilisateur
+
+### POST /which_shiny_game/games/{gameId}/answers
+
+Répond à une manche. Corps : `{"position": 2, "slot": 2}` (`slot` = l'image choisie par le joueur, `1` ou `2`).
+
+```json
+{
+  "position": 2,
+  "is_correct": false,
+  "chosen_slot": 2,
+  "shiny_slot": 1,
+  "game": { "id": "…", "answered_count": 2, "correct_count": 1, "…": "…" }
+}
+```
+
+- `400` : corps invalide
+- `404` : partie ou manche inconnue
+- `409` : partie terminée ou manche déjà répondue
+
+---
+
 
 ## GET /labels
 
