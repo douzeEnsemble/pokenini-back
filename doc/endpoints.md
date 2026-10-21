@@ -562,6 +562,63 @@ Répond à une manche. Corps : `{"position": 2, "choice": 0}` (`choice` = `index
 
 ---
 
+## Jeu « Shiny or not » (`/shiny_game`)
+
+Réservé aux utilisateurs connectés. Relais vers les endpoints `/shiny_game/{trainerExternalId}/…` de l'API, sans cache, comme le jeu des couleurs. On montre l'image d'un Pokémon, le joueur devine si c'est la version normale ou chromatique. Les dex jouables sont ceux du jeu des couleurs qui ne sont pas chromatiques.
+
+### GET /shiny_game/dex
+
+Dex jouables, avec `playable_count` et la partie en cours (`current_game`, ou `null`). Contenu selon le rôle, comme `/color_game/dex`. Même objet que pour le jeu des couleurs, sans `is_shiny`.
+
+### GET /shiny_game/games
+
+Historique des parties de l'utilisateur, la plus récente en premier. Même objet partie que pour le jeu des couleurs, sans `is_shiny`.
+
+### POST /shiny_game/games
+
+Crée une partie. Rate-limited. Corps : `{"dex_slug": "demo"}`.
+
+- `201` : la partie créée
+- `400` : corps invalide, ou dex sans Pokémon jouable
+- `404` : dex absent de `/shiny_game/dex` pour ce rôle
+
+### GET /shiny_game/games/{gameId}
+
+État de la partie et prochaine manche (`round` vaut `null` quand tout a été répondu). `round.is_shiny` dit quelle image montrer : c'est la réponse, le front ne doit pas la laisser voir au joueur.
+
+```json
+{
+  "game": { "id": "…", "status": "in_progress", "…": "…" },
+  "round": {
+    "position": 2,
+    "pokemon": { "slug": "ivysaur", "…": "…", "icon": "ivysaur" },
+    "is_shiny": false
+  }
+}
+```
+
+- `404` : partie inconnue pour cet utilisateur
+
+### POST /shiny_game/games/{gameId}/answers
+
+Répond à une manche. Corps : `{"position": 2, "is_shiny": true}` (`is_shiny` = la réponse du joueur).
+
+```json
+{
+  "position": 2,
+  "is_correct": false,
+  "chosen_shiny": true,
+  "is_shiny": false,
+  "game": { "id": "…", "answered_count": 2, "correct_count": 1, "…": "…" }
+}
+```
+
+- `400` : corps invalide
+- `404` : partie ou manche inconnue
+- `409` : partie terminée ou manche déjà répondue
+
+---
+
 
 ## GET /labels
 
