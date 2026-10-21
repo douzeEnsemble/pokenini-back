@@ -9,6 +9,11 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+/**
+ * Every API service extends it, so its number of children grows with the API endpoints.
+ *
+ * @SuppressWarnings("PHPMD.NumberOfChildren")
+ */
 abstract class AbstractApiService implements ApiServiceInterface
 {
     public function __construct(
