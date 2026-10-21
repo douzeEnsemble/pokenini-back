@@ -529,7 +529,8 @@ Crée une partie. Rate-limited. Corps : `{"dex_slug": "demo"}`.
       "simplified_french_name": "Herbizarre",
       "forms_label": "",
       "forms_french_label": "",
-      "national_dex_number": 2
+      "national_dex_number": 2,
+      "icon": "ivysaur"
     },
     "choices": [
       { "index": 0, "codes": ["#B45AA0", "#8CE66E"], "names": ["purple", "green"], "french_names": ["violet", "vert"] },
