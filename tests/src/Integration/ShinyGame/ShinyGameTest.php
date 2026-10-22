@@ -89,6 +89,60 @@ final class ShinyGameTest extends WebTestCase
     }
 
     #[Test]
+    public function createWithRoundCount(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'trainer',
+            'POST',
+            '/shiny_game/games',
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: '{"dex_slug":"demo","round_count":2}',
+        );
+
+        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseContent($client, 'ShinyGame/created_two_rounds.json');
+    }
+
+    #[Test]
+    public function createWithOneRound(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'trainer',
+            'POST',
+            '/shiny_game/games',
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: '{"dex_slug":"demo","round_count":1}',
+        );
+
+        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseContent($client, 'ShinyGame/created.json');
+    }
+
+    #[Test]
+    public function createWithNullRoundCount(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'trainer',
+            'POST',
+            '/shiny_game/games',
+            server: ['CONTENT_TYPE' => 'application/json'],
+            content: '{"dex_slug":"demo","round_count":null}',
+        );
+
+        $this->assertResponseStatusCodeSame(201);
+        $this->assertResponseContent($client, 'ShinyGame/created.json');
+    }
+
+    #[Test]
     #[DataProvider('providerCreateFailures')]
     public function createFailures(string $roleCode, string $content, int $expectedStatus): void
     {
@@ -116,6 +170,9 @@ final class ShinyGameTest extends WebTestCase
             'not json' => ['trainer', 'not-json', 400],
             'no dex slug' => ['trainer', '{}', 400],
             'dex slug is not a string' => ['trainer', '{"dex_slug":12}', 400],
+            'no round' => ['trainer', '{"dex_slug":"demo","round_count":0}', 400],
+            'negative round count' => ['trainer', '{"dex_slug":"demo","round_count":-3}', 400],
+            'round count is not an integer' => ['trainer', '{"dex_slug":"demo","round_count":"10"}', 400],
             'unknown dex' => ['trainer', '{"dex_slug":"douze"}', 404],
             'premium dex as trainer' => ['trainer', '{"dex_slug":"redgreenblueyellow"}', 404],
             'unreleased dex as collector' => ['collector', '{"dex_slug":"demolite"}', 404],

@@ -37,13 +37,13 @@ class WhichShinyGameApiService extends AbstractApiService
     /**
      * @return array<string, mixed>
      */
-    public function createGame(string $trainerId, string $dexSlug): array
+    public function createGame(string $trainerId, string $dexSlug, ?int $roundCount): array
     {
         $json = $this->requestContent(
             'POST',
             "/which_shiny_game/{$trainerId}/games",
             [
-                'body' => json_encode(['dex_slug' => $dexSlug], JSON_THROW_ON_ERROR),
+                'body' => json_encode(['dex_slug' => $dexSlug, 'round_count' => $roundCount], JSON_THROW_ON_ERROR),
             ]
         );
 

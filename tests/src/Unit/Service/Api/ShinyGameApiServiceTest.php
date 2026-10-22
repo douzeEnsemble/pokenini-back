@@ -46,9 +46,17 @@ final class ShinyGameApiServiceTest extends TestCase
     #[Test]
     public function createGame(): void
     {
-        $service = $this->service('POST', 'https://api.local/shiny_game/8800088/games', '{"id":"g1"}', '{"dex_slug":"demo"}');
+        $service = $this->service('POST', 'https://api.local/shiny_game/8800088/games', '{"id":"g1"}', '{"dex_slug":"demo","round_count":null}');
 
-        $this->assertSame(['id' => 'g1'], $service->createGame('8800088', 'demo'));
+        $this->assertSame(['id' => 'g1'], $service->createGame('8800088', 'demo', null));
+    }
+
+    #[Test]
+    public function createGameWithRoundCount(): void
+    {
+        $service = $this->service('POST', 'https://api.local/shiny_game/8800088/games', '{"id":"g1"}', '{"dex_slug":"demo","round_count":10}');
+
+        $this->assertSame(['id' => 'g1'], $service->createGame('8800088', 'demo', 10));
     }
 
     #[Test]

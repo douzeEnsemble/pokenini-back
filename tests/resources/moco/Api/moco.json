@@ -74,6 +74,28 @@
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
+        "match": ".*\"dex_slug\":\"demo\",\"round_count\":2[,}].*"
+      }
+    },
+    "response": {
+      "status": "201",
+      "file": "/var/moco/responses/color_game/created_two_rounds.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/color_game/[\\w\\d]*/games"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
         "match": ".*\"dex_slug\":\"demo\"[,}].*"
       }
     },
@@ -271,6 +293,28 @@
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
+        "match": ".*\"dex_slug\":\"demo\",\"round_count\":2[,}].*"
+      }
+    },
+    "response": {
+      "status": "201",
+      "file": "/var/moco/responses/shiny_game/created_two_rounds.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/shiny_game/[\\w\\d]*/games"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
         "match": ".*\"dex_slug\":\"demo\"[,}].*"
       }
     },
@@ -452,6 +496,28 @@
     "response": {
       "status": "200",
       "file": "/var/moco/responses/which_shiny_game/dex_trainer.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/which_shiny_game/[\\w\\d]*/games"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": ".*\"dex_slug\":\"demo\",\"round_count\":2[,}].*"
+      }
+    },
+    "response": {
+      "status": "201",
+      "file": "/var/moco/responses/which_shiny_game/created_two_rounds.json",
       "headers": {
         "content-type": "application/json"
       }
