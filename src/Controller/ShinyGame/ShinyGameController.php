@@ -39,11 +39,13 @@ final class ShinyGameController extends AbstractController
     #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function create(Request $request): JsonResponse
     {
-        /** @var array{dex_slug?: mixed} $content */
+        /** @var array{dex_slug?: mixed, round_count?: mixed} $content */
         $content = $this->decodeContent($request);
         $dexSlug = $content['dex_slug'] ?? null;
+        // No round count to play the whole dex
+        $roundCount = $content['round_count'] ?? null;
 
-        if (!\is_string($dexSlug)) {
+        if (!\is_string($dexSlug) || (null !== $roundCount && (!\is_int($roundCount) || $roundCount < 1))) {
             return new JsonResponse([], Response::HTTP_BAD_REQUEST);
         }
 
@@ -52,7 +54,7 @@ final class ShinyGameController extends AbstractController
         }
 
         try {
-            $game = $this->shinyGameService->create($dexSlug);
+            $game = $this->shinyGameService->create($dexSlug, $roundCount);
         } catch (ApiValidationException $e) {
             return new JsonResponse([], $e->getStatusCode());
         }

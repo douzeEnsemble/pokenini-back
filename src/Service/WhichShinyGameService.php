@@ -47,10 +47,10 @@ class WhichShinyGameService
      *
      * @throws ApiValidationException
      */
-    public function create(string $dexSlug): array
+    public function create(string $dexSlug, ?int $roundCount): array
     {
         try {
-            return $this->apiService->createGame($this->getTrainerId(), $dexSlug);
+            return $this->apiService->createGame($this->getTrainerId(), $dexSlug, $roundCount);
         } catch (HttpExceptionInterface $e) {
             throw new ApiValidationException($e->getResponse()->getStatusCode());
         }

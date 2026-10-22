@@ -73,11 +73,24 @@ final class WhichShinyGameServiceTest extends TestCase
         $apiService = $this->createMock(WhichShinyGameApiService::class);
         $apiService->expects($this->once())
             ->method('createGame')
-            ->with('8800088', 'demo')
+            ->with('8800088', 'demo', null)
             ->willReturn(['id' => 'g1'])
         ;
 
-        $this->assertSame(['id' => 'g1'], $this->service($apiService)->create('demo'));
+        $this->assertSame(['id' => 'g1'], $this->service($apiService)->create('demo', null));
+    }
+
+    #[Test]
+    public function createWithRoundCount(): void
+    {
+        $apiService = $this->createMock(WhichShinyGameApiService::class);
+        $apiService->expects($this->once())
+            ->method('createGame')
+            ->with('8800088', 'demo', 10)
+            ->willReturn(['id' => 'g1'])
+        ;
+
+        $this->assertSame(['id' => 'g1'], $this->service($apiService)->create('demo', 10));
     }
 
     #[Test]
