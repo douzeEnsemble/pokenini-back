@@ -152,7 +152,7 @@ final class ColorGameServiceTest extends TestCase
     public static function providerApiErrors(): array
     {
         return [
-            'create' => ['createGame', static fn (ColorGameService $service): array => $service->create('demo'), 400],
+            'create' => ['createGame', static fn (ColorGameService $service): array => $service->create('demo', null), 400],
             'get' => ['getGame', static fn (ColorGameService $service): array => $service->get('g1'), 404],
             'answer' => ['answer', static fn (ColorGameService $service): array => $service->answer('g1', 1, 0), 409],
         ];

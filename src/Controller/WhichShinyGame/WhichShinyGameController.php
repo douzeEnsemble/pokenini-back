@@ -45,7 +45,7 @@ final class WhichShinyGameController extends AbstractController
         // No round count to play the whole dex
         $roundCount = $content['round_count'] ?? null;
 
-        if (!\is_string($dexSlug) || (null !== $roundCount && (!\is_int($roundCount) || $roundCount < 1))) {
+        if (!\is_string($dexSlug) || !self::isRoundCount($roundCount)) {
             return new JsonResponse([], Response::HTTP_BAD_REQUEST);
         }
 
@@ -115,6 +115,16 @@ final class WhichShinyGameController extends AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * @psalm-assert-if-true null|positive-int $roundCount
+     *
+     * @phpstan-assert-if-true null|positive-int $roundCount
+     */
+    private static function isRoundCount(mixed $roundCount): bool
+    {
+        return null === $roundCount || (\is_int($roundCount) && $roundCount > 0);
     }
 
     /**

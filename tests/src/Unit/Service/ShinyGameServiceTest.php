@@ -152,7 +152,7 @@ final class ShinyGameServiceTest extends TestCase
     public static function providerApiErrors(): array
     {
         return [
-            'create' => ['createGame', static fn (ShinyGameService $service): array => $service->create('demo'), 400],
+            'create' => ['createGame', static fn (ShinyGameService $service): array => $service->create('demo', null), 400],
             'get' => ['getGame', static fn (ShinyGameService $service): array => $service->get('g1'), 404],
             'answer' => ['answer', static fn (ShinyGameService $service): array => $service->answer('g1', 1, false), 409],
         ];
