@@ -777,6 +777,37 @@ JSON libre transmis à pokenini-api (structure définie côté API).
 
 ---
 
+## GET /trainer/preference
+
+Page d'accueil choisie par le dresseur connecté (relais de `GET /trainer_preference/{trainerId}` de pokenini-api). Requiert `ROLE_TRAINER`.
+
+### Réponse
+
+```json
+{ "home_page": "hub" }
+```
+
+Valeurs : `hub` (par défaut, tant que rien n'est choisi), `album`, `election`, `game`.
+
+---
+
+## PUT /trainer/preference
+
+Enregistre la page d'accueil du dresseur connecté. Requiert `ROLE_TRAINER`. Rate-limited.
+
+### Corps de la requête
+
+```json
+{ "home_page": "album" }
+```
+
+### Réponse
+
+- `200` (body vide) si succès
+- `400` si body invalide ou page inconnue (code renvoyé par pokenini-api)
+
+---
+
 ## GET /user
 
 Retourne les informations de l'utilisateur connecté.
