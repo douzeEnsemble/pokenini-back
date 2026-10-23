@@ -67,6 +67,18 @@ final class TrainerPreferenceControllerTest extends TestCase
         $this->assertSame(400, $response->getStatusCode());
     }
 
+    /**
+     * @return string[][]
+     */
+    public static function providerBadBodies(): array
+    {
+        return [
+            'empty' => [''],
+            'missing' => ['{}'],
+            'not a string' => ['{"home_page":1}'],
+        ];
+    }
+
     #[Test]
     public function modifyForwardsTheApiStatusCode(): void
     {
@@ -82,17 +94,5 @@ final class TrainerPreferenceControllerTest extends TestCase
         $response = $controller->modify(Request::create('test.local', 'PUT', content: '{"home_page":"admin"}'));
 
         $this->assertSame(400, $response->getStatusCode());
-    }
-
-    /**
-     * @return string[][]
-     */
-    public static function providerBadBodies(): array
-    {
-        return [
-            'empty' => [''],
-            'missing' => ['{}'],
-            'not a string' => ['{"home_page":1}'],
-        ];
     }
 }
