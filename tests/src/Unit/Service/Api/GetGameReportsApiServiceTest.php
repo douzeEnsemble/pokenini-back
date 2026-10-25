@@ -9,7 +9,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -19,6 +20,8 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 #[CoversClass(GetGameReportsApiService::class)]
 final class GetGameReportsApiServiceTest extends TestCase
 {
+    private TagAwareAdapter $cache;
+
     #[Test]
     public function get(): void
     {
@@ -30,6 +33,19 @@ final class GetGameReportsApiServiceTest extends TestCase
         $this->assertArrayHasKey('daily_games', $reports);
         $this->assertIsArray($reports['daily_games']);
         $this->assertCount(30, $reports['daily_games']);
+
+        /** @var string $value */
+        $value = $this->cache->getItem('game_reports')->get();
+        $this->assertNotEmpty($value);
+        $this->assertJson($value);
+    }
+
+    #[Test]
+    public function getFromCache(): void
+    {
+        $service = $this->getService();
+
+        $this->assertSame($service->get(), $service->get());
     }
 
     private function getService(): GetGameReportsApiService
@@ -65,12 +81,14 @@ final class GetGameReportsApiServiceTest extends TestCase
             ->willReturn($response)
         ;
 
+        $this->cache = new TagAwareAdapter(new ArrayAdapter(), new ArrayAdapter());
+
         return new GetGameReportsApiService(
             $this->createStub(LoggerInterface::class),
             $client,
             'https://api.domain',
             './resources/certificates/cacert.pem',
-            $this->createStub(TagAwareCacheInterface::class),
+            $this->cache,
             'web',
             'douze',
         );

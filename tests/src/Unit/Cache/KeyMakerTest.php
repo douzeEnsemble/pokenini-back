@@ -64,6 +64,12 @@ final class KeyMakerTest extends TestCase
     }
 
     #[Test]
+    public function getGameReportsKey(): void
+    {
+        $this->assertEquals('game_reports', KeyMaker::getGameReportsKey());
+    }
+
+    #[Test]
     public function getCreditsKey(): void
     {
         $this->assertEquals('credits_v2', KeyMaker::getCreditsKey());
