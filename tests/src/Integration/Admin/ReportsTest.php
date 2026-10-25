@@ -51,4 +51,34 @@ final class ReportsTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(401);
     }
+
+    #[Test]
+    public function getGameReports(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'admin',
+            'GET',
+            '/istration/reports/games',
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertResponseContent($client, 'Admin/reports_games.json');
+    }
+
+    #[Test]
+    public function getGameReportsNonAuthenticated(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/istration/reports/games',
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
 }
