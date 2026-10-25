@@ -81,10 +81,10 @@ Versions extraites des `composer.lock` de chaque outil.
 | Service | Image | Version actuelle | Action recommandée |
 |---------|-------|-----------------|-------------------|
 | `php` (base) | `php` Alpine | `8.5.6-fpm-alpine3.23` | Suivre les patches PHP 8.5.x |
-| `php` (symfony-cli, dev only) | `ghcr.io/symfony-cli/symfony-cli` | `5.17.1` | Vérifier les nouvelles versions |
+| `php` (symfony-cli, dev only) | `ghcr.io/symfony-cli/symfony-cli` | `5.22.2` | Vérifier les nouvelles versions |
 | `web` | `nginx` Alpine | `1.29.8-alpine3.23` | Suivre les nouvelles versions nginx |
 | `redis` | `redis` Alpine | `8.6.2-alpine3.23` | Suivre les nouvelles versions Redis |
-| `moco.api` / `moco.oauth2` | Custom Moco (build arg) | `1.5.0` | Vérifier les nouvelles versions Moco |
+| `moco.api` / `moco.oauth2` | Custom Moco (build arg) | `1.6.1` | Vérifier les nouvelles versions Moco |
 
 ---
 
@@ -114,8 +114,8 @@ Versions extraites des `composer.lock` de chaque outil.
 | cachetool | `9.2.1` | `Makefile:360` (curl GitHub releases) | Surveiller les nouvelles releases |
 | dclint (Docker Compose linter) | `3.1.0-alpine` | `Makefile:13` (image Docker) | À jour (confirmé par `ci_infraquality.yml`) |
 | dotenv-linter | `4.0.0` | `Makefile:14` (image Docker) | CI utilise action `v3`, Makefile local hors-sync |
-| hadolint | `v2.14.0-alpine` | `Makefile:15` (image Docker) | CI utilise action `v3.1.0`, Makefile local hors-sync |
-| editorconfig-checker | `v3.6.0` | `Makefile:16` (image Docker) | Vérifier la dernière version |
+| hadolint | `v2.15.1-alpine` | `Makefile:15` (image Docker) | CI utilise action `v3.1.0`, Makefile local hors-sync |
+| editorconfig-checker | `4.0.2` | `Makefile:16` (image Docker) | Vérifier la dernière version |
 
 ---
 

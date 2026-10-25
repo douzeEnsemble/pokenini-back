@@ -133,7 +133,7 @@ Audit automatique via `make security` (`composer audit`) et workflow CI dédié 
 - [x] Port Redis non exposé à l'hôte (pas de `ports:` dans `docker-compose.yaml`) — communication interne uniquement.
 - [x] Port Nginx publié uniquement sur `127.0.0.1:8081` en dev — `docker-compose.yaml:47`.
 - [ ] Image PHP non épinglée sur un digest SHA — `php:8.5.6-fpm-alpine3.23` dans `.docker/php/Dockerfile:1`. La version de tag est fixée (bon), mais pas le digest. Acceptable pour ce type de projet.
-- [ ] Symfony CLI épinglée à `5.17.1` dans le Dockerfile dev — bien épinglée, surveiller les nouvelles versions.
+- [ ] Symfony CLI épinglée à `5.22.2` dans le Dockerfile dev — bien épinglée, surveiller les nouvelles versions.
 
 ---
 
