@@ -5,7 +5,7 @@ services:
     build:
       context: ./.docker/moco
       args:
-        MOCO_VERSION: 1.5.0
+        MOCO_VERSION: 1.6.1
     volumes:
       - ./tests/resources/moco/Api/:/var/moco:ro
     command: "/var/moco/moco.json"
@@ -14,7 +14,7 @@ services:
     build:
       context: ./.docker/moco
       args:
-        MOCO_VERSION: 1.5.0
+        MOCO_VERSION: 1.6.1
     volumes:
       - ./tests/resources/moco/OAuth/:/var/moco:ro
     command: "/var/moco/moco.json"
@@ -34,7 +34,7 @@ services:
     tty: true
 
   web:
-    image: nginx:1.31.7-alpine3.24
+    image: nginx:1.31.8-alpine3.24
     volumes:
       - .:/app
       - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf

@@ -210,8 +210,8 @@ Référence : `deptrac.yaml`
 | `php` | Custom (`php:8.5.6-fpm-alpine3.23`) | PHP-FPM, multi-stage (base/dev/prod) |
 | `web` | `nginx:1.29.8-alpine3.23` | Reverse proxy, port `127.0.0.1:8081:8080` |
 | `redis` | `redis:8.6.2-alpine3.23` | Cache tag-aware (Symfony Cache) |
-| `moco.api` | Custom (Moco 1.5.0) | Mock du serveur pokenini-api (tests) |
-| `moco.oauth2` | Custom (Moco 1.5.0) | Mock des providers OAuth2 (tests) |
+| `moco.api` | Custom (Moco 1.6.1) | Mock du serveur pokenini-api (tests) |
+| `moco.oauth2` | Custom (Moco 1.6.1) | Mock des providers OAuth2 (tests) |
 
 ### Environnements
 
