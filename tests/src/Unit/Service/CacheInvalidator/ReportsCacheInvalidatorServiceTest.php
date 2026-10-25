@@ -33,11 +33,13 @@ final class ReportsCacheInvalidatorServiceTest extends TestCase
 
         $cache->get('douze', fn () => 'DouZe');
         $cache->get('reports', fn () => 'whatever');
+        $cache->get('game_reports', fn () => 'whatever');
 
         $service = new ReportsCacheInvalidatorService($cache);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
         $this->assertFalse($cache->hasItem('reports'));
+        $this->assertFalse($cache->hasItem('game_reports'));
     }
 }

@@ -18,5 +18,6 @@ class ReportsCacheInvalidatorService extends AbstractCacheInvalidatorService imp
     public function invalidate(): void
     {
         $this->cache->delete(KeyMaker::getReportsKey());
+        $this->cache->delete(KeyMaker::getGameReportsKey());
     }
 }

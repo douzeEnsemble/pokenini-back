@@ -18,6 +18,7 @@ final class KeyMaker
     private const string CACHE_KEY_FORMS = 'forms';
     private const string CACHE_KEY_ALBUM = 'album';
     private const string CACHE_KEY_REPORTS = 'reports';
+    private const string CACHE_KEY_GAME_REPORTS = 'game_reports';
     private const string CACHE_KEY_TRAINER = 'trainer';
     private const string CACHE_KEY_CREDITS = 'credits_v2';
 
@@ -59,6 +60,11 @@ final class KeyMaker
     public static function getReportsKey(): string
     {
         return self::CACHE_KEY_REPORTS;
+    }
+
+    public static function getGameReportsKey(): string
+    {
+        return self::CACHE_KEY_GAME_REPORTS;
     }
 
     public static function getCreditsKey(): string
