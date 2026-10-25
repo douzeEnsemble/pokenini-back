@@ -1459,6 +1459,20 @@
   },
   {
     "request": {
+      "uri": "/reports/games",
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/reports_games.json"
+    }
+  },
+  {
+    "request": {
       "uri": "/action_logs",
       "method": "get",
       "headers": {
