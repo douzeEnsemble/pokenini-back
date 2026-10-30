@@ -107,6 +107,19 @@ final class ShinyGameServiceTest extends TestCase
     }
 
     #[Test]
+    public function getRounds(): void
+    {
+        $apiService = $this->createMock(ShinyGameApiService::class);
+        $apiService->expects($this->once())
+            ->method('getRounds')
+            ->with('8800088', 'g1')
+            ->willReturn(['rounds' => []])
+        ;
+
+        $this->assertSame(['rounds' => []], $this->service($apiService)->getRounds('g1'));
+    }
+
+    #[Test]
     public function answer(): void
     {
         $apiService = $this->createMock(ShinyGameApiService::class);
@@ -154,6 +167,7 @@ final class ShinyGameServiceTest extends TestCase
         return [
             'create' => ['createGame', static fn (ShinyGameService $service): array => $service->create('demo', null), 400],
             'get' => ['getGame', static fn (ShinyGameService $service): array => $service->get('g1'), 404],
+            'rounds' => ['getRounds', static fn (ShinyGameService $service): array => $service->getRounds('g1'), 404],
             'answer' => ['answer', static fn (ShinyGameService $service): array => $service->answer('g1', 1, false), 409],
         ];
     }

@@ -75,6 +75,20 @@ class ShinyGameService
      *
      * @throws ApiValidationException
      */
+    public function getRounds(string $gameId): array
+    {
+        try {
+            return $this->apiService->getRounds($this->getTrainerId(), $gameId);
+        } catch (HttpExceptionInterface $e) {
+            throw new ApiValidationException($e->getResponse()->getStatusCode());
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws ApiValidationException
+     */
     public function answer(string $gameId, int $position, bool $isShiny): array
     {
         try {

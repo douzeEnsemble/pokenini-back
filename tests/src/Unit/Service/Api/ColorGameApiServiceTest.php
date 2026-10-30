@@ -68,6 +68,14 @@ final class ColorGameApiServiceTest extends TestCase
     }
 
     #[Test]
+    public function getRounds(): void
+    {
+        $service = $this->service('GET', 'https://api.local/color_game/8800088/games/g1/rounds', '{"rounds":[]}');
+
+        $this->assertSame(['rounds' => []], $service->getRounds('8800088', 'g1'));
+    }
+
+    #[Test]
     public function answer(): void
     {
         $service = $this->service('POST', 'https://api.local/color_game/8800088/games/g1/answers', '{"is_correct":true}', '{"position":2,"choice":0}');
