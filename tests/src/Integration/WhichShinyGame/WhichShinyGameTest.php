@@ -213,6 +213,28 @@ final class WhichShinyGameTest extends WebTestCase
     }
 
     #[Test]
+    public function rounds(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest($client, 'trainer', 'GET', '/which_shiny_game/games/'.self::GAME_ID.'/rounds');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseContent($client, 'WhichShinyGame/rounds.json');
+    }
+
+    #[Test]
+    public function roundsUnknown(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest($client, 'trainer', 'GET', '/which_shiny_game/games/99999999-9999-4999-8999-999999999999/rounds');
+
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertSame('[]', $client->getResponse()->getContent());
+    }
+
+    #[Test]
     public function answer(): void
     {
         $client = self::createClient();

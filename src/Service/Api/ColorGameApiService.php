@@ -65,6 +65,17 @@ class ColorGameApiService extends AbstractApiService
     /**
      * @return array<string, mixed>
      */
+    public function getRounds(string $trainerId, string $gameId): array
+    {
+        $json = $this->requestContent('GET', "/color_game/{$trainerId}/games/{$gameId}/rounds");
+
+        /** @var array<string, mixed> */
+        return JsonDecoder::decode($json);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     public function answer(string $trainerId, string $gameId, int $position, int $choice): array
     {
         $json = $this->requestContent(

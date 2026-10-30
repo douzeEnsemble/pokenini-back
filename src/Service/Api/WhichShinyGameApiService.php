@@ -65,6 +65,17 @@ class WhichShinyGameApiService extends AbstractApiService
     /**
      * @return array<string, mixed>
      */
+    public function getRounds(string $trainerId, string $gameId): array
+    {
+        $json = $this->requestContent('GET', "/which_shiny_game/{$trainerId}/games/{$gameId}/rounds");
+
+        /** @var array<string, mixed> */
+        return JsonDecoder::decode($json);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
     public function answer(string $trainerId, string $gameId, int $position, int $slot): array
     {
         $json = $this->requestContent(

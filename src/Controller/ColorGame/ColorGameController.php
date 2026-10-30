@@ -74,6 +74,18 @@ final class ColorGameController extends AbstractController
         return new JsonResponse($state, Response::HTTP_OK);
     }
 
+    #[Route('/games/{gameId}/rounds', requirements: ['gameId' => Requirement::UUID], methods: ['GET'])]
+    public function rounds(string $gameId): JsonResponse
+    {
+        try {
+            $rounds = $this->colorGameService->getRounds($gameId);
+        } catch (ApiValidationException $e) {
+            return new JsonResponse([], $e->getStatusCode());
+        }
+
+        return new JsonResponse($rounds, Response::HTTP_OK);
+    }
+
     #[Route('/games/{gameId}/answers', requirements: ['gameId' => Requirement::UUID], methods: ['POST'])]
     public function answer(string $gameId, Request $request): JsonResponse
     {
