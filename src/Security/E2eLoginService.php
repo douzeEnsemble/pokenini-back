@@ -24,15 +24,17 @@ class E2eLoginService
      */
     public function findUser(string $secret): ?User
     {
-        if ($this->matches($this->e2eLoginSecret, $this->e2eUserId, $secret)) {
-            $user = new User($this->e2eUserId, self::PROVIDER);
+        $userId = $this->e2eUserId;
+        if ('' !== $userId && $this->matches($this->e2eLoginSecret, $secret)) {
+            $user = new User($userId, self::PROVIDER);
             $user->addTrainerRole();
 
             return $user;
         }
 
-        if ($this->matches($this->e2eAdminLoginSecret, $this->e2eAdminUserId, $secret)) {
-            $user = new User($this->e2eAdminUserId, self::PROVIDER);
+        $adminUserId = $this->e2eAdminUserId;
+        if ('' !== $adminUserId && $this->matches($this->e2eAdminLoginSecret, $secret)) {
+            $user = new User($adminUserId, self::PROVIDER);
             $user->addTrainerRole();
             $user->addCollectorRole();
             $user->addAdminRole();
@@ -46,8 +48,8 @@ class E2eLoginService
     /**
      * An empty secret or user disables the login.
      */
-    private function matches(string $expectedSecret, string $userId, string $secret): bool
+    private function matches(string $expectedSecret, string $secret): bool
     {
-        return '' !== $expectedSecret && '' !== $userId && hash_equals($expectedSecret, $secret);
+        return '' !== $expectedSecret && hash_equals($expectedSecret, $secret);
     }
 }
