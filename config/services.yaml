@@ -24,6 +24,10 @@ services:
             string $metadataDir: '%kernel.project_dir%/resources/metadata'
             string $sessionTokenSecret: '%env(SESSION_TOKEN_SECRET)%'
             int $sessionTtl: '%env(int:SESSION_TTL)%'
+            string $e2eLoginSecret: '%env(default::E2E_LOGIN_SECRET)%'
+            string $e2eUserId: '%env(default::E2E_USER_ID)%'
+            string $e2eAdminLoginSecret: '%env(default::E2E_ADMIN_LOGIN_SECRET)%'
+            string $e2eAdminUserId: '%env(default::E2E_ADMIN_USER_ID)%'
 
     App\:
         resource: '../src/'
