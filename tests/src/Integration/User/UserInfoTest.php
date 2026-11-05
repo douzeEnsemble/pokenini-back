@@ -55,6 +55,94 @@ final class UserInfoTest extends WebTestCase
     }
 
     #[Test]
+    public function getWithE2eLogin(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/user',
+            [],
+            [],
+            [
+                'HTTP_AUTHORIZATION' => 'Bearer this-is-the-e2e-login-secret',
+                'HTTP_X-Provider' => 'e2e',
+            ],
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        /** @var array<string, mixed> $data */
+        $data = json_decode((string) $client->getResponse()->getContent(), true, flags: JSON_THROW_ON_ERROR);
+
+        $this->assertArrayHasKey('session_token', $data);
+        unset($data['session_token']);
+
+        $this->assertSame(
+            [
+                'id' => 'e2e-test-trainer',
+                'provider' => 'e2e',
+                'roles' => ['ROLE_USER', 'ROLE_TRAINER'],
+                'profile' => 'trainer',
+            ],
+            $data,
+        );
+    }
+
+    #[Test]
+    public function getWithE2eAdminLogin(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/user',
+            [],
+            [],
+            [
+                'HTTP_AUTHORIZATION' => 'Bearer this-is-the-e2e-admin-login-secret',
+                'HTTP_X-Provider' => 'e2e',
+            ],
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        /** @var array<string, mixed> $data */
+        $data = json_decode((string) $client->getResponse()->getContent(), true, flags: JSON_THROW_ON_ERROR);
+
+        unset($data['session_token']);
+
+        $this->assertSame(
+            [
+                'id' => 'e2e-test-admin',
+                'provider' => 'e2e',
+                'roles' => ['ROLE_USER', 'ROLE_TRAINER', 'ROLE_COLLECTOR', 'ROLE_ADMIN'],
+                'profile' => 'admin',
+            ],
+            $data,
+        );
+    }
+
+    #[Test]
+    public function getWithWrongE2eLogin(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/user',
+            [],
+            [],
+            [
+                'HTTP_AUTHORIZATION' => 'Bearer not-the-e2e-login-secret',
+                'HTTP_X-Provider' => 'e2e',
+            ],
+        );
+
+        $this->assertResponseStatusCodeSame(401);
+    }
+
+    #[Test]
     public function getNonAuthenticated(): void
     {
         $client = self::createClient();

@@ -18,6 +18,12 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 class AccessTokenHandler implements AccessTokenHandlerInterface
 {
+    /**
+     * The E2E tests sign in with a shared secret instead of a provider: one secret for the test trainer,
+     * another one for the test admin.
+     */
+    public const string E2E_PROVIDER = 'e2e';
+
     public function __construct(
         private readonly ClientRegistry $clientRegistry,
         private readonly RequestStack $requestStack,
@@ -28,6 +34,10 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         private readonly LoggerInterface $logger,
         private readonly string $env,
         private readonly SessionTokenService $sessionTokenService,
+        private readonly string $e2eLoginSecret = '',
+        private readonly string $e2eUserId = '',
+        private readonly string $e2eAdminLoginSecret = '',
+        private readonly string $e2eAdminUserId = '',
     ) {}
 
     #[\Override]
@@ -39,6 +49,10 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
 
         if (null !== $claims) {
             return $this->createSessionTokenBadge($claims);
+        }
+
+        if (self::E2E_PROVIDER === strtolower($provider)) {
+            return $this->createE2eBadge($accessToken);
         }
 
         if ('fake' === strtolower($provider) && \in_array($this->env, ['dev', 'test'], true)) {
@@ -107,6 +121,53 @@ class AccessTokenHandler implements AccessTokenHandlerInterface
         return new UserBadge($accessToken, function () use ($accessToken, $provider) {
             $user = $this->loadUserFromLists($accessToken, $provider);
             $this->logger->info("Authentication succeeded for provider {$provider}");
+
+            return $user;
+        });
+    }
+
+    private function createE2eBadge(string $accessToken): UserBadge
+    {
+        if ($this->isE2eLogin($this->e2eLoginSecret, $this->e2eUserId, $accessToken)) {
+            return $this->createE2eUserBadge($this->e2eUserId, false);
+        }
+
+        if ($this->isE2eLogin($this->e2eAdminLoginSecret, $this->e2eAdminUserId, $accessToken)) {
+            return $this->createE2eUserBadge($this->e2eAdminUserId, true);
+        }
+
+        $this->logger->info('Authentication failed: invalid E2E login');
+
+        throw new BadCredentialsException('Invalid E2E login.');
+    }
+
+    /**
+     * @psalm-assert-if-true non-empty-string $userId
+     *
+     * @phpstan-assert-if-true non-empty-string $userId
+     */
+    private function isE2eLogin(string $secret, string $userId, string $accessToken): bool
+    {
+        return '' !== $secret && '' !== $userId && hash_equals($secret, $accessToken);
+    }
+
+    /**
+     * @param non-empty-string $userId
+     */
+    private function createE2eUserBadge(string $userId, bool $isAdmin): UserBadge
+    {
+        return new UserBadge($userId, function () use ($userId, $isAdmin) {
+            // The roles come from the secret, never from the lists
+            $user = new User($userId, self::E2E_PROVIDER);
+            $user->addTrainerRole();
+
+            if ($isAdmin) {
+                $user->addCollectorRole();
+                $user->addAdminRole();
+            }
+
+            $profile = $isAdmin ? 'admin' : 'trainer';
+            $this->logger->info("Authentication succeeded for the E2E test {$profile}");
 
             return $user;
         });
