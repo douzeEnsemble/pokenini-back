@@ -652,6 +652,9 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
+    /**
+     * @param non-empty-string $userId
+     */
     #[Test]
     #[DataProvider('provideE2eUsers')]
     public function getUserBadgeFromWithE2eLogin(string $userId, string $profile): void
@@ -686,7 +689,7 @@ final class AccessTokenHandlerTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{string, string}>
+     * @return iterable<string, array{non-empty-string, string}>
      */
     public static function provideE2eUsers(): iterable
     {
