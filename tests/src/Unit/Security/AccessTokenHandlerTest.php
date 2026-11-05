@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Security;
 
 use App\Security\AccessTokenHandler;
+use App\Security\E2eLoginService;
 use App\Security\SessionTokenService;
 use App\Security\User;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
@@ -651,22 +652,23 @@ final class AccessTokenHandlerTest extends TestCase
         $this->assertTrue($user->isATrainer());
     }
 
-    /**
-     * @param list<string> $roles
-     */
     #[Test]
-    #[DataProvider('provideE2eLogins')]
-    public function getUserBadgeFromWithE2eLogin(string $accessToken, string $userId, array $roles): void
+    #[DataProvider('provideE2eUsers')]
+    public function getUserBadgeFromWithE2eLogin(string $userId, string $profile): void
     {
-        $clientRegistry = $this->createMock(ClientRegistry::class);
-        $clientRegistry->expects($this->never())->method('getClient');
+        $e2eUser = new User($userId, 'e2e');
+        $e2eUser->addTrainerRole();
+        if ('admin' === $profile) {
+            $e2eUser->addAdminRole();
+        }
 
-        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'E2E']);
-
-        $requestStack = $this->createMock(RequestStack::class);
-        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
-
-        $profile = 'e2e-test-admin' === $userId ? 'admin' : 'trainer';
+        $e2eLoginService = $this->createMock(E2eLoginService::class);
+        $e2eLoginService
+            ->expects($this->once())
+            ->method('findUser')
+            ->with('the-e2e-secret')
+            ->willReturn($e2eUser)
+        ;
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -675,52 +677,34 @@ final class AccessTokenHandlerTest extends TestCase
             ->with("Authentication succeeded for the E2E test {$profile}")
         ;
 
-        $accessTokenHandler = $this->createE2eAccessTokenHandler(
-            $clientRegistry,
-            $requestStack,
-            $logger,
-            'the-e2e-secret',
-            'e2e-test-trainer',
-            'the-e2e-admin-secret',
-            'e2e-test-admin',
-        );
+        $accessTokenHandler = $this->createE2eAccessTokenHandler($logger, $e2eLoginService);
 
-        $userBadge = $accessTokenHandler->getUserBadgeFrom($accessToken);
+        $userBadge = $accessTokenHandler->getUserBadgeFrom('the-e2e-secret');
 
         $this->assertSame($userId, $userBadge->getUserIdentifier());
-        $user = $userBadge->getUser();
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame($userId, $user->getId());
-        $this->assertSame('e2e', $user->getProvider());
-        $this->assertSame($roles, array_values($user->getRoles()));
+        $this->assertSame($e2eUser, $userBadge->getUser());
     }
 
     /**
-     * @return iterable<string, array{string, string, list<string>}>
+     * @return iterable<string, array{string, string}>
      */
-    public static function provideE2eLogins(): iterable
+    public static function provideE2eUsers(): iterable
     {
-        yield 'trainer' => ['the-e2e-secret', 'e2e-test-trainer', ['ROLE_USER', 'ROLE_TRAINER']];
+        yield 'trainer' => ['e2e-test-trainer', 'trainer'];
 
-        yield 'admin' => ['the-e2e-admin-secret', 'e2e-test-admin', ['ROLE_USER', 'ROLE_TRAINER', 'ROLE_COLLECTOR', 'ROLE_ADMIN']];
+        yield 'admin' => ['e2e-test-admin', 'admin'];
     }
 
     #[Test]
-    #[DataProvider('provideInvalidE2eLogins')]
-    public function getUserBadgeFromWithInvalidE2eLogin(
-        string $secret,
-        string $userId,
-        string $adminSecret,
-        string $adminUserId,
-        string $accessToken,
-    ): void {
-        $clientRegistry = $this->createMock(ClientRegistry::class);
-        $clientRegistry->expects($this->never())->method('getClient');
-
-        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'e2e']);
-
-        $requestStack = $this->createMock(RequestStack::class);
-        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+    public function getUserBadgeFromWithInvalidE2eLogin(): void
+    {
+        $e2eLoginService = $this->createMock(E2eLoginService::class);
+        $e2eLoginService
+            ->expects($this->once())
+            ->method('findUser')
+            ->with('not-the-secret')
+            ->willReturn(null)
+        ;
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -729,36 +713,30 @@ final class AccessTokenHandlerTest extends TestCase
             ->with('Authentication failed: invalid E2E login')
         ;
 
-        $accessTokenHandler = $this->createE2eAccessTokenHandler(
-            $clientRegistry,
-            $requestStack,
-            $logger,
-            $secret,
-            $userId,
-            $adminSecret,
-            $adminUserId,
-        );
+        $accessTokenHandler = $this->createE2eAccessTokenHandler($logger, $e2eLoginService);
 
         $this->expectException(BadCredentialsException::class);
         $this->expectExceptionMessageIsOrContains('Invalid E2E login.');
 
-        $accessTokenHandler->getUserBadgeFrom($accessToken);
+        $accessTokenHandler->getUserBadgeFrom('not-the-secret');
     }
 
-    /**
-     * @return iterable<string, array{string, string, string, string, string}>
-     */
-    public static function provideInvalidE2eLogins(): iterable
+    #[Test]
+    public function getUserBadgeFromWithE2eLoginWithoutService(): void
     {
-        yield 'wrong secret' => ['the-e2e-secret', 'e2e-test-trainer', 'the-e2e-admin-secret', 'e2e-test-admin', 'not-the-secret'];
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('info')
+            ->with('Authentication failed: invalid E2E login')
+        ;
 
-        yield 'trainer secret not configured' => ['', 'e2e-test-trainer', '', 'e2e-test-admin', ''];
+        $accessTokenHandler = $this->createE2eAccessTokenHandler($logger, null);
 
-        yield 'trainer not configured' => ['the-e2e-secret', '', '', '', 'the-e2e-secret'];
+        $this->expectException(BadCredentialsException::class);
+        $this->expectExceptionMessageIsOrContains('Invalid E2E login.');
 
-        yield 'admin secret not configured' => ['the-e2e-secret', 'e2e-test-trainer', '', 'e2e-test-admin', ''];
-
-        yield 'admin not configured' => ['the-e2e-secret', 'e2e-test-trainer', 'the-e2e-admin-secret', '', 'the-e2e-admin-secret'];
+        $accessTokenHandler->getUserBadgeFrom('the-e2e-secret');
     }
 
     private function getUserFromUserBadge(string $userId, bool $isInvitationRequired): User
@@ -828,30 +806,27 @@ final class AccessTokenHandlerTest extends TestCase
         return $userBadge->getUser();
     }
 
-    private function createE2eAccessTokenHandler(
-        ClientRegistry $clientRegistry,
-        RequestStack $requestStack,
-        LoggerInterface $logger,
-        string $secret,
-        string $userId,
-        string $adminSecret,
-        string $adminUserId,
-    ): AccessTokenHandler {
+    private function createE2eAccessTokenHandler(LoggerInterface $logger, ?E2eLoginService $e2eLoginService): AccessTokenHandler
+    {
+        $clientRegistry = $this->createMock(ClientRegistry::class);
+        $clientRegistry->expects($this->never())->method('getClient');
+
+        $request = new Request([], [], [], [], [], ['HTTP_X-Provider' => 'E2E']);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
         return new AccessTokenHandler(
             $clientRegistry,
             $requestStack,
-            // The test users are in no list: their roles come from the secret only
-            'someone-else',
-            'someone-else',
-            'someone-else',
+            'some-id',
+            'some-id',
+            'some-id',
             true,
             $logger,
             'prod',
             $this->createSessionTokenService(),
-            $secret,
-            $userId,
-            $adminSecret,
-            $adminUserId,
+            $e2eLoginService,
         );
     }
 
