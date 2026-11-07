@@ -48,7 +48,7 @@ class GetElectionDexListApiService extends AbstractApiService
     {
         $key = KeyMaker::getElectionDexListKeyForTrainer($trainerId, $queryParams);
 
-        $urlQueryParams = http_build_query(array_merge(['count' => '0'], $queryParams));
+        $urlQueryParams = http_build_query(array_merge(['count' => '1'], $queryParams));
 
         $json = $this->cache->get($key, function (ItemInterface $item) use ($trainerId, $urlQueryParams) {
             $item->tag([

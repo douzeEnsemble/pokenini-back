@@ -10,7 +10,7 @@ final class KeyMaker
     private const string CACHE_KEY_ID_SEPARATOR = '#';
 
     private const string CACHE_KEY_DEX = 'dex';
-    private const string CACHE_KEY_ELECTION_DEX_LIST = 'election_dex_list';
+    private const string CACHE_KEY_ELECTION_DEX_LIST = 'election_dex_list_v2';
     private const string CACHE_KEY_CATCH_STATES = 'catch_states';
     private const string CACHE_KEY_TYPES = 'types';
     private const string CACHE_KEY_GAME_BUNDLES = 'game_bundles';
@@ -21,6 +21,7 @@ final class KeyMaker
     private const string CACHE_KEY_GAME_REPORTS = 'game_reports';
     private const string CACHE_KEY_TRAINER = 'trainer';
     private const string CACHE_KEY_CREDITS = 'credits_v2';
+    private const string CACHE_KEY_GAMES = 'games';
 
     public static function getDexKey(): string
     {
@@ -127,6 +128,13 @@ final class KeyMaker
         }
 
         return $prefix.$strFilters;
+    }
+
+    public static function getGamesKeyForTrainer(string $game, string $trainerId): string
+    {
+        return self::CACHE_KEY_GAMES
+            .self::CACHE_KEY_SEPARATOR.$game
+            .self::CACHE_KEY_SEPARATOR.$trainerId;
     }
 
     public static function getTrainerIdKey(string $trainerId): string

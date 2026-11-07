@@ -1483,13 +1483,30 @@
   },
   {
     "request": {
+      "uri": {
+        "match": "/dex/[\\w\\d]*/homepokemongo"
+      },
+      "method": "put",
+      "headers": {
+        "authorization": "Basic d2ViOmRvdXpl"
+      },
+      "text": {
+        "match": ".*\"is_on_hub\": ?true.*"
+      }
+    },
+    "response": {
+      "status": "409"
+    }
+  },
+  {
+    "request": {
       "uri": "/dex/6c33064427a5b419ca8eb3f7d11a0807f66cab22/redgreenblueyellow",
       "method": "put",
       "headers": {
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
-        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false),? ?)?(\"is_on_hub\": ?(?:true|false))?\\}"
       }
     },
     "response": {
@@ -1504,7 +1521,7 @@
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
-        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false),? ?)?(\"is_on_hub\": ?(?:true|false))?\\}"
       }
     },
     "response": {
@@ -1521,7 +1538,7 @@
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
-        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false),? ?)?(\"is_on_hub\": ?(?:true|false))?\\}"
       }
     },
     "response": {
@@ -1538,7 +1555,7 @@
         "authorization": "Basic d2ViOmRvdXpl"
       },
       "text": {
-        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false))?\\}"
+        "match": "\\{(\"is_private\": ?(?:true|false),? ?)?(\"is_on_home\": ?(?:true|false),? ?)?(\"is_on_hub\": ?(?:true|false))?\\}"
       }
     },
     "response": {
@@ -1607,7 +1624,7 @@
         "match": "/election/[\\w\\d]*/list"
       },
       "queries": {
-        "count": "0",
+        "count": "1",
         "include_premium_dex": "1",
         "include_unreleased_dex": "1"
       },
@@ -1628,7 +1645,7 @@
         "match": "/election/[\\w\\d]*/list"
       },
       "queries": {
-        "count": "0",
+        "count": "1",
         "include_premium_dex": "1"
       },
       "method": "get",
@@ -1648,7 +1665,7 @@
         "match": "/election/[\\w\\d]*/list"
       },
       "queries": {
-        "count": "0"
+        "count": "1"
       },
       "method": "get",
       "headers": {

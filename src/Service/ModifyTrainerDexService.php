@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exception\ModifyFailedException;
+use App\Exception\TooManyDexOnHubException;
 use App\Security\UserTokenService;
 use App\Service\Api\ModifyDexApiService;
 use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
 use App\Service\CacheInvalidator\DexCacheInvalidatorService;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
@@ -34,7 +36,13 @@ class ModifyTrainerDexService
 
             $this->albumCacheInvalidatorService->invalidate($dexSlug, $trainerId);
             $this->dexCacheInvalidatorService->invalidateByTrainerId($trainerId);
-        } catch (HttpExceptionInterface|TransportExceptionInterface $e) {
+        } catch (HttpExceptionInterface $e) {
+            if (Response::HTTP_CONFLICT === $e->getResponse()->getStatusCode()) {
+                throw new TooManyDexOnHubException();
+            }
+
+            throw new ModifyFailedException();
+        } catch (TransportExceptionInterface $e) {
             throw new ModifyFailedException();
         }
     }

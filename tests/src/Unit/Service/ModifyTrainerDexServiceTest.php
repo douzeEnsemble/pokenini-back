@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service;
 
 use App\Exception\ModifyFailedException;
+use App\Exception\TooManyDexOnHubException;
 use App\Security\UserTokenService;
 use App\Service\Api\ModifyDexApiService;
 use App\Service\CacheInvalidator\AlbumCacheInvalidatorService;
@@ -15,6 +16,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * @internal
@@ -117,6 +119,45 @@ final class ModifyTrainerDexServiceTest extends TestCase
         $this->expectException(ModifyFailedException::class);
 
         $service->modifyDex('douze', '{"ceci": "est-du-contenu"}');
+    }
+
+    #[Test]
+    public function modifyDexWithTooManyDexOnHub(): void
+    {
+        $userTokenService = $this->createStub(UserTokenService::class);
+        $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
+
+        $response = $this->createStub(ResponseInterface::class);
+        $response->method('getStatusCode')->willReturn(409);
+
+        $exception = $this->createStub(HttpExceptionInterface::class);
+        $exception->method('getResponse')->willReturn($response);
+
+        $modifyDexService = $this->createStub(ModifyDexApiService::class);
+        $modifyDexService->method('modify')->willThrowException($exception);
+
+        $albumCacheInvalidatorService = $this->createMock(AlbumCacheInvalidatorService::class);
+        $albumCacheInvalidatorService
+            ->expects($this->never())
+            ->method('invalidate')
+        ;
+
+        $dexCacheInvalidatorService = $this->createMock(DexCacheInvalidatorService::class);
+        $dexCacheInvalidatorService
+            ->expects($this->never())
+            ->method('invalidateByTrainerId')
+        ;
+
+        $service = new ModifyTrainerDexService(
+            $userTokenService,
+            $modifyDexService,
+            $albumCacheInvalidatorService,
+            $dexCacheInvalidatorService
+        );
+
+        $this->expectException(TooManyDexOnHubException::class);
+
+        $service->modifyDex('douze', '{"is_on_hub": true}');
     }
 
     #[Test]
