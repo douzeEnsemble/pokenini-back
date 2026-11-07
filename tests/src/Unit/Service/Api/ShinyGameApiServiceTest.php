@@ -99,6 +99,36 @@ final class ShinyGameApiServiceTest extends TestCase
     }
 
     #[Test]
+    public function failedAnswerEmptiesTheGamesCache(): void
+    {
+        $cache = new TagAwareAdapter(new ArrayAdapter());
+        $cache->get('games_shiny_game_8800088', static fn (): string => '[]');
+
+        $response = $this->createStub(ResponseInterface::class);
+        $response->method('getContent')->willThrowException($this->createStub(HttpExceptionInterface::class));
+
+        $client = $this->createStub(HttpClientInterface::class);
+        $client->method('request')->willReturn($response);
+
+        $service = new ShinyGameApiService(
+            $this->createStub(LoggerInterface::class),
+            $client,
+            'https://api.local',
+            '/path/to/cafile',
+            $cache,
+            'login',
+            'password',
+        );
+
+        try {
+            $service->answer('8800088', 'g1', 2, true);
+            $this->fail('The API error should be thrown');
+        } catch (HttpExceptionInterface) {
+            $this->assertFalse($cache->getItem('games_shiny_game_8800088')->isHit());
+        }
+    }
+
+    #[Test]
     public function createGame(): void
     {
         $service = $this->service('POST', 'https://api.local/shiny_game/8800088/games', '{"id":"g1"}', '{"dex_slug":"demo","round_count":null}');
