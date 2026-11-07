@@ -92,29 +92,29 @@ final class KeyMakerTest extends TestCase
     #[Test]
     public function getElectionDexListKey(): void
     {
-        $this->assertEquals('election_dex_list', KeyMaker::getElectionDexListKey());
+        $this->assertEquals('election_dex_list_v2', KeyMaker::getElectionDexListKey());
     }
 
     #[Test]
     public function getElectionDexListKeyWithQueryParams(): void
     {
-        $this->assertEquals('election_dex_list_1=1', KeyMaker::getElectionDexListKey(['1' => '1']));
-        $this->assertEquals('election_dex_list_1=1_2=2', KeyMaker::getElectionDexListKey(['1' => '1', '2' => '2']));
+        $this->assertEquals('election_dex_list_v2_1=1', KeyMaker::getElectionDexListKey(['1' => '1']));
+        $this->assertEquals('election_dex_list_v2_1=1_2=2', KeyMaker::getElectionDexListKey(['1' => '1', '2' => '2']));
     }
 
     #[Test]
     public function getElectionDexListKeyForTrainer(): void
     {
-        $this->assertEquals('election_dex_list_1', KeyMaker::getElectionDexListKeyForTrainer('1'));
-        $this->assertEquals('election_dex_list_12', KeyMaker::getElectionDexListKeyForTrainer('12'));
+        $this->assertEquals('election_dex_list_v2_1', KeyMaker::getElectionDexListKeyForTrainer('1'));
+        $this->assertEquals('election_dex_list_v2_12', KeyMaker::getElectionDexListKeyForTrainer('12'));
     }
 
     #[Test]
     public function getElectionDexListKeyForTrainerWithQueryParams(): void
     {
-        $this->assertEquals('election_dex_list_1_1=1', KeyMaker::getElectionDexListKeyForTrainer('1', ['1' => '1']));
+        $this->assertEquals('election_dex_list_v2_1_1=1', KeyMaker::getElectionDexListKeyForTrainer('1', ['1' => '1']));
         $this->assertEquals(
-            'election_dex_list_12_1=1_2=2',
+            'election_dex_list_v2_12_1=1_2=2',
             KeyMaker::getElectionDexListKeyForTrainer('12', ['1' => '1', '2' => '2']),
         );
     }
@@ -174,5 +174,11 @@ final class KeyMakerTest extends TestCase
     {
         $this->assertEquals('trainer#123', KeyMaker::getTrainerIdKey('123'));
         $this->assertEquals('trainer#1654da64faeg54a6f4a8', KeyMaker::getTrainerIdKey('1654da64faeg54a6f4a8'));
+    }
+
+    #[Test]
+    public function getGamesKeyForTrainer(): void
+    {
+        $this->assertEquals('games_color_game_8800088', KeyMaker::getGamesKeyForTrainer('color_game', '8800088'));
     }
 }

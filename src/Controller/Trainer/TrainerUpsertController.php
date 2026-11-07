@@ -8,6 +8,7 @@ use App\Exception\DexNotFoundException;
 use App\Exception\EmptyContentException;
 use App\Exception\InvalidJsonException;
 use App\Exception\ModifyFailedException;
+use App\Exception\TooManyDexOnHubException;
 use App\Service\GetTrainerPokedexService;
 use App\Service\ModifyTrainerDexService;
 use App\Service\RequestedContentService;
@@ -61,6 +62,8 @@ final class TrainerUpsertController extends AbstractController
                 $dexSlug,
                 $content,
             );
+        } catch (TooManyDexOnHubException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         } catch (ModifyFailedException $e) {
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }

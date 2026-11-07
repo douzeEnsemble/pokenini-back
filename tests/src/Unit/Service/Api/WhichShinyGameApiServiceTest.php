@@ -9,7 +9,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Contracts\Cache\TagAwareCacheInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -38,9 +40,62 @@ final class WhichShinyGameApiServiceTest extends TestCase
     #[Test]
     public function getGames(): void
     {
-        $service = $this->service('GET', 'https://api.local/which_shiny_game/8800088/games', '[{"id":"g1"}]');
+        $cache = new TagAwareAdapter(new ArrayAdapter());
+        $service = $this->service('GET', 'https://api.local/which_shiny_game/8800088/games', '[{"id":"g1"}]', null, $cache);
 
         $this->assertSame([['id' => 'g1']], $service->getGames('8800088'));
+        // Served from the cache: the client expects one request only
+        $this->assertSame([['id' => 'g1']], $service->getGames('8800088'));
+
+        $item = $cache->getItem('games_which_shiny_game_8800088');
+
+        $this->assertTrue($item->isHit());
+        $this->assertSame('[{"id":"g1"}]', $item->get());
+        $this->assertSame(['tags' => ['trainer#8800088' => 'trainer#8800088']], $item->getMetadata());
+    }
+
+    #[Test]
+    public function createGameEmptiesTheGamesCache(): void
+    {
+        $cache = new TagAwareAdapter(new ArrayAdapter());
+        $cache->get('games_which_shiny_game_8800088', static fn (): string => '[]');
+        $cache->get('games_which_shiny_game_other', static fn (): string => '[]');
+
+        $service = $this->service('POST', 'https://api.local/which_shiny_game/8800088/games', '{"id":"g1"}', '{"dex_slug":"demo","round_count":null}', $cache);
+        $service->createGame('8800088', 'demo', null);
+
+        $this->assertFalse($cache->getItem('games_which_shiny_game_8800088')->isHit());
+        $this->assertTrue($cache->getItem('games_which_shiny_game_other')->isHit());
+    }
+
+    #[Test]
+    public function failedCreateGameEmptiesTheGamesCache(): void
+    {
+        $cache = new TagAwareAdapter(new ArrayAdapter());
+        $cache->get('games_which_shiny_game_8800088', static fn (): string => '[]');
+
+        $response = $this->createStub(ResponseInterface::class);
+        $response->method('getContent')->willThrowException($this->createStub(HttpExceptionInterface::class));
+
+        $client = $this->createStub(HttpClientInterface::class);
+        $client->method('request')->willReturn($response);
+
+        $service = new WhichShinyGameApiService(
+            $this->createStub(LoggerInterface::class),
+            $client,
+            'https://api.local',
+            '/path/to/cafile',
+            $cache,
+            'login',
+            'password',
+        );
+
+        try {
+            $service->createGame('8800088', 'demo', null);
+            $this->fail('The API error should be thrown');
+        } catch (HttpExceptionInterface) {
+            $this->assertFalse($cache->getItem('games_which_shiny_game_8800088')->isHit());
+        }
     }
 
     #[Test]
@@ -78,12 +133,16 @@ final class WhichShinyGameApiServiceTest extends TestCase
     #[Test]
     public function answer(): void
     {
-        $service = $this->service('POST', 'https://api.local/which_shiny_game/8800088/games/g1/answers', '{"is_correct":true}', '{"position":2,"slot":2}');
+        $cache = new TagAwareAdapter(new ArrayAdapter());
+        $cache->get('games_which_shiny_game_8800088', static fn (): string => '[]');
+
+        $service = $this->service('POST', 'https://api.local/which_shiny_game/8800088/games/g1/answers', '{"is_correct":true}', '{"position":2,"slot":2}', $cache);
 
         $this->assertSame(['is_correct' => true], $service->answer('8800088', 'g1', 2, 2));
+        $this->assertFalse($cache->getItem('games_which_shiny_game_8800088')->isHit());
     }
 
-    private function service(string $method, string $url, string $content, ?string $expectedBody = null): WhichShinyGameApiService
+    private function service(string $method, string $url, string $content, ?string $expectedBody = null, ?TagAwareAdapter $cache = null): WhichShinyGameApiService
     {
         $response = $this->createStub(ResponseInterface::class);
         $response->method('getContent')->willReturn($content);
@@ -104,7 +163,7 @@ final class WhichShinyGameApiServiceTest extends TestCase
             $client,
             'https://api.local',
             '/path/to/cafile',
-            $this->createStub(TagAwareCacheInterface::class),
+            $cache ?? new TagAwareAdapter(new ArrayAdapter()),
             'login',
             'password',
         );

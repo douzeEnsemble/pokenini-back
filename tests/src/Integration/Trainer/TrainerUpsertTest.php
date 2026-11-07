@@ -97,6 +97,47 @@ final class TrainerUpsertTest extends WebTestCase
     }
 
     #[Test]
+    public function upsertOnHub(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'trainer',
+            'PUT',
+            '/trainer/dex/goldsilvercrystal',
+            [],
+            [],
+            [],
+            '{"is_private": false, "is_on_home": true, "is_on_hub": true}'
+        );
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    #[Test]
+    public function upsertOnHubTooMany(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'collector',
+            'PUT',
+            '/trainer/dex/homepokemongo',
+            [],
+            [],
+            [],
+            '{"is_private": false, "is_on_home": true, "is_on_hub": true}'
+        );
+
+        $this->assertResponseStatusCodeSame(409);
+
+        $content = (string) $client->getResponse()->getContent();
+        $this->assertSame('{"error":"Too many dex on the hub"}', $content);
+    }
+
+    #[Test]
     public function upsertOnPremiumDexAsTrainer(): void
     {
         $client = self::createClient();

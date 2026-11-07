@@ -24,12 +24,12 @@ final class ElectionCacheInvalidatorServiceTest extends TestCase
         $cachePool = new ArrayAdapter();
         $cache = new TagAwareAdapter($cachePool, new ArrayAdapter());
 
-        $cache->get('election_dex_list_123', function (ItemInterface $item) {
+        $cache->get('election_dex_list_v2_123', function (ItemInterface $item) {
             $item->tag(['trainer#123']);
 
             return 'whatever';
         });
-        $cache->get('election_dex_list_456', function (ItemInterface $item) {
+        $cache->get('election_dex_list_v2_456', function (ItemInterface $item) {
             $item->tag(['trainer#456']);
 
             return 'whatever';
@@ -38,8 +38,8 @@ final class ElectionCacheInvalidatorServiceTest extends TestCase
         $service = new ElectionCacheInvalidatorService($cache);
         $service->invalidate('123');
 
-        $this->assertFalse($cache->hasItem('election_dex_list_123'));
-        $this->assertTrue($cache->hasItem('election_dex_list_456'));
+        $this->assertFalse($cache->hasItem('election_dex_list_v2_123'));
+        $this->assertTrue($cache->hasItem('election_dex_list_v2_456'));
     }
 
     #[Test]
