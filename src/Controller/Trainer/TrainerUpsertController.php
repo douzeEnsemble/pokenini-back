@@ -21,6 +21,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\Json;
 
+/**
+ * Each error of the upsert (content, dex, premium, api, hub full) has its own exception and response.
+ *
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
+ */
 #[Route('/trainer')]
 final class TrainerUpsertController extends AbstractController
 {
