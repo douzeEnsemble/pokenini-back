@@ -12,14 +12,15 @@ class GetCollectionsApiService extends AbstractApiService
     /**
      * @return string[][]
      */
-    public function get(): array
+    public function get(?string $lang = null): array
     {
-        $key = KeyMaker::getCollectionsKey();
+        $key = KeyMaker::getCollectionsKey($lang);
 
-        $json = $this->cache->get($key, function () {
+        $json = $this->cache->get($key, function () use ($lang) {
             return $this->requestContent(
                 'GET',
                 '/collections',
+                $this->langOptions($lang),
             );
         });
 

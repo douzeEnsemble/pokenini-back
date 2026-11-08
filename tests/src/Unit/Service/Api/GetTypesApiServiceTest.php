@@ -36,7 +36,17 @@ final class GetTypesApiServiceTest extends TestCase
         $this->assertJson($value);
     }
 
-    private function getService(): GetTypesApiService
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $result = $this->getService('fr')->get('fr');
+
+        $this->assertNotEmpty($result);
+        $this->assertTrue($this->cache->hasItem('types_fr'));
+        $this->assertFalse($this->cache->hasItem('types'));
+    }
+
+    private function getService(?string $lang = null): GetTypesApiService
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -45,6 +55,7 @@ final class GetTypesApiServiceTest extends TestCase
         ;
 
         $client = $this->createMock(HttpClientInterface::class);
+        $langOptions = null === $lang ? [] : ['query' => ['lang' => $lang]];
 
         $json = (string) file_get_contents('/app/tests/resources/unit/service/api/types.json');
 
@@ -70,7 +81,7 @@ final class GetTypesApiServiceTest extends TestCase
                         'douze',
                     ],
                     'cafile' => './resources/certificates/cacert.pem',
-                ],
+                ] + $langOptions,
             )
             ->willReturn($response)
         ;

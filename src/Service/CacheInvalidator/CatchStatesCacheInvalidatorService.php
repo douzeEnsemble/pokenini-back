@@ -6,7 +6,7 @@ namespace App\Service\CacheInvalidator;
 
 use App\Cache\KeyMaker;
 
-class CatchStatesCacheInvalidatorService extends AbstractCacheInvalidatorService implements CacheInvalidatorInterface
+class CatchStatesCacheInvalidatorService extends AbstractLabelsCacheInvalidatorService implements CacheInvalidatorInterface
 {
     #[\Override]
     public function getSupportedTypes(): array
@@ -17,6 +17,8 @@ class CatchStatesCacheInvalidatorService extends AbstractCacheInvalidatorService
     #[\Override]
     public function invalidate(): void
     {
-        $this->cache->delete(KeyMaker::getCatchStatesKey());
+        foreach ($this->languages() as $lang) {
+            $this->cache->delete(KeyMaker::getCatchStatesKey($lang));
+        }
     }
 }

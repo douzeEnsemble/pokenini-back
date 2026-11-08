@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Non",
+        "slug": "no",
+        "color": "#e57373"
+    },
+    {
+        "name": "af. évoluer",
+        "slug": "toevolve",
+        "color": "#9575cd"
+    },
+    {
+        "name": "af. reproduire",
+        "slug": "tobreed",
+        "color": "#4fc3f7"
+    },
+    {
+        "name": "à transférer",
+        "slug": "totransfer",
+        "color": "#ffd54f"
+    },
+    {
+        "name": "À échanger",
+        "slug": "totrade",
+        "color": "#ff9100"
+    },
+    {
+        "name": "Oui",
+        "slug": "yes",
+        "color": "#66bb6a"
+    }
+]

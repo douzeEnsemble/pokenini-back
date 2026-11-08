@@ -12,14 +12,15 @@ class GetGameBundlesApiService extends AbstractApiService
     /**
      * @return string[][]
      */
-    public function get(): array
+    public function get(?string $lang = null): array
     {
-        $key = KeyMaker::getGameBundlesKey();
+        $key = KeyMaker::getGameBundlesKey($lang);
 
-        $json = $this->cache->get($key, function () {
+        $json = $this->cache->get($key, function () use ($lang) {
             return $this->requestContent(
                 'GET',
                 '/game_bundles',
+                $this->langOptions($lang),
             );
         });
 

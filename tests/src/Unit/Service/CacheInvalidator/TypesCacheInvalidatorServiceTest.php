@@ -20,7 +20,7 @@ final class TypesCacheInvalidatorServiceTest extends TestCase
     #[Test]
     public function getSupportedTypes(): void
     {
-        $service = new TypesCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
+        $service = new TypesCacheInvalidatorService($this->createStub(TagAwareAdapter::class), ['en', 'fr']);
 
         $this->assertSame(['labels', 'types'], $service->getSupportedTypes());
     }
@@ -34,10 +34,29 @@ final class TypesCacheInvalidatorServiceTest extends TestCase
         $cache->get('douze', fn () => 'DouZe');
         $cache->get('types', fn () => 'whatever');
 
-        $service = new TypesCacheInvalidatorService($cache);
+        $service = new TypesCacheInvalidatorService($cache, ['en', 'fr']);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
         $this->assertFalse($cache->hasItem('types'));
+    }
+
+    #[Test]
+    public function invalidateEveryLanguage(): void
+    {
+        $cache = new TagAwareAdapter(new ArrayAdapter(), new ArrayAdapter());
+
+        foreach (['douze', 'types', 'types_en', 'types_fr', 'types_de'] as $key) {
+            $cache->get($key, fn () => 'whatever');
+        }
+
+        new TypesCacheInvalidatorService($cache, ['en', 'fr'])->invalidate();
+
+        $this->assertFalse($cache->hasItem('types'));
+        $this->assertFalse($cache->hasItem('types_en'));
+        $this->assertFalse($cache->hasItem('types_fr'));
+        // Not an enabled language, nor a label
+        $this->assertTrue($cache->hasItem('types_de'));
+        $this->assertTrue($cache->hasItem('douze'));
     }
 }

@@ -12,14 +12,15 @@ class GetCatchStatesApiService extends AbstractApiService
     /**
      * @return string[][]
      */
-    public function get(): array
+    public function get(?string $lang = null): array
     {
-        $key = KeyMaker::getCatchStatesKey();
+        $key = KeyMaker::getCatchStatesKey($lang);
 
-        $json = $this->cache->get($key, function () {
+        $json = $this->cache->get($key, function () use ($lang) {
             return $this->requestContent(
                 'GET',
-                '/catch_states'
+                '/catch_states',
+                $this->langOptions($lang),
             );
         });
 

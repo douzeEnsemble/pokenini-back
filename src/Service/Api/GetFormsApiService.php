@@ -12,46 +12,46 @@ class GetFormsApiService extends AbstractApiService
     /**
      * @return string[][]
      */
-    public function getFormsCategory(): array
+    public function getFormsCategory(?string $lang = null): array
     {
         /** @var string[][] */
-        return $this->getForms()['category'];
+        return $this->getForms($lang)['category'];
     }
 
     /**
      * @return string[][]
      */
-    public function getFormsRegional(): array
+    public function getFormsRegional(?string $lang = null): array
     {
         /** @var string[][] */
-        return $this->getForms()['regional'];
+        return $this->getForms($lang)['regional'];
     }
 
     /**
      * @return string[][]
      */
-    public function getFormsSpecial(): array
+    public function getFormsSpecial(?string $lang = null): array
     {
         /** @var string[][] */
-        return $this->getForms()['special'];
+        return $this->getForms($lang)['special'];
     }
 
     /**
      * @return string[][]
      */
-    public function getFormsVariant(): array
+    public function getFormsVariant(?string $lang = null): array
     {
         /** @var string[][] */
-        return $this->getForms()['variant'];
+        return $this->getForms($lang)['variant'];
     }
 
     /**
      * @return array{category: string[][], regional: string[][], special: string[][], variant: string[][]}
      */
-    private function getForms(): array
+    private function getForms(?string $lang): array
     {
-        $json = $this->cache->get(KeyMaker::getFormsKey(), function () {
-            return $this->requestContent('GET', '/forms');
+        $json = $this->cache->get(KeyMaker::getFormsKey($lang), function () use ($lang) {
+            return $this->requestContent('GET', '/forms', $this->langOptions($lang));
         });
 
         /** @var array{category: string[][], regional: string[][], special: string[][], variant: string[][]} */

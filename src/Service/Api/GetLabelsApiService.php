@@ -17,64 +17,64 @@ class GetLabelsApiService
     /**
      * @return string[][]
      */
-    public function getCatchStates(): array
+    public function getCatchStates(?string $lang = null): array
     {
-        return $this->getCatchStatesService->get();
+        return $this->getCatchStatesService->get($lang);
     }
 
     /**
      * @return string[][]
      */
-    public function getTypes(): array
+    public function getTypes(?string $lang = null): array
     {
-        return $this->getTypesService->get();
+        return $this->getTypesService->get($lang);
     }
 
     /**
      * @return string[][]
      */
-    public function getFormsCategory(): array
+    public function getFormsCategory(?string $lang = null): array
     {
-        return $this->getFormsService->getFormsCategory();
+        return $this->getFormsService->getFormsCategory($lang);
     }
 
     /**
      * @return string[][]
      */
-    public function getFormsRegional(): array
+    public function getFormsRegional(?string $lang = null): array
     {
-        return $this->getFormsService->getFormsRegional();
+        return $this->getFormsService->getFormsRegional($lang);
     }
 
     /**
      * @return string[][]
      */
-    public function getFormsSpecial(): array
+    public function getFormsSpecial(?string $lang = null): array
     {
-        return $this->getFormsService->getFormsSpecial();
+        return $this->getFormsService->getFormsSpecial($lang);
     }
 
     /**
      * @return string[][]
      */
-    public function getFormsVariant(): array
+    public function getFormsVariant(?string $lang = null): array
     {
-        return $this->getFormsService->getFormsVariant();
+        return $this->getFormsService->getFormsVariant($lang);
     }
 
     /**
      * @return string[][]
      */
-    public function getGameBundles(): array
+    public function getGameBundles(?string $lang = null): array
     {
-        return $this->getGameBundlesService->get();
+        return $this->getGameBundlesService->get($lang);
     }
 
     /**
      * @return string[][]
      */
-    public function getCollections(): array
+    public function getCollections(?string $lang = null): array
     {
-        return $this->getCollectionsService->get();
+        return $this->getCollectionsService->get($lang);
     }
 }

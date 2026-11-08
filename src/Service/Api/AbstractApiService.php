@@ -27,6 +27,16 @@ abstract class AbstractApiService implements ApiServiceInterface
     ) {}
 
     /**
+     * The request options to get the names in a language.
+     *
+     * @return array{query: array{lang: string}}|array{}
+     */
+    protected function langOptions(?string $lang): array
+    {
+        return null === $lang ? [] : ['query' => ['lang' => $lang]];
+    }
+
+    /**
      * @param mixed[] $options
      */
     protected function requestContent(
