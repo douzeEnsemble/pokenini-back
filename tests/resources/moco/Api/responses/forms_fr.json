@@ -1,0 +1,106 @@
+{
+    "category": [
+        {
+            "name": "de Départ",
+            "slug": "starter"
+        },
+        {
+            "name": "Légendaire",
+            "slug": "legendary"
+        },
+        {
+            "name": "Fabuleux",
+            "slug": "mythical"
+        },
+        {
+            "name": "Ultra Chimère",
+            "slug": "ultrabeast"
+        },
+        {
+            "name": "Bébé",
+            "slug": "baby"
+        },
+        {
+            "name": "Paradoxe",
+            "slug": "paradox"
+        }
+    ],
+    "regional": [
+        {
+            "name": "d'Alola",
+            "slug": "alolan"
+        },
+        {
+            "name": "de Galar",
+            "slug": "galarian"
+        },
+        {
+            "name": "de Hisui",
+            "slug": "hisuian"
+        },
+        {
+            "name": "de Paldea",
+            "slug": "paldean"
+        }
+    ],
+    "special": [
+        {
+            "name": "Mega",
+            "slug": "mega"
+        },
+        {
+            "name": "Originelle",
+            "slug": "primal"
+        },
+        {
+            "name": "Gigamax",
+            "slug": "gigantamax"
+        },
+        {
+            "name": "Dominant",
+            "slug": "totem"
+        },
+        {
+            "name": "Baron",
+            "slug": "alpha"
+        },
+        {
+            "name": "Événementiel",
+            "slug": "event"
+        },
+        {
+            "name": "Stellaire",
+            "slug": "terastal"
+        }
+    ],
+    "variant": [
+        {
+            "name": "Genre",
+            "slug": "gender"
+        },
+        {
+            "name": "Alternatif",
+            "slug": "alternate"
+        },
+        {
+            "name": "Totémique",
+            "slug": "therian"
+        },
+        {
+            "name": "Combat",
+            "slug": "battle"
+        },
+        {
+            "name": "Objet",
+            "slug": "item"
+        },
+        {
+            "name": "Fusion",
+            "slug": "fusion"
+        },
+        {
+            "name": "Non obtenable",
+            "slug": "unobtainable"
+        }
+    ]
+}

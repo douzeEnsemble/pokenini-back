@@ -761,6 +761,81 @@
   {
     "request": {
       "uri": "/catch_states",
+      "queries": {
+        "lang": "fr"
+      },
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/catch_states_fr.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/types",
+      "queries": {
+        "lang": "fr"
+      },
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/types_fr.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/forms",
+      "queries": {
+        "lang": "fr"
+      },
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/forms_fr.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/game_bundles",
+      "queries": {
+        "lang": "fr"
+      },
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/game_bundles_fr.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/collections",
+      "queries": {
+        "lang": "fr"
+      },
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/collections_fr.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/catch_states",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"

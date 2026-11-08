@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Cache;
 
 use App\Cache\KeyMaker;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
@@ -180,5 +181,29 @@ final class KeyMakerTest extends TestCase
     public function getGamesKeyForTrainer(): void
     {
         $this->assertEquals('games_color_game_8800088', KeyMaker::getGamesKeyForTrainer('color_game', '8800088'));
+    }
+
+    #[DataProvider('providerLabelsKeysByLanguage')]
+    #[Test]
+    public function labelsKeysByLanguage(string $method, string $legacy): void
+    {
+        $this->assertSame($legacy, KeyMaker::$method());
+        $this->assertSame($legacy, KeyMaker::$method(null));
+        $this->assertSame("{$legacy}_fr", KeyMaker::$method('fr'));
+        $this->assertSame("{$legacy}_en", KeyMaker::$method('en'));
+    }
+
+    /**
+     * @return array<string, array{method: string, legacy: string}>
+     */
+    public static function providerLabelsKeysByLanguage(): array
+    {
+        return [
+            'catch states' => ['method' => 'getCatchStatesKey', 'legacy' => 'catch_states'],
+            'types' => ['method' => 'getTypesKey', 'legacy' => 'types'],
+            'game bundles' => ['method' => 'getGameBundlesKey', 'legacy' => 'game_bundles'],
+            'collections' => ['method' => 'getCollectionsKey', 'legacy' => 'collections'],
+            'forms' => ['method' => 'getFormsKey', 'legacy' => 'forms'],
+        ];
     }
 }

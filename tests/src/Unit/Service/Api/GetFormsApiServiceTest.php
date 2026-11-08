@@ -72,12 +72,23 @@ final class GetFormsApiServiceTest extends TestCase
         $this->assertEquals($expectedResult, $this->getService()->getFormsVariant());
     }
 
-    private function getService(): GetFormsApiService
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $result = $this->getService('fr')->getFormsCategory('fr');
+
+        $this->assertNotEmpty($result);
+        $this->assertTrue($this->cache->hasItem('forms_fr'));
+        $this->assertFalse($this->cache->hasItem('forms'));
+    }
+
+    private function getService(?string $lang = null): GetFormsApiService
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects($this->exactly(2))->method('info');
 
         $client = $this->createMock(HttpClientInterface::class);
+        $langOptions = null === $lang ? [] : ['query' => ['lang' => $lang]];
         $json = (string) file_get_contents('/app/tests/resources/unit/service/api/forms.json');
 
         $response = $this->createMock(ResponseInterface::class);
@@ -93,7 +104,7 @@ final class GetFormsApiServiceTest extends TestCase
                     'headers' => ['accept' => 'application/json'],
                     'auth_basic' => ['web', 'douze'],
                     'cafile' => './resources/certificates/cacert.pem',
-                ],
+                ] + $langOptions,
             )
             ->willReturn($response)
         ;

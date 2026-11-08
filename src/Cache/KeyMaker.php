@@ -28,29 +28,44 @@ final class KeyMaker
         return self::CACHE_KEY_DEX;
     }
 
-    public static function getCatchStatesKey(): string
+    /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     */
+    public static function getCatchStatesKey(?string $lang = null): string
     {
-        return self::CACHE_KEY_CATCH_STATES;
+        return self::withLang(self::CACHE_KEY_CATCH_STATES, $lang);
     }
 
-    public static function getTypesKey(): string
+    /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     */
+    public static function getTypesKey(?string $lang = null): string
     {
-        return self::CACHE_KEY_TYPES;
+        return self::withLang(self::CACHE_KEY_TYPES, $lang);
     }
 
-    public static function getGameBundlesKey(): string
+    /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     */
+    public static function getGameBundlesKey(?string $lang = null): string
     {
-        return self::CACHE_KEY_GAME_BUNDLES;
+        return self::withLang(self::CACHE_KEY_GAME_BUNDLES, $lang);
     }
 
-    public static function getCollectionsKey(): string
+    /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     */
+    public static function getCollectionsKey(?string $lang = null): string
     {
-        return self::CACHE_KEY_COLLECTIONS;
+        return self::withLang(self::CACHE_KEY_COLLECTIONS, $lang);
     }
 
-    public static function getFormsKey(): string
+    /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     */
+    public static function getFormsKey(?string $lang = null): string
     {
-        return self::CACHE_KEY_FORMS;
+        return self::withLang(self::CACHE_KEY_FORMS, $lang);
     }
 
     public static function getAlbumKey(): string
@@ -140,5 +155,10 @@ final class KeyMaker
     public static function getTrainerIdKey(string $trainerId): string
     {
         return self::CACHE_KEY_TRAINER.self::CACHE_KEY_ID_SEPARATOR.$trainerId;
+    }
+
+    private static function withLang(string $key, ?string $lang): string
+    {
+        return null === $lang ? $key : $key.self::CACHE_KEY_SEPARATOR.$lang;
     }
 }

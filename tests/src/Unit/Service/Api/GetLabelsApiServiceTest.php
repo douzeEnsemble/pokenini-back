@@ -21,6 +21,54 @@ use PHPUnit\Framework\TestCase;
 final class GetLabelsApiServiceTest extends TestCase
 {
     #[Test]
+    public function getCatchStatesInALanguage(): void
+    {
+        $this->getService('catch_states', 'fr')->getCatchStates('fr');
+    }
+
+    #[Test]
+    public function getTypesInALanguage(): void
+    {
+        $this->getService('types', 'fr')->getTypes('fr');
+    }
+
+    #[Test]
+    public function getFormsCategoryInALanguage(): void
+    {
+        $this->getService('forms_category', 'fr')->getFormsCategory('fr');
+    }
+
+    #[Test]
+    public function getFormsRegionalInALanguage(): void
+    {
+        $this->getService('forms_regional', 'fr')->getFormsRegional('fr');
+    }
+
+    #[Test]
+    public function getFormsSpecialInALanguage(): void
+    {
+        $this->getService('forms_special', 'fr')->getFormsSpecial('fr');
+    }
+
+    #[Test]
+    public function getFormsVariantInALanguage(): void
+    {
+        $this->getService('forms_variant', 'fr')->getFormsVariant('fr');
+    }
+
+    #[Test]
+    public function getGameBundlesInALanguage(): void
+    {
+        $this->getService('game_bundles', 'fr')->getGameBundles('fr');
+    }
+
+    #[Test]
+    public function getCollectionsInALanguage(): void
+    {
+        $this->getService('collections', 'fr')->getCollections('fr');
+    }
+
+    #[Test]
     public function getCatchStates(): void
     {
         $this->getService('catch_states')->getCatchStates();
@@ -71,12 +119,13 @@ final class GetLabelsApiServiceTest extends TestCase
     /**
      * @SuppressWarnings("PHPMD.NPathComplexity")
      */
-    private function getService(string $type): GetLabelsApiService
+    private function getService(string $type, ?string $lang = null): GetLabelsApiService
     {
         $getCatchStatesService = $this->createMock(GetCatchStatesApiService::class);
         $getCatchStatesService
             ->expects($this->exactly('catch_states' === $type ? 1 : 0))
             ->method('get')
+            ->with($lang)
             ->willReturn([])
         ;
 
@@ -84,6 +133,7 @@ final class GetLabelsApiServiceTest extends TestCase
         $getTypesService
             ->expects($this->exactly('types' === $type ? 1 : 0))
             ->method('get')
+            ->with($lang)
             ->willReturn([])
         ;
 
@@ -91,21 +141,25 @@ final class GetLabelsApiServiceTest extends TestCase
         $getFormsService
             ->expects($this->exactly('forms_category' === $type ? 1 : 0))
             ->method('getFormsCategory')
+            ->with($lang)
             ->willReturn([])
         ;
         $getFormsService
             ->expects($this->exactly('forms_regional' === $type ? 1 : 0))
             ->method('getFormsRegional')
+            ->with($lang)
             ->willReturn([])
         ;
         $getFormsService
             ->expects($this->exactly('forms_special' === $type ? 1 : 0))
             ->method('getFormsSpecial')
+            ->with($lang)
             ->willReturn([])
         ;
         $getFormsService
             ->expects($this->exactly('forms_variant' === $type ? 1 : 0))
             ->method('getFormsVariant')
+            ->with($lang)
             ->willReturn([])
         ;
 
@@ -113,6 +167,7 @@ final class GetLabelsApiServiceTest extends TestCase
         $getGameBundlesService
             ->expects($this->exactly('game_bundles' === $type ? 1 : 0))
             ->method('get')
+            ->with($lang)
             ->willReturn([])
         ;
 
@@ -120,6 +175,7 @@ final class GetLabelsApiServiceTest extends TestCase
         $getCollectionsService
             ->expects($this->exactly('collections' === $type ? 1 : 0))
             ->method('get')
+            ->with($lang)
             ->willReturn([])
         ;
 

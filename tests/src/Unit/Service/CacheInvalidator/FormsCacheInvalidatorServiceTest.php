@@ -20,7 +20,7 @@ final class FormsCacheInvalidatorServiceTest extends TestCase
     #[Test]
     public function getSupportedTypes(): void
     {
-        $service = new FormsCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
+        $service = new FormsCacheInvalidatorService($this->createStub(TagAwareAdapter::class), ['en', 'fr']);
 
         $this->assertSame(['labels'], $service->getSupportedTypes());
     }
@@ -34,7 +34,7 @@ final class FormsCacheInvalidatorServiceTest extends TestCase
         $cache->get('douze', fn () => 'DouZe');
         $cache->get('forms', fn () => 'whatever');
 
-        $service = new FormsCacheInvalidatorService($cache);
+        $service = new FormsCacheInvalidatorService($cache, ['en', 'fr']);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
@@ -49,10 +49,29 @@ final class FormsCacheInvalidatorServiceTest extends TestCase
 
         $cache->get('douze', fn () => 'DouZe');
 
-        $service = new FormsCacheInvalidatorService($cache);
+        $service = new FormsCacheInvalidatorService($cache, ['en', 'fr']);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
         $this->assertFalse($cache->hasItem('forms'));
+    }
+
+    #[Test]
+    public function invalidateEveryLanguage(): void
+    {
+        $cache = new TagAwareAdapter(new ArrayAdapter(), new ArrayAdapter());
+
+        foreach (['douze', 'forms', 'forms_en', 'forms_fr', 'forms_de'] as $key) {
+            $cache->get($key, fn () => 'whatever');
+        }
+
+        new FormsCacheInvalidatorService($cache, ['en', 'fr'])->invalidate();
+
+        $this->assertFalse($cache->hasItem('forms'));
+        $this->assertFalse($cache->hasItem('forms_en'));
+        $this->assertFalse($cache->hasItem('forms_fr'));
+        // Not an enabled language, nor a label
+        $this->assertTrue($cache->hasItem('forms_de'));
+        $this->assertTrue($cache->hasItem('douze'));
     }
 }

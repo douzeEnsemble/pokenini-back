@@ -36,7 +36,17 @@ final class GetGameBundlesApiServiceTest extends TestCase
         $this->assertJson($value);
     }
 
-    private function getService(): GetGameBundlesApiService
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $result = $this->getService('fr')->get('fr');
+
+        $this->assertNotEmpty($result);
+        $this->assertTrue($this->cache->hasItem('game_bundles_fr'));
+        $this->assertFalse($this->cache->hasItem('game_bundles'));
+    }
+
+    private function getService(?string $lang = null): GetGameBundlesApiService
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -45,6 +55,7 @@ final class GetGameBundlesApiServiceTest extends TestCase
         ;
 
         $client = $this->createMock(HttpClientInterface::class);
+        $langOptions = null === $lang ? [] : ['query' => ['lang' => $lang]];
 
         $json = (string) file_get_contents('/app/tests/resources/unit/service/api/game_bundles.json');
 
@@ -70,7 +81,7 @@ final class GetGameBundlesApiServiceTest extends TestCase
                         'douze',
                     ],
                     'cafile' => './resources/certificates/cacert.pem',
-                ],
+                ] + $langOptions,
             )
             ->willReturn($response)
         ;

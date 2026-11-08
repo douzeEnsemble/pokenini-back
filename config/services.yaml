@@ -1,3 +1,7 @@
+parameters:
+    # Enabled locales, in display order (the API has the same list)
+    app.locales: ['en', 'fr']
+
 services:
     _defaults:
         autowire: true
@@ -22,6 +26,7 @@ services:
             int $electionCandidateCount: '%env(ELECTION_CANDIDATE_COUNT)%'
             string $env: '%kernel.environment%'
             string $metadataDir: '%kernel.project_dir%/resources/metadata'
+            array $locales: '%app.locales%'
             string $sessionTokenSecret: '%env(SESSION_TOKEN_SECRET)%'
             int $sessionTtl: '%env(int:SESSION_TTL)%'
             string $e2eLoginSecret: '%env(default::E2E_LOGIN_SECRET)%'

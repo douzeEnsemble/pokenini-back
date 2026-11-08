@@ -79,7 +79,17 @@ final class GetCatchStatesApiServiceTest extends TestCase
         );
     }
 
-    private function getService(): GetCatchStatesApiService
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $result = $this->getService('fr')->get('fr');
+
+        $this->assertNotEmpty($result);
+        $this->assertTrue($this->cache->hasItem('catch_states_fr'));
+        $this->assertFalse($this->cache->hasItem('catch_states'));
+    }
+
+    private function getService(?string $lang = null): GetCatchStatesApiService
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -88,6 +98,7 @@ final class GetCatchStatesApiServiceTest extends TestCase
         ;
 
         $client = $this->createMock(HttpClientInterface::class);
+        $langOptions = null === $lang ? [] : ['query' => ['lang' => $lang]];
 
         $json = (string) file_get_contents('/app/tests/resources/unit/service/api/catch_states.json');
 
@@ -113,7 +124,7 @@ final class GetCatchStatesApiServiceTest extends TestCase
                         'douze',
                     ],
                     'cafile' => './resources/certificates/cacert.pem',
-                ],
+                ] + $langOptions,
             )
             ->willReturn($response)
         ;

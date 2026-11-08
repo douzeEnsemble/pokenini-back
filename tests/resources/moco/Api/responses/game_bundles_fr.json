@@ -1,0 +1,128 @@
+[
+    {
+        "name": "Rouge, Vert, Bleu, Jaune",
+        "slug": "redgreenblueyellow",
+        "generation": {
+            "slug": "1"
+        }
+    },
+    {
+        "name": "Or, Argent, Cristal",
+        "slug": "goldsilvercrystal",
+        "generation": {
+            "slug": "2"
+        }
+    },
+    {
+        "name": "Rubis, Saphir, Émeraude",
+        "slug": "rubysapphireemerald",
+        "generation": {
+            "slug": "3"
+        }
+    },
+    {
+        "name": "Rouge Feu, Vert Feuille",
+        "slug": "fireredleafgreen",
+        "generation": {
+            "slug": "3"
+        }
+    },
+    {
+        "name": "Diamant, Perle, Platine",
+        "slug": "diamondpearlplatinium",
+        "generation": {
+            "slug": "4"
+        }
+    },
+    {
+        "name": "Or HeartGold, Argent SoulSilver",
+        "slug": "heartgoldsoulsilver",
+        "generation": {
+            "slug": "4"
+        }
+    },
+    {
+        "name": "Noir, Blanc",
+        "slug": "blackwhite",
+        "generation": {
+            "slug": "5"
+        }
+    },
+    {
+        "name": "Noir 2, Blanc 2",
+        "slug": "black2white2",
+        "generation": {
+            "slug": "5"
+        }
+    },
+    {
+        "name": "X, Y",
+        "slug": "xy",
+        "generation": {
+            "slug": "6"
+        }
+    },
+    {
+        "name": "Rubis Oméga, Saphir Alpha",
+        "slug": "omegarubyalphasapphire",
+        "generation": {
+            "slug": "6"
+        }
+    },
+    {
+        "name": "Soleil, Lune",
+        "slug": "sunmoon",
+        "generation": {
+            "slug": "7"
+        }
+    },
+    {
+        "name": "Ultra-Soleil, Ultra-Lune",
+        "slug": "ultrasunultramoon",
+        "generation": {
+            "slug": "7"
+        }
+    },
+    {
+        "name": "Let's Go Pikachu, Let's Go Évoli",
+        "slug": "letsgopikachuletsgoeevee",
+        "generation": {
+            "slug": "7"
+        }
+    },
+    {
+        "name": "Pokémon Go",
+        "slug": "pokemongo",
+        "generation": {
+            "slug": "7"
+        }
+    },
+    {
+        "name": "Épée, Bouclier",
+        "slug": "swordshield",
+        "generation": {
+            "slug": "8"
+        }
+    },
+    {
+        "name": "Diamant Étincelant, Perle Scintillante",
+        "slug": "brilliantdiamondshiningpearl",
+        "generation": {
+            "slug": "8"
+        }
+    },
+    {
+        "name": "Légendes Pokémon : Arceus",
+        "slug": "pokemonlegendsarceus",
+        "generation": {
+            "slug": "8"
+        }
+    },
+    {
+        "name": "Écarlate, Violet",
+        "slug": "scarletviolet",
+        "generation": {
+            "slug": "8"
+        }
+    }
+]

@@ -53,4 +53,55 @@ final class LabelsTest extends WebTestCase
 
         $this->assertResponseContent($client, 'Labels/all.json');
     }
+
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'admin',
+            'GET',
+            '/labels?lang=fr',
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertResponseContent($client, 'Labels/all_fr.json');
+    }
+
+    #[Test]
+    public function getInANotEnabledLanguage(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/labels?lang=de',
+        );
+
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonStringEqualsJsonString(
+            '{"error": "Invalid language"}',
+            (string) $client->getResponse()->getContent(),
+        );
+    }
+
+    #[Test]
+    public function getInAnEmptyLanguage(): void
+    {
+        $client = self::createClient();
+
+        $client->request(
+            'GET',
+            '/labels?lang=',
+        );
+
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonStringEqualsJsonString(
+            '{"error": "Invalid language"}',
+            (string) $client->getResponse()->getContent(),
+        );
+    }
 }
