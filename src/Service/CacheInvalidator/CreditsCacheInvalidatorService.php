@@ -6,7 +6,7 @@ namespace App\Service\CacheInvalidator;
 
 use App\Cache\KeyMaker;
 
-class CreditsCacheInvalidatorService extends AbstractCacheInvalidatorService implements CacheInvalidatorInterface
+class CreditsCacheInvalidatorService extends AbstractLabelsCacheInvalidatorService implements CacheInvalidatorInterface
 {
     #[\Override]
     public function getSupportedTypes(): array
@@ -17,6 +17,8 @@ class CreditsCacheInvalidatorService extends AbstractCacheInvalidatorService imp
     #[\Override]
     public function invalidate(): void
     {
-        $this->cache->delete(KeyMaker::getCreditsKey());
+        foreach ($this->languages() as $lang) {
+            $this->cache->delete(KeyMaker::getCreditsKey($lang));
+        }
     }
 }

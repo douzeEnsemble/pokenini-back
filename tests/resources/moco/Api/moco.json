@@ -872,6 +872,21 @@
   {
     "request": {
       "uri": "/credits",
+      "queries": {
+        "lang": "fr"
+      },
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/credits_fr.json"
+    }
+  },
+  {
+    "request": {
+      "uri": "/credits",
       "headers": {
         "accept": "application/json",
         "authorization": "Basic d2ViOmRvdXpl"

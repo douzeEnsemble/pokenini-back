@@ -204,6 +204,7 @@ final class KeyMakerTest extends TestCase
             'game bundles' => ['method' => 'getGameBundlesKey', 'legacy' => 'game_bundles'],
             'collections' => ['method' => 'getCollectionsKey', 'legacy' => 'collections'],
             'forms' => ['method' => 'getFormsKey', 'legacy' => 'forms'],
+            'credits' => ['method' => 'getCreditsKey', 'legacy' => 'credits_v2'],
         ];
     }
 }

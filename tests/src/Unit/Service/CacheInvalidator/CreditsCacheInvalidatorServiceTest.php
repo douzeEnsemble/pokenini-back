@@ -20,7 +20,7 @@ final class CreditsCacheInvalidatorServiceTest extends TestCase
     #[Test]
     public function getSupportedTypes(): void
     {
-        $service = new CreditsCacheInvalidatorService($this->createStub(TagAwareAdapter::class));
+        $service = new CreditsCacheInvalidatorService($this->createStub(TagAwareAdapter::class), ['en', 'fr']);
 
         $this->assertSame(['labels'], $service->getSupportedTypes());
     }
@@ -34,10 +34,29 @@ final class CreditsCacheInvalidatorServiceTest extends TestCase
         $cache->get('douze', fn () => 'DouZe');
         $cache->get('credits_v2', fn () => 'whatever');
 
-        $service = new CreditsCacheInvalidatorService($cache);
+        $service = new CreditsCacheInvalidatorService($cache, ['en', 'fr']);
         $service->invalidate();
 
         $this->assertTrue($cache->hasItem('douze'));
         $this->assertFalse($cache->hasItem('credits_v2'));
+    }
+
+    #[Test]
+    public function invalidateEveryLanguage(): void
+    {
+        $cache = new TagAwareAdapter(new ArrayAdapter(), new ArrayAdapter());
+
+        foreach (['douze', 'credits_v2', 'credits_v2_en', 'credits_v2_fr', 'credits_v2_de'] as $key) {
+            $cache->get($key, fn () => 'whatever');
+        }
+
+        new CreditsCacheInvalidatorService($cache, ['en', 'fr'])->invalidate();
+
+        $this->assertFalse($cache->hasItem('credits_v2'));
+        $this->assertFalse($cache->hasItem('credits_v2_en'));
+        $this->assertFalse($cache->hasItem('credits_v2_fr'));
+        // Not an enabled language, nor a credit
+        $this->assertTrue($cache->hasItem('credits_v2_de'));
+        $this->assertTrue($cache->hasItem('douze'));
     }
 }
