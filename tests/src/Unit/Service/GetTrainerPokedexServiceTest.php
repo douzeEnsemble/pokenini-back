@@ -247,4 +247,39 @@ final class GetTrainerPokedexServiceTest extends TestCase
 
         $service->getPokedexData('douze', []);
     }
+
+    #[Test]
+    public function getPokedexDataInALanguage(): void
+    {
+        $userTokenService = $this->createStub(UserTokenService::class);
+        $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
+
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
+        $getPokedexService
+            ->expects($this->once())
+            ->method('get')
+            ->with('douze', '8800088', [], 'fr')
+            ->willReturn(['dex' => ['slug' => 'douze-douze'], 'pokemons' => []])
+        ;
+
+        $service = new GetTrainerPokedexService($userTokenService, $getPokedexService);
+
+        $this->assertSame('douze-douze', $service->getPokedexData('douze', [], 'fr')['dex']['slug']);
+    }
+
+    #[Test]
+    public function getPokedexDataByTrainerIdInALanguage(): void
+    {
+        $getPokedexService = $this->createMock(GetPokedexApiService::class);
+        $getPokedexService
+            ->expects($this->once())
+            ->method('get')
+            ->with('douze', '8800088', [], 'en')
+            ->willReturn(['dex' => ['slug' => 'douze-douze'], 'pokemons' => []])
+        ;
+
+        $service = new GetTrainerPokedexService($this->createStub(UserTokenService::class), $getPokedexService);
+
+        $this->assertSame('douze-douze', $service->getPokedexDataByTrainerId('douze', [], '8800088', 'en')['dex']['slug']);
+    }
 }

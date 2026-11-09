@@ -125,8 +125,9 @@ final class KeyMaker
 
     /**
      * @param string[]|string[][] $filters
+     * @param null|string         $lang    the language of the names, null for the legacy ones (English and French)
      */
-    public static function getPokedexKey(string $dexSlug, string $trainerId, array $filters = []): string
+    public static function getPokedexKey(string $dexSlug, string $trainerId, array $filters = [], ?string $lang = null): string
     {
         $prefix = self::CACHE_KEY_ALBUM
             .self::CACHE_KEY_SEPARATOR.$dexSlug
@@ -145,7 +146,7 @@ final class KeyMaker
             }
         }
 
-        return $prefix.$strFilters;
+        return self::withLang($prefix.$strFilters, $lang);
     }
 
     public static function getGamesKeyForTrainer(string $game, string $trainerId): string

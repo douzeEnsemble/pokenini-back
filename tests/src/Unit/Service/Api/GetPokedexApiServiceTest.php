@@ -296,8 +296,37 @@ final class GetPokedexApiServiceTest extends TestCase
         );
     }
 
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $json = (string) file_get_contents('/app/tests/resources/unit/service/api/pokedex_lite_123.json');
+
+        $pokedex = $this
+            ->getService('lite', '123', $json, ['lang' => 'fr'])
+            ->get('lite', '123', [], 'fr')
+        ;
+
+        $this->assertArrayHasKey('dex', $pokedex);
+        $this->assertTrue($this->cache->hasItem('album_lite_123_fr'));
+        $this->assertFalse($this->cache->hasItem('album_lite_123'));
+    }
+
+    #[Test]
+    public function getInALanguageWithFilters(): void
+    {
+        $json = (string) file_get_contents('/app/tests/resources/unit/service/api/pokedex_lite_123.json');
+        $filters = ['catch_states' => ['no']];
+
+        $this
+            ->getService('lite', '123', $json, ['catch_states' => ['no'], 'lang' => 'fr'])
+            ->get('lite', '123', $filters, 'fr')
+        ;
+
+        $this->assertTrue($this->cache->hasItem('album_lite_123_catch_statesno_fr'));
+    }
+
     /**
-     * @param string[][]|string[][][] $queryParams
+     * @param array<string, list<string>|string> $queryParams
      */
     private function getService(
         string $dexSlug,

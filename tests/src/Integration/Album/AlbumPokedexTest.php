@@ -338,4 +338,46 @@ final class AlbumPokedexTest extends WebTestCase
 
         $this->assertResponseContent($client, 'Pokedex/demolite_f86cbe805674d85f7806b175b70647a6a9334631.json');
     }
+
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'trainer',
+            'GET',
+            '/album/demo',
+            [
+                'lang' => 'fr',
+            ],
+        );
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertResponseContent($client, 'Pokedex/demo_fr.json');
+    }
+
+    #[Test]
+    public function getInANotEnabledLanguage(): void
+    {
+        $client = self::createClient();
+
+        $this->authenticatedRequest(
+            $client,
+            'trainer',
+            'GET',
+            '/album/demo',
+            [
+                'lang' => 'de',
+            ],
+        );
+
+        $this->assertResponseStatusCodeSame(400);
+        $this->assertJsonStringEqualsJsonString(
+            '{"error": "Invalid language"}',
+            (string) $client->getResponse()->getContent(),
+        );
+    }
 }

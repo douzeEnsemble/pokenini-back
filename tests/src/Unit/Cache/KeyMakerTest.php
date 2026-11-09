@@ -207,4 +207,15 @@ final class KeyMakerTest extends TestCase
             'credits' => ['method' => 'getCreditsKey', 'legacy' => 'credits_v2'],
         ];
     }
+
+    #[Test]
+    public function getPokedexKeyInALanguage(): void
+    {
+        $this->assertSame('album_douze_12', KeyMaker::getPokedexKey('douze', '12', [], null));
+        $this->assertSame('album_douze_12_fr', KeyMaker::getPokedexKey('douze', '12', [], 'fr'));
+        $this->assertSame(
+            'album_toto_0_csno_en',
+            KeyMaker::getPokedexKey('toto', '0', ['cs' => 'no'], 'en'),
+        );
+    }
 }
