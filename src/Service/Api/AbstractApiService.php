@@ -57,6 +57,14 @@ abstract class AbstractApiService implements ApiServiceInterface
     }
 
     /**
+     * The url asking for the names in a language, the legacy names (English and French) without one.
+     */
+    protected static function withLang(string $url, ?string $lang): string
+    {
+        return null === $lang ? $url : $url.'?lang='.$lang;
+    }
+
+    /**
      * @param mixed[] $options
      */
     private function request(

@@ -150,6 +150,7 @@ parameters:
       - SymfonyHttpFoundation
     AppCache:
     AppEventSubscriber:
+      - AppException
       - Logger
       - SymfonyEventDispatcher
       - SymfonyHttpFoundation

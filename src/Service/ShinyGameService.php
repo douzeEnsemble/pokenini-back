@@ -19,7 +19,7 @@ class ShinyGameService
     /**
      * @return array<int, array<string, mixed>>
      */
-    public function getDexList(bool $includePremium, bool $includeUnreleased): array
+    public function getDexList(bool $includePremium, bool $includeUnreleased, ?string $lang = null): array
     {
         $queryParams = [];
 
@@ -31,15 +31,15 @@ class ShinyGameService
             $queryParams['include_unreleased_dex'] = '1';
         }
 
-        return $this->apiService->getDexList($this->getTrainerId(), $queryParams);
+        return $this->apiService->getDexList($this->getTrainerId(), $queryParams, $lang);
     }
 
     /**
      * @return array<int, array<string, mixed>>
      */
-    public function getGames(): array
+    public function getGames(?string $lang = null): array
     {
-        return $this->apiService->getGames($this->getTrainerId());
+        return $this->apiService->getGames($this->getTrainerId(), $lang);
     }
 
     /**
@@ -47,10 +47,10 @@ class ShinyGameService
      *
      * @throws ApiValidationException
      */
-    public function create(string $dexSlug, ?int $roundCount): array
+    public function create(string $dexSlug, ?int $roundCount, ?string $lang = null): array
     {
         try {
-            return $this->apiService->createGame($this->getTrainerId(), $dexSlug, $roundCount);
+            return $this->apiService->createGame($this->getTrainerId(), $dexSlug, $roundCount, $lang);
         } catch (HttpExceptionInterface $e) {
             throw new ApiValidationException($e->getResponse()->getStatusCode());
         }
@@ -61,10 +61,10 @@ class ShinyGameService
      *
      * @throws ApiValidationException
      */
-    public function get(string $gameId): array
+    public function get(string $gameId, ?string $lang = null): array
     {
         try {
-            return $this->apiService->getGame($this->getTrainerId(), $gameId);
+            return $this->apiService->getGame($this->getTrainerId(), $gameId, $lang);
         } catch (HttpExceptionInterface $e) {
             throw new ApiValidationException($e->getResponse()->getStatusCode());
         }
@@ -75,10 +75,10 @@ class ShinyGameService
      *
      * @throws ApiValidationException
      */
-    public function getRounds(string $gameId): array
+    public function getRounds(string $gameId, ?string $lang = null): array
     {
         try {
-            return $this->apiService->getRounds($this->getTrainerId(), $gameId);
+            return $this->apiService->getRounds($this->getTrainerId(), $gameId, $lang);
         } catch (HttpExceptionInterface $e) {
             throw new ApiValidationException($e->getResponse()->getStatusCode());
         }
@@ -89,10 +89,10 @@ class ShinyGameService
      *
      * @throws ApiValidationException
      */
-    public function answer(string $gameId, int $position, bool $isShiny): array
+    public function answer(string $gameId, int $position, bool $isShiny, ?string $lang = null): array
     {
         try {
-            return $this->apiService->answer($this->getTrainerId(), $gameId, $position, $isShiny);
+            return $this->apiService->answer($this->getTrainerId(), $gameId, $position, $isShiny, $lang);
         } catch (HttpExceptionInterface $e) {
             throw new ApiValidationException($e->getResponse()->getStatusCode());
         }

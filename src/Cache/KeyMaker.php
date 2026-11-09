@@ -149,11 +149,19 @@ final class KeyMaker
         return self::withLang($prefix.$strFilters, $lang);
     }
 
-    public static function getGamesKeyForTrainer(string $game, string $trainerId): string
+    /**
+     * The key of the games of a trainer, which is also the tag of its language variants.
+     *
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     */
+    public static function getGamesKeyForTrainer(string $game, string $trainerId, ?string $lang = null): string
     {
-        return self::CACHE_KEY_GAMES
+        return self::withLang(
+            self::CACHE_KEY_GAMES
             .self::CACHE_KEY_SEPARATOR.$game
-            .self::CACHE_KEY_SEPARATOR.$trainerId;
+            .self::CACHE_KEY_SEPARATOR.$trainerId,
+            $lang,
+        );
     }
 
     public static function getTrainerIdKey(string $trainerId): string
