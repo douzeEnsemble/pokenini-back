@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Labels;
 
+use App\Controller\LangQueryTrait;
+use App\Exception\InvalidLangException;
 use App\Service\Api\GetLabelsApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/labels')]
 final class LabelsController extends AbstractController
 {
+    use LangQueryTrait;
+
     /**
      * @param string[] $locales the enabled locales
      */
@@ -29,10 +33,10 @@ final class LabelsController extends AbstractController
     #[Route('', methods: ['GET'])]
     public function get(Request $request): JsonResponse
     {
-        $lang = $request->query->get('lang');
-
-        if (null !== $lang && !\in_array($lang, $this->locales, true)) {
-            return new JsonResponse(['error' => 'Invalid language'], Response::HTTP_BAD_REQUEST);
+        try {
+            $lang = $this->getLang($request, $this->locales);
+        } catch (InvalidLangException $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse(

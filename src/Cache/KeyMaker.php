@@ -83,9 +83,12 @@ final class KeyMaker
         return self::CACHE_KEY_GAME_REPORTS;
     }
 
-    public static function getCreditsKey(): string
+    /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     */
+    public static function getCreditsKey(?string $lang = null): string
     {
-        return self::CACHE_KEY_CREDITS;
+        return self::withLang(self::CACHE_KEY_CREDITS, $lang);
     }
 
     /**

@@ -41,7 +41,17 @@ final class GetCreditsApiServiceTest extends TestCase
         self::assertJson($value);
     }
 
-    private function getService(): GetCreditsApiService
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $credits = $this->getService('fr')->get('fr');
+
+        self::assertCount(2, $credits);
+        self::assertTrue($this->cache->hasItem('credits_v2_fr'));
+        self::assertFalse($this->cache->hasItem('credits_v2'));
+    }
+
+    private function getService(?string $lang = null): GetCreditsApiService
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -50,6 +60,7 @@ final class GetCreditsApiServiceTest extends TestCase
         ;
 
         $client = $this->createMock(HttpClientInterface::class);
+        $langOptions = null === $lang ? [] : ['query' => ['lang' => $lang]];
 
         $json = (string) file_get_contents('/app/tests/resources/unit/service/api/credits.json');
 
@@ -75,7 +86,7 @@ final class GetCreditsApiServiceTest extends TestCase
                         'douze',
                     ],
                     'cafile' => './resources/certificates/cacert.pem',
-                ],
+                ] + $langOptions,
             )
             ->willReturn($response)
         ;
