@@ -258,6 +258,138 @@
         "match": "/shiny_game/[\\w\\d]*/dex"
       },
       "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/dex_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/shiny_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111/answers"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/answer_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/shiny_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111/rounds"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/rounds_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/shiny_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/state_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/shiny_game/[\\w\\d]*/games"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201",
+      "file": "/var/moco/responses/game_lang/created_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/shiny_game/[\\w\\d]*/games"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/games_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/shiny_game/[\\w\\d]*/dex"
+      },
+      "queries": {
         "include_premium_dex": "1",
         "include_unreleased_dex": "1"
       },
@@ -503,6 +635,138 @@
     },
     "response": {
       "status": "404"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/which_shiny_game/[\\w\\d]*/dex"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/dex_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/which_shiny_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111/answers"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/answer_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/which_shiny_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111/rounds"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/rounds_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/which_shiny_game/[\\w\\d]*/games/11111111-1111-4111-8111-111111111111"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/state_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/which_shiny_game/[\\w\\d]*/games"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "post",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "201",
+      "file": "/var/moco/responses/game_lang/created_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/which_shiny_game/[\\w\\d]*/games"
+      },
+      "queries": {
+        "lang": "fr"
+      },
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/game_lang/games_fr.json",
+      "headers": {
+        "content-type": "application/json"
+      }
     }
   },
   {
