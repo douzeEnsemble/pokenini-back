@@ -37,6 +37,7 @@ final class AlbumPokedexControllerTest extends TestCase
         $getTrainerPokedexService
             ->expects($this->once())
             ->method('getPokedexDataByTrainerId')
+            ->with('machi', [], 'douze', null)
             ->willReturn([
                 'dex' => [
                     'slug' => 'machi',
@@ -76,7 +77,8 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $controller = new AlbumPokedexController(
             $trainerIdsService,
-            $getTrainerPokedexService
+            $getTrainerPokedexService,
+            ['en', 'fr'],
         );
         $controller->setContainer($container);
 
@@ -99,7 +101,8 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $controller = new AlbumPokedexController(
             $trainerIdsService,
-            $getTrainerPokedexService
+            $getTrainerPokedexService,
+            ['en', 'fr'],
         );
 
         $response = $controller->get(new Request(), 'machi');
@@ -126,11 +129,66 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $controller = new AlbumPokedexController(
             $trainerIdsService,
-            $getTrainerPokedexService
+            $getTrainerPokedexService,
+            ['en', 'fr'],
         );
 
         $response = $controller->get(new Request(), 'machi');
 
         $this->assertEquals(404, $response->getStatusCode());
+    }
+
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $trainerIdsService = $this->createStub(TrainerIdsService::class);
+        $trainerIdsService->method('getTrainerId')->willReturn('douze');
+        $trainerIdsService->method('getLoggedTrainerId')->willReturn('douze');
+
+        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService
+            ->expects($this->once())
+            ->method('getPokedexDataByTrainerId')
+            ->with('machi', [], 'douze', 'fr')
+            ->willReturn([
+                'dex' => ['slug' => 'machi', 'flags' => ['is_private' => false, 'is_released' => true]],
+                'pokemons' => [],
+            ])
+        ;
+
+        $token = $this->createStub(TokenInterface::class);
+        $token->method('getUser')->willReturn(new User('douze', 'ROLE_TRAINER'));
+        $tokenStorage = $this->createStub(TokenStorageInterface::class);
+        $tokenStorage->method('getToken')->willReturn($token);
+        $container = $this->createStub(ContainerInterface::class);
+        $container->method('has')->willReturn(true);
+        $container->method('get')->willReturn($tokenStorage);
+
+        $controller = new AlbumPokedexController($trainerIdsService, $getTrainerPokedexService, ['en', 'fr']);
+        $controller->setContainer($container);
+
+        $response = $controller->get(new Request(['lang' => 'fr']), 'machi');
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    #[Test]
+    public function getInANotEnabledLanguage(): void
+    {
+        $trainerIdsService = $this->createStub(TrainerIdsService::class);
+        $trainerIdsService->method('getTrainerId')->willReturn('douze');
+
+        $getTrainerPokedexService = $this->createMock(GetTrainerPokedexService::class);
+        $getTrainerPokedexService
+            ->expects($this->never())
+            ->method('getPokedexDataByTrainerId')
+        ;
+
+        $controller = new AlbumPokedexController($trainerIdsService, $getTrainerPokedexService, ['en', 'fr']);
+
+        $response = $controller->get(new Request(['lang' => 'de']), 'machi');
+
+        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"error": "Invalid language"}', (string) $response->getContent());
     }
 }

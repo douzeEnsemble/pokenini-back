@@ -1184,6 +1184,22 @@
       "uri": {
         "match": "/album/[\\w\\d]*/demo"
       },
+      "queries": {
+        "lang": "fr"
+      },
+      "headers": {
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "file": "/var/moco/responses/album/default/demo_fr.json"
+    }
+  },
+  {
+    "request": {
+      "uri": {
+        "match": "/album/[\\w\\d]*/demo"
+      },
       "headers": {
         "authorization": "Basic d2ViOmRvdXpl"
       }

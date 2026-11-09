@@ -12,6 +12,7 @@ class GetPokedexApiService extends AbstractApiService
 {
     /**
      * @param string[]|string[][] $filters
+     * @param null|string         $lang    the language of the names, null for the legacy ones (English and French)
      *
      * @return array{
      *   dex: null|array<string, mixed>,
@@ -24,10 +25,11 @@ class GetPokedexApiService extends AbstractApiService
         string $dexSlug,
         string $trainerId,
         array $filters = [],
+        ?string $lang = null,
     ): array {
-        $key = KeyMaker::getPokedexKey($dexSlug, $trainerId, $filters);
+        $key = KeyMaker::getPokedexKey($dexSlug, $trainerId, $filters, $lang);
 
-        $json = $this->cache->get($key, function (ItemInterface $item) use ($dexSlug, $trainerId, $filters) {
+        $json = $this->cache->get($key, function (ItemInterface $item) use ($dexSlug, $trainerId, $filters, $lang) {
             $item->tag([
                 KeyMaker::getAlbumKey(),
                 KeyMaker::getTrainerIdKey($trainerId),
@@ -39,7 +41,7 @@ class GetPokedexApiService extends AbstractApiService
                 'GET',
                 $url,
                 [
-                    'query' => $filters,
+                    'query' => null === $lang ? $filters : $filters + ['lang' => $lang],
                 ],
             );
         });

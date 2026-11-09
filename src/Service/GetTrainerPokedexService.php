@@ -19,6 +19,7 @@ class GetTrainerPokedexService
 
     /**
      * @param string[]|string[][] $filters
+     * @param null|string         $lang    the language of the names, null for the legacy ones (English and French)
      *
      * @return array{
      *   dex: array<string, mixed>,
@@ -27,15 +28,16 @@ class GetTrainerPokedexService
      *   filtered_report?: array<string, mixed>,
      * }
      */
-    public function getPokedexData(string $dexSlug, array $filters): array
+    public function getPokedexData(string $dexSlug, array $filters, ?string $lang = null): array
     {
         $trainerId = $this->userTokenService->getLoggedUserToken();
 
-        return $this->getPokedexDataByTrainerId($dexSlug, $filters, $trainerId);
+        return $this->getPokedexDataByTrainerId($dexSlug, $filters, $trainerId, $lang);
     }
 
     /**
      * @param string[]|string[][] $filters
+     * @param null|string         $lang    the language of the names, null for the legacy ones (English and French)
      *
      * @return array{
      *   dex: array<string, mixed>,
@@ -44,10 +46,10 @@ class GetTrainerPokedexService
      *   filtered_report?: array<string, mixed>,
      * }
      */
-    public function getPokedexDataByTrainerId(string $dexSlug, array $filters, string $trainerId): array
+    public function getPokedexDataByTrainerId(string $dexSlug, array $filters, string $trainerId, ?string $lang = null): array
     {
         try {
-            $data = $this->getPokedexService->get($dexSlug, $trainerId, $filters);
+            $data = $this->getPokedexService->get($dexSlug, $trainerId, $filters, $lang);
 
             /** @psalm-suppress RiskyTruthyFalsyComparison */
             if (empty($data['dex'])) {
