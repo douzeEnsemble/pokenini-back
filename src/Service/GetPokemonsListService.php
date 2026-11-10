@@ -18,8 +18,9 @@ class GetPokemonsListService
 
     /**
      * @param string[]|string[][] $filters
+     * @param null|string         $lang    the language of the names, null for the legacy ones (English and French)
      */
-    public function get(string $dexSlug, string $electionSlug, array $filters): ElectionPokemonsList
+    public function get(string $dexSlug, string $electionSlug, array $filters, ?string $lang = null): ElectionPokemonsList
     {
         $trainerId = $this->userTokenService->getLoggedUserToken();
 
@@ -29,6 +30,7 @@ class GetPokemonsListService
             $electionSlug,
             $this->electionCandidateCount,
             $filters,
+            $lang,
         );
     }
 }

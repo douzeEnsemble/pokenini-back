@@ -54,12 +54,33 @@ final class GetElectionReportApiServiceTest extends TestCase
         $this->assertEmpty($this->cachePool->getValues());
     }
 
+    #[Test]
+    public function getReportInALanguage(): void
+    {
+        $rawJson = (string) json_encode([
+            'top' => [['pokemon' => ['slug' => 'bulbasaur']]],
+            'metrics' => [
+                'view_count' => ['sum' => 6, 'max' => 1],
+                'win_count' => ['sum' => 2, 'max' => 1],
+                'completion' => ['under_max_count' => 1, 'at_max_count' => 5],
+                'dex_total_count' => 48,
+            ],
+        ]);
+
+        $result = $this->getService('4564650', 'home', 'fav', 5, $rawJson, 'fr')
+            ->getReport('4564650', 'home', 'fav', 5, 'fr')
+        ;
+
+        $this->assertCount(1, $result['top']);
+    }
+
     private function getService(
         string $trainerId,
         string $dexSlug,
         string $electionSlug,
         int $count,
         string $json,
+        ?string $lang = null,
     ): GetElectionReportApiService {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -86,7 +107,7 @@ final class GetElectionReportApiServiceTest extends TestCase
                     'query' => [
                         'election_slug' => $electionSlug,
                         'count' => $count,
-                    ],
+                    ] + (null === $lang ? [] : ['lang' => $lang]),
                     'headers' => [
                         'accept' => 'application/json',
                     ],

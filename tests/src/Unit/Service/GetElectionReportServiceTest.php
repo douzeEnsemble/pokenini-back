@@ -80,4 +80,31 @@ final class GetElectionReportServiceTest extends TestCase
         $this->assertSame(5, $result['metrics']->maxViewCount);
         $this->assertSame($rawMetrics, $result['metrics']->raw);
     }
+
+    #[Test]
+    public function getReportInALanguage(): void
+    {
+        $userTokenService = $this->createStub(UserTokenService::class);
+        $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
+
+        $apiService = $this->createMock(GetElectionReportApiService::class);
+        $apiService
+            ->expects($this->once())
+            ->method('getReport')
+            ->with('8800088', 'home', 'fav', 5, 'fr')
+            ->willReturn([
+                'top' => [],
+                'metrics' => [
+                    'view_count' => ['sum' => 12, 'max' => 4],
+                    'win_count' => ['sum' => 6, 'max' => 3],
+                    'completion' => ['under_max_count' => 1, 'at_max_count' => 3],
+                    'dex_total_count' => 4,
+                ],
+            ])
+        ;
+
+        $service = new GetElectionReportService($userTokenService, $apiService, 5, 12);
+
+        $this->assertSame([], $service->getReport('home', 'fav', 'fr')['top']);
+    }
 }

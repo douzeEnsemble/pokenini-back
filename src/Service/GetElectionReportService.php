@@ -18,32 +18,18 @@ class GetElectionReportService
     ) {}
 
     /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     *
      * @return array{
-     *   top: array<int, array{
-     *     pokemon: array{
-     *       slug: string,
-     *       labels: array{name: string, simplified_name: string, french_name: string, simplified_french_name: string, forms_label: null|string, forms_french_label: null|string},
-     *       national_dex_number: int,
-     *       regional_dex_number: null|int,
-     *       icon: string,
-     *       family_order: int,
-     *       family_lead: array{slug: string},
-     *       original_game_bundle: array{slug: string},
-     *       order_number: string,
-     *       game_bundles: array{normal: array<int, array{slug: string}>, shiny: array<int, array{slug: string}>},
-     *     },
-     *     forms: null|array{variant?: array{slug: string, name: string, french_name: string}, regional?: array{slug: string, name: string, french_name: string}, special?: array{slug: string, name: string, french_name: string}},
-     *     types: array{primary: array{slug: string, name: string, french_name: string, color: string}, secondary: null|array{slug: string, name: string, french_name: string, color: string}},
-     *     score: array{elo: int, significance: bool},
-     *   }>,
+     *   top: array<int, array{pokemon: array<string, mixed>, forms: null|array<string, mixed>, types: array<string, mixed>, score: array{elo: int, significance: bool}}>,
      *   metrics: ElectionMetrics,
      * }
      */
-    public function getReport(string $dexSlug, string $electionSlug): array
+    public function getReport(string $dexSlug, string $electionSlug, ?string $lang = null): array
     {
         $trainerId = $this->userTokenService->getLoggedUserToken();
 
-        $data = $this->apiService->getReport($trainerId, $dexSlug, $electionSlug, $this->topCount);
+        $data = $this->apiService->getReport($trainerId, $dexSlug, $electionSlug, $this->topCount, $lang);
 
         return [
             'top' => $data['top'],

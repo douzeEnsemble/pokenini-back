@@ -218,4 +218,11 @@ final class KeyMakerTest extends TestCase
             KeyMaker::getPokedexKey('toto', '0', ['cs' => 'no'], 'en'),
         );
     }
+
+    #[Test]
+    public function getElectionDexListKeyForTrainerInALanguage(): void
+    {
+        $this->assertSame('election_dex_list_v2_1_fr', KeyMaker::getElectionDexListKeyForTrainer('1', [], 'fr'));
+        $this->assertSame('election_dex_list_v2_1_1=1_en', KeyMaker::getElectionDexListKeyForTrainer('1', ['1' => '1'], 'en'));
+    }
 }

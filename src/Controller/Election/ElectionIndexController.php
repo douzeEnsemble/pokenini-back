@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Election;
 
 use App\AlbumFilters\FromRequest;
+use App\Controller\LangQueryTrait;
 use App\Exception\DexNotFoundException;
 use App\Service\GetElectionReportService;
 use App\Service\GetPokemonsListService;
@@ -19,6 +20,15 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/election')]
 final class ElectionIndexController extends AbstractController
 {
+    use LangQueryTrait;
+
+    /**
+     * @param string[] $locales the enabled locales
+     */
+    public function __construct(
+        private readonly array $locales,
+    ) {}
+
     #[Route(
         '/{dexSlug}/{electionSlug}',
         requirements: [
@@ -36,16 +46,17 @@ final class ElectionIndexController extends AbstractController
         string $dexSlug,
         string $electionSlug = '',
     ): JsonResponse {
+        $lang = $this->getLang($request, $this->locales);
         $filters = FromRequest::get($request);
 
-        $report = $electionReportService->getReport($dexSlug, $electionSlug);
+        $report = $electionReportService->getReport($dexSlug, $electionSlug, $lang);
         $electionTop = $report['top'];
 
-        $list = $getPokemonsListService->get($dexSlug, $electionSlug, $filters);
+        $list = $getPokemonsListService->get($dexSlug, $electionSlug, $filters, $lang);
         $metrics = $report['metrics'];
 
         try {
-            $pokedex = $getTrainerPokedexService->getPokedexData($dexSlug, $filters);
+            $pokedex = $getTrainerPokedexService->getPokedexData($dexSlug, $filters, $lang);
         } catch (DexNotFoundException $e) {
             $pokedex = null;
         }

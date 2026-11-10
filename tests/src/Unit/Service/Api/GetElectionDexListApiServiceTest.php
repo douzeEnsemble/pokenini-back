@@ -120,6 +120,44 @@ final class GetElectionDexListApiServiceTest extends TestCase
         $this->assertFalse($this->cache->hasItem('election_dex_list_v2_456'));
     }
 
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $this->getService('election/8800088/list?count=1&lang=fr')->get('8800088', 'fr');
+
+        $cacheItem = $this->cache->getItem('election_dex_list_v2_8800088_fr');
+
+        $this->assertTrue($cacheItem->isHit());
+        $this->assertFalse($this->cache->getItem('election_dex_list_v2_8800088')->isHit());
+        $this->assertSame(
+            [
+                'dex' => 'dex',
+                'election_dex_list_v2' => 'election_dex_list_v2',
+                'trainer#8800088' => 'trainer#8800088',
+            ],
+            $cacheItem->getMetadata()['tags'],
+        );
+    }
+
+    #[Test]
+    public function getWithPremiumInALanguage(): void
+    {
+        $this->getService('election/8800088/list?count=1&include_premium_dex=1&lang=fr')->getWithPremium('8800088', 'fr');
+
+        $this->assertTrue($this->cache->getItem('election_dex_list_v2_8800088_include_premium_dex=1_fr')->isHit());
+    }
+
+    #[Test]
+    public function getWithUnreleasedAndPremiumInALanguage(): void
+    {
+        $this
+            ->getService('election/8800088/list?count=1&include_unreleased_dex=1&include_premium_dex=1&lang=fr')
+            ->getWithUnreleasedAndPremium('8800088', 'fr')
+        ;
+
+        $this->assertTrue($this->cache->getItem('election_dex_list_v2_8800088_include_unreleased_dex=1_include_premium_dex=1_fr')->isHit());
+    }
+
     private function getService(
         string $endpoint,
         string $jsonFile = 'election_dex_list.json',

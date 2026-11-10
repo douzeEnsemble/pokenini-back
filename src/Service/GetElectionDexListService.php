@@ -15,27 +15,33 @@ class GetElectionDexListService
     ) {}
 
     /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     *
      * @return array<int, array<string, mixed>>
      */
-    public function get(string $trainerId): array
+    public function get(string $trainerId, ?string $lang = null): array
     {
-        return $this->withRoundMetrics($this->apiService->get($trainerId));
+        return $this->withRoundMetrics($this->apiService->get($trainerId, $lang));
     }
 
     /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     *
      * @return array<int, array<string, mixed>>
      */
-    public function getWithPremium(string $trainerId): array
+    public function getWithPremium(string $trainerId, ?string $lang = null): array
     {
-        return $this->withRoundMetrics($this->apiService->getWithPremium($trainerId));
+        return $this->withRoundMetrics($this->apiService->getWithPremium($trainerId, $lang));
     }
 
     /**
+     * @param null|string $lang the language of the names, null for the legacy ones (English and French)
+     *
      * @return array<int, array<string, mixed>>
      */
-    public function getWithUnreleasedAndPremium(string $trainerId): array
+    public function getWithUnreleasedAndPremium(string $trainerId, ?string $lang = null): array
     {
-        return $this->withRoundMetrics($this->apiService->getWithUnreleasedAndPremium($trainerId));
+        return $this->withRoundMetrics($this->apiService->getWithUnreleasedAndPremium($trainerId, $lang));
     }
 
     /**
