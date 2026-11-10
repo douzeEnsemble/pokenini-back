@@ -1,5 +1,5 @@
 parameters:
-    # Enabled locales, in display order (the API has the same list)
+    # Enabled locales, in display order, the only place to list them here (the API has the same list)
     app.locales: ['en', 'fr']
 
 services:
