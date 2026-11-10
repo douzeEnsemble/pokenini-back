@@ -181,4 +181,19 @@ final class GetElectionDexListServiceTest extends TestCase
 
         $this->assertSame([], $service->getWithUnreleasedAndPremium('8800088'));
     }
+
+    #[Test]
+    public function everyMethodRelaysTheLanguage(): void
+    {
+        $apiService = $this->createMock(GetElectionDexListApiService::class);
+        $apiService->expects($this->once())->method('get')->with('8800088', 'fr')->willReturn([['slug' => 'a']]);
+        $apiService->expects($this->once())->method('getWithPremium')->with('8800088', 'fr')->willReturn([['slug' => 'b']]);
+        $apiService->expects($this->once())->method('getWithUnreleasedAndPremium')->with('8800088', 'fr')->willReturn([['slug' => 'c']]);
+
+        $service = new GetElectionDexListService($apiService, 12);
+
+        $this->assertSame([['slug' => 'a']], $service->get('8800088', 'fr'));
+        $this->assertSame([['slug' => 'b']], $service->getWithPremium('8800088', 'fr'));
+        $this->assertSame([['slug' => 'c']], $service->getWithUnreleasedAndPremium('8800088', 'fr'));
+    }
 }

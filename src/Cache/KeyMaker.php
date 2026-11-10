@@ -113,14 +113,18 @@ final class KeyMaker
     }
 
     /**
-     * @param string[] $queryParams
+     * @param string[]    $queryParams
+     * @param null|string $lang        the language of the names, null for the legacy ones (English and French)
      */
-    public static function getElectionDexListKeyForTrainer(string $trainerId, array $queryParams = []): string
+    public static function getElectionDexListKeyForTrainer(string $trainerId, array $queryParams = [], ?string $lang = null): string
     {
         $cacheKeySuffixe = http_build_query($queryParams, '', self::CACHE_KEY_SEPARATOR);
 
-        return self::CACHE_KEY_ELECTION_DEX_LIST.self::CACHE_KEY_SEPARATOR.$trainerId
-            .($cacheKeySuffixe ? self::CACHE_KEY_SEPARATOR.$cacheKeySuffixe : '');
+        return self::withLang(
+            self::CACHE_KEY_ELECTION_DEX_LIST.self::CACHE_KEY_SEPARATOR.$trainerId
+            .($cacheKeySuffixe ? self::CACHE_KEY_SEPARATOR.$cacheKeySuffixe : ''),
+            $lang,
+        );
     }
 
     /**

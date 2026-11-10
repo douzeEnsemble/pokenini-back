@@ -118,4 +118,25 @@ final class GetPokemonsListServiceTest extends TestCase
         $this->assertSame('pichu', $list->items[0]['pokemon']['slug']);
         $this->assertSame('raichu', $list->items[1]['pokemon']['slug']);
     }
+
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $userTokenService = $this->createStub(UserTokenService::class);
+        $userTokenService->method('getLoggedUserToken')->willReturn('8800088');
+
+        $list = new ElectionPokemonsList(['type' => 'pick', 'items' => []]);
+
+        $getPokemonsService = $this->createMock(GetPokemonsApiService::class);
+        $getPokemonsService
+            ->expects($this->once())
+            ->method('get')
+            ->with('8800088', 'douze', '', 12, [], 'fr')
+            ->willReturn($list)
+        ;
+
+        $service = new GetPokemonsListService($userTokenService, $getPokemonsService, 12);
+
+        $this->assertSame($list, $service->get('douze', '', [], 'fr'));
+    }
 }

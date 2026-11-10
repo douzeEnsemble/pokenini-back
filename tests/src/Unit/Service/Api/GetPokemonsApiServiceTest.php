@@ -128,6 +128,18 @@ final class GetPokemonsApiServiceTest extends TestCase
         $this->assertEmpty($this->cache->getItems());
     }
 
+    #[Test]
+    public function getInALanguage(): void
+    {
+        $electionDexList = $this
+            ->getService('pick', '12', '123', '', 3, '', [], 'fr')
+            ->get('12', '123', '', 3, [], 'fr')
+        ;
+
+        $this->assertSame('pick', $electionDexList->type);
+        $this->assertCount(3, $electionDexList->items);
+    }
+
     /**
      * @param string[][] $filters
      */
@@ -139,6 +151,7 @@ final class GetPokemonsApiServiceTest extends TestCase
         int $count,
         string $filtersStr = '',
         array $filters = [],
+        ?string $lang = null,
     ): GetPokemonsApiService {
         $logger = $this->createMock(LoggerInterface::class);
         $logger
@@ -175,6 +188,7 @@ final class GetPokemonsApiServiceTest extends TestCase
                             'count' => $count,
                         ],
                         $filters,
+                        null === $lang ? [] : ['lang' => $lang],
                     ),
                     'headers' => [
                         'accept' => 'application/json',

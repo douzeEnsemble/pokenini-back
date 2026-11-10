@@ -11,6 +11,7 @@ class GetPokemonsApiService extends AbstractApiService
 {
     /**
      * @param string[]|string[][] $filters
+     * @param null|string         $lang    the language of the names, null for the legacy ones (English and French)
      */
     public function get(
         string $trainerExternalId,
@@ -18,6 +19,7 @@ class GetPokemonsApiService extends AbstractApiService
         string $electionSlug,
         int $count,
         array $filters,
+        ?string $lang = null,
     ): ElectionPokemonsList {
         $json = $this->requestContent(
             'GET',
@@ -31,11 +33,12 @@ class GetPokemonsApiService extends AbstractApiService
                         'count' => $count,
                     ],
                     $filters,
+                    null === $lang ? [] : ['lang' => $lang],
                 ),
             ]
         );
 
-        /** @var array{type: string, items: array<int, array{pokemon: array{slug: string, name: string, french_name: string, national_dex_number: int, regional_dex_number: null|int, simplified_name: string, forms_label: string, simplified_french_name: string, forms_french_label: string, icon: string, family_order: int, family_lead: null|array{slug: string}, original_game_bundle: array{slug: string}, order_number: string, game_bundles: array<int, array{slug: string}>, game_bundles_shiny: array<int, array{slug: string}>, small_regular_credit: null|array{credit: string}, small_shiny_credit: null|array{credit: string}, big_regular_credit: null|array{credit: string}, big_shiny_credit: null|array{credit: string}}, forms: array{category: null|array{slug: string, name: string, french_name: string}, regional: null|array{slug: string, name: string, french_name: string}, special: null|array{slug: string, name: string, french_name: string}, variant: null|array{slug: string, name: string, french_name: string}}, types: array{primary: array{slug: string, name: string, french_name: string, color: string}, secondary: null|array{slug: string, name: string, french_name: string, color: string}}}>} */
+        /** @var array{type: string, items: array<int, array{pokemon: array<string, mixed>, forms: null|array<string, mixed>, types: array<string, mixed>}>} */
         $data = JsonDecoder::decode($json);
 
         return new ElectionPokemonsList($data);

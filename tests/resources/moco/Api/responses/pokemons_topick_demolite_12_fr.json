@@ -1,0 +1,45 @@
+{
+  "type": "pick",
+  "items": [
+    {
+      "pokemon": {
+        "slug": "bulbasaur",
+        "labels": {
+          "names": {
+            "en": "Bulbasaur",
+            "fr": "Bulbizarre"
+          },
+          "simplified_names": {
+            "en": "Bulbasaur",
+            "fr": "Bulbizarre"
+          },
+          "forms_label": null
+        },
+        "national_dex_number": 1,
+        "regional_dex_number": null,
+        "icon": "bulbasaur",
+        "family_order": 0,
+        "family_lead": {
+          "slug": "bulbasaur"
+        },
+        "original_game_bundle": {
+          "slug": "redgreenblueyellow"
+        },
+        "order_number": "9999-0001-000",
+        "game_bundles": {
+          "normal": [],
+          "shiny": []
+        }
+      },
+      "forms": null,
+      "types": {
+        "primary": {
+          "slug": "grass",
+          "name": "Plante",
+          "color": "#78C850"
+        },
+        "secondary": null
+      }
+    }
+  ]
+}

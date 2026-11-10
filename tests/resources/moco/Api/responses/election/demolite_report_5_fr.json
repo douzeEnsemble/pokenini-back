@@ -1,0 +1,63 @@
+{
+  "top": [
+    {
+      "pokemon": {
+        "slug": "bulbasaur",
+        "labels": {
+          "names": {
+            "en": "Bulbasaur",
+            "fr": "Bulbizarre"
+          },
+          "simplified_names": {
+            "en": "Bulbasaur",
+            "fr": "Bulbizarre"
+          },
+          "forms_label": null
+        },
+        "national_dex_number": 1,
+        "regional_dex_number": null,
+        "icon": "bulbasaur",
+        "family_order": 0,
+        "family_lead": {
+          "slug": "bulbasaur"
+        },
+        "original_game_bundle": {
+          "slug": "redgreenblueyellow"
+        },
+        "order_number": "9999-0001-000",
+        "game_bundles": {
+          "normal": [],
+          "shiny": []
+        }
+      },
+      "forms": null,
+      "types": {
+        "primary": {
+          "slug": "grass",
+          "name": "Plante",
+          "color": "#78C850"
+        },
+        "secondary": null
+      },
+      "score": {
+        "elo": 1040.0,
+        "significance": true
+      }
+    }
+  ],
+  "metrics": {
+    "view_count": {
+      "sum": 82,
+      "max": 1
+    },
+    "win_count": {
+      "sum": 41,
+      "max": 1
+    },
+    "completion": {
+      "under_max_count": 1,
+      "at_max_count": 5
+    },
+    "dex_total_count": 48
+  }
+}
