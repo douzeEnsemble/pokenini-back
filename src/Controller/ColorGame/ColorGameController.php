@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\ColorGame;
 
+use App\Controller\LangQueryTrait;
 use App\Exception\ApiValidationException;
 use App\Service\ColorGameService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,26 +20,40 @@ use Symfony\Component\Routing\Requirement\Requirement;
 #[Route('/color_game')]
 final class ColorGameController extends AbstractController
 {
+    use LangQueryTrait;
+
+    /**
+     * @param string[] $locales the enabled locales
+     */
     public function __construct(
         private readonly ColorGameService $colorGameService,
+        private readonly array $locales,
     ) {}
 
     #[Route('/dex', methods: ['GET'])]
-    public function dex(): JsonResponse
+    public function dex(Request $request): JsonResponse
     {
-        return new JsonResponse($this->getPlayableDexList(), Response::HTTP_OK);
+        return new JsonResponse(
+            $this->getPlayableDexList($this->getLang($request, $this->locales)),
+            Response::HTTP_OK,
+        );
     }
 
     #[Route('/games', methods: ['GET'])]
-    public function list(): JsonResponse
+    public function list(Request $request): JsonResponse
     {
-        return new JsonResponse($this->colorGameService->getGames(), Response::HTTP_OK);
+        return new JsonResponse(
+            $this->colorGameService->getGames($this->getLang($request, $this->locales)),
+            Response::HTTP_OK,
+        );
     }
 
     #[Route('/games', methods: ['POST'])]
     #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function create(Request $request): JsonResponse
     {
+        $lang = $this->getLang($request, $this->locales);
+
         /** @var array{dex_slug?: mixed, round_count?: mixed} $content */
         $content = $this->decodeContent($request);
         $dexSlug = $content['dex_slug'] ?? null;
@@ -49,12 +64,12 @@ final class ColorGameController extends AbstractController
             return new JsonResponse([], Response::HTTP_BAD_REQUEST);
         }
 
-        if (!$this->isPlayable($dexSlug)) {
+        if (!$this->isPlayable($dexSlug, $lang)) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 
         try {
-            $game = $this->colorGameService->create($dexSlug, $roundCount);
+            $game = $this->colorGameService->create($dexSlug, $roundCount, $lang);
         } catch (ApiValidationException $e) {
             return new JsonResponse([], $e->getStatusCode());
         }
@@ -63,10 +78,12 @@ final class ColorGameController extends AbstractController
     }
 
     #[Route('/games/{gameId}', requirements: ['gameId' => Requirement::UUID], methods: ['GET'])]
-    public function show(string $gameId): JsonResponse
+    public function show(string $gameId, Request $request): JsonResponse
     {
+        $lang = $this->getLang($request, $this->locales);
+
         try {
-            $state = $this->colorGameService->get($gameId);
+            $state = $this->colorGameService->get($gameId, $lang);
         } catch (ApiValidationException $e) {
             return new JsonResponse([], $e->getStatusCode());
         }
@@ -75,10 +92,12 @@ final class ColorGameController extends AbstractController
     }
 
     #[Route('/games/{gameId}/rounds', requirements: ['gameId' => Requirement::UUID], methods: ['GET'])]
-    public function rounds(string $gameId): JsonResponse
+    public function rounds(string $gameId, Request $request): JsonResponse
     {
+        $lang = $this->getLang($request, $this->locales);
+
         try {
-            $rounds = $this->colorGameService->getRounds($gameId);
+            $rounds = $this->colorGameService->getRounds($gameId, $lang);
         } catch (ApiValidationException $e) {
             return new JsonResponse([], $e->getStatusCode());
         }
@@ -89,6 +108,8 @@ final class ColorGameController extends AbstractController
     #[Route('/games/{gameId}/answers', requirements: ['gameId' => Requirement::UUID], methods: ['POST'])]
     public function answer(string $gameId, Request $request): JsonResponse
     {
+        $lang = $this->getLang($request, $this->locales);
+
         /** @var array{position?: mixed, choice?: mixed} $content */
         $content = $this->decodeContent($request);
         $position = $content['position'] ?? null;
@@ -99,7 +120,7 @@ final class ColorGameController extends AbstractController
         }
 
         try {
-            $answer = $this->colorGameService->answer($gameId, $position, $choice);
+            $answer = $this->colorGameService->answer($gameId, $position, $choice, $lang);
         } catch (ApiValidationException $e) {
             return new JsonResponse([], $e->getStatusCode());
         }
@@ -110,17 +131,18 @@ final class ColorGameController extends AbstractController
     /**
      * @return array<int, array<string, mixed>>
      */
-    private function getPlayableDexList(): array
+    private function getPlayableDexList(?string $lang = null): array
     {
         return $this->colorGameService->getDexList(
             $this->isGranted('ROLE_COLLECTOR'),
             $this->isGranted('ROLE_ADMIN'),
+            $lang,
         );
     }
 
-    private function isPlayable(string $dexSlug): bool
+    private function isPlayable(string $dexSlug, ?string $lang): bool
     {
-        foreach ($this->getPlayableDexList() as $dex) {
+        foreach ($this->getPlayableDexList($lang) as $dex) {
             if ($dexSlug === ($dex['slug'] ?? null)) {
                 return true;
             }
