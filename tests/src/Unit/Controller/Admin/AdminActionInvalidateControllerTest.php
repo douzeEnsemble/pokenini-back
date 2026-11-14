@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Controller\Admin;
 use App\Controller\Admin\AbstractAdminActionController;
 use App\Controller\Admin\AdminActionInvalidateController;
 use App\Service\Api\AdminActionApiService;
+use App\Service\Api\GetActionCatalogApiService;
 use App\Service\CacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -51,10 +52,14 @@ final class AdminActionInvalidateControllerTest extends TestCase
             ->with('Admin action succeeded: invalidate something')
         ;
 
+        $catalog = $this->createMock(GetActionCatalogApiService::class);
+        $catalog->expects($this->never())->method('has');
+
         $controller = new AdminActionInvalidateController(
             $cacheInvalidatorService,
             $adminActionService,
-            $logger
+            $logger,
+            $catalog
         );
 
         $response = $controller->process('something');
@@ -95,10 +100,14 @@ final class AdminActionInvalidateControllerTest extends TestCase
             )
         ;
 
+        $catalog = $this->createMock(GetActionCatalogApiService::class);
+        $catalog->expects($this->never())->method('has');
+
         $controller = new AdminActionInvalidateController(
             $cacheInvalidatorService,
             $adminActionService,
-            $logger
+            $logger,
+            $catalog
         );
 
         $controller->process('something');

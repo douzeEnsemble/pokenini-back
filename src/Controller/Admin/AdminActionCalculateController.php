@@ -16,14 +16,7 @@ final class AdminActionCalculateController extends AbstractAdminActionController
     #[Route(
         '/calculate/{name}',
         methods: ['POST'],
-        condition: "params['name']
-            in [
-                'game_bundles_availabilities',
-                'game_bundles_shinies_availabilities',
-                'collections_availabilities',
-                'dex_availabilities',
-                'pokemon_availabilities',
-            ]"
+        requirements: ['name' => '[a-z_]+'],
     )]
     #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function process(string $name): JsonResponse

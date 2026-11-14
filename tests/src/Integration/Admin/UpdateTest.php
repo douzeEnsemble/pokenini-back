@@ -71,7 +71,7 @@ final class UpdateTest extends WebTestCase
 
         $this->expectException(NotFoundHttpException::class);
 
-        $client->request('GET', '/istration/action/update/truc');
+        $client->request('POST', '/istration/action/update/truc');
     }
 
     #[Test]
