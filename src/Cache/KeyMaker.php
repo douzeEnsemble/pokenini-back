@@ -22,6 +22,12 @@ final class KeyMaker
     private const string CACHE_KEY_TRAINER = 'trainer';
     private const string CACHE_KEY_CREDITS = 'credits_v2';
     private const string CACHE_KEY_GAMES = 'games';
+    private const string CACHE_KEY_ACTION_CATALOG = 'action_catalog';
+
+    public static function getActionCatalogKey(): string
+    {
+        return self::CACHE_KEY_ACTION_CATALOG;
+    }
 
     public static function getDexKey(): string
     {
