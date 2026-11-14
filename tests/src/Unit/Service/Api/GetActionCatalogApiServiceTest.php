@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -33,6 +34,11 @@ final class GetActionCatalogApiServiceTest extends TestCase
         $this->assertCount(11, $catalog);
         $this->assertSame(['type' => 'update', 'name' => 'labels', 'depends_on' => []], $catalog[0]);
         $this->assertTrue($this->cache->hasItem('action_catalog'));
+
+        // The catalog is cached for one hour, so a new api release is picked up.
+        $expiry = $this->cache->getItem('action_catalog')->getMetadata()[ItemInterface::METADATA_EXPIRY] ?? null;
+        $this->assertIsFloat($expiry);
+        $this->assertEqualsWithDelta(time() + 3600, $expiry, 5);
 
         // Second call is served from the cache: the client is requested only once.
         $this->assertSame($catalog, $service->get());

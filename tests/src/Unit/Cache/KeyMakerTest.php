@@ -17,6 +17,12 @@ use PHPUnit\Framework\TestCase;
 final class KeyMakerTest extends TestCase
 {
     #[Test]
+    public function getActionCatalogKey(): void
+    {
+        $this->assertEquals('action_catalog', KeyMaker::getActionCatalogKey());
+    }
+
+    #[Test]
     public function getDexKey(): void
     {
         $this->assertEquals('dex', KeyMaker::getDexKey());
