@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Api;
 
+use App\Exception\ActionAlreadyRunningException;
 use App\Exception\ModifyFailedException;
 use App\Service\Api\AdminActionApiService;
 use App\Tests\Utils\WithConsecutive;
@@ -13,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpClient\Exception\TransportException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -58,7 +60,52 @@ final class AdminActionApiServiceTest extends TestCase
         $this->getFailingService()->calculate('start');
     }
 
-    private function getFailingService(): AdminActionApiService
+    #[Test]
+    public function updateAlreadyRunning(): void
+    {
+        try {
+            $this->getFailingService($this->clientException(409))->update('start');
+            $this->fail('ActionAlreadyRunningException expected');
+        } catch (ActionAlreadyRunningException $e) {
+            $this->assertSame('admin.action.already_running', $e->getMessage());
+        }
+    }
+
+    #[Test]
+    public function calculateAlreadyRunning(): void
+    {
+        $this->expectException(ActionAlreadyRunningException::class);
+
+        $this->getFailingService($this->clientException(409))->calculate('start');
+    }
+
+    #[Test]
+    public function otherClientErrorsAreModifyFailures(): void
+    {
+        $this->expectException(ModifyFailedException::class);
+
+        $this->getFailingService($this->clientException(404))->update('start');
+    }
+
+    private function clientException(int $status): ClientException
+    {
+        $response = $this->createStub(ResponseInterface::class);
+        $response->method('getStatusCode')->willReturn($status);
+        $response->method('getInfo')->willReturnCallback(
+            static fn (?string $type = null): mixed => match ($type) {
+                'http_code' => $status,
+                'url' => 'https://api.domain/istration/update/start',
+                'response_headers' => [],
+                default => [],
+            }
+        );
+        $response->method('getContent')->willReturn('');
+        $response->method('toArray')->willReturn([]);
+
+        return new ClientException($response);
+    }
+
+    private function getFailingService(?\Throwable $failure = null): AdminActionApiService
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects($this->once())->method('info');
@@ -67,7 +114,7 @@ final class AdminActionApiServiceTest extends TestCase
         $client
             ->expects($this->once())
             ->method('request')
-            ->willThrowException(new TransportException('Network error'))
+            ->willThrowException($failure ?? new TransportException('Network error'))
         ;
 
         $this->cachePool = new ArrayAdapter();

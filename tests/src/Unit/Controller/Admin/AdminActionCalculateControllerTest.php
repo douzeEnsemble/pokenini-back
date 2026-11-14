@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Controller\Admin;
 use App\Controller\Admin\AbstractAdminActionController;
 use App\Controller\Admin\AdminActionCalculateController;
 use App\Service\Api\AdminActionApiService;
+use App\Service\Api\GetActionCatalogApiService;
 use App\Service\CacheInvalidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -48,10 +49,14 @@ final class AdminActionCalculateControllerTest extends TestCase
             ->with('Admin action succeeded: calculate something')
         ;
 
+        $catalog = $this->createStub(GetActionCatalogApiService::class);
+        $catalog->method('has')->willReturn(true);
+
         $controller = new AdminActionCalculateController(
             $cacheInvalidatorService,
             $adminActionService,
-            $logger
+            $logger,
+            $catalog
         );
 
         $response = $controller->process('something');
@@ -92,10 +97,14 @@ final class AdminActionCalculateControllerTest extends TestCase
             )
         ;
 
+        $catalog = $this->createStub(GetActionCatalogApiService::class);
+        $catalog->method('has')->willReturn(true);
+
         $controller = new AdminActionCalculateController(
             $cacheInvalidatorService,
             $adminActionService,
-            $logger
+            $logger,
+            $catalog
         );
 
         $controller->process('something');

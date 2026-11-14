@@ -1949,18 +1949,6 @@
   },
   {
     "request": {
-      "uri": "/istration/calculate/collections_availabilities",
-      "method": "post",
-      "headers": {
-        "authorization": "Basic d2ViOmRvdXpl"
-      }
-    },
-    "response": {
-      "status": "201"
-    }
-  },
-  {
-    "request": {
       "uri": "/istration/calculate/dex_availabilities",
       "method": "post",
       "headers": {
@@ -2094,6 +2082,20 @@
   },
   {
     "request": {
+      "uri": "/istration/actions",
+      "method": "get",
+      "headers": {
+        "accept": "application/json",
+        "authorization": "Basic d2ViOmRvdXpl"
+      }
+    },
+    "response": {
+      "status": "200",
+      "file": "/var/moco/responses/action_catalog.json"
+    }
+  },
+  {
+    "request": {
       "uri": "/action_logs",
       "method": "get",
       "headers": {
@@ -2122,8 +2124,13 @@
   },
   {
     "request": {
-      "uri": {"match": "/election/[\\w\\d]*/list"},
-      "queries": {"count": "1", "lang": "fr"},
+      "uri": {
+        "match": "/election/[\\w\\d]*/list"
+      },
+      "queries": {
+        "count": "1",
+        "lang": "fr"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -2198,7 +2205,11 @@
   {
     "request": {
       "uri": "/pokemons/to_choose",
-      "queries": {"dex_slug": "demolite", "count": "12", "lang": "fr"},
+      "queries": {
+        "dex_slug": "demolite",
+        "count": "12",
+        "lang": "fr"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",
@@ -2268,8 +2279,13 @@
   },
   {
     "request": {
-      "uri": {"match": "/election/[\\w\\d]*/demolite.*"},
-      "queries": {"count": "5", "lang": "fr"},
+      "uri": {
+        "match": "/election/[\\w\\d]*/demolite.*"
+      },
+      "queries": {
+        "count": "5",
+        "lang": "fr"
+      },
       "method": "get",
       "headers": {
         "accept": "application/json",

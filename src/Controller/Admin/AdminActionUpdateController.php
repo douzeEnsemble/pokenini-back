@@ -16,16 +16,7 @@ final class AdminActionUpdateController extends AbstractAdminActionController
     #[Route(
         '/{name}',
         methods: ['POST'],
-        condition: "params['name']
-            in [
-                'labels',
-                'games_collections_and_dex',
-                'pokemons',
-                'games_availabilities',
-                'games_shinies_availabilities',
-                'regional_dex_numbers',
-                'collections_availabilities',
-            ]"
+        requirements: ['name' => '[a-z_]+'],
     )]
     #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
     public function process(string $name): JsonResponse
