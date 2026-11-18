@@ -47,6 +47,10 @@ class SessionTokenService
         try {
             $claims = JWT::decode($token, new Key($this->sessionTokenSecret, self::ALGORITHM));
         } catch (\Throwable) {
+            // Deliberately broad and silent: firebase/php-jwt throws a different exception
+            // for each way a token can be bad (signature, expiry, format, algorithm, ...),
+            // and every one of them means the same thing here: no valid session. An invalid
+            // token is an expected input, not an error worth a log line or a rethrow.
             return null;
         }
 
