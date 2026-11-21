@@ -27,6 +27,13 @@
     </plugins>
 
     <issueHandlers>
+        <!-- Stable user identifier (not security-sensitive): see UserTokenService -->
+        <WeakHash>
+            <errorLevel type="suppress">
+                <file name="src/Security/UserTokenService.php" />
+            </errorLevel>
+        </WeakHash>
+
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="src/Controller" />
@@ -44,15 +51,17 @@
 
         <UnusedClass>
             <errorLevel type="suppress">
-                <directory name="src/EventSubscriber" />
-                <directory name="src/Validator" />
+                <directory name="src/DTO" />
+                <directory name="src/Exception" />
+                <directory name="src/Security" />
+                <file name="src/Service/GetDexByRoleService.php" />
             </errorLevel>
         </UnusedClass>
 
         <PossiblyUnusedMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="App\Security\User::eraseCredentials" />
-                <directory name="src/Controller" />
+                <directory name="src/DTO" />
             </errorLevel>
         </PossiblyUnusedMethod>
 

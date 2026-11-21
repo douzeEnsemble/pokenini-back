@@ -10,7 +10,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
-/** @psalm-suppress PropertyNotSetInConstructor */
 final class CatchStatesValidator extends ConstraintValidator
 {
     public function __construct(

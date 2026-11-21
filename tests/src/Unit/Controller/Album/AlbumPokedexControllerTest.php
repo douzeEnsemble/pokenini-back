@@ -84,7 +84,7 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $response = $controller->get(new Request(), 'machi');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     #[Test]
@@ -107,7 +107,7 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $response = $controller->get(new Request(), 'machi');
 
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
     }
 
     #[Test]
@@ -135,7 +135,7 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $response = $controller->get(new Request(), 'machi');
 
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
     }
 
     #[Test]
@@ -169,7 +169,7 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $response = $controller->get(new Request(['lang' => 'fr']), 'machi');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
     }
 
     #[Test]
@@ -188,7 +188,7 @@ final class AlbumPokedexControllerTest extends TestCase
 
         $response = $controller->get(new Request(['lang' => 'de']), 'machi');
 
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertJsonStringEqualsJsonString('{"error": "Invalid language"}', (string) $response->getContent());
     }
 }

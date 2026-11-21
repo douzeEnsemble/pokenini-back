@@ -38,6 +38,6 @@ final class AuthenticationEntryPointTest extends TestCase
         /** @var RedirectResponse $response */
         $response = $authenticator->start($request);
 
-        $this->assertEquals('/home', $response->getTargetUrl());
+        $this->assertSame('/home', $response->getTargetUrl());
     }
 }
