@@ -91,7 +91,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
         $this->assertEmpty($response->getContent());
     }
 
@@ -138,7 +138,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertSame('{"error":"Content cannot be empty"}', $response->getContent());
     }
 
@@ -185,7 +185,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertSame('{"error":"Json is invalid"}', $response->getContent());
     }
 
@@ -233,7 +233,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
         $this->assertSame('[]', $response->getContent());
     }
 
@@ -281,7 +281,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
         $this->assertSame('[]', $response->getContent());
     }
 
@@ -341,7 +341,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
         $this->assertEmpty($response->getContent());
     }
 
@@ -407,7 +407,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
         $this->assertSame('[]', $response->getContent());
     }
 
@@ -478,7 +478,7 @@ final class TrainerUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze');
 
-        $this->assertEquals(500, $response->getStatusCode());
+        $this->assertSame(500, $response->getStatusCode());
         $this->assertSame('{"error":"Fail to modify resources"}', $response->getContent());
     }
 }

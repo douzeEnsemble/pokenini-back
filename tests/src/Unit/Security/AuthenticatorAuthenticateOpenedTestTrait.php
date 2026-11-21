@@ -40,9 +40,9 @@ trait AuthenticatorAuthenticateOpenedTestTrait
         $this->assertFalse($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     #[Test]
@@ -65,9 +65,9 @@ trait AuthenticatorAuthenticateOpenedTestTrait
         $this->assertFalse($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     #[Test]
@@ -90,9 +90,9 @@ trait AuthenticatorAuthenticateOpenedTestTrait
         $this->assertFalse($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertTrue($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     #[Test]
@@ -115,9 +115,9 @@ trait AuthenticatorAuthenticateOpenedTestTrait
         $this->assertTrue($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     #[Test]
@@ -140,9 +140,9 @@ trait AuthenticatorAuthenticateOpenedTestTrait
         $this->assertTrue($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     #[Test]
@@ -181,9 +181,9 @@ trait AuthenticatorAuthenticateOpenedTestTrait
         $this->assertTrue($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertTrue($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
-        $this->assertEquals($this->getAuthenticatorProviderName(), $user->getProvider());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame($this->getAuthenticatorProviderName(), $user->getProvider());
     }
 
     private function getOpenedAuthenticator(string $listAdmin, string $listTrainer, string $listCollector): OAuth2Authenticator

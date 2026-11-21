@@ -20,7 +20,7 @@ final class LastRouteTest extends TestCase
     {
         $lastRoute = new LastRoute('douze', ['un' => '1', 'deux' => '2']);
 
-        $this->assertEquals('douze', $lastRoute->route);
+        $this->assertSame('douze', $lastRoute->route);
         $this->assertEquals(['un' => '1', 'deux' => '2'], $lastRoute->routeParams);
     }
 }

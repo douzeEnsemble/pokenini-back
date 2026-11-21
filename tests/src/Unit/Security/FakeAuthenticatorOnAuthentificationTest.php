@@ -47,7 +47,7 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
         $this->assertInstanceOf(RedirectResponse::class, $response);
 
         // @var $response RedirectResponse
-        $this->assertEquals('/success-but-not-a-trainer', $response->getTargetUrl());
+        $this->assertSame('/success-but-not-a-trainer', $response->getTargetUrl());
     }
 
     #[Test]
@@ -77,7 +77,7 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
         $this->assertInstanceOf(RedirectResponse::class, $response);
 
         // @var $response RedirectResponse
-        $this->assertEquals('/success-trainer', $response->getTargetUrl());
+        $this->assertSame('/success-trainer', $response->getTargetUrl());
     }
 
     #[Test]
@@ -92,7 +92,7 @@ final class FakeAuthenticatorOnAuthentificationTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
 
-        $this->assertEquals(403, $response->getStatusCode());
+        $this->assertSame(403, $response->getStatusCode());
         $this->assertEquals('An authentication exception occurred.', $response->getContent());
     }
 

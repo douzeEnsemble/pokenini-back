@@ -39,8 +39,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertFalse($user->isAnAdmin());
         $this->assertFalse($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
     }
 
     #[Test]
@@ -63,8 +63,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertFalse($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
     }
 
     #[Test]
@@ -87,8 +87,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertFalse($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
     }
 
     #[Test]
@@ -111,8 +111,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertTrue($user->isAnAdmin());
         $this->assertFalse($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
     }
 
     #[Test]
@@ -135,8 +135,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertTrue($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertFalse($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
     }
 
     #[Test]
@@ -175,8 +175,8 @@ final class FakeAuthenticatorAuthenticateTest extends TestCase
         $this->assertTrue($user->isAnAdmin());
         $this->assertTrue($user->isATrainer());
         $this->assertTrue($user->isACollector());
-        $this->assertEquals('1212121212000000000000012', $user->getId());
-        $this->assertEquals('1212121212000000000000012', $user->getUserIdentifier());
+        $this->assertSame('1212121212000000000000012', $user->getId());
+        $this->assertSame('1212121212000000000000012', $user->getUserIdentifier());
     }
 
     private function getFakeAuthenticator(string $listAdmin, string $listTrainer, string $listCollector): FakeAuthenticator

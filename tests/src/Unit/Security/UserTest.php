@@ -20,9 +20,9 @@ final class UserTest extends TestCase
     {
         $user = new User('12', 'TestProvider');
 
-        $this->assertEquals('12', $user->getUserIdentifier());
-        $this->assertEquals('12', $user->getId());
-        $this->assertEquals('TestProvider', $user->getProvider());
+        $this->assertSame('12', $user->getUserIdentifier());
+        $this->assertSame('12', $user->getId());
+        $this->assertSame('TestProvider', $user->getProvider());
         $this->assertEquals(['ROLE_USER'], $user->getRoles());
     }
 

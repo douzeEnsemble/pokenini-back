@@ -88,7 +88,7 @@ final class AlbumUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze', 'machi');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertSame(200, $response->getStatusCode());
         $this->assertEmpty($response->getContent());
     }
 
@@ -134,7 +134,7 @@ final class AlbumUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze', 'machi');
 
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertSame('{"error":"Content cannot be empty"}', $response->getContent());
     }
 
@@ -180,7 +180,7 @@ final class AlbumUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze', 'machi');
 
-        $this->assertEquals(400, $response->getStatusCode());
+        $this->assertSame(400, $response->getStatusCode());
         $this->assertSame('{"error":"Json is invalid"}', $response->getContent());
     }
 
@@ -228,7 +228,7 @@ final class AlbumUpsertControllerTest extends TestCase
 
         $response = $controller->upsert('douze', 'machi');
 
-        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertSame(404, $response->getStatusCode());
         $this->assertSame('[]', $response->getContent());
     }
 }
