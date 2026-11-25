@@ -6,5 +6,6 @@ namespace App\Exception;
 
 final class TooManyDexOnHubException extends \RuntimeException
 {
+    #[\Override]
     protected $message = 'Too many dex on the hub';
 }
