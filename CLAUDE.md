@@ -29,7 +29,7 @@ docker compose exec php php vendor/bin/phpunit --filter testMyMethod
 
 # Quality (runs all checks)
 make quality         # infra-quality + code-quality
-make code-quality    # editorconfig, jsonlint, autoloader, php-cs-fixer, phpmd, psalm, phpstan, deptrac
+make code-quality    # editorconfig, jsonlint, autoloader, php-cs-fixer, phpmd, psalm, phpstan, deptrac, lint:expressions
 make cq              # Alias
 
 # Fix code style
