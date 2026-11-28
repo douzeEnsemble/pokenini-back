@@ -8,22 +8,21 @@ controllers:
 
 index:
   path: /
-  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+  redirect_to_route: app_home_index
   defaults:
-    route: app_home_index
     permanent: true
 
 # Fake route for OAuth2 clients to redirect to after authentication
 app_connect_google_check:
   path: /
-  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  controller: Symfony\Component\Routing\Controller\RedirectController
 app_connect_discord_check:
   path: /
-  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  controller: Symfony\Component\Routing\Controller\RedirectController
 
 when@test: &routes_test
   app_connect_mock_check:
     path: /
-    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    controller: Symfony\Component\Routing\Controller\RedirectController
 
 when@dev: *routes_test
