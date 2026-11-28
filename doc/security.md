@@ -91,7 +91,7 @@ Non applicable — API JSON stateless. Le frontend consomme l'API avec un Bearer
 
 ### CORS
 
-Configuré via `CORS_ALLOW_ORIGIN` en variable d'env. En dev : `localhost|apache|127.0.0.1`. En prod : à vérifier que `CORS_ALLOW_ORIGIN` est correctement restreint au domaine du frontend.
+Aucun en-tête CORS n'est envoyé : le back n'est pas prévu pour être appelé par le JavaScript d'une autre origine.
 
 ### Rate limiting
 
@@ -165,7 +165,6 @@ Audit automatique via `make security` (`composer audit`) et workflow CI dédié 
 
 ### Priorité moyenne
 
-- [ ] [moyenne] Vérifier que `CORS_ALLOW_ORIGIN` est correctement restreint en production au domaine frontend.
 - [ ] [moyenne] Adapter `TRUSTED_PROXIES` à la topologie de déploiement prod — `config/packages/framework.yaml:8`.
 - [ ] [moyenne] Rate limiting des endpoints OAuth à configurer au niveau Nginx/infrastructure.
 

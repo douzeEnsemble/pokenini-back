@@ -148,7 +148,6 @@ Versions extraites des `composer.lock` de chaque outil.
 | `ELECTION_TOP_COUNT` | `5` | Nombre de Pokémon dans le top élection |
 | `MATOMO_SITE_ID` | `3` (dev) / `1` (prod) | ID site Matomo analytics |
 | `MATOMO_URL` | `http://moco.matomo.gbl` (dev) | URL instance Matomo |
-| `CORS_ALLOW_ORIGIN` | Regex localhost | Restreindre au domaine frontend en prod |
 | `OAUTH_PASSAGE_SUB_DOMAIN` | `pokeninidev` | Sous-domaine pour le provider Passage |
 
 ---
