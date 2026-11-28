@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controller\ColorGame;
 
+use App\Attribute\WriteApiRateLimit;
 use App\Controller\LangQueryTrait;
 use App\Exception\ApiValidationException;
 use App\Service\ColorGameService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\RateLimit;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 
@@ -49,7 +48,7 @@ final class ColorGameController extends AbstractController
     }
 
     #[Route('/games', methods: ['POST'])]
-    #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
+    #[WriteApiRateLimit]
     public function create(Request $request): JsonResponse
     {
         $lang = $this->getLang($request, $this->locales);

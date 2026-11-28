@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Election;
 
+use App\Attribute\WriteApiRateLimit;
 use App\DTO\ElectionVote;
 use App\Service\ModifyElectionVoteService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
-use Symfony\Component\HttpKernel\Attribute\RateLimit;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/election')]
@@ -25,7 +24,7 @@ final class ElectionVoteController extends AbstractController
         ],
         methods: ['POST']
     )]
-    #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
+    #[WriteApiRateLimit]
     public function vote(
         ModifyElectionVoteService $electionVoteService,
         #[MapRequestPayload]

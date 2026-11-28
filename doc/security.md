@@ -95,18 +95,12 @@ Aucun en-tête CORS n'est envoyé : le back n'est pas prévu pour être appelé 
 
 ### Rate limiting
 
-Configuré sur les **endpoints d'écriture** via `App\EventSubscriber\RateLimiterSubscriber` — `src/EventSubscriber/RateLimiterSubscriber.php` :
+Configuré sur les **endpoints d'écriture** avec l'attribut `#[App\Attribute\WriteApiRateLimit]`, qui étend `#[RateLimit]` de Symfony.
 
-| Route | Méthode | Limite |
-|-------|---------|--------|
-| `app_album_albumupsert_upsert` | PATCH/PUT | 60 req/min |
-| `app_election_electionvote_vote` | POST | 60 req/min |
-| `app_trainer_trainerupsert_upsert` | PUT | 60 req/min |
-| `app_admin_adminactioncalculate_process` | POST | 60 req/min |
-| `app_admin_adminactionupdate_process` | POST | 60 req/min |
-| `app_admin_adminactioninvalidate_process` | DELETE | 60 req/min |
-
-Clé de limite : SHA-256(Authorization header) ou SHA-256(IP) si pas de header. Policy : `sliding_window`. Config : `config/packages/rate_limiter.yaml`.
+- Limite : 60 requêtes par minute, politique `sliding_window` (`config/packages/rate_limiter.yaml`).
+- Clé : en-tête `Authorization`, sinon l'IP du client.
+- Les réponses portent les en-têtes `X-RateLimit-Limit`, `X-RateLimit-Remaining` et `X-RateLimit-Reset` ; un rejet répond 429 avec `Retry-After`.
+- Chaque rejet est journalisé en `error` par `App\EventSubscriber\RateLimitExceededSubscriber`, avec une empreinte de la clé et jamais le jeton.
 
 ### Points de vigilance
 
