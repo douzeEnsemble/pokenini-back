@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Attribute\WriteApiRateLimit;
 use App\DTO\AdminAction;
 use App\Service\TriggerBannersPipelineService;
 use App\Service\TriggerImagesPipelineService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\RateLimit;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/istration/action/trigger')]
@@ -29,7 +28,7 @@ final class AdminActionTriggerController extends AbstractController
         methods: ['POST'],
         condition: "params['name'] in ['update_images', 'update_banners']"
     )]
-    #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
+    #[WriteApiRateLimit]
     public function process(string $name): JsonResponse
     {
         $state = 'ok';

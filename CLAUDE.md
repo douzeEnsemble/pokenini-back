@@ -69,6 +69,7 @@ Controllers must not call API services directly — they go through business `Se
 
 ### Key namespaces
 
+- `App\Attribute\` — Controller attributes. `#[WriteApiRateLimit]` goes on every write endpoint.
 - `App\Controller\` — Slim controllers. Each controller handles one endpoint, delegates to a `Service`.
 - `App\Service\` — Business logic. Two sub-groups:
   - `App\Service\Api\` — HTTP calls to pokenini-api, all extend `AbstractApiService`. Names follow `Get*ApiService` / `Modify*ApiService`.

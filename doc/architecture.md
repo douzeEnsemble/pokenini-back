@@ -99,9 +99,9 @@ Référence : `src/Security/AccessTokenHandler.php`
 
 ### EventSubscriber (`src/EventSubscriber/`)
 Abonnés noyau Symfony transverses, sans logique métier :
-- `RateLimiterSubscriber` — intercède sur `KernelEvents::REQUEST`, bloque les routes d'écriture au-delà de 60 req/min par token (SHA-256) ou IP. Retourne HTTP 429 si dépassé.
+- `RateLimitExceededSubscriber` — journalise les requêtes rejetées par `#[WriteApiRateLimit]` (`src/Attribute/`).
 - `AccessDeniedSubscriber` — intercepte `KernelEvents::EXCEPTION` pour logger en `warning` les rejets `AccessDeniedException` avec la route concernée.
-Référence : `src/EventSubscriber/RateLimiterSubscriber.php`
+Référence : `src/EventSubscriber/RateLimitExceededSubscriber.php`
 
 ### Cache (`src/Cache/`)
 `KeyMaker` : génère des clés de cache déterministes par type de ressource et paramètres. Toutes statiques.

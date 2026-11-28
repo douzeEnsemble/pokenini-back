@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Trainer;
 
+use App\Attribute\WriteApiRateLimit;
 use App\Exception\ApiValidationException;
 use App\Service\TrainerPreferenceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\RateLimit;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -31,7 +30,7 @@ final class TrainerPreferenceController extends AbstractController
 
     #[Route('', methods: ['PUT'])]
     #[IsGranted('ROLE_TRAINER')]
-    #[RateLimit(limiter: 'write_api', key: new Expression("request.headers.get('Authorization') ?? request.getClientIp() ?? 'unknown'"))]
+    #[WriteApiRateLimit]
     public function modify(Request $request): Response
     {
         /** @var array{home_page?: mixed} $content */

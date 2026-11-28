@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration;
 
+use App\Attribute\WriteApiRateLimit;
 use App\Controller\Album\AlbumUpsertController;
+use App\EventSubscriber\RateLimitExceededSubscriber;
 use App\Tests\Integration\Trait\ClientRequestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\RateLimiter\Event\RateLimitExceededEvent;
 use Symfony\Component\RateLimiter\LimiterInterface;
 
 /**
@@ -17,6 +20,8 @@ use Symfony\Component\RateLimiter\LimiterInterface;
  */
 #[Group('api-mocked-testing')]
 #[CoversClass(AlbumUpsertController::class)]
+#[CoversClass(WriteApiRateLimit::class)]
+#[CoversClass(RateLimitExceededSubscriber::class)]
 final class RateLimitTest extends WebTestCase
 {
     use ClientRequestTrait;
@@ -24,7 +29,7 @@ final class RateLimitTest extends WebTestCase
     /**
      * The rate-limiter key used by write-endpoint controllers.
      *
-     * The #[RateLimit] attribute is declared with key: new Expression("...") so
+     * The #[WriteApiRateLimit] attribute is declared with key: new Expression("...") so
      * Symfony evaluates the expression against the request. In tests,
      * authenticatedRequest() sends HTTP_AUTHORIZATION: 'Bearer this-is-the-trainer-token',
      * so that value becomes the rate-limiter bucket key.
@@ -70,6 +75,9 @@ final class RateLimitTest extends WebTestCase
 
         // Rate limiter fired and accepted the request — must not be 429.
         $this->assertResponseStatusCodeSame(200);
+        $this->assertResponseHeaderSame('X-RateLimit-Limit', '10000');
+        $this->assertResponseHeaderSame('X-RateLimit-Remaining', '9999');
+        $this->assertResponseHasHeader('X-RateLimit-Reset');
     }
 
     /**
@@ -109,6 +117,19 @@ final class RateLimitTest extends WebTestCase
         );
 
         $this->assertResponseStatusCodeSame(429);
+        $this->assertResponseHeaderSame('X-RateLimit-Remaining', '0');
+        $this->assertResponseHasHeader('Retry-After');
+    }
+
+    /**
+     * The subscriber that logs the rejections is registered: it is the only listener of this event.
+     */
+    #[Test]
+    public function rejectionsAreListenedTo(): void
+    {
+        $dispatcher = self::getContainer()->get('event_dispatcher');
+
+        $this->assertTrue($dispatcher->hasListeners(RateLimitExceededEvent::class));
     }
 
     /**

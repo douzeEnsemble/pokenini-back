@@ -8,6 +8,10 @@ parameters:
       collectors:
         - type: classLike
           value: '^App\\AlbumFilters\\.*'
+    - name: AppAttribute
+      collectors:
+        - type: classLike
+          value: '^App\\Attribute\\.*'
     - name: AppCache
       collectors:
         - type: classLike
@@ -148,6 +152,9 @@ parameters:
   ruleset:
     AppAlbumFilters:
       - SymfonyHttpFoundation
+    AppAttribute:
+      - SymfonyExpressionLanguage
+      - SymfonyHttpKernel
     AppCache:
     AppEventSubscriber:
       - AppException
@@ -155,9 +162,11 @@ parameters:
       - SymfonyEventDispatcher
       - SymfonyHttpFoundation
       - SymfonyHttpKernel
+      - SymfonyRateLimiter
       - SymfonySecurity
     AppController:
       - AppAlbumFilters
+      - AppAttribute
       - AppDTO
       - AppException
       - AppSecurity
